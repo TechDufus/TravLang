@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -80,8 +80,8 @@ val alloc_boxedintnat_header : Debuginfo.t -> expression
 
 (** Integers *)
 
-(** Minimal/maximal OCaml integer values whose backend representation fits
-    in a regular OCaml integer *)
+(** Minimal/maximal travlang integer values whose backend representation fits
+    in a regular travlang integer *)
 val max_repr_int : int
 val min_repr_int : int
 
@@ -231,7 +231,7 @@ val get_size : expression -> Debuginfo.t -> expression
 val wordsize_shift : int
 val numfloat_shift : int
 
-(** Check whether the given array is an array of regular OCaml values
+(** Check whether the given array is an array of regular travlang values
     (as opposed to unboxed floats), from its header or pointer *)
 val is_addr_array_hdr : expression -> Debuginfo.t -> expression
 val is_addr_array_ptr : expression -> Debuginfo.t -> expression
@@ -436,16 +436,16 @@ val int_as_pointer : unary_primitive
 (** Raise primitive *)
 val raise_prim : Lambda.raise_kind -> unary_primitive
 
-(** Unary negation of an OCaml integer *)
+(** Unary negation of an travlang integer *)
 val negint : unary_primitive
 
-(** Add a constant number to an OCaml integer *)
+(** Add a constant number to an travlang integer *)
 val offsetint : int -> unary_primitive
 
-(** Add a constant number to an OCaml integer reference *)
+(** Add a constant number to an travlang integer reference *)
 val offsetref : int -> unary_primitive
 
-(** Return the length of the array argument, as an OCaml integer *)
+(** Return the length of the array argument, as an travlang integer *)
 val arraylength : Lambda.array_kind -> unary_primitive
 
 (** Byte swap primitive
@@ -470,7 +470,7 @@ val setfield :
 val setfloatfield :
   int -> Lambda.initialization_or_assignment -> binary_primitive
 
-(** Operations on OCaml integers *)
+(** Operations on travlang integers *)
 val add_int_caml : binary_primitive
 val sub_int_caml : binary_primitive
 val mul_int_caml : binary_primitive

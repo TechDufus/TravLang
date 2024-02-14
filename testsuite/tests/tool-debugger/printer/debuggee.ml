@@ -23,19 +23,19 @@ let () = f 3
 
 (* TEST
  flags += " -g ";
- ocamldebug_script = "${test_source_directory}/input_script";
+ travlangdebug_script = "${test_source_directory}/input_script";
  readonly_files = "printer.ml";
  include debugger;
  debugger;
  shared-libraries;
- setup-ocamlc.byte-build-env;
+ setup-travlangc.byte-build-env;
  {
    module = "printer.ml";
-   ocamlc.byte;
+   travlangc.byte;
  }{
-   ocamlc.byte;
-   check-ocamlc.byte-output;
-   ocamldebug;
+   travlangc.byte;
+   check-travlangc.byte-output;
+   travlangdebug;
    check-program-output;
  }
 *)

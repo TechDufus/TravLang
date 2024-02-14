@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Maxence Guesdon, projet Cristal, INRIA Rocquencourt        *)
 (*                                                                        *)
@@ -13,7 +13,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(** Interface for analysing documented OCaml source files and to the collected information. *)
+(** Interface for analysing documented travlang source files and to the collected information. *)
 
 type ref_kind = Odoc_types.ref_kind =
     RK_module

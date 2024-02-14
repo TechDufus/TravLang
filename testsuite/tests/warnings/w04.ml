@@ -9,7 +9,7 @@
 
 *)
 
-[@@@ocaml.warning "+4"]
+[@@@travlang.warning "+4"]
 
 type expr = E of int [@@unboxed]
 
@@ -24,8 +24,8 @@ let g x = match x with
 
 (* TEST
  flags = "-w +A-70";
- setup-ocamlc.byte-build-env;
+ setup-travlangc.byte-build-env;
  compile_only = "true";
- ocamlc.byte;
- check-ocamlc.byte-output;
+ travlangc.byte;
+ check-travlangc.byte-output;
 *)

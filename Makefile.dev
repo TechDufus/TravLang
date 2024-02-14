@@ -1,6 +1,6 @@
 #**************************************************************************
 #*                                                                        *
-#*                                 OCaml                                  *
+#*                                 travlang                                  *
 #*                                                                        *
 #*            Gabriel Scherer, projet Parsifal, INRIA Saclay              *
 #*                                                                        *
@@ -27,17 +27,17 @@ build-all-asts:
 	@$(MAKE) --no-print-directory $(AST_FILES)
 
 CAMLC_DPARSETREE := \
-  $(OCAMLRUN) ./ocamlc -nostdlib -nopervasives \
+  $(travlangRUN) ./travlangc -nostdlib -nopervasives \
                        -stop-after parsing -dparsetree
 
-%.ml.ast: %.ml ocamlc
+%.ml.ast: %.ml travlangc
 	$(CAMLC_DPARSETREE) $< 2> $@ || exit 0
 # `|| exit 0` : some source files will fail to parse
 # (for example, they are meant as toplevel scripts
 # rather than source files, or are parse-error tests),
 # we ignore the failure in that case
 
-%.mli.ast: %.mli ocamlc
+%.mli.ast: %.mli travlangc
 	$(CAMLC_DPARSETREE) $< 2> $@ || exit 0
 
 .PHONY: list-all-asts

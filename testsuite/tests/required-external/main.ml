@@ -2,36 +2,36 @@
  modules = "file.ml";
  {
    program = "${test_build_directory}/main.exe";
-   setup-ocamlc.byte-build-env;
+   setup-travlangc.byte-build-env;
    module = "file.ml";
-   ocamlc.byte;
+   travlangc.byte;
    module = "";
    program = "lib.cma";
    flags = "-a";
    all_modules = "file.cmo";
-   ocamlc.byte;
+   travlangc.byte;
    program = "${test_build_directory}/main.exe";
    all_modules = "lib.cma main.ml";
    flags = "";
-   ocamlc.byte;
-   check-ocamlc.byte-output;
+   travlangc.byte;
+   check-travlangc.byte-output;
    run;
    check-program-output;
  }{
    program = "${test_build_directory}/main.exe";
-   setup-ocamlopt.byte-build-env;
+   setup-travlangopt.byte-build-env;
    module = "file.ml";
-   ocamlopt.byte;
+   travlangopt.byte;
    module = "";
    program = "lib.cmxa";
    flags = "-a";
    all_modules = "file.cmx";
-   ocamlopt.byte;
+   travlangopt.byte;
    program = "${test_build_directory}/main.exe";
    all_modules = "lib.cmxa main.ml";
    flags = "";
-   ocamlopt.byte;
-   check-ocamlopt.byte-output;
+   travlangopt.byte;
+   check-travlangopt.byte-output;
    run;
    check-program-output;
  }

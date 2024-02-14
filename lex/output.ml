@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -62,7 +62,7 @@ let output_byte_array oc v =
 (* Output the tables *)
 
 let output_tables oc tbl =
-  output_string oc "let __ocaml_lex_tables = {\n";
+  output_string oc "let __travlang_lex_tables = {\n";
 
   fprintf oc "  Lexing.lex_base =\n%a;\n" output_array_s tbl.tbl_base;
   fprintf oc "  Lexing.lex_backtrk =\n%a;\n" output_array_s tbl.tbl_backtrk;
@@ -93,7 +93,7 @@ let output_entry some_mem_code ic oc has_refill oci e =
   let some_mem_code = some_mem_code &&  e.auto_mem_size > 0 in
   fprintf oc
     "%s %alexbuf =\
-   \n  %a%a __ocaml_lex_%s_rec %alexbuf %d\n"
+   \n  %a%a __travlang_lex_%s_rec %alexbuf %d\n"
     e.auto_name
     output_args e.auto_args
     (fun oc x ->
@@ -104,11 +104,11 @@ let output_entry some_mem_code ic oc has_refill oci e =
     e.auto_name
     output_args e.auto_args
     init_num;
-  fprintf oc "and __ocaml_lex_%s_rec %alexbuf __ocaml_lex_state =\n"
+  fprintf oc "and __travlang_lex_%s_rec %alexbuf __travlang_lex_state =\n"
     e.auto_name output_args e.auto_args;
   fprintf oc "  match Lexing.%sengine"
           (if some_mem_code then "new_" else "");
-  fprintf oc " __ocaml_lex_tables __ocaml_lex_state lexbuf with\n    ";
+  fprintf oc " __travlang_lex_tables __travlang_lex_state lexbuf with\n    ";
   List.iter
     (fun (num, env, loc) ->
       fprintf oc "  | ";
@@ -119,14 +119,14 @@ let output_entry some_mem_code ic oc has_refill oci e =
     e.auto_actions;
   if has_refill then
     fprintf oc
-      "  | __ocaml_lex_state -> __ocaml_lex_refill\
+      "  | __travlang_lex_state -> __travlang_lex_refill\
      \n      (fun lexbuf -> lexbuf.Lexing.refill_buff lexbuf;\
-     \n         __ocaml_lex_%s_rec %alexbuf __ocaml_lex_state) lexbuf\n\n"
+     \n         __travlang_lex_%s_rec %alexbuf __travlang_lex_state) lexbuf\n\n"
       e.auto_name output_args e.auto_args
   else
     fprintf oc
-      "  | __ocaml_lex_state -> lexbuf.Lexing.refill_buff lexbuf;\
-     \n      __ocaml_lex_%s_rec %alexbuf __ocaml_lex_state\n\n"
+      "  | __travlang_lex_state -> lexbuf.Lexing.refill_buff lexbuf;\
+     \n      __travlang_lex_%s_rec %alexbuf __travlang_lex_state\n\n"
       e.auto_name output_args e.auto_args
 
 (* Main output function *)

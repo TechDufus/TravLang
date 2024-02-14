@@ -1,7 +1,7 @@
 # 2 "asmcomp/s390x/reload.ml"
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)

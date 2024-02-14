@@ -1,13 +1,13 @@
-(Introduced in OCaml 4.02.2, extended in 4.03)
+(Introduced in travlang 4.02.2, extended in 4.03)
 
 Some syntactic constructions are accepted during parsing and rejected
 during type checking. These syntactic constructions can therefore not
-be used directly in vanilla OCaml. However, "-ppx" rewriters and other
+be used directly in vanilla travlang. However, "-ppx" rewriters and other
 external tools can exploit this parser leniency to extend the language
 with these new syntactic constructions by rewriting them to
 vanilla constructions.
 \subsection{ss:extension-operators}{Extension operators} \label{s:ext-ops}
-(Introduced in OCaml 4.02.2, extended to unary operators in OCaml 4.12.0)
+(Introduced in travlang 4.02.2, extended to unary operators in travlang 4.12.0)
 \begin{syntax}
 infix-symbol:
           ...
@@ -33,7 +33,7 @@ Note that both "##" and "!#" must be eliminated by a ppx rewriter to make
 this example valid.
 
 \subsection{ss:extension-literals}{Extension literals}
-(Introduced in OCaml 4.03)
+(Introduced in travlang 4.03)
 \begin{syntax}
 float-literal:
        ...

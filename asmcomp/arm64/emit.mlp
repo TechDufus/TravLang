@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Gallium, INRIA Rocquencourt           *)
 (*                 Benedikt Meurer, University of Siegen                  *)
@@ -751,8 +751,8 @@ let emit_instr env i =
           `	bl	{emit_symbol "caml_c_call"}\n`;
           `{record_frame env i.live (Dbg_other i.dbg)}\n`
         end else begin
-          (* store ocaml stack in the frame pointer register
-             NB: no need to store previous x29 because OCaml frames don't
+          (* store travlang stack in the frame pointer register
+             NB: no need to store previous x29 because travlang frames don't
              maintain frame pointer *)
           `	mov	x29, sp\n`;
           cfi_remember_state ();
@@ -806,7 +806,7 @@ let emit_instr env i =
         end
     | Lop(Istore(size, addr, assignment)) ->
         (* NB: assignments other than Word_int and Word_val do not follow the
-        Multicore OCaml memory model and so do not emit a barrier *)
+        Multicore travlang memory model and so do not emit a barrier *)
         let src = i.arg.(0) in
         let base =
           match addr with

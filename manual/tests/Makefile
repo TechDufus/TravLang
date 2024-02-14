@@ -3,7 +3,7 @@ include $(ROOTDIR)/api_docgen/Makefile.docfiles
 include $(ROOTDIR)/Makefile.common
 include $(ROOTDIR)/stdlib/StdlibModules
 include $(ROOTDIR)/Makefile.best_binaries
-OCAMLC ?= $(BEST_OCAMLC) $(STDLIBFLAGS)
+travlangC ?= $(BEST_travlangC) $(STDLIBFLAGS)
 
 MANUAL=$(ROOTDIR)/manual/src
 
@@ -14,14 +14,14 @@ all: check-cross-references check-stdlib check-case-collision
 tools: cross-reference-checker
 
 cross-reference-checker: cross_reference_checker.ml
-	$(OCAMLC) $(ROOTDIR)/compilerlibs/ocamlcommon.cma \
+	$(travlangC) $(ROOTDIR)/compilerlibs/travlangcommon.cma \
 	  -I $(ROOTDIR)/parsing -I $(ROOTDIR)/driver \
 	  $< -o $@
 
 # check cross-references between the manual and error messages
 .PHONY: check-cross-references
 check-cross-references: cross-reference-checker
-	$(OCAMLRUN) ./cross-reference-checker \
+	$(travlangRUN) ./cross-reference-checker \
 	  -auxfile $(MANUAL)/texstuff/manual.aux \
 	  $(ROOTDIR)/utils/warnings.ml \
 	  $(ROOTDIR)/driver/main_args.ml \
@@ -46,11 +46,11 @@ INTER = $(filter $(LOWER_ETEX), $(LOWER_MLIS))
 .PHONY: check-case-collision
 check-case-collision:
 ifeq ($(INTER),)
-	@echo "No collisions detected between OCaml modules and LaTeX sources."
+	@echo "No collisions detected between travlang modules and LaTeX sources."
 else
 	@echo "The following names"
 	@echo "  $(INTER)"
-	@echo "are used by both an OCaml module and a latex source file."
+	@echo "are used by both an travlang module and a latex source file."
 	@echo "This creates a conflict on case-insensitive file systems."
 	@false
 endif

@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Maxence Guesdon, projet Cristal, INRIA Rocquencourt        *)
 (*                                                                        *)
@@ -131,7 +131,7 @@ val all_merge_options : merge_option list
 (** Type of magic numbers. *)
 type magic
 
-(** The magic number for the dumps of this version of ocamldoc. *)
+(** The magic number for the dumps of this version of travlangdoc. *)
 val magic : magic
 
 (** A dump of a structure. *)

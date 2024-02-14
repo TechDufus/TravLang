@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Luc Maranget, projet Moscova,                              *)
 (*                          INRIA Rocquencourt                            *)
@@ -164,7 +164,7 @@ let output_args oc args =
 let output_refill_handler ic oc oci = function
   | None -> false
   | Some location ->
-    output_string oc "let __ocaml_lex_refill : \
+    output_string oc "let __travlang_lex_refill : \
                       (Lexing.lexbuf -> 'a) -> (Lexing.lexbuf -> 'a) =\n";
     copy_chunk ic oc oci location true;
     true

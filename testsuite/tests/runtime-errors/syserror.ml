@@ -1,8 +1,8 @@
 (* TEST
  flags = "-w -a";
  {
-   setup-ocamlc.byte-build-env;
-   ocamlc.byte;
+   setup-travlangc.byte-build-env;
+   travlangc.byte;
    exit_status = "2";
    run;
    {
@@ -15,8 +15,8 @@
      check-program-output;
    }
  }{
-   setup-ocamlopt.byte-build-env;
-   ocamlopt.byte;
+   setup-travlangopt.byte-build-env;
+   travlangopt.byte;
    exit_status = "2";
    run;
    {

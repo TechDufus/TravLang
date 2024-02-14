@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           */
 /*                                                                        */
@@ -183,7 +183,7 @@ CAMLprim value caml_obj_is_shared (value obj)
 }
 
 /* The following functions are used to support lazy values. They are not
- * written in OCaml in order to ensure atomicity guarantees with respect to the
+ * written in travlang in order to ensure atomicity guarantees with respect to the
  * GC. */
 CAMLprim value caml_lazy_make_forward (value v)
 {

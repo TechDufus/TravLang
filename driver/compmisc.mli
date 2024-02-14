@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*       Fabrice Le Fessant, EPI Gallium, INRIA Paris-Rocquencourt        *)
 (*                                                                        *)

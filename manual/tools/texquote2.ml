@@ -87,10 +87,10 @@ let process_line line = function
     then begin
       print_string "\\begin{machineenv}";
       (Verbatim ("\\end{verbatim}", "\\end{machineenv}"))
-    end else if is_prefix "\\begin{ocamldoccode}" line
+    end else if is_prefix "\\begin{travlangdoccode}" line
     then begin
-      print_string "\\begin{ocamldoccode}";
-      (Verbatim ("\\end{ocamldoccode}", "\\end{ocamldoccode}"))
+      print_string "\\begin{travlangdoccode}";
+      (Verbatim ("\\end{travlangdoccode}", "\\end{travlangdoccode}"))
     end else begin
       process_normal_line line;
       if !in_quotes

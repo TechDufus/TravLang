@@ -1,6 +1,6 @@
 (* TEST
- flags = "-I ${ocamlsrcdir}/parsing";
- include ocamlcommon;
+ flags = "-I ${travlangsrcdir}/parsing";
+ include travlangcommon;
  expect;
 *)
 [@@@alert "-deprecated"]

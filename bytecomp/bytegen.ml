@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -137,7 +137,7 @@ let rec is_tailcall = function
   | Kpop _ :: c -> is_tailcall c
   | _ -> false
 
-(* Will this primitive result in an OCaml call which would benefit
+(* Will this primitive result in an travlang call which would benefit
    from the tail call optimization? *)
 
 let preserve_tailcall_for_prim = function

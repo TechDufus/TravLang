@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 #**************************************************************************
 #*                                                                        *
-#*                                 OCaml                                  *
+#*                                 travlang                                  *
 #*                                                                        *
-#*                 David Allsopp, OCaml Labs, Cambridge.                  *
+#*                 David Allsopp, travlang Labs, Cambridge.                  *
 #*                                                                        *
 #*   Copyright 2021 David Allsopp Ltd.                                    *
 #*                                                                        *
@@ -44,7 +44,7 @@ else
 Most contributions should come with a message in the Changes file, as
 described in our contributor documentation:
 
-  https://github.com/ocaml/ocaml/blob/trunk/CONTRIBUTING.md#changelog
+  https://github.com/travlang/travlang/blob/trunk/CONTRIBUTING.md#changelog
 
 Some very minor changes (typo fixes for example) may not need
 a Changes entry. In this case, you may explicitly disable this test by

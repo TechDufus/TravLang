@@ -1,4 +1,4 @@
-(Introduced in OCaml 4.03)
+(Introduced in travlang 4.03)
 
 Comments which start with "**" are treated specially by the
 compiler. They are automatically converted during parsing into
@@ -10,10 +10,10 @@ comments} and {\em label comments}. Any comment starting with "**" which
 does not match one of these forms will cause the compiler to emit
 warning 50.
 
-Comments which start with "**" are also used by the ocamldoc
-documentation generator (see \ref{c:ocamldoc}). The three comment forms
+Comments which start with "**" are also used by the travlangdoc
+documentation generator (see \ref{c:travlangdoc}). The three comment forms
 recognised by the compiler are a subset of the forms accepted by
-ocamldoc (see \ref{s:ocamldoc-comments}).
+travlangdoc (see \ref{s:travlangdoc-comments}).
 
 \subsection{ss:floating-comments}{Floating comments}
 
@@ -34,7 +34,7 @@ will be converted to:
 \begin{caml_example*}{verbatim}
 type t = T
 
-[@@@ocaml.text " Now some definitions for [t] "]
+[@@@travlang.text " Now some definitions for [t] "]
 
 let mkT = T
 \end{caml_example*}
@@ -65,7 +65,7 @@ will be converted to:
 
 \begin{caml_example*}{verbatim}
 type t = T
-[@@ocaml.doc " A description of [t] "]
+[@@travlang.doc " A description of [t] "]
 \end{caml_example*}
 
 Note that, if a comment appears immediately next to multiple items,
@@ -81,9 +81,9 @@ then it will be attached to both items:
 
 \begin{caml_example*}{verbatim}
 type t = T
-[@@ocaml.doc " An ambiguous comment "]
+[@@travlang.doc " An ambiguous comment "]
 type s = S
-[@@ocaml.doc " An ambiguous comment "]
+[@@travlang.doc " An ambiguous comment "]
 \end{caml_example*}
 
 and the compiler will emit warning 50.
@@ -118,21 +118,21 @@ type t5 = [
 will be converted to:
 
 \begin{caml_example*}{verbatim}
-type t1 = lbl:(int [@ocaml.doc " Labelled argument "]) -> unit
+type t1 = lbl:(int [@travlang.doc " Labelled argument "]) -> unit
 
 type t2 = {
-  fld: int [@ocaml.doc " Record field "];
+  fld: int [@travlang.doc " Record field "];
   fld2: float;
 }
 
 type t3 =
-  | Cstr of string [@ocaml.doc " Variant constructor "]
+  | Cstr of string [@travlang.doc " Variant constructor "]
   | Cstr2 of string
 
-type t4 = < meth : int * int [@ocaml.doc " Object method "] >
+type t4 = < meth : int * int [@travlang.doc " Object method "] >
 
 type t5 = [
-  `PCstr [@ocaml.doc " Polymorphic variant constructor "]
+  `PCstr [@travlang.doc " Polymorphic variant constructor "]
 ]
 \end{caml_example*}
 
@@ -146,7 +146,7 @@ type t = T of string
 will be converted to:
 
 \begin{caml_example*}{verbatim}
-type t =  T of string [@ocaml.doc " Attaches to T not t "]
+type t =  T of string [@travlang.doc " Attaches to T not t "]
 \end{caml_example*}
 
 whilst:
@@ -160,8 +160,8 @@ type t = T of string
 will be converted to:
 
 \begin{caml_example*}{verbatim}
-type t =  T of string [@ocaml.doc " Attaches to T not t "]
-[@@ocaml.doc " Attaches to t "]
+type t =  T of string [@travlang.doc " Attaches to T not t "]
+[@@travlang.doc " Attaches to t "]
 \end{caml_example*}
 
 In the absence of meaningful comment on the last constructor of
@@ -177,5 +177,5 @@ will be converted directly to
 
 \begin{caml_example*}{verbatim}
 type t =  T of string
-[@@ocaml.doc " Attaches to t "]
+[@@travlang.doc " Attaches to t "]
 \end{caml_example*}

@@ -1,6 +1,6 @@
 (* TEST
 
- ocamlopt_flags = "-g";
+ travlangopt_flags = "-g";
  include unix;
  set TSAN_OPTIONS="detect_deadlocks=0";
 

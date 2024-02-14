@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Maxence Guesdon, projet Cristal, INRIA Rocquencourt        *)
 (*                                                                        *)
@@ -21,10 +21,10 @@ type source_file =
   | Intf_file of string
   | Text_file of string
 
-(** The include_dirs in the OCaml compiler. *)
+(** The include_dirs in the travlang compiler. *)
 val include_dirs : string list ref
 
-(** The hidden_include_dirs in the OCaml compiler. *)
+(** The hidden_include_dirs in the travlang compiler. *)
 val hidden_include_dirs : string list ref
 
 (** The merge options to be used. *)

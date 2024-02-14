@@ -1,5 +1,5 @@
 <ppx-context>
-tool_name: "ocamlc"
+tool_name: "travlangc"
 open_modules: ["List"]
 for_package: "None"
 use_debug: false
@@ -10,7 +10,7 @@ transparent_modules: false
 unboxed_types: true
 </ppx-context>
 <ppx-context>
-tool_name: "ocamlc"
+tool_name: "travlangc"
 open_modules: []
 for_package: "None"
 use_debug: true

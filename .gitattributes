@@ -1,6 +1,6 @@
 #**************************************************************************
 #*                                                                        *
-#*                                 OCaml                                  *
+#*                                 travlang                                  *
 #*                                                                        *
 #*                 Damien Doligez, projet Gallium, INRIA                  *
 #*                                                                        *
@@ -20,8 +20,8 @@
 .gitattributes typo.long-line=may
 
 # Binary files
-/boot/ocamlc binary
-/boot/ocamllex binary
+/boot/travlangc binary
+/boot/travlanglex binary
 *.gif binary
 *.png binary
 *.tfm binary
@@ -92,12 +92,12 @@ build-aux                typo.prune
 # configure is generated so do not check it
 configure                typo.prune
 
-ocaml-variants.opam      typo.prune
+travlang-variants.opam      typo.prune
 
-ocamldoc/**              typo.long-line=may
-ocamldoc/Changes.txt     typo.missing-header
-ocamldoc/ocamldoc.sty    typo.missing-header
-ocamldoc/odoc_index.html typo.missing-header
+travlangdoc/**              typo.long-line=may
+travlangdoc/Changes.txt     typo.missing-header
+travlangdoc/travlangdoc.sty    typo.missing-header
+travlangdoc/odoc_index.html typo.missing-header
 
 otherlibs/unix/readlink_win32.c    typo.long-line
 otherlibs/unix/stat_win32.c        typo.long-line
@@ -126,12 +126,12 @@ testsuite/tests/**/*.reference               typo.prune
 # Expect tests with overly long lines of expected output
 testsuite/tests/parsing/docstrings.ml        typo.very-long-line
 
-# Generated test with overly long ocamltest description
+# Generated test with overly long travlangtest description
 testsuite/tests/lib-dynlink-domains/main.ml  typo.very-long-line
 
 # The normalisation tests have very specific line endings which mustn't be
 # corrupted by git.
-testsuite/tests/tool-ocamltest/norm*.reference binary
+testsuite/tests/tool-travlangtest/norm*.reference binary
 
 tools/magic                       typo.missing-header
 
@@ -150,7 +150,7 @@ tools/magic                       typo.missing-header
 *.awk text eol=lf
 *.m4 text eol=lf linguist-language=M4Sugar
 
-# ocamltest hooks which are used in the testsuite
+# travlangtest hooks which are used in the testsuite
 *.check-program-output text eol=lf
 *.run text eol=lf
 
@@ -161,10 +161,10 @@ Makefile* linguist-language=Makefile
 *.h linguist-language=C
 *.h.in linguist-language=C
 *.hva linguist-language=TeX
-*.ml linguist-language=OCaml
-*.ml? linguist-language=OCaml
+*.ml linguist-language=travlang
+*.ml? linguist-language=travlang
 *.mld linguist-documentation
-*.ml*.in linguist-language=OCaml
+*.ml*.in linguist-language=travlang
 *.tbl linguist-language=C
 
 aclocal.m4 typo.tab -linguist-vendored linguist-language=M4Sugar
@@ -178,8 +178,8 @@ build-aux/install-sh linguist-generated text eol=lf
 build-aux/ltmain.sh linguist-generated text eol=lf
 build-aux/missing linguist-generated text eol=lf
 build-aux/*.m4 linguist-vendored
-build-aux/ocaml_version.m4 -linguist-vendored linguist-language=M4Sugar
-ocamltest/OCAMLTEST.org typo.long-line=may typo.missing-header
+build-aux/travlang_version.m4 -linguist-vendored linguist-language=M4Sugar
+travlangtest/travlangTEST.org typo.long-line=may typo.missing-header
 stdlib/Compflags text eol=lf
 stdlib/hashbang -text
 tools/autogen text eol=lf
@@ -190,7 +190,7 @@ tools/check-symbol-names text eol=lf
 tools/msvs-promote-path text eol=lf
 tools/gdb-macros text eol=lf linguist-language=GDB
 tools/magic text eol=lf
-tools/ocamlsize text eol=lf
+tools/travlangsize text eol=lf
 tools/pre-commit-githook text eol=lf
 runtime/caml/sizeclasses.h typo.missing-header
 
@@ -206,9 +206,9 @@ testsuite/tests/parsing/int_and_float_with_modifier.ml text eol=lf
 testsuite/tests/parsing/pr6865.ml text eol=lf
 testsuite/tests/parsing/quotedextensions.ml text eol=lf
 testsuite/tests/parsing/shortcut_ext_attr.ml text eol=lf
-testsuite/tests/tool-ocamlc-stop-after/stop_after_parsing_impl.ml text eol=lf
-testsuite/tests/tool-ocamlc-stop-after/stop_after_parsing_intf.mli text eol=lf
-testsuite/tests/tool-ocamlc-stop-after/stop_after_typing_impl.ml text eol=lf
+testsuite/tests/tool-travlangc-stop-after/stop_after_parsing_impl.ml text eol=lf
+testsuite/tests/tool-travlangc-stop-after/stop_after_parsing_intf.mli text eol=lf
+testsuite/tests/tool-travlangc-stop-after/stop_after_typing_impl.ml text eol=lf
 testsuite/tests/translprim/module_coercion.ml text eol=lf
 
 # This is forced to \n to allow the Cygwin testsuite to pass on a

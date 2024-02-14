@@ -321,7 +321,7 @@ standard library (module \stdmoduleref{Lazy}).
 \index{force\@\verb`force`}%
 
 \subsubsection*{sss:exception-match}{Exception patterns}
-(Introduced in OCaml 4.02)
+(Introduced in travlang 4.02)
 
 A new form of exception pattern, @ 'exception' pattern @, is allowed
 only as a toplevel pattern or inside a toplevel or-pattern under
@@ -353,7 +353,7 @@ let find_opt p l =
 
 \subsubsection*{sss:pat-open}{Local opens for patterns}
 \ikwd{open\@\texttt{open}}
-(Introduced in OCaml 4.04)
+(Introduced in travlang 4.04)
 
 For patterns, local opens are limited to the
 @module-path'.('pattern')'@ construction. This

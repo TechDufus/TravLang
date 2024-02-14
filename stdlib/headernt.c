@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           */
 /*                                                                        */
@@ -126,7 +126,7 @@ static __inline void __declspec(noreturn) run_runtime(wchar_t * runtime,
 #endif
   }
   /* Need to ignore ctrl-C and ctrl-break, otherwise we'll die and take
-     the underlying OCaml program with us! */
+     the underlying travlang program with us! */
   SetConsoleCtrlHandler(ctrl_handler, TRUE);
 
   stinfo.cb = sizeof(stinfo);

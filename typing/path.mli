@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -24,7 +24,7 @@ type t =
   (** Examples: Set.Make(Int), Map.Make(Set.Make(Int)) *)
   | Pextra_ty of t * extra_ty
   (** [Pextra_ty (p, extra)] are additional paths of types
-      introduced by specific OCaml constructs. See below.
+      introduced by specific travlang constructs. See below.
   *)
 and extra_ty =
   | Pcstr_ty of string

@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*          Xavier Leroy and Damien Doligez, INRIA Rocquencourt           */
 /*                                                                        */
@@ -249,15 +249,15 @@ static char_os * read_section_to_os(int fd, struct exec_trailer *trail,
 
 #endif
 
-/* Invocation of ocamlrun: 4 cases.
+/* Invocation of travlangrun: 4 cases.
 
    1.  runtime + bytecode
-       user types:  ocamlrun [options] bytecode args...
-       arguments:  ocamlrun [options] bytecode args...
+       user types:  travlangrun [options] bytecode args...
+       arguments:  travlangrun [options] bytecode args...
 
    2.  bytecode script
        user types:  bytecode args...
-   2a  (kernel 1) arguments:  ocamlrun ./bytecode args...
+   2a  (kernel 1) arguments:  travlangrun ./bytecode args...
    2b  (kernel 2) arguments:  bytecode bytecode args...
 
    3.  concatenated runtime and bytecode
@@ -267,7 +267,7 @@ static char_os * read_section_to_os(int fd, struct exec_trailer *trail,
 Algorithm:
   1-  If argument 0 is a valid byte-code file that does not start with #!,
       then we are in case 3 and we pass the same command line to the
-      OCaml program.
+      travlang program.
   2-  In all other cases, we parse the command line as:
         (whatever) [options] bytecode args...
       and we strip "(whatever) [options]" from the command line.
@@ -277,12 +277,12 @@ Algorithm:
 static void do_print_help(void)
 {
   printf("%s\n",
-    "Usage: ocamlrun [<options>] [--] <executable> [<command-line>]\n"
+    "Usage: travlangrun [<options>] [--] <executable> [<command-line>]\n"
     "Options are:\n"
     "  -b  Set runtime parameter b (detailed exception backtraces)\n"
     "  -config  Print configuration values and exit\n"
     "  -events  Trace debug events in bytecode interpreter (ignored \n"
-    "      if not ocamlrund)\n"
+    "      if not travlangrund)\n"
     "  -I <dir>  Add <dir> to the list of DLL search directories\n"
     "  -m  Print the magic number of <executable> and exit\n"
     "  -M  Print the magic number expected by this runtime and exit\n"
@@ -349,10 +349,10 @@ static int parse_command_line(char_os **argv)
     } else {
       /* Named options, e.g. -version */
       if (!strcmp_os(argv[i], T("-version"))) {
-        printf("%s\n", "The OCaml runtime, version " OCAML_VERSION_STRING);
+        printf("%s\n", "The travlang runtime, version " travlang_VERSION_STRING);
         exit(0);
       } else if (!strcmp_os(argv[i], T("-vnum"))) {
-        printf("%s\n", OCAML_VERSION_STRING);
+        printf("%s\n", travlang_VERSION_STRING);
         exit(0);
       } else if (!strcmp_os(argv[i], T("-events"))) {
         params->event_trace = 1; /* Ignored unless DEBUG mode */
@@ -382,14 +382,14 @@ static void do_print_config(void)
   char_os * dir;
 
   /* Print the runtime configuration */
-  printf("version: %s\n", OCAML_VERSION_STRING);
+  printf("version: %s\n", travlang_VERSION_STRING);
   printf("standard_library_default: %s\n",
-         caml_stat_strdup_of_os(OCAML_STDLIB_DIR));
+         caml_stat_strdup_of_os(travlang_STDLIB_DIR));
   printf("standard_library: %s\n",
          caml_stat_strdup_of_os(caml_get_stdlib_location()));
   printf("int_size: %d\n", 8 * (int)sizeof(value));
   printf("word_size: %d\n", 8 * (int)sizeof(value) - 1);
-  printf("os_type: %s\n", OCAML_OS_TYPE);
+  printf("os_type: %s\n", travlang_OS_TYPE);
   printf("host: %s\n", HOST);
   printf("flat_float_array: %s\n",
 #ifdef FLAT_FLOAT_ARRAY
@@ -459,7 +459,7 @@ CAMLexport void caml_main(char_os **argv)
   char_os * exe_name, * proc_self_exe;
 
   /* Determine options */
-  caml_parse_ocamlrunparam();
+  caml_parse_travlangrunparam();
 
   if (!caml_startup_aux(/* pooling */ caml_params->cleanup_on_exit))
     return;
@@ -477,14 +477,14 @@ CAMLexport void caml_main(char_os **argv)
   /* Determine position of bytecode file */
   pos = 0;
 
-  /* First, try argv[0] (when ocamlrun is called by a bytecode program) */
+  /* First, try argv[0] (when travlangrun is called by a bytecode program) */
   exe_name = argv[0];
   fd = caml_attempt_open(&exe_name, &trail, 0);
 
   /* Little grasshopper wonders why we do that at all, since
-     "The current executable is ocamlrun itself, it's never a bytecode
-     program".  Little grasshopper "ocamlc -custom" in mind should keep.
-     With -custom, we have an executable that is ocamlrun itself
+     "The current executable is travlangrun itself, it's never a bytecode
+     program".  Little grasshopper "travlangc -custom" in mind should keep.
+     With -custom, we have an executable that is travlangrun itself
      concatenated with the bytecode.  So, if the attempt with argv[0]
      failed, it is worth trying again with executable_name. */
   if (fd < 0 && (proc_self_exe = caml_executable_name()) != NULL) {
@@ -597,7 +597,7 @@ CAMLexport value caml_startup_code_exn(
   value res;
 
   /* Determine options */
-  caml_parse_ocamlrunparam();
+  caml_parse_travlangrunparam();
 
   if (caml_params->cleanup_on_exit)
     pooling = 1;

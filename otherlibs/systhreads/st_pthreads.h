@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*          Xavier Leroy and Damien Doligez, INRIA Rocquencourt           */
 /*                                                                        */
@@ -134,7 +134,7 @@ static void st_bt_lock_acquire(st_masterlock *m) {
      as it may very well not be, because we could have just resumed
      execution from another thread right away. */
   if (caml_bt_is_in_blocking_section()) {
-    caml_bt_enter_ocaml();
+    caml_bt_enter_travlang();
   }
 
   caml_acquire_domain_lock();
@@ -149,7 +149,7 @@ static void st_bt_lock_release(st_masterlock *m) {
      idle. */
   if (st_masterlock_waiters(m) == 0 &&
       caml_bt_is_in_blocking_section() == 0) {
-    caml_bt_exit_ocaml();
+    caml_bt_exit_travlang();
   }
 
   caml_release_domain_lock();

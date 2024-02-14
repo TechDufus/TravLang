@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Sebastien Hinderer, projet Gallium, INRIA Paris            *)
 (*                                                                        *)
@@ -33,9 +33,9 @@ val readonly_files : Variables.t
 
 val make : Variables.t
 
-val ocamltest_response : Variables.t
+val travlangtest_response : Variables.t
 
-val ocamltest_log : Variables.t
+val travlangtest_log : Variables.t
 
 val output : Variables.t
 

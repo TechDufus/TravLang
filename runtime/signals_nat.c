@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*             Xavier Leroy, projet Gallium, INRIA Rocquencourt           */
 /*                                                                        */
@@ -31,7 +31,7 @@
 #include "caml/stack.h"
 
 /* This routine is the common entry point for garbage collection
-   and signal handling.  It can trigger a callback to OCaml code.
+   and signal handling.  It can trigger a callback to travlang code.
    With system threads, this callback can cause a context switch.
    Hence [caml_garbage_collection] must not be called from regular C code
    (e.g. the [caml_alloc] function) because the context of the call

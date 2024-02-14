@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*               Damien Doligez, projet Cambium, INRIA Paris              *)
 (*                                                                        *)
@@ -83,7 +83,7 @@ type style =
 (* What kind of comments are used in the test file *)
 type kind = { opening : string; closing : string }
 let c_kind = { opening = "/*"; closing = "*/" }
-let ocaml_kind = { opening = "(*"; closing = "*)" }
+let travlang_kind = { opening = "(*"; closing = "*)" }
 
 let file ~style ~compact f =
   let tsl_block = tsl_block_of_file f in
@@ -100,13 +100,13 @@ let file ~style ~compact f =
   let rec seek_to_begin () =
     match Tsl_lexer.token lexbuf with
     | Tsl_parser.TSL_BEGIN_C_STYLE position -> (c_kind, position)
-    | Tsl_parser.TSL_BEGIN_OCAML_STYLE position -> (ocaml_kind, position)
+    | Tsl_parser.TSL_BEGIN_travlang_STYLE position -> (travlang_kind, position)
     | _ -> seek_to_begin ()
   in
   let rec seek_to_end () =
     match Tsl_lexer.token lexbuf with
     | Tsl_parser.TSL_END_C_STYLE -> ()
-    | Tsl_parser.TSL_END_OCAML_STYLE -> ()
+    | Tsl_parser.TSL_END_travlang_STYLE -> ()
     | _ -> seek_to_end ()
   in
   let (kind, position) = seek_to_begin () in

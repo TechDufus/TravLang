@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -15,7 +15,7 @@
 
 (* From lambda to assembly code *)
 
-[@@@ocaml.warning "+a-4-9-40-41-42"]
+[@@@travlang.warning "+a-4-9-40-41-42"]
 
 open Format
 open Config

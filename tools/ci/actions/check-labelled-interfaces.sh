@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 #**************************************************************************
 #*                                                                        *
-#*                                 OCaml                                  *
+#*                                 travlang                                  *
 #*                                                                        *
-#*                 David Allsopp, OCaml Labs, Cambridge.                  *
+#*                 David Allsopp, travlang Labs, Cambridge.                  *
 #*                                                                        *
 #*   Copyright 2021 David Allsopp Ltd.                                    *
 #*                                                                        *

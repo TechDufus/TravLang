@@ -1,7 +1,7 @@
 # 2 "asmcomp/amd64/CSE.ml"
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Gallium, INRIA Rocquencourt           *)
 (*                                                                        *)

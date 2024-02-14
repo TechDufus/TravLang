@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*            Damien Doligez, projet Para, INRIA Rocquencourt             *)
 (*            Jacques-Henri Jourdan, projet Gallium, INRIA Paris          *)
@@ -42,7 +42,7 @@ type stat =
 
     heap_chunks : int;
     (** Number of contiguous pieces of memory that make up the major heap.
-        This metrics is currently not available in OCaml 5: the field value is
+        This metrics is currently not available in travlang 5: the field value is
         always [0]. *)
 
     live_words : int;
@@ -71,12 +71,12 @@ type stat =
 
     free_blocks : int;
     (** Number of blocks in the free list.
-        This metrics is currently not available in OCaml 5: the field value is
+        This metrics is currently not available in travlang 5: the field value is
         always [0]. *)
 
     largest_free : int;
     (** Size (in words) of the largest block in the free list.
-        This metrics is currently not available in OCaml 5: the field value
+        This metrics is currently not available in travlang 5: the field value
         is always [0]. *)
 
     fragments : int;
@@ -92,7 +92,7 @@ type stat =
 
     stack_size: int;
     (** Current size of the stack, in words.
-        This metrics is currently not available in OCaml 5: the field value is
+        This metrics is currently not available in travlang 5: the field value is
         always [0].
         @since 3.12 *)
 
@@ -166,15 +166,15 @@ type control =
     allocation_policy : int;
     (** The policy used for allocating in the major heap.
 
-        This option is ignored in OCaml 5.x.
+        This option is ignored in travlang 5.x.
 
-        Prior to OCaml 5.0, possible values were 0, 1 and 2.
+        Prior to travlang 5.0, possible values were 0, 1 and 2.
 
         - 0 was the next-fit policy
 
-        - 1 was the first-fit policy (since OCaml 3.11)
+        - 1 was the first-fit policy (since travlang 3.11)
 
-        - 2 was the best-fit policy (since OCaml 4.10)
+        - 2 was the best-fit policy (since travlang 4.10)
 
         @since 3.11 *)
 
@@ -219,8 +219,8 @@ type control =
   }
 (** The GC parameters are given as a [control] record.  Note that
     these parameters can also be initialised by setting the
-    OCAMLRUNPARAM environment variable.  See the documentation of
-    [ocamlrun]. *)
+    travlangRUNPARAM environment variable.  See the documentation of
+    [travlangrun]. *)
 
 external stat : unit -> stat = "caml_gc_stat"
 (** Return the current values of the memory management counters in a
@@ -320,7 +320,7 @@ val finalise : ('a -> unit) -> 'a -> unit
    before the values it depends upon.  Of course, this becomes
    false if additional dependencies are introduced by assignments.
 
-   In the presence of multiple OCaml threads it should be assumed that
+   In the presence of multiple travlang threads it should be assumed that
    any particular finaliser may be executed in any of the threads.
 
    Anything reachable from the closure of finalisation functions
@@ -333,7 +333,7 @@ val finalise : ('a -> unit) -> 'a -> unit
    - [ let f = fun x -> ...  let v = ... in Gc.finalise f v ]
 
 
-   The [f] function can use all features of OCaml, including
+   The [f] function can use all features of travlang, including
    assignments that make the value reachable again.  It can also
    loop forever (in this case, the other
    finalisation functions will not be called during the execution of f,
@@ -425,10 +425,10 @@ val delete_alarm : alarm -> unit
    to [a]. Calling [delete_alarm a] again has no effect. *)
 
 val eventlog_pause : unit -> unit
-[@@ocaml.deprecated "Use Runtime_events.pause instead."]
+[@@travlang.deprecated "Use Runtime_events.pause instead."]
 
 val eventlog_resume : unit -> unit
-[@@ocaml.deprecated "Use Runtime_events.resume instead."]
+[@@travlang.deprecated "Use Runtime_events.resume instead."]
 
 (** [Memprof] is a profiling engine which randomly samples allocated
    memory words. Every allocated word has a probability of being
@@ -444,7 +444,7 @@ val eventlog_resume : unit -> unit
    [allocation] structure.
 
    This engine makes it possible to implement a low-overhead memory
-   profiler as an OCaml library.
+   profiler as an travlang library.
 
    Note: this API is EXPERIMENTAL. It may change without prior
    notice. *)
@@ -463,7 +463,7 @@ module Memprof :
 
         source : allocation_source;
         (** The cause of the allocation; [Marshal] cannot be produced
-          since OCaml 5. *)
+          since travlang 5. *)
 
         callstack : Printexc.raw_backtrace
         (** The callstack for the allocation. *)

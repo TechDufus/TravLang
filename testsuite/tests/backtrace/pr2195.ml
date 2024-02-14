@@ -33,15 +33,15 @@ let () =
  exit_status = "2";
  no-tsan; (* Exhausting file descriptors kills TSan support (libunwind fails) *)
  {
-   ocamlrunparam += ",b=0";
+   travlangrunparam += ",b=0";
    reference = "${test_source_directory}/pr2195-nolocs.byte.reference";
    bytecode;
  }{
-   ocamlrunparam += ",b=1";
+   travlangrunparam += ",b=1";
    reference = "${test_source_directory}/pr2195-nolocs.byte.reference";
    bytecode;
  }{
-   ocamlrunparam += ",b=2";
+   travlangrunparam += ",b=2";
    reference = "${test_source_directory}/pr2195-locs.byte.reference";
    bytecode;
  }{

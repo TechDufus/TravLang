@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Luc Maranget, Jerome Vouillon projet Cristal,              *)
 (*                          INRIA Rocquencourt                            *)

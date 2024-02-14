@@ -1,8 +1,8 @@
 (* TEST
  include config;
  flags = "-w -55";
- ocamlc_flags = "config.cmo";
- ocamlopt_flags = "-inline 20 config.cmx";
+ travlangc_flags = "config.cmo";
+ travlangopt_flags = "-inline 20 config.cmx";
  native;
 *)
 

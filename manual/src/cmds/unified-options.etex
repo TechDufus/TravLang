@@ -33,13 +33,13 @@
 % }
 % These macros can be also used to add information that are only relevant to
 % some tools or differ slightly from one tool to another. For instance, we
-% define the following macro for the pairs cma/cmxa cmo/cmxo and ocamlc/ocamlopt
+% define the following macro for the pairs cma/cmxa cmo/cmxo and travlangc/travlangopt
 %
 \def\cma{\comp{.cma}\nat{.cmxa}}
 \def\cmo{\comp{.cmo}\nat{.cmx}}
 \def\qcmo{{\machine\cmo}}
 \def\qcma{{\machine\cma}}
-\def\ocamlx{\comp{ocamlc}\nat{ocamlopt}}
+\def\travlangx{\comp{travlangc}\nat{travlangopt}}
 %
 %
 \begin{options}
@@ -64,7 +64,7 @@ Force error messages to show absolute paths for file names.
 Do not try to show absolute filenames in error messages.
 
 \notop{\item["-annot"]
-Deprecated since OCaml 4.11. Please use "-bin-annot" instead.
+Deprecated since travlang 4.11. Please use "-bin-annot" instead.
 }%notop
 
 \item["-args" \var{filename}]
@@ -142,10 +142,10 @@ The following modes are supported:
   \item["never"] disable color output.
 \end{description}
 
-The environment variable "OCAML_COLOR" is considered if "-color" is not
+The environment variable "travlang_COLOR" is considered if "-color" is not
 provided. Its values are auto/always/never as above.
 
-If "-color" is not provided, "OCAML_COLOR" is not set and the environment
+If "-color" is not provided, "travlang_COLOR" is not set and the environment
 variable "NO_COLOR" is set, then color output is disabled. Otherwise,
 the default setting is 'auto', and the current heuristic
 checks that the "TERM" environment variable exists and is
@@ -163,7 +163,7 @@ The following modes are supported:
   \end{description}
 The default setting is "contextual".
 
-The environment variable "OCAML_ERROR_STYLE" is considered if "-error-style" is
+The environment variable "travlang_ERROR_STYLE" is considered if "-error-style" is
 not provided. Its values are short/contextual as above.
 }%notop
 
@@ -183,7 +183,7 @@ optimize for speed.
 
 \notop{%
 \item["-config"]
-Print the version number of {\machine\ocamlx} and a detailed
+Print the version number of {\machine\travlangx} and a detailed
 summary of its configuration, then exit.
 }%notop
 
@@ -191,7 +191,7 @@ summary of its configuration, then exit.
 \item["-config-var" \var{var}]
 Print the value of a specific configuration variable from the
 "-config" output, then exit. If the variable does not exist, the exit
-code is non-zero. This option is only available since OCaml 4.08,
+code is non-zero. This option is only available since travlang 4.08,
 so script authors should have a fallback for older versions.
 }%notop
 
@@ -199,34 +199,34 @@ so script authors should have a fallback for older versions.
 \item["-custom"]
 Link in ``custom runtime'' mode. In the default linking mode, the
 linker produces bytecode that is intended to be executed with the
-shared runtime system, "ocamlrun". In the custom runtime mode, the
+shared runtime system, "travlangrun". In the custom runtime mode, the
 linker produces an output file that contains both the runtime system
 and the bytecode for the program. The resulting file is larger, but it
-can be executed directly, even if the "ocamlrun" command is not
+can be executed directly, even if the "travlangrun" command is not
 installed. Moreover, the ``custom runtime'' mode enables static
-linking of OCaml code with user-defined C functions, as described in
+linking of travlang code with user-defined C functions, as described in
 chapter~\ref{c:intf-c}.
 \begin{unix}
-Never use the "strip" command on executables produced by "ocamlc -custom",
+Never use the "strip" command on executables produced by "travlangc -custom",
 this would remove the bytecode part of the executable.
 \end{unix}
 \begin{unix}
 Security warning: never set the ``setuid'' or ``setgid'' bits on executables
-produced by "ocamlc -custom", this would make them vulnerable to attacks.
+produced by "travlangc -custom", this would make them vulnerable to attacks.
 \end{unix}
 }%comp
 
 \notop{%
-\item["-depend" \var{ocamldep-args}]
-Compute dependencies, as the "ocamldep" command would do. The remaining
-arguments are interpreted as if they were given to the "ocamldep" command.
+\item["-depend" \var{travlangdep-args}]
+Compute dependencies, as the "travlangdep" command would do. The remaining
+arguments are interpreted as if they were given to the "travlangdep" command.
 }%notop
 
 \comp{
 \item["-dllib" "-l"\var{libname}]
 Arrange for the C shared library "dll"\var{libname}".so"
 ("dll"\var{libname}".dll" under Windows) to be loaded dynamically
-by the run-time system "ocamlrun" at program start-up time.
+by the run-time system "travlangrun" at program start-up time.
 }%comp
 
 \comp{\item["-dllpath" \var{dir}]
@@ -234,8 +234,8 @@ Adds the directory \var{dir} to the run-time search path for shared
 C libraries.  At link-time, shared libraries are searched in the
 standard search path (the one corresponding to the "-I" option).
 The "-dllpath" option simply stores \var{dir} in the produced
-executable file, where "ocamlrun" can find it and use it as
-described in section~\ref{s:ocamlrun-dllpath}.
+executable file, where "travlangrun" can find it and use it as
+described in section~\ref{s:travlangrun-dllpath}.
 }%comp
 
 \notop{%
@@ -244,9 +244,9 @@ Generate an object file (\qcmo\nat{ and ".o"/".obj" files})
 that can later be included
 as a sub-module (with the given access path) of a compilation unit
 constructed with "-pack".  For instance,
-{\machine\ocamlx\ -for-pack\ P\ -c\ A.ml}
+{\machine\travlangx\ -for-pack\ P\ -c\ A.ml}
 will generate {\machine a.\cmo}\nat{ and "a.o" files} that can
-later be used with {\machine \ocamlx\ -pack\ -o\ P\cmo\ a\cmo}.
+later be used with {\machine \travlangx\ -pack\ -o\ P\cmo\ a\cmo}.
 Note: you can still pack a module that was compiled without
 "-for-pack" but in this case exceptions will be printed with the wrong
 names.
@@ -255,10 +255,10 @@ names.
 \notop{%
 \item["-g"]
 Add debugging information while compiling and linking. This option is
-required in order to \comp{be able to debug the program with "ocamldebug"
+required in order to \comp{be able to debug the program with "travlangdebug"
 (see chapter~\ref{c:debugger}), and to} produce stack backtraces when
 the program terminates on an uncaught exception (see
-section~\ref{s:ocamlrun-options}).
+section~\ref{s:travlangrun-options}).
 }%notop
 
 \notop{%
@@ -315,21 +315,21 @@ them to silently become direct dependencies.
 Load the given file instead of the default initialization file.
 The default initialization file is the first found of:
 \begin{enumerate}
-  \item ".ocamlinit" in the current directory;
-  \item "XDG_CONFIG_HOME/ocaml/init.ml", if "XDG_CONFIG_HOME" is an absolute
+  \item ".travlanginit" in the current directory;
+  \item "XDG_CONFIG_HOME/travlang/init.ml", if "XDG_CONFIG_HOME" is an absolute
     path;
-  \item otherwise, on Unix, "HOME/ocaml/init.ml" or, on Windows,
-    "ocaml\\init.ml" under "LocalAppData"
-    (e.g. "C:\\Users\\Bactrian\\AppData\\Local\\ocaml\\init.ml");
-  \item "ocaml/init.ml" under any of the absolute paths in "XDG_CONFIG_DIRS".
+  \item otherwise, on Unix, "HOME/travlang/init.ml" or, on Windows,
+    "travlang\\init.ml" under "LocalAppData"
+    (e.g. "C:\\Users\\Bactrian\\AppData\\Local\\travlang\\init.ml");
+  \item "travlang/init.ml" under any of the absolute paths in "XDG_CONFIG_DIRS".
     Paths in "XDG_CONFIG_DIRS" are colon-delimited on Unix, and
     semicolon-delimited on Windows;
   \item if "XDG_CONFIG_DIRS" contained no absolute paths,
-    "/usr/xdg/ocaml/init.ml" on Unix or, "ocaml\\init.ml" under any of
+    "/usr/xdg/travlang/init.ml" on Unix or, "travlang\\init.ml" under any of
     "LocalAppData" (e.g. "C:\\Users\\Bactrian\\AppData\\Local"),
     "RoamingAppData" (e.g. "C:\\Users\\Bactrian\\AppData\\Roaming"), or
     "ProgramData" (e.g. "C:\\ProgramData") on Windows;
-  \item "HOME/.ocamlinit", if "HOME" is non-empty;
+  \item "HOME/.travlanginit", if "HOME" is non-empty;
 \end{enumerate}
 }%top
 
@@ -392,7 +392,7 @@ Build a custom runtime system (in the file specified by option "-o")
 incorporating the C object files and libraries given on the command
 line.  This custom runtime system can be used later to execute
 bytecode executables produced with the
-"ocamlc -use-runtime" \var{runtime-name} option.
+"travlangc -use-runtime" \var{runtime-name} option.
 See section~\ref{ss:custom-runtime} for more information.
 }%comp
 
@@ -463,7 +463,7 @@ Do not display any prompt when waiting for input.
 \item["-nopromptcont"]
 Do not display the secondary prompt when waiting for continuation
 lines in multi-line inputs.  This should be used e.g. when running
-"ocaml" in an "emacs" window.
+"travlang" in an "emacs" window.
 }%top
 
 \item["-nostdlib"]
@@ -506,7 +506,7 @@ When the native compiler compiles an implementation, by default it
 produces a ".cmx" file containing information for cross-module
 optimization. It also expects ".cmx" files to be present for the
 dependencies of the currently compiled source, and uses them for
-optimization. Since OCaml 4.03, the compiler will emit a warning if it
+optimization. Since travlang 4.03, the compiler will emit a warning if it
 is unable to locate the ".cmx" file of one of those dependencies.
 
 The "-opaque" option, available since 4.04, disables cross-module
@@ -542,7 +542,7 @@ were added at the top of each file.
 \item["-output-obj"]
 Cause the linker to produce a C object file instead of
 \comp{a bytecode executable file}\nat{an executable file}.
-This is useful to wrap OCaml code as a C library,
+This is useful to wrap travlang code as a C library,
 callable from any C program. See chapter~\ref{c:intf-c},
 section~\ref{ss:c-embedded-code}. The name of the output object file
 must be set with the "-o" option.
@@ -553,10 +553,10 @@ or a} compiled shared/dynamic library (".so" extension, ".dll" under Windows).
 \comp{%
 \item["-output-complete-exe"]
 Build a self-contained executable by linking a C object file containing the
-bytecode program, the OCaml runtime system and any other static C code given to
-"ocamlc". The resulting effect is similar to "-custom", except that the bytecode
+bytecode program, the travlang runtime system and any other static C code given to
+"travlangc". The resulting effect is similar to "-custom", except that the bytecode
 is embedded in the C code so it is no longer accessible to tools such as
-"ocamldebug". On the other hand, the resulting binary is resistant to "strip".
+"travlangdebug". On the other hand, the resulting binary is resistant to "strip".
 }%comp
 
 \notop{%
@@ -573,7 +573,7 @@ files given on the command line, making them appear as sub-modules of
 the output ".cmx" file.  The name of the output ".cmx" file must be
 given with the "-o" option.  For instance,
 \begin{verbatim}
-        ocamlopt -pack -o P.cmx A.cmx B.cmx C.cmx
+        travlangopt -pack -o P.cmx A.cmx B.cmx C.cmx
 \end{verbatim}
 generates compiled files "P.cmx", "P.o" and "P.cmi" describing a
 compilation unit having three sub-modules "A", "B" and "C",
@@ -584,15 +584,15 @@ in the remainder of the program.
 The ".cmx" object files being combined must have been compiled with
 the appropriate "-for-pack" option.  In the example above,
 "A.cmx", "B.cmx" and "C.cmx" must have been compiled with
-"ocamlopt -for-pack P".
+"travlangopt -for-pack P".
 
 Multiple levels of packing can be achieved by combining "-pack" with
 "-for-pack".  Consider the following example:
 \begin{verbatim}
-        ocamlopt -for-pack P.Q -c A.ml
-        ocamlopt -pack -o Q.cmx -for-pack P A.cmx
-        ocamlopt -for-pack P -c B.ml
-        ocamlopt -pack -o P.cmx Q.cmx B.cmx
+        travlangopt -for-pack P.Q -c A.ml
+        travlangopt -pack -o Q.cmx -for-pack P A.cmx
+        travlangopt -for-pack P -c B.ml
+        travlangopt -pack -o P.cmx Q.cmx B.cmx
 \end{verbatim}
 The resulting "P.cmx" object file has sub-modules "P.Q", "P.Q.A"
 and "P.B".
@@ -606,7 +606,7 @@ files given on the command line, making them appear as sub-modules of
 the output ".cmo" file.  The name of the output ".cmo" file must be
 given with the "-o" option.  For instance,
 \begin{verbatim}
-        ocamlc -pack -o p.cmo a.cmo b.cmo c.cmo
+        travlangc -pack -o p.cmo a.cmo b.cmo c.cmo
 \end{verbatim}
 generates compiled files "p.cmo" and "p.cmi" describing a compilation
 unit having three sub-modules "A", "B" and "C", corresponding to the
@@ -653,7 +653,7 @@ flag, you must use it again for all dependencies.}
 \item["-runtime-variant" \var{suffix}]
 Add the \var{suffix} string to the name of the runtime library used by
 the program.  Currently, only one such suffix is supported: "d", and
-only if the OCaml compiler was configured with option
+only if the travlang compiler was configured with option
 "-with-debug-runtime".  This suffix gives the debug version of the
 runtime, which is useful for debugging pointer problems in low-level
 code such as C stubs.
@@ -668,7 +668,7 @@ code for the source file \var{x}".ml" is saved in the file \var{x}".s".
 \item["-safe-string"]
 Enforce the separation between types "string" and "bytes",
 thereby making strings read-only. This is the default, and enforced
-since OCaml 5.0.
+since travlang 5.0.
 
 \item["-safer-matching"]
 Do not use type information to optimize pattern-matching.
@@ -696,11 +696,11 @@ using "compiler-libs" library (see
 \item["-shared"]
 Build a plugin (usually ".cmxs") that can be dynamically loaded with
 the "Dynlink" module. The name of the plugin must be
-set with the "-o" option. A plugin can include a number of OCaml
+set with the "-o" option. A plugin can include a number of travlang
 modules and libraries, and extra native objects (".o", ".obj", ".a",
 ".lib" files). Building native plugins is only supported for some
 operating system. Under some systems (currently,
-only Linux AMD 64), all the OCaml code linked in a plugin must have
+only Linux AMD 64), all the travlang code linked in a plugin must have
 been compiled without the "-nodynlink" flag. Some constraints might also
 apply to the way the extra native objects have been compiled (under
 Linux AMD 64, they must contain only position-independent code).
@@ -732,19 +732,19 @@ Force the left-hand part of each sequence to have type unit.
 \item["-strict-formats"]
 Reject invalid formats that were accepted in legacy format
 implementations. You should use this flag to detect and fix such
-invalid formats, as they will be rejected by future OCaml versions.
+invalid formats, as they will be rejected by future travlang versions.
 
 \notop{%
 \item["-unboxed-types"]
 When a type is unboxable (i.e. a record with a single argument or a
 concrete datatype with a single constructor of one argument) it will
-be unboxed unless annotated with "[\@\@ocaml.boxed]".
+be unboxed unless annotated with "[\@\@travlang.boxed]".
 }%notop
 
 \notop{%
 \item["-no-unboxed-types"]
 When a type is unboxable  it will be boxed unless annotated with
-"[\@\@ocaml.unboxed]". This is the default.
+"[\@\@travlang.unboxed]". This is the default.
 }%notop
 
 \item["-unsafe"]
@@ -763,13 +763,13 @@ unspecified result instead of raising a "Division_by_zero" exception.
 Identify the types "string" and "bytes", thereby making strings writable.
 This is intended for compatibility with old source code and should not
 be used with new software. This option raises an error unconditionally
-since OCaml 5.0.
+since travlang 5.0.
 
 \comp{%
 \item["-use-runtime" \var{runtime-name}]
 Generate a bytecode executable file that can be executed on the custom
 runtime system \var{runtime-name}, built earlier with
-"ocamlc -make-runtime" \var{runtime-name}.
+"travlangc -make-runtime" \var{runtime-name}.
 See section~\ref{ss:custom-runtime} for more information.
 }%comp
 
@@ -853,7 +853,7 @@ the mnemonic for that warning).
 \end{options}
 
 The default setting is "-w +a-4-6-7-9-27-29-32..42-44-45-48-50-60".
-It is displayed by {\machine\ocamlx\ -help}.
+It is displayed by {\machine\travlangx\ -help}.
 Note that warnings 5 and 10 are not always triggered, depending on
 the internals of the type checker.
 
@@ -871,7 +871,7 @@ warnings.
 Note: it is not recommended to use warning sets (i.e. letters) as
 arguments to "-warn-error"
 in production code, because this can break your build when future versions
-of OCaml add some new warnings.
+of travlang add some new warnings.
 
 The default setting is "-warn-error -a" (no warning is fatal).
 

@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -21,7 +21,7 @@ type machtype_component =
   | Int
   | Float
 
-(* - [Val] denotes a valid OCaml value: either a pointer to the beginning
+(* - [Val] denotes a valid travlang value: either a pointer to the beginning
      of a heap block, an infix pointer if it is preceded by the correct
      infix header, or a 2n+1 encoded integer.
    - [Int] is for integers (not necessarily 2n+1 encoded) and for
@@ -69,7 +69,7 @@ val ge_component
   -> bool
 
 type exttype =
-  | XInt                                (**r OCaml value, word-sized integer *)
+  | XInt                                (**r travlang value, word-sized integer *)
   | XInt32                              (**r 32-bit integer *)
   | XInt64                              (**r 64-bit integer  *)
   | XFloat                              (**r double-precision FP number  *)
@@ -99,8 +99,8 @@ val cur_label: unit -> label
 type rec_flag = Nonrecursive | Recursive
 
 type phantom_defining_expr =
-  (* CR-soon mshinwell: Convert this to [Targetint.OCaml.t] (or whatever the
-     representation of "target-width OCaml integers of type [int]"
+  (* CR-soon mshinwell: Convert this to [Targetint.travlang.t] (or whatever the
+     representation of "target-width travlang integers of type [int]"
      becomes when merged). *)
   | Cphantom_const_int of Targetint.t
   (** The phantom-let-bound variable is a constant integer.

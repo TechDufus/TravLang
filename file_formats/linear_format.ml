@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                    Greta Yorsh, Jane Street Europe                     *)
@@ -85,7 +85,7 @@ let report_error ppf = function
         (Style.as_inline_code Location.print_filename) filename
   | Wrong_version filename ->
       fprintf ppf
-        "%a@ is not compatible with this version of OCaml"
+        "%a@ is not compatible with this version of travlang"
         (Style.as_inline_code Location.print_filename) filename
   | Corrupted filename ->
       fprintf ppf "Corrupted format@ %a"

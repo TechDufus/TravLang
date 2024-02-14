@@ -26,8 +26,8 @@ end
 
 (* TEST
  flags = "-nostdlib -nopervasives";
- setup-ocamlc.byte-build-env;
- ocamlc_byte_exit_status = "2";
- ocamlc.byte;
- check-ocamlc.byte-output;
+ setup-travlangc.byte-build-env;
+ travlangc_byte_exit_status = "2";
+ travlangc.byte;
+ check-travlangc.byte-output;
 *)

@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           */
 /*                                                                        */
@@ -268,7 +268,7 @@ static void process_apostrophe_body(FILE *f)
     }
 }
 
-static bool is_ocaml_ident_start_char(char p) {
+static bool is_travlang_ident_start_char(char p) {
     return p == '_' || (p >= 'a' && p <= 'z');
 }
 
@@ -294,12 +294,12 @@ static void process_open_curly_bracket(FILE *f) {
         }
     }
 
-    if (is_ocaml_ident_start_char(*idcptr) || *idcptr == '|')
+    if (is_travlang_ident_start_char(*idcptr) || *idcptr == '|')
     {
         char *newcptr = idcptr;
         size_t size = 0;
         char *buf;
-        while (is_ocaml_ident_start_char(*newcptr)) { newcptr++; }
+        while (is_travlang_ident_start_char(*newcptr)) { newcptr++; }
         if (*newcptr == '|')
         { /* Raw string */
             int s_lineno;

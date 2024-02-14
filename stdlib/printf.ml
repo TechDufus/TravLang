@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*   Xavier Leroy and Pierre Weis, projet Cristal, INRIA Rocquencourt     *)
 (*                                                                        *)

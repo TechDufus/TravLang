@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -691,14 +691,14 @@ let emit_instr env i =
           record_frame env i.live (Dbg_other i.dbg);
           `	nop\n`
         end else begin
-          (* Save OCaml stack pointer in a callee-save register *)
+          (* Save travlang stack pointer in a callee-save register *)
           `	mr	28, 1\n`;
           (* Switch to C stack *)
           let offset = Domainstate.(idx_of_field Domain_c_stack) * 8 in
           `	ld	1, {emit_int offset}(30)\n`;
           emit_call func;
           emit_call_nop();
-          (* Switch back to OCaml stack *)
+          (* Switch back to travlang stack *)
           `	mr	1, 28\n`
         end
     | Lop(Istackoffset n) ->
@@ -740,7 +740,7 @@ let emit_instr env i =
           | Single -> assert false
           | Double -> "stfd" in
         (* Non-initializing stores need a memory barrier to follow the
-           Multicore OCaml memory model.  Stores of size other than
+           Multicore travlang memory model.  Stores of size other than
            Word_int and Word_val do not follow the memory model and therefore
            do not need a barrier *)
         if assignment && (chunk = Word_int || chunk = Word_val) then

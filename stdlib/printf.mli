@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*   Xavier Leroy and Pierre Weis, projet Cristal, INRIA Rocquencourt     *)
 (*                                                                        *)
@@ -50,13 +50,13 @@ val fprintf : out_channel -> ('a, out_channel, unit) format -> 'a
    - [o]: convert an integer argument to unsigned octal.
      The flag [#] adds a [0] prefix to non zero values.
    - [s]: insert a string argument.
-   - [S]: convert a string argument to OCaml syntax (double quotes, escapes).
+   - [S]: convert a string argument to travlang syntax (double quotes, escapes).
    - [c]: insert a character argument.
-   - [C]: convert a character argument to OCaml syntax
+   - [C]: convert a character argument to travlang syntax
      (single quotes, escapes).
    - [f]: convert a floating-point argument to decimal notation,
      in the style [dddd.ddd].
-   - [F]: convert a floating-point argument to OCaml syntax ([dddd.]
+   - [F]: convert a floating-point argument to travlang syntax ([dddd.]
      or [dddd.ddd] or [d.ddd e+-dd]).
      Converts to hexadecimal with the [#] flag (see [h]).
    - [e] or [E]: convert a floating-point argument to decimal notation,
@@ -191,5 +191,5 @@ val ikbprintf : (Buffer.t -> 'd) -> Buffer.t ->
 (** Deprecated *)
 
 val kprintf : (string -> 'b) -> ('a, unit, string, 'b) format4 -> 'a
-[@@ocaml.deprecated "Use Printf.ksprintf instead."]
+[@@travlang.deprecated "Use Printf.ksprintf instead."]
 (** A deprecated synonym for [ksprintf]. *)

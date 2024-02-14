@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*         Gabriel Scherer, projet Parsifal, INRIA Saclay                 *)
 (*                                                                        *)
@@ -38,7 +38,7 @@
 (* Unlike [result], no [either] type is made available in Stdlib,
    one needs to access [Either.t] explicitly:
 
-   - This type is less common in typical OCaml codebases,
+   - This type is less common in typical travlang codebases,
      which prefer domain-specific variant types whose constructors
      carry more meaning.
    - Adding this to Stdlib would raise warnings in existing codebases

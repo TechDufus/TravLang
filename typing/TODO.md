@@ -1,7 +1,7 @@
-TODO for the OCaml typechecker implementation
+TODO for the travlang typechecker implementation
 =============================================
 
-There is a consensus that the current implementation of the OCaml
+There is a consensus that the current implementation of the travlang
 typechecker is overly complex and fragile.  A big rewriting "from
 scratch" might be possible or desirable at some point, or not, but
 incremental cleanup steps are certainly accessible and could bring the

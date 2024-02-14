@@ -27,13 +27,13 @@ let () =
 
 (* TEST
  flags = "-g";
- ocamlrunparam += ",b=1";
+ travlangrunparam += ",b=1";
  {
    bytecode;
  }{
    native;
  }{
-   ocamlopt_flags = "-O3";
+   travlangopt_flags = "-O3";
    compiler_directory_suffix = ".O3";
    native;
  }

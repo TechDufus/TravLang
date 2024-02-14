@@ -195,7 +195,7 @@ AC_LANG_POP
 
 ]) dnl end AC_DEFUN
 
-# Added for OCaml, should be submitted to the autoconf archive
+# Added for travlang, should be submitted to the autoconf archive
 
 AC_DEFUN([AX_FUNC_WHICH_GETHOSTBYADDR_R], [
 

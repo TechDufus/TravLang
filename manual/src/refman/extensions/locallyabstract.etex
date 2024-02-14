@@ -1,4 +1,4 @@
-(Introduced in OCaml 3.12, short syntax added in 4.03)
+(Introduced in travlang 3.12, short syntax added in 4.03)
 
 \begin{syntax}
 parameter:
@@ -54,7 +54,7 @@ It is also extremely useful for first-class modules (see
 section~\ref{s:first-class-modules}) and generalized algebraic datatypes
 (GADTs: see section~\ref{s:gadts}).
 
-\lparagraph{p:polymorpic-locally-abstract}{Polymorphic syntax} (Introduced in OCaml 4.00)
+\lparagraph{p:polymorpic-locally-abstract}{Polymorphic syntax} (Introduced in travlang 4.00)
 
 \begin{syntax}
 let-binding:

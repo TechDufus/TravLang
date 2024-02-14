@@ -1,5 +1,5 @@
 (* TEST
- ocamlopt_flags += " -O3 ";
+ travlangopt_flags += " -O3 ";
 *)
 
 exception E

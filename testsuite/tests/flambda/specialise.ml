@@ -1,6 +1,6 @@
 (* TEST
  flambda;
- ocamlopt_flags = "-O2 -inline-call-cost 1=20 -unbox-closures";
+ travlangopt_flags = "-O2 -inline-call-cost 1=20 -unbox-closures";
  native;
 *)
 

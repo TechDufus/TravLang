@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Sebastien Hinderer, projet Gallium, INRIA Paris            *)
 (*                                                                        *)
@@ -51,13 +51,13 @@ and token = parse
       TSL_BEGIN_C_STYLE `Below
     }
   | "*/" { TSL_END_C_STYLE }
-  | "(*" blank* "TEST" { TSL_BEGIN_OCAML_STYLE `Above }
+  | "(*" blank* "TEST" { TSL_BEGIN_travlang_STYLE `Above }
   | "(*" blank* "TEST_BELOW" _ * "(*" blank* "TEST" {
       let s = Lexing.lexeme lexbuf in
       String.iter (fun c -> if c = '\n' then Lexing.new_line lexbuf) s;
-      TSL_BEGIN_OCAML_STYLE `Below
+      TSL_BEGIN_travlang_STYLE `Below
     }
-  | "*)" { TSL_END_OCAML_STYLE }
+  | "*)" { TSL_END_travlang_STYLE }
   | "," { COMMA }
   | '*'+ { TEST_DEPTH (String.length (Lexing.lexeme lexbuf)) }
   | "*" (num+ as n) { TEST_DEPTH (int_of_string n)}
@@ -103,7 +103,7 @@ and token = parse
    In particular, this means that the following:
 script = "some-directory\\
          \ foo"
-   is interpreted as the OCaml string "some-directory\\ foo".
+   is interpreted as the travlang string "some-directory\\ foo".
    *)
 and string acc = parse
   | [^ '\\' '"' ]+

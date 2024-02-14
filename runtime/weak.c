@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*              Damien Doligez, projet Para, INRIA Rocquencourt           */
 /*                                                                        */
@@ -80,7 +80,7 @@ CAMLprim value caml_weak_create (value len)
    values. It iterates the function caml_ephe_clean through all the
    ephemerons.
 
-   However the GC is incremental and ocaml code can run on the middle
+   However the GC is incremental and travlang code can run on the middle
    of this cleaning phase. In order to respect the semantic of the
    ephemerons concerning dead values, the getter and setter must work
    as if the cleaning of all the ephemerons have been done at once.

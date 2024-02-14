@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -87,7 +87,7 @@ let add_module_path bv lid = add_path bv lid.txt
 
 let handle_extension ext =
   match (fst ext).txt with
-  | "error" | "ocaml.error" ->
+  | "error" | "travlang.error" ->
     raise (Location.Error
              (Builtin_attributes.error_of_extension ext))
   | _ ->
@@ -262,7 +262,7 @@ let rec add_expr bv exp =
       let bv' = add_binding_op bv bv let_ in
       let bv' = List.fold_left (add_binding_op bv) bv' ands in
       add_expr bv' body
-  | Pexp_extension (({ txt = ("ocaml.extension_constructor"|
+  | Pexp_extension (({ txt = ("travlang.extension_constructor"|
                               "extension_constructor"); _ },
                      PStr [item]) as e) ->
       begin match item.pstr_desc with

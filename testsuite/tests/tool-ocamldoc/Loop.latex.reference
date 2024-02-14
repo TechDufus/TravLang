@@ -4,19 +4,19 @@
 \usepackage{textcomp}
 \usepackage{fullpage} 
 \usepackage{url} 
-\usepackage{ocamldoc}
+\usepackage{travlangdoc}
 \begin{document}
 \tableofcontents
 \section{Module {\tt{Loop}}}
 \label{Loop}\index{Loop@\verb`Loop`}
 
 
-\ocamldocvspace{0.5cm}
+\travlangdocvspace{0.5cm}
 
 
 
-\begin{ocamldoccode}
-{\tt{module }}{\tt{A}}{\tt{ : }}\end{ocamldoccode}
+\begin{travlangdoccode}
+{\tt{module }}{\tt{A}}{\tt{ : }}\end{travlangdoccode}
 \label{Loop.A}\index{A@\verb`A`}
 
 {\tt{B}}
@@ -25,8 +25,8 @@
 
 
 
-\begin{ocamldoccode}
-{\tt{module }}{\tt{B}}{\tt{ : }}\end{ocamldoccode}
+\begin{travlangdoccode}
+{\tt{module }}{\tt{B}}{\tt{ : }}\end{travlangdoccode}
 \label{Loop.B}\index{B@\verb`B`}
 
 {\tt{A}}

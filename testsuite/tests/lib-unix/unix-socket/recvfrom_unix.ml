@@ -12,7 +12,7 @@
 open Recvfrom
 
 let () =
-  let server_path = "ocaml-test-socket-unix" in
+  let server_path = "travlang-test-socket-unix" in
   ensure_no_file server_path;
   at_exit (fun () -> ensure_no_file server_path);
   with_bound_socket server_path (fun server_addr server_socket ->

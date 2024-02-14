@@ -4,7 +4,7 @@ let m = 1000
 let m' = 100
 let k = m*10
 
-(** the printing are not stable between ocamlc and ocamlopt *)
+(** the printing are not stable between travlangc and travlangopt *)
 let debug = false
 
 let gc_print where _ =

@@ -4,7 +4,7 @@
  }{
    native;
  }{
-   ocamlopt_flags = "-compact";
+   travlangopt_flags = "-compact";
    native;
  }
 *)

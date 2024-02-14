@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Maxence Guesdon, projet Cristal, INRIA Rocquencourt        *)
 (*                                                                        *)
@@ -301,9 +301,9 @@ class text =
       p fmt "{\\tt{%s}}" s3
 
     method latex_of_CodePre fmt s =
-      ps fmt "\\begin{ocamldoccode}\n";
+      ps fmt "\\begin{travlangdoccode}\n";
       ps fmt (self#escape_simple s);
-      ps fmt "\n\\end{ocamldoccode}\n"
+      ps fmt "\n\\end{travlangdoccode}\n"
 
     method latex_of_Verbatim fmt s =
       ps fmt "\n\\begin{verbatim}\n";
@@ -365,9 +365,9 @@ class text =
     method latex_of_Newline fmt = ps fmt "\n\n"
 
     method latex_of_Block fmt t =
-      ps fmt "\\begin{ocamldocdescription}\n";
+      ps fmt "\\begin{travlangdocdescription}\n";
       self#latex_of_text fmt t;
-      ps fmt "\n\\end{ocamldocdescription}\n"
+      ps fmt "\n\\end{travlangdocdescription}\n"
 
     method latex_of_Title fmt n label_opt t =
       let (fmt2, flush) = new_fmt () in
@@ -528,9 +528,9 @@ class latex =
       | None -> []
       | Some t ->
           let s =
-            ps fmt "\\begin{ocamldoccomment}\n";
+            ps fmt "\\begin{travlangdoccomment}\n";
             self#latex_of_info fmt (Some t);
-            ps fmt "\n\\end{ocamldoccomment}\n";
+            ps fmt "\n\\end{travlangdoccomment}\n";
             flush ()
           in
           [ Latex s]
@@ -707,9 +707,9 @@ class latex =
                       None -> []
                     | Some t ->
                         let s =
-                          ps fmt2 "\\begin{ocamldoccomment}\n";
+                          ps fmt2 "\\begin{travlangdoccomment}\n";
                           self#latex_of_info fmt2 (Some t);
-                          ps fmt2 "\n\\end{ocamldoccomment}\n";
+                          ps fmt2 "\n\\end{travlangdoccomment}\n";
                           flush2 ()
                         in
                         [ Latex s]
@@ -766,9 +766,9 @@ class latex =
     method latex_of_module_type_kind fmt father kind =
       match kind with
         Module_type_struct eles ->
-          self#latex_of_text fmt [Latex "\\begin{ocamldocsigend}\n"];
+          self#latex_of_text fmt [Latex "\\begin{travlangdocsigend}\n"];
           List.iter (self#latex_of_module_element fmt father) eles;
-          self#latex_of_text fmt [Latex "\\end{ocamldocsigend}\n"]
+          self#latex_of_text fmt [Latex "\\end{travlangdocsigend}\n"]
       | Module_type_functor (p, k) ->
           self#latex_of_module_parameter fmt father p;
           self#latex_of_module_type_kind fmt father k
@@ -790,9 +790,9 @@ class latex =
     method latex_of_module_kind fmt father kind =
       match kind with
         Module_struct eles ->
-          self#latex_of_text fmt [Latex "\\begin{ocamldocsigend}\n"];
+          self#latex_of_text fmt [Latex "\\begin{travlangdocsigend}\n"];
           List.iter (self#latex_of_module_element fmt father) eles;
-          self#latex_of_text fmt [Latex "\\end{ocamldocsigend}\n"]
+          self#latex_of_text fmt [Latex "\\end{travlangdocsigend}\n"]
       | Module_alias a ->
           self#latex_of_text fmt
             [Code (self#relative_module_idents father a.ma_name)]
@@ -833,10 +833,10 @@ class latex =
     method latex_of_class_kind fmt father kind =
       match kind with
         Class_structure (inh, eles) ->
-          self#latex_of_text fmt [Latex "\\begin{ocamldocobjectend}\n"];
+          self#latex_of_text fmt [Latex "\\begin{travlangdocobjectend}\n"];
           self#generate_inheritance_info fmt inh;
           List.iter (self#latex_of_class_element fmt father) eles;
-          self#latex_of_text fmt [Latex "\\end{ocamldocobjectend}\n"]
+          self#latex_of_text fmt [Latex "\\end{travlangdocobjectend}\n"]
 
       | Class_apply _ ->
           (* TODO: print final type from typedtree *)
@@ -881,10 +881,10 @@ class latex =
             [Code (self#relative_idents father cta.cta_name)]
 
       | Class_signature (inh, eles) ->
-          self#latex_of_text fmt [Latex "\\begin{ocamldocobjectend}\n"];
+          self#latex_of_text fmt [Latex "\\begin{travlangdocobjectend}\n"];
           self#generate_inheritance_info fmt inh;
           List.iter (self#latex_of_class_element fmt father) eles;
-          self#latex_of_text fmt [Latex "\\end{ocamldocobjectend}\n"]
+          self#latex_of_text fmt [Latex "\\end{travlangdocobjectend}\n"]
 
     method latex_for_module_index fmt m =
       let s_name = Name.simple m.m_name in
@@ -936,14 +936,14 @@ class latex =
       let father = Name.father m.m_name in
       let t =
         [
-          Latex "\\begin{ocamldoccode}\n" ;
+          Latex "\\begin{travlangdoccode}\n" ;
           Code "module ";
           Code (Name.simple m.m_name);
           Code " : ";
         ]
       in
       self#latex_of_text fmt t;
-      self#latex_of_text fmt [ Latex "\\end{ocamldoccode}\n" ];
+      self#latex_of_text fmt [ Latex "\\end{travlangdoccode}\n" ];
       self#latex_for_module_label fmt m;
       self#latex_for_module_index fmt m;
       p fmt "@[<h 4>";
@@ -984,7 +984,7 @@ class latex =
       let father = Name.father mt.mt_name in
       let t =
         [
-          Latex "\\begin{ocamldoccode}\n" ;
+          Latex "\\begin{travlangdoccode}\n" ;
           Code "module type " ;
           Code (Name.simple mt.mt_name);
         ]
@@ -994,13 +994,13 @@ class latex =
        match mt.mt_type, mt.mt_kind with
        | Some _, Some kind ->
            self#latex_of_text fmt [ Code " = " ];
-           self#latex_of_text fmt [ Latex "\\end{ocamldoccode}\n" ];
+           self#latex_of_text fmt [ Latex "\\end{travlangdoccode}\n" ];
            self#latex_for_module_type_label fmt mt;
            self#latex_for_module_type_index fmt mt;
            p fmt "@[<h 4>";
            self#latex_of_module_type_kind fmt father kind
        | _ ->
-           self#latex_of_text fmt [ Latex "\\end{ocamldoccode}\n" ];
+           self#latex_of_text fmt [ Latex "\\end{travlangdoccode}\n" ];
            self#latex_for_module_type_index fmt mt;
            p fmt "@[<h 4>";
       );
@@ -1058,7 +1058,7 @@ class latex =
       in
       let t =
         [
-          Latex "\\begin{ocamldoccode}\n" ;
+          Latex "\\begin{travlangdoccode}\n" ;
           Code (Printf.sprintf
                   "class %s%s%s : "
                   (if c.cl_virtual then "virtual " else "")
@@ -1077,7 +1077,7 @@ class latex =
        | _ ->
            ()
       );
-      self#latex_of_text fmt [ Latex "\\end{ocamldoccode}\n" ];
+      self#latex_of_text fmt [ Latex "\\end{travlangdoccode}\n" ];
       self#latex_for_class_label fmt c;
       self#latex_for_class_index fmt c;
       p fmt "@[<h 4>";
@@ -1100,7 +1100,7 @@ class latex =
       in
       let t =
         [
-          Latex "\\begin{ocamldoccode}\n" ;
+          Latex "\\begin{travlangdoccode}\n" ;
           Code (Printf.sprintf
                   "class type %s%s%s = "
                   (if ct.clt_virtual then "virtual " else "")
@@ -1111,7 +1111,7 @@ class latex =
       in
       self#latex_of_text fmt t;
 
-      self#latex_of_text fmt [ Latex "\\end{ocamldoccode}\n" ];
+      self#latex_of_text fmt [ Latex "\\end{travlangdoccode}\n" ];
       self#latex_for_class_type_label fmt ct;
       self#latex_for_class_type_index fmt ct;
       p fmt "@[<h 4>";
@@ -1219,7 +1219,7 @@ class latex =
       self#latex_of_text fmt rest_t ;
 
       self#latex_of_text fmt [ Newline ] ;
-      if not m.m_text_only then ps fmt "\\ocamldocvspace{0.5cm}\n\n";
+      if not m.m_text_only then ps fmt "\\travlangdocvspace{0.5cm}\n\n";
       List.iter
         (fun ele ->
           self#latex_of_module_element fmt m.m_name ele;
@@ -1235,7 +1235,7 @@ class latex =
       ps fmt "\\usepackage{textcomp}\n";
       ps fmt "\\usepackage{fullpage} \n";
       ps fmt "\\usepackage{url} \n";
-      ps fmt "\\usepackage{ocamldoc}\n";
+      ps fmt "\\usepackage{travlangdoc}\n";
       (
        match !Global.title with
          None -> ()
@@ -1265,7 +1265,7 @@ class latex =
     method generate_style_file =
       try
         let dir = Filename.dirname !Global.out_file in
-        let file = Filename.concat dir "ocamldoc.sty" in
+        let file = Filename.concat dir "travlangdoc.sty" in
         if Sys.file_exists file then
           Odoc_info.verbose (Odoc_messages.file_exists_dont_generate file)
         else

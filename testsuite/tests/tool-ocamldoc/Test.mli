@@ -1,12 +1,12 @@
 (* TEST
- ocamldoc with latex;
+ travlangdoc with latex;
 *)
 
 (** Ten comments for tests *)
 
 (** {6 A first comments for title } *)
 
-(** {7 A subsection for ocamldoc *} *)
+(** {7 A subsection for travlangdoc *} *)
 
 (** {7 Bis } *)
 

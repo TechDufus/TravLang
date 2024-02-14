@@ -1,8 +1,8 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
-/*                 David Allsopp, OCaml Labs, Cambridge.                  */
+/*                 David Allsopp, travlang Labs, Cambridge.                  */
 /*                                                                        */
 /*   Copyright 2021 David Allsopp Ltd.                                    */
 /*                                                                        */
@@ -41,20 +41,20 @@
 #endif
 
 /* Operations
-   - encode-C-literal. Used for the OCAML_STDLIB_DIR macro in
+   - encode-C-literal. Used for the travlang_STDLIB_DIR macro in
      runtime/build_config.h to ensure the LIBDIR make variable is correctly
      represented as a C string literal.
 
      On Unix, `sak encode-C-literal /usr/local/lib` returns `"/usr/local/lib"`
 
-     On Windows, `sak encode-C-literal "C:\OCaml🐫\lib"` returns
-     `L"C:\\OCaml\xd83d\xdc2b\\lib"`
+     On Windows, `sak encode-C-literal "C:\travlang🐫\lib"` returns
+     `L"C:\\travlang\xd83d\xdc2b\\lib"`
  */
 
 void usage(void)
 {
   printf(
-    "OCaml Build System Swiss Army Knife\n"
+    "travlang Build System Swiss Army Knife\n"
     "Usage: sak command\n"
     "Commands:\n"
     " * encode-C-literal path - encodes path as a C string literal\n"

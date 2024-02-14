@@ -8,8 +8,8 @@
  }
 *)
 
-(* Tests nested calls from C (main C) to OCaml (main OCaml) to C (caml_to_c) to
- * OCaml (c_to_caml) to C (printf functions). A stack overflow and a heap
+(* Tests nested calls from C (main C) to travlang (main travlang) to C (caml_to_c) to
+ * travlang (c_to_caml) to C (printf functions). A stack overflow and a heap
  * overflow are triggered in c_to_caml. *)
 
 let printf = Printf.printf

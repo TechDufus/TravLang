@@ -1,12 +1,12 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*      KC Sivaramakrishnan, Indian Institute of Technology, Madras       */
 /*                 Stephen Dolan, University of Cambridge                 */
-/*                   Tom Kelly, OCaml Labs Consultancy                    */
+/*                   Tom Kelly, travlang Labs Consultancy                    */
 /*                                                                        */
-/*   Copyright 2021 OCaml Labs Consultancy Ltd                            */
+/*   Copyright 2021 travlang Labs Consultancy Ltd                            */
 /*   Copyright 2019 Indian Institute of Technology, Madras                */
 /*   Copyright 2019 University of Cambridge                               */
 /*                                                                        */
@@ -127,7 +127,7 @@ static_assert(
        [main pthread]                                       |
               |                                             |
               v                                             |
-       BT_ENTERING_OCAML  <-----------------+               |
+       BT_ENTERING_travlang  <-----------------+               |
               |                             |               |
 (caml_enter_blocking_section)               |               |
        [main pthread]                       |               |
@@ -149,7 +149,7 @@ static_assert(
 
  */
 #define BT_IN_BLOCKING_SECTION 0
-#define BT_ENTERING_OCAML 1
+#define BT_ENTERING_travlang 1
 #define BT_TERMINATE 2
 #define BT_INIT 3
 
@@ -1026,14 +1026,14 @@ static void* backup_thread_func(void* v)
           caml_plat_wait(&s->cond);
         caml_plat_unlock(&s->lock);
         break;
-      case BT_ENTERING_OCAML:
-        /* Main thread wants to enter OCaml
-         * Will be woken from caml_bt_exit_ocaml
+      case BT_ENTERING_travlang:
+        /* Main thread wants to enter travlang
+         * Will be woken from caml_bt_exit_travlang
          * or domain_terminate
          */
         caml_plat_lock(&di->domain_lock);
         msg = atomic_load_acquire (&di->backup_thread_msg);
-        if (msg == BT_ENTERING_OCAML)
+        if (msg == BT_ENTERING_travlang)
           caml_plat_wait(&di->domain_cond);
         caml_plat_unlock(&di->domain_lock);
         break;
@@ -1077,7 +1077,7 @@ static void install_backup_thread (dom_internal* di)
     pthread_sigmask(SIG_BLOCK, &mask, &old_mask);
 #endif
 
-    atomic_store_release(&di->backup_thread_msg, BT_ENTERING_OCAML);
+    atomic_store_release(&di->backup_thread_msg, BT_ENTERING_travlang);
     err = pthread_create(&di->backup_thread, 0, backup_thread_func, (void*)di);
 
 #ifndef _WIN32
@@ -1242,7 +1242,7 @@ CAMLprim value caml_domain_spawn(value callback, value term_sync)
 
 #ifndef NATIVE_CODE
   if (caml_debugger_in_use)
-    caml_fatal_error("ocamldebug does not support spawning multiple domains");
+    caml_fatal_error("travlangdebug does not support spawning multiple domains");
 #endif
   p.parent = domain_self;
   p.status = Dom_starting;
@@ -1657,7 +1657,7 @@ void caml_reset_young_limit(caml_domain_state * dom_st)
      addition, in the case of long-running C code (that may
      regularly poll with caml_process_pending_actions), we want to
      force a query of all callbacks at every minor collection or
-     major slice (similarly to the OCaml behaviour). */
+     major slice (similarly to the travlang behaviour). */
   caml_set_action_pending(dom_st);
 }
 
@@ -1793,14 +1793,14 @@ CAMLexport void caml_acquire_domain_lock(void)
   caml_state = self->state;
 }
 
-CAMLexport void caml_bt_enter_ocaml(void)
+CAMLexport void caml_bt_enter_travlang(void)
 {
   dom_internal* self = domain_self;
 
   CAMLassert(caml_domain_alone() || self->backup_thread_running);
 
   if (self->backup_thread_running) {
-    atomic_store_release(&self->backup_thread_msg, BT_ENTERING_OCAML);
+    atomic_store_release(&self->backup_thread_msg, BT_ENTERING_travlang);
   }
 }
 
@@ -1811,7 +1811,7 @@ CAMLexport void caml_release_domain_lock(void)
   caml_plat_unlock(&self->domain_lock);
 }
 
-CAMLexport void caml_bt_exit_ocaml(void)
+CAMLexport void caml_bt_exit_travlang(void)
 {
   dom_internal* self = domain_self;
 
@@ -1860,7 +1860,7 @@ static void domain_terminate (void)
   s->terminating = 1;
 
   /* Join ongoing systhreads, if necessary, and then run user-defined
-     termination hooks. No OCaml code can run on this domain after
+     termination hooks. No travlang code can run on this domain after
      this. */
   caml_domain_stop_hook();
   call_timing_hook(&caml_domain_terminated_hook);

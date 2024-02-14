@@ -1,9 +1,9 @@
 (* TEST
  flags = "-w +A-22-27-32-60-67-70-71-72";
- setup-ocamlc.byte-build-env;
+ setup-travlangc.byte-build-env;
  compile_only = "true";
- ocamlc.byte;
- check-ocamlc.byte-output;
+ travlangc.byte;
+ check-travlangc.byte-output;
 *)
 
 module type TestAlertSig = sig
@@ -161,37 +161,37 @@ end
 
 module TestInlineStruct = struct
   let h x = x [@inline] (* rejected *)
-  let h x = x [@ocaml.inline] (* rejected *)
+  let h x = x [@travlang.inline] (* rejected *)
 
   let i x = x [@inlined] (* rejected *)
-  let j x = x [@ocaml.inlined] (* rejected *)
+  let j x = x [@travlang.inlined] (* rejected *)
   let k x = (h [@inlined]) x (* accepted *)
-  let k' x = (h [@ocaml.inlined]) x (* accepted *)
+  let k' x = (h [@travlang.inlined]) x (* accepted *)
   let l x = h x [@inlined] (* rejected *)
 
   module type E = sig end
 
   module A(E:E) = struct end [@@inline] (* accepted *)
-  module A'(E:E) = struct end [@@ocaml.inline] (* accepted *)
+  module A'(E:E) = struct end [@@travlang.inline] (* accepted *)
   module B = ((functor (E:E) -> struct end) [@inline]) (* accepted *)
-  module B' = ((functor (E:E) -> struct end) [@ocaml.inline]) (* accepted *)
+  module B' = ((functor (E:E) -> struct end) [@travlang.inline]) (* accepted *)
   module C = struct end [@@inline] (* rejected *)
-  module C' = struct end [@@ocaml.inline] (* rejected *)
+  module C' = struct end [@@travlang.inline] (* rejected *)
   module D = struct end [@@inlined] (* rejected *)
-  module D' = struct end [@@ocaml.inlined] (* rejected *)
+  module D' = struct end [@@travlang.inlined] (* rejected *)
 
   module F = (A [@inlined])(struct end) (* accepted *)
-  module F' = (A [@ocaml.inlined])(struct end) (* accepted *)
+  module F' = (A [@travlang.inlined])(struct end) (* accepted *)
   module G = (A [@inline])(struct end) (* rejected *)
-  module G' = (A [@ocaml.inline])(struct end) (* rejected *)
+  module G' = (A [@travlang.inline])(struct end) (* rejected *)
 
   module H = Set.Make [@inlined] (Int32) (* accepted *) (* GPR#1808 *)
 
   module I = Set.Make [@inlined] (* rejected *)
-  module I' = Set.Make [@ocaml.inlined] (* rejected *)
+  module I' = Set.Make [@travlang.inlined] (* rejected *)
 
   module J = Set.Make [@@inlined] (* rejected *)
-  module J' = Set.Make [@@ocaml.inlined] (* rejected *)
+  module J' = Set.Make [@@travlang.inlined] (* rejected *)
 end
 
 
@@ -252,9 +252,9 @@ module TestTailcallStruct = struct
   type s1 = Foo1 [@tailcall] (* rejected *)
 
   let m x = x [@tailcall] (* rejected *)
-  let n x = x [@ocaml.tailcall] (* rejected *)
+  let n x = x [@travlang.tailcall] (* rejected *)
   let o x = (m [@tailcall]) x (* accepted *)
-  let p x = (m [@ocaml.tailcall]) x (* accepted *)
+  let p x = (m [@travlang.tailcall]) x (* accepted *)
   let q x = m x [@tailcall] (* rejected *)
 
   external z : int -> int = "x" [@@tailcall] (* rejected *)

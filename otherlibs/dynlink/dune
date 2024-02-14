@@ -1,6 +1,6 @@
 ;**************************************************************************
 ;*                                                                        *
-;*                                 OCaml                                  *
+;*                                 travlang                                  *
 ;*                                                                        *
 ;*                     Thomas Refis, Jane Street Europe                   *
 ;*                                                                        *
@@ -23,9 +23,9 @@
 ;   ; the -33 is specific to the hackery done with dune.
 ;   (flags (:standard -nostdlib -w -33))
 ;   (modules_without_implementation dynlink)
-;   (libraries ocamlcommon stdlib))
+;   (libraries travlangcommon stdlib))
 ;
 ; (rule
 ;  (targets dynlink_compilerlibs.ml)
 ;  (action (write-file %{targets}
-;            "(* empty because we are linking with ocamlcommon *)")))
+;            "(* empty because we are linking with travlangcommon *)")))

@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -15,8 +15,8 @@
 
 (* Typechecking for the core language *)
 
-[@@@ocaml.warning "-60"] module Str = Ast_helper.Str (* For ocamldep *)
-[@@@ocaml.warning "+60"]
+[@@@travlang.warning "-60"] module Str = Ast_helper.Str (* For travlangdep *)
+[@@@travlang.warning "+60"]
 
 open Misc
 open Asttypes
@@ -1151,7 +1151,7 @@ end) = struct
     end
 
   (* warn if the selected name is not the last introduced in scope
-     -- in these cases the resolution is different from pre-disambiguation OCaml
+     -- in these cases the resolution is different from pre-disambiguation travlang
      (this warning is not enabled by default, it is specifically for people
       wishing to write backward-compatible code).
    *)
@@ -4266,7 +4266,7 @@ and type_expect_
             exp_env = env;
             exp_attributes = sexp.pexp_attributes; }
 
-  | Pexp_extension ({ txt = ("ocaml.extension_constructor"
+  | Pexp_extension ({ txt = ("travlang.extension_constructor"
                              |"extension_constructor"); _ },
                     payload) ->
       begin match payload with
@@ -5506,7 +5506,7 @@ and type_construct env loc lid sarg ty_expected_explained attrs =
 (* Typing of statements (expressions whose values are discarded) *)
 
 and type_statement ?explanation env sexp =
-  (* OCaml 5.2.0 changed the type of 'while' to give 'while true do e done'
+  (* travlang 5.2.0 changed the type of 'while' to give 'while true do e done'
      a polymorphic type.  The change has the potential to trigger a
      nonreturning-statement warning in existing code that follows
      'while true' with some other statement, e.g.
@@ -5515,7 +5515,7 @@ and type_statement ?explanation env sexp =
 
     To avoid this issue, we disable the warning in this particular case.
     We might consider re-enabling it at a point when most users have
-    migrated to OCaml 5.2.0 or later. *)
+    migrated to travlang 5.2.0 or later. *)
   let allow_polymorphic e = match e.exp_desc with
     | Texp_while _ -> true
     | _ -> false
@@ -6586,7 +6586,7 @@ let report_error ~loc env = function
           []
         else
           [ Location.msg
-              "Since OCaml 4.11, optional arguments do not commute when \
+              "Since travlang 4.11, optional arguments do not commute when \
                -nolabels is given" ]
       in
       Location.errorf ~loc ~sub:extra_info

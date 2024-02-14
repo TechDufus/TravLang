@@ -6,7 +6,7 @@
 #include <caml/custom.h>
 
 /* Encapsulation of opaque window handles (of type WINDOW *)
-   as OCaml custom blocks. */
+   as travlang custom blocks. */
 
 static struct custom_operations curses_window_ops = {
   "fr.inria.caml.curses_windows",
@@ -19,10 +19,10 @@ static struct custom_operations curses_window_ops = {
   custom_fixed_length_default
 };
 
-/* Accessing the WINDOW * part of an OCaml custom block */
+/* Accessing the WINDOW * part of an travlang custom block */
 #define Window_val(v) (*((WINDOW **) Data_custom_val(v)))
 
-/* Allocating an OCaml custom block to hold the given WINDOW * */
+/* Allocating an travlang custom block to hold the given WINDOW * */
 static value alloc_window(WINDOW * w)
 {
   value v = alloc_custom(&curses_window_ops, sizeof(WINDOW *), 0, 1);

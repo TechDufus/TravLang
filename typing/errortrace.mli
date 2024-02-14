@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Florian Angeletti, projet Cambium, Inria Paris             *)
 (*              Antal Spector-Zabusky, Jane Street, New York              *)

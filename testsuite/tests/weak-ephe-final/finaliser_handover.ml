@@ -1,6 +1,6 @@
 (* TEST *)
 
-(* ocaml-multicore issues 528 and 468 *)
+(* travlang-multicore issues 528 and 468 *)
 
 let tree_size = try int_of_string Sys.argv.(1) with _ -> 9
 let iterations = try int_of_string Sys.argv.(2) with _ -> 10

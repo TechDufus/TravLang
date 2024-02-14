@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           */
 /*                                                                        */
@@ -225,8 +225,8 @@ void caml_array_bound_error_asm(void)
   caml_tsan_exit_on_raise_c(exception_pointer);
 #endif
 
-  /* This exception is raised directly from ocamlopt-compiled OCaml,
-     not C, so we jump directly to the OCaml handler (and avoid GC) */
+  /* This exception is raised directly from travlangopt-compiled travlang,
+     not C, so we jump directly to the travlang handler (and avoid GC) */
   caml_raise_exception(Caml_state, array_bound_exn());
 }
 

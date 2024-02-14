@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*          Xavier Leroy and Damien Doligez, INRIA Rocquencourt           */
 /*                                                                        */
@@ -35,7 +35,7 @@ CAMLextern void caml_process_pending_actions (void);
 /* Checks for pending actions and executes them. This includes pending
    minor and major collections, thread switching, signal handlers,
    finalisers, and Memprof callbacks. Assumes that the runtime lock is
-   held. Can raise exceptions asynchronously into OCaml code. */
+   held. Can raise exceptions asynchronously into travlang code. */
 
 CAMLextern value caml_process_pending_actions_exn (void);
 /* Same as [caml_process_pending_actions], but returns the encoded

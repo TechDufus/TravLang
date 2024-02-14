@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -3549,7 +3549,7 @@ and compile_no_test ~scopes divide up_ctx repr partial ctx to_match =
    Notice that exhaustiveness information is trusted by the compiler,
    that is, a match flagged as Total should not fail at runtime.
    More specifically, for instance if match y with x::_ -> x is flagged
-   total (as it happens during JoCaml compilation) then y cannot be []
+   total (as it happens during Jtravlang compilation) then y cannot be []
    at runtime. As a consequence, the static Total exhaustiveness information
    have to be downgraded to Partial, in the dubious cases where guards
    or lazy pattern execute arbitrary code that may perform side effects

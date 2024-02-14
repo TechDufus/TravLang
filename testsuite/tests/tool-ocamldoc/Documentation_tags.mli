@@ -1,8 +1,8 @@
 (* TEST
- ocamldoc with html;
+ travlangdoc with html;
 *)
 
-(** Test the html rendering of ocamldoc documentation tags *)
+(** Test the html rendering of travlangdoc documentation tags *)
 
 val heterological: unit
 (**

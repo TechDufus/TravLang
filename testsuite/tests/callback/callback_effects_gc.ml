@@ -1,5 +1,5 @@
 (* TEST
- ocamlrunparam += ",s=512";
+ travlangrunparam += ",s=512";
  native;
 *)
 

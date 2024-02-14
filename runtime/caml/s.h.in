@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           */
 /*                                                                        */
@@ -17,10 +17,10 @@
 
 /* 0. Operating system type string. */
 
-#undef OCAML_OS_TYPE
-/* #define OCAML_OS_TYPE "Unix" */
-/* #define OCAML_OS_TYPE "Win32" */
-/* #define OCAML_OS_TYPE "MacOS" */
+#undef travlang_OS_TYPE
+/* #define travlang_OS_TYPE "Unix" */
+/* #define travlang_OS_TYPE "Win32" */
+/* #define travlang_OS_TYPE "MacOS" */
 
 /* 1. For the runtime system. */
 

@@ -8,7 +8,7 @@
  }
 *)
 
-let str = "Hello, OCaml!"
+let str = "Hello, travlang!"
 let txt = "truncate.txt"
 
 let test file openfile stat truncate delta close =

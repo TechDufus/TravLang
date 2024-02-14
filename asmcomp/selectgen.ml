@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -343,7 +343,7 @@ method is_simple_expr = function
    property of the Cmm language rather than anything particular about the
    instruction selection algorithm in this file.
 
-   In the case of e.g. an OCaml function call, the arguments whose evaluation
+   In the case of e.g. an travlang function call, the arguments whose evaluation
    cannot be deferred (cf. [emit_parts], below) are computed in right-to-left
    order first with their results going into temporaries, then the block is
    allocated, then the remaining arguments are evaluated before being

@@ -1,10 +1,10 @@
 ROOTDIR = ../../..
 include $(ROOTDIR)/Makefile.common
 
-TEXQUOTE = $(ROOTDIR)/runtime/ocamlrun ../../tools/texquote2
+TEXQUOTE = $(ROOTDIR)/runtime/travlangrun ../../tools/texquote2
 LD_PATH = $(ROOTDIR)/otherlibs/str $(ROOTDIR)/otherlibs/unix
-CAMLLATEX = $(OCAMLRUN) $(addprefix -I ,$(LD_PATH)) \
-  $(ROOTDIR)/tools/ocamltex -repo-root $(ROOTDIR) -n 80 -v false
+CAMLLATEX = $(travlangRUN) $(addprefix -I ,$(LD_PATH)) \
+  $(ROOTDIR)/tools/travlangtex -repo-root $(ROOTDIR) -n 80 -v false
 
 FILES = core.tex builtin.tex stdlib-blurb.tex compilerlibs.tex \
   libunix.tex libstr.tex old.tex libthreads.tex libdynlink.tex \
@@ -23,7 +23,7 @@ all: etex-files
 
 .PHONY: clean
 clean:
-	rm -f *.tex ocamldoc.out ocamldoc.sty
+	rm -f *.tex travlangdoc.out travlangdoc.sty
 
 .PHONY: distclean
 distclean: clean

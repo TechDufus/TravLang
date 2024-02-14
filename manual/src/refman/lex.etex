@@ -51,7 +51,7 @@ All characters in an identifier are
 meaningful. The current implementation accepts identifiers up to
 16000000 characters in length.
 
-In many places, OCaml makes a distinction between capitalized
+In many places, travlang makes a distinction between capitalized
 identifiers and identifiers that begin with a lowercase letter.  The
 underscore character is considered a lowercase letter for this
 purpose.
@@ -213,7 +213,7 @@ let superscript_plus = "\u{207A}";;
 \end{caml_example}
 
 A newline sequence is a line feed optionally preceded by a carriage
-return. Since OCaml 5.2, a newline sequence occurring in a string
+return. Since travlang 5.2, a newline sequence occurring in a string
 literal is normalized into a single line feed character.
 
 To allow splitting long string literals across lines, the sequence
@@ -371,7 +371,7 @@ linenum-directive:
      '#' {{ "0"\ldots"9" }} '"' { string-character } '"'
 \end{syntax}
 
-Preprocessors that generate OCaml source code can insert line number
+Preprocessors that generate travlang source code can insert line number
 directives in their output so that error messages produced by the
 compiler contain line numbers and file names referring to the source
 file before preprocessing, instead of after preprocessing.

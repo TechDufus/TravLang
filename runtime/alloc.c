@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*          Xavier Leroy and Damien Doligez, INRIA Rocquencourt           */
 /*                                                                        */
@@ -292,7 +292,7 @@ CAMLprim value caml_alloc_dummy(value size)
 /* [size] is a [value] representing number of words (fields) */
 CAMLprim value caml_alloc_dummy_function(value size,value arity)
 {
-  /* the arity argument is used by the js_of_ocaml runtime */
+  /* the arity argument is used by the js_of_travlang runtime */
   return caml_alloc_dummy(size);
 }
 
@@ -330,7 +330,7 @@ CAMLprim value caml_update_dummy(value dummy, value newval)
   if (Wosize_val(dummy) == 0) {
       /* Size-0 blocks are statically-allocated atoms. We cannot
          mutate them, but there is no need:
-         - All atoms used in the runtime to represent OCaml values
+         - All atoms used in the runtime to represent travlang values
            have tag 0 --- including empty flat float arrays, or other
            types that use a non-0 tag for non-atom blocks.
          - The dummy was already created with tag 0.

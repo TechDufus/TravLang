@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           */
 /*                                                                        */
@@ -651,7 +651,7 @@ static void intern_rec(struct caml_intern_state* s,
       case OLD_CODE_CUSTOM:
         intern_cleanup(s);
         intern_failwith2(fun_name, "custom blocks serialized with "
-                         "OCaml 4.08.0 (or prior) are no longer supported");
+                         "travlang 4.08.0 (or prior) are no longer supported");
         break;
       case CODE_CUSTOM_LEN:
       case CODE_CUSTOM_FIXED: {

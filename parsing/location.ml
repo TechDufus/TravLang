@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -908,11 +908,11 @@ module Style = Misc.Style
 
 let auto_include_alert lib =
   let message = Format.asprintf "\
-    OCaml's lib directory layout changed in 5.0. The %a subdirectory has been \
+    travlang's lib directory layout changed in 5.0. The %a subdirectory has been \
     automatically added to the search path, but you should add %a to the \
     command-line to silence this alert (e.g. by adding %a to the list of \
     libraries in your dune file, or adding %a to your %a file for \
-    ocamlbuild, or using %a for ocamlfind)."
+    travlangbuild, or using %a for travlangfind)."
       Style.inline_code lib
       Style.inline_code ("-I +" ^lib)
       Style.inline_code lib
@@ -920,7 +920,7 @@ let auto_include_alert lib =
       Style.inline_code "_tags"
       Style.inline_code ("-package " ^ lib) in
   let alert =
-    {Warnings.kind="ocaml_deprecated_auto_include"; use=none; def=none;
+    {Warnings.kind="travlang_deprecated_auto_include"; use=none; def=none;
      message = Format.asprintf "@[@\n%a@]" Format.pp_print_text message}
   in
   prerr_alert none alert
@@ -936,7 +936,7 @@ let deprecated_script_alert program =
       Style.inline_code (program ^ " ./script-file")
   in
   let alert =
-    {Warnings.kind="ocaml_deprecated_cli"; use=none; def=none;
+    {Warnings.kind="travlang_deprecated_cli"; use=none; def=none;
      message = Format.asprintf "@[@\n%a@]" Format.pp_print_text message}
   in
   prerr_alert none alert

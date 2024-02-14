@@ -4,7 +4,7 @@
 \usepackage{textcomp}
 \usepackage{fullpage} 
 \usepackage{url} 
-\usepackage{ocamldoc}
+\usepackage{travlangdoc}
 \begin{document}
 \tableofcontents
 \section{Module {\tt{Extensible\_variant}} : Testing display of extensible variant types and exceptions.}
@@ -13,7 +13,7 @@
 
 
 
-\ocamldocvspace{0.5cm}
+\travlangdocvspace{0.5cm}
 
 
 
@@ -21,104 +21,104 @@ Also check reference for {\tt{Extensible\_variant.M.A}}[\ref{extension:Extensibl
 
 
 
-\label{TYPExtensible-underscorevariant.e}\begin{ocamldoccode}
+\label{TYPExtensible-underscorevariant.e}\begin{travlangdoccode}
 type e = ..
-\end{ocamldoccode}
+\end{travlangdoccode}
 \index{e@\verb`e`}
-\begin{ocamldocdescription}
+\begin{travlangdocdescription}
 Extensible type
 
 
-\end{ocamldocdescription}
+\end{travlangdocdescription}
 
 
 
 
-\begin{ocamldoccode}
-{\tt{module }}{\tt{M}}{\tt{ : }}\end{ocamldoccode}
+\begin{travlangdoccode}
+{\tt{module }}{\tt{M}}{\tt{ : }}\end{travlangdoccode}
 \label{Extensible-underscorevariant.M}\index{M@\verb`M`}
 
-\begin{ocamldocsigend}
+\begin{travlangdocsigend}
 
 
-\begin{ocamldoccode}
+\begin{travlangdoccode}
 type e +=
-\end{ocamldoccode}
-\label{extension:Extensible-underscorevariant.M.A}\begin{ocamldoccode}
+\end{travlangdoccode}
+\label{extension:Extensible-underscorevariant.M.A}\begin{travlangdoccode}
   | A
-\end{ocamldoccode}
-\begin{ocamldoccomment}
+\end{travlangdoccode}
+\begin{travlangdoccomment}
 A doc
 
 
-\end{ocamldoccomment}
-\label{extension:Extensible-underscorevariant.M.B}\begin{ocamldoccode}
+\end{travlangdoccomment}
+\label{extension:Extensible-underscorevariant.M.B}\begin{travlangdoccode}
   | B
-\end{ocamldoccode}
-\begin{ocamldoccomment}
+\end{travlangdoccode}
+\begin{travlangdoccomment}
 B doc
 
 
-\end{ocamldoccomment}
-\label{extension:Extensible-underscorevariant.M.C}\begin{ocamldoccode}
+\end{travlangdoccomment}
+\label{extension:Extensible-underscorevariant.M.C}\begin{travlangdoccode}
   | C
-\end{ocamldoccode}
-\begin{ocamldoccomment}
+\end{travlangdoccode}
+\begin{travlangdoccomment}
 C doc
 
 
-\end{ocamldoccomment}
-\end{ocamldocsigend}
+\end{travlangdoccomment}
+\end{travlangdocsigend}
 
 
 
 
 
 
-\begin{ocamldoccode}
-{\tt{module type }}{\tt{MT}}{\tt{ = }}\end{ocamldoccode}
+\begin{travlangdoccode}
+{\tt{module type }}{\tt{MT}}{\tt{ = }}\end{travlangdoccode}
 \label{Extensible-underscorevariant.MT}\index{MT@\verb`MT`}
 
-\begin{ocamldocsigend}
+\begin{travlangdocsigend}
 
 
-\begin{ocamldoccode}
+\begin{travlangdoccode}
 type e +=
-\end{ocamldoccode}
-\label{extension:Extensible-underscorevariant.MT.A}\begin{ocamldoccode}
+\end{travlangdoccode}
+\label{extension:Extensible-underscorevariant.MT.A}\begin{travlangdoccode}
   | A
-\end{ocamldoccode}
-\begin{ocamldoccomment}
+\end{travlangdoccode}
+\begin{travlangdoccomment}
 A doc
 
 
-\end{ocamldoccomment}
-\label{extension:Extensible-underscorevariant.MT.B}\begin{ocamldoccode}
+\end{travlangdoccomment}
+\label{extension:Extensible-underscorevariant.MT.B}\begin{travlangdoccode}
   | B
-\end{ocamldoccode}
-\begin{ocamldoccomment}
+\end{travlangdoccode}
+\begin{travlangdoccomment}
 B doc
 
 
-\end{ocamldoccomment}
-\label{extension:Extensible-underscorevariant.MT.C}\begin{ocamldoccode}
+\end{travlangdoccomment}
+\label{extension:Extensible-underscorevariant.MT.C}\begin{travlangdoccode}
   | C
-\end{ocamldoccode}
-\begin{ocamldoccomment}
+\end{travlangdoccode}
+\begin{travlangdoccomment}
 C doc
 
 
-\end{ocamldoccomment}
-\end{ocamldocsigend}
+\end{travlangdoccomment}
+\end{travlangdocsigend}
 
 
 
 
 
 
-\label{exception:Extensible-underscorevariant.E}\begin{ocamldoccode}
+\label{exception:Extensible-underscorevariant.E}\begin{travlangdoccode}
 exception E
-\end{ocamldoccode}
+\end{travlangdoccode}
 \index{E@\verb`E`}
 
 

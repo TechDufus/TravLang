@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           */
 /*                                                                        */
@@ -144,7 +144,7 @@ CAMLexport void caml_print_exception_backtrace(void)
     fprintf(stderr,
             "(Cannot print locations:\n "
              "bytecode executable program file cannot be opened;\n "
-             "-- too many open files. Try running with OCAMLRUNPARAM=b=2)\n");
+             "-- too many open files. Try running with travlangRUNPARAM=b=2)\n");
     break;
   }
 }
@@ -237,7 +237,7 @@ CAMLprim value caml_restore_raw_backtrace(value exn, value backtrace)
 #define Val_debuginfo(bslot) (Val_long((uintnat)(bslot)>>1))
 #define Debuginfo_val(vslot) ((debuginfo)(Long_val(vslot) << 1))
 
-/* Convert the raw backtrace to a data structure usable from OCaml */
+/* Convert the raw backtrace to a data structure usable from travlang */
 static value caml_convert_debuginfo(debuginfo dbg)
 {
   CAMLparam0();
@@ -275,7 +275,7 @@ CAMLprim value caml_convert_raw_backtrace_slot(value slot)
   return (caml_convert_debuginfo(Debuginfo_val(slot)));
 }
 
-/* Convert the raw backtrace to a data structure usable from OCaml */
+/* Convert the raw backtrace to a data structure usable from travlang */
 CAMLprim value caml_convert_raw_backtrace(value bt)
 {
   CAMLparam1(bt);
@@ -348,7 +348,7 @@ CAMLprim value caml_raw_backtrace_next_slot(value slot)
 }
 
 /* the function below is deprecated: we previously returned directly
-   the OCaml-usable representation, instead of the raw backtrace as an
+   the travlang-usable representation, instead of the raw backtrace as an
    abstract type, but this has a large performance overhead if you
    store a lot of backtraces and print only some of them.
 

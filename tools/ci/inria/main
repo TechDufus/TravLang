@@ -1,7 +1,7 @@
 #!/bin/sh
 #**************************************************************************
 #*                                                                        *
-#*                                 OCaml                                  *
+#*                                 travlang                                  *
 #*                                                                        *
 #*          Damien Doligez, projet Gallium, INRIA Rocquencourt            *
 #*                                                                        *
@@ -17,14 +17,14 @@
 # This script is run on our continuous-integration servers to recompile
 # from scratch and run the test suite.
 
-# To know the slave's architecture, this script looks at the OCAML_ARCH
+# To know the slave's architecture, this script looks at the travlang_ARCH
 # environment variable. For a given node NODE, this variable can be defined
 # in Jenkins at the following address:
-# https://ci.inria.fr/ocaml/computer/NODE/configure
+# https://ci.inria.fr/travlang/computer/NODE/configure
 
 # Other environment variables that are honored:
-#   OCAML_CONFIGURE_OPTIONS   additional options for configure
-#   OCAML_JOBS                number of jobs to run in parallel (make -j)
+#   travlang_CONFIGURE_OPTIONS   additional options for configure
+#   travlang_JOBS                number of jobs to run in parallel (make -j)
 
 # Command-line arguments:
 # -conf configure-option  add configure-option to configure cmd line
@@ -38,8 +38,8 @@ error () {
 }
 
 arch_error() {
-  configure_url="https://ci.inria.fr/ocaml/computer/${NODE_NAME}/configure"
-  msg="Unknown architecture. Make sure the OCAML_ARCH environment"
+  configure_url="https://ci.inria.fr/travlang/computer/${NODE_NAME}/configure"
+  msg="Unknown architecture. Make sure the travlang_ARCH environment"
   msg="$msg variable has been defined."
   msg="$msg\nSee ${configure_url}"
   error "$msg"
@@ -84,7 +84,7 @@ echo jenkinsdir=${jenkinsdir}
 # If we are called from a Windows batch script, we must set up the
 # Unix environment variables (e.g. PATH).
 
-case "${OCAML_ARCH}" in
+case "${travlang_ARCH}" in
   bsd|macos|linux|solaris) ;;
   cygwin|cygwin64|mingw|mingw64)
     . /etc/profile
@@ -106,26 +106,26 @@ esac
 #########################################################################
 
 # be considerate towards other potential users of the test machine
-case "${OCAML_ARCH}" in
+case "${travlang_ARCH}" in
   linux) renice 10 $$ ;;
 esac
 
 # be verbose and stop on error
 set -ex
 
-# On PowerPC, the OCAML_CONFIGURE_OPTIONS is used to specify which C
+# On PowerPC, the travlang_CONFIGURE_OPTIONS is used to specify which C
 # compiler to use. However with the introduction of autoconf the way
 # to do that has changed. Once all the branches on which we do CI will use
 # autoconf, the variable shall be updated on the host. But until then,
 # we leave it with its legacy value and override it here.
 CCOMP=
 case $NODE_NAME in
-  ocaml-ppc-32)
+  travlang-ppc-32)
     CCOMP="CC='gcc -m32'"
-    OCAML_CONFIGURE_OPTIONS=;;
-  ocaml-ppc-64)
+    travlang_CONFIGURE_OPTIONS=;;
+  travlang-ppc-64)
     CCOMP="CC='gcc -m64'"
-    OCAML_CONFIGURE_OPTIONS=;;
+    travlang_CONFIGURE_OPTIONS=;;
 esac
 
 #########################################################################
@@ -136,9 +136,9 @@ build=''
 host=''
 conffile=Makefile.config
 make=make
-instdir="$HOME/ocaml-tmp-install"
-confoptions="--enable-ocamltest --enable-dependency-generation \
-${OCAML_CONFIGURE_OPTIONS}"
+instdir="$HOME/travlang-tmp-install"
+confoptions="--enable-travlangtest --enable-dependency-generation \
+${travlang_CONFIGURE_OPTIONS}"
 make_native=true
 cleanup=false
 check_make_alldepend=false
@@ -149,7 +149,7 @@ init_submodule=false
 memory_model_tests="tests/memory-model/forbidden.ml \
 tests/memory-model/publish.ml"
 
-case "${OCAML_ARCH}" in
+case "${travlang_ARCH}" in
   bsd|solaris)
     make=gmake
   ;;
@@ -162,17 +162,17 @@ case "${OCAML_ARCH}" in
   cygwin)
     cleanup=true
     check_make_alldepend=true
-    export OCAMLTEST_SKIP_TESTS="$memory_model_tests"
+    export travlangTEST_SKIP_TESTS="$memory_model_tests"
   ;;
   cygwin64)
     cleanup=true
     check_make_alldepend=true
-    export OCAMLTEST_SKIP_TESTS="$memory_model_tests"
+    export travlangTEST_SKIP_TESTS="$memory_model_tests"
   ;;
   mingw)
     build='--build=i686-pc-cygwin'
     host='--host=i686-w64-mingw32'
-    instdir='C:/ocamlmgw'
+    instdir='C:/travlangmgw'
     cleanup=true
     check_make_alldepend=true
     init_submodule=true
@@ -180,7 +180,7 @@ case "${OCAML_ARCH}" in
   mingw64)
     build='--build=x86_64-pc-cygwin'
     host='--host=x86_64-w64-mingw32'
-    instdir='C:/ocamlmgw64'
+    instdir='C:/travlangmgw64'
     cleanup=true
     check_make_alldepend=true
     init_submodule=true
@@ -188,13 +188,13 @@ case "${OCAML_ARCH}" in
   msvc)
     build='--build=i686-pc-cygwin'
     host='--host=i686-pc-windows'
-    instdir='C:/ocamlms'
+    instdir='C:/travlangms'
     cleanup=true
   ;;
   msvc64)
     build='--build=x86_64-pc-cygwin'
     host='--host=x86_64-pc-windows'
-    instdir='C:/ocamlms64'
+    instdir='C:/travlangms64'
     cleanup=true
   ;;
   *) arch_error;;
@@ -203,15 +203,15 @@ esac
 # Make sure two builds won't use the same install directory
 instdir="$instdir-$$"
 
-case "${OCAML_JOBS}" in
-  [1-9]|[1-9][0-9]) jobs="-j${OCAML_JOBS}" ;;
+case "${travlang_JOBS}" in
+  [1-9]|[1-9][0-9]) jobs="-j${travlang_JOBS}" ;;
 esac
 
 #########################################################################
 # On Windows, cleanup processes that may remain from previous run
 
 if $cleanup; then
-  tasks="tee ocamlrun program ocamltest ocamltest.opt"
+  tasks="tee travlangrun program travlangtest travlangtest.opt"
   for task in ${tasks}; do kill_task ${task}.exe; done
 fi
 
@@ -289,5 +289,5 @@ else $make --warn-undefined-variables SHOW_TIMINGS=1 all
 fi
 
 if $bootstrap; then
-  git checkout ../boot/ocamlc ../boot/ocamllex
+  git checkout ../boot/travlangc ../boot/travlanglex
 fi

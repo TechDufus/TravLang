@@ -1,16 +1,16 @@
 (* TEST
- setup-ocamlopt.opt-build-env;
+ setup-travlangopt.opt-build-env;
  all_modules = "";
  compile_only = "true";
- ocamlopt_opt_exit_status = "2";
+ travlangopt_opt_exit_status = "2";
  flags = "";
- ocamlopt.opt;
+ travlangopt.opt;
  flags = "-o test.exe";
- ocamlopt.opt;
- check-ocamlopt.opt-output;
+ travlangopt.opt;
+ check-travlangopt.opt-output;
 *)
 
 (*
   This file is just a test driver, the test does not contain any
-  real OCaml code
+  real travlang code
  *)

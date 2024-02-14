@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -100,12 +100,12 @@ let compile_file ?output ?(opt="") ?stable_name name =
          (match !Clflags.c_compiler with
           | Some cc -> cc
           | None ->
-              (* #7678: ocamlopt only calls the C compiler to process .c files
+              (* #7678: travlangopt only calls the C compiler to process .c files
                  from the command line, and the behaviour between
-                 ocamlc/ocamlopt should be identical. *)
+                 travlangc/travlangopt should be identical. *)
               (String.concat " " [Config.c_compiler;
-                                  Config.ocamlc_cflags;
-                                  Config.ocamlc_cppflags]))
+                                  Config.travlangc_cflags;
+                                  Config.travlangc_cppflags]))
          debug_prefix_map
          (match output with
           | None -> ""

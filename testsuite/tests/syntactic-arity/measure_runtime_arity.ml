@@ -1,7 +1,7 @@
 (* TEST
  flags = "-w +A-70";
- setup-ocamlopt.byte-build-env;
- ocamlopt.byte;
+ setup-travlangopt.byte-build-env;
+ travlangopt.byte;
  run;
  check-program-output;
 *)

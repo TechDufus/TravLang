@@ -1,9 +1,9 @@
 (* TEST
  compile_only = "true";
  no-flambda;
- setup-ocamlopt.byte-build-env;
- ocamlopt.byte;
- check-ocamlopt.byte-output;
+ setup-travlangopt.byte-build-env;
+ travlangopt.byte;
+ check-travlangopt.byte-output;
 *)
 
 module Stable = struct

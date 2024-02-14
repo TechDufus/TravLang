@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*              Damien Doligez, projet Para, INRIA Rocquencourt           */
 /*                                                                        */
@@ -685,7 +685,7 @@ void caml_empty_minor_heap_promote(caml_domain_state* domain,
 /* Finalize dead custom blocks and do the accounting for the live
    ones. This must be done right after leaving the barrier. At this
    point, all domains have finished minor GC, but this domain hasn't
-   resumed running OCaml code. Other domains may have resumed OCaml
+   resumed running travlang code. Other domains may have resumed travlang
    code, but they cannot have any pointers into our minor heap. */
 static void custom_finalize_minor (caml_domain_state * domain)
 {
@@ -846,7 +846,7 @@ void caml_alloc_small_dispatch (caml_domain_state * dom_st,
     /* We might be here because of an async callback / urgent GC
        request. Take the opportunity to do what has been requested. */
     if (flags & CAML_FROM_CAML)
-      /* In the case of allocations performed from OCaml, execute
+      /* In the case of allocations performed from travlang, execute
          asynchronous callbacks. */
       caml_raise_if_exception(caml_do_pending_actions_exn());
     else {

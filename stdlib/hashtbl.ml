@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -48,7 +48,7 @@ let flip_ongoing_traversal h =
 
 let randomized_default =
   let params =
-    try Sys.getenv "OCAMLRUNPARAM" with Not_found ->
+    try Sys.getenv "travlangRUNPARAM" with Not_found ->
     try Sys.getenv "CAMLRUNPARAM" with Not_found -> "" in
   String.contains params 'R'
 

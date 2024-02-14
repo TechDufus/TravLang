@@ -231,8 +231,8 @@ let _eRR =
 # 25 "parsing/parser.mly"
   
 
-[@@@ocaml.warning "-60"] module Str = Ast_helper.Str (* For ocamldep *)
-[@@@ocaml.warning "+60"]
+[@@@travlang.warning "-60"] module Str = Ast_helper.Str (* For travlangdep *)
+[@@@travlang.warning "+60"]
 
 open Asttypes
 open Longident
@@ -27591,7 +27591,7 @@ module Tables = struct
         let poly_exp =
           let exp, poly =
             (* it seems odd to use the global ~loc here while poly_exp_loc
-               is tighter, but this is what ocamlyacc does;
+               is tighter, but this is what travlangyacc does;
                TODO improve parser.mly *)
             wrap_type_annotation ~loc:_sloc _7 _9 _11 in
           ghexp ~loc:poly_exp_loc (Pexp_poly(exp, Some poly)) in
@@ -27750,7 +27750,7 @@ module Tables = struct
         let poly_exp =
           let exp, poly =
             (* it seems odd to use the global ~loc here while poly_exp_loc
-               is tighter, but this is what ocamlyacc does;
+               is tighter, but this is what travlangyacc does;
                TODO improve parser.mly *)
             wrap_type_annotation ~loc:_sloc _7 _9 _11 in
           ghexp ~loc:poly_exp_loc (Pexp_poly(exp, Some poly)) in

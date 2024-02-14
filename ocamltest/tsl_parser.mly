@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*             Sebastien Hinderer, projet Gallium, INRIA Paris            */
 /*                                                                        */
@@ -33,8 +33,8 @@ let mkenvstmt envstmt =
 
 %token <[`Above | `Below]> TSL_BEGIN_C_STYLE
 %token TSL_END_C_STYLE
-%token <[`Above | `Below]> TSL_BEGIN_OCAML_STYLE
-%token TSL_END_OCAML_STYLE
+%token <[`Above | `Below]> TSL_BEGIN_travlang_STYLE
+%token TSL_END_travlang_STYLE
 %token COMMA LEFT_BRACE RIGHT_BRACE SEMI
 %token <int> TEST_DEPTH
 %token EQUAL PLUSEQUAL
@@ -69,11 +69,11 @@ statement:
 
 tsl_script:
 | TSL_BEGIN_C_STYLE node TSL_END_C_STYLE { $2 }
-| TSL_BEGIN_OCAML_STYLE node TSL_END_OCAML_STYLE { $2 }
+| TSL_BEGIN_travlang_STYLE node TSL_END_travlang_STYLE { $2 }
 
 tsl_block:
 | TSL_BEGIN_C_STYLE tsl_items TSL_END_C_STYLE { $2 }
-| TSL_BEGIN_OCAML_STYLE tsl_items TSL_END_OCAML_STYLE { $2 }
+| TSL_BEGIN_travlang_STYLE tsl_items TSL_END_travlang_STYLE { $2 }
 
 tsl_items:
 | { [] }

@@ -1,5 +1,5 @@
 (* TEST
- ocamllex_flags = "-q";
+ travlanglex_flags = "-q";
 *)
 
 {
@@ -32,12 +32,12 @@ and mnemonics = parse
   { [] }
 
 {
-let ocamlsrcdir = Sys.getenv "ocamlsrcdir"
+let travlangsrcdir = Sys.getenv "travlangsrcdir"
 
-let ocamlrun = Sys.getenv "ocamlrun"
+let travlangrun = Sys.getenv "travlangrun"
 
 let constructors =
-  let ic = open_in Filename.(concat ocamlsrcdir (concat "utils" "warnings.ml")) in
+  let ic = open_in Filename.(concat travlangsrcdir (concat "utils" "warnings.ml")) in
   Fun.protect ~finally:(fun () -> close_in_noerr ic)
     (fun () ->
        let lexbuf = Lexing.from_channel ic in
@@ -50,7 +50,7 @@ let mnemonics =
   let n =
     Sys.command
       Filename.(quote_command ~stdout
-                  ocamlrun [concat ocamlsrcdir "ocamlc"; "-warn-help"])
+                  travlangrun [concat travlangsrcdir "travlangc"; "-warn-help"])
   in
   assert (n = 0);
   let ic = open_in stdout in

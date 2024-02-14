@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*                     Anmol Sahoo, Purdue University                     *)
 (*                        Olivier Nicole, Tarides                         *)

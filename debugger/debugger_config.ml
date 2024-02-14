@@ -1,9 +1,9 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*           Jerome Vouillon, projet Cristal, INRIA Rocquencourt          *)
-(*           OCaml port by John Malecki and Xavier Leroy                  *)
+(*           travlang port by John Malecki and Xavier Leroy                  *)
 (*                                                                        *)
 (*   Copyright 1996 Institut National de Recherche en Informatique et     *)
 (*     en Automatique.                                                    *)
@@ -57,8 +57,8 @@ let shell =
     "Win32" -> "cmd"
   | _ -> "/bin/sh"
 
-(* Name of the OCaml runtime. *)
-let runtime_program = "ocamlrun"
+(* Name of the travlang runtime. *)
+let runtime_program = "travlangrun"
 
 (* Time history size (for `last') *)
 let history_size = ref 30

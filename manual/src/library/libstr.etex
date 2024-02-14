@@ -8,16 +8,16 @@ such as "awk", "perl" or "sed".
 
 Programs that use the "str" library must be linked as follows:
 \begin{alltt}
-        ocamlc \var{other options} -I +str str.cma \var{other files}
-        ocamlopt \var{other options}  -I +str str.cmxa \var{other files}
+        travlangc \var{other options} -I +str str.cma \var{other files}
+        travlangopt \var{other options}  -I +str str.cmxa \var{other files}
 \end{alltt}
 For interactive use of the "str" library, do:
 \begin{alltt}
-        ocamlmktop -o mytop str.cma
+        travlangmktop -o mytop str.cma
         ./mytop
 \end{alltt}
 or (if dynamic linking of C libraries is supported on your platform),
-start "ocaml" and type
+start "travlang" and type
 \begin{caml_example*}{toplevel}
 #directory "+str";;
 #load  "str.cma";;

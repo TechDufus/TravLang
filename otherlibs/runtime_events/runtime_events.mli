@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*                          Sadiq Jaffer, Opsian                          *)
 (*                                                                        *)
@@ -15,15 +15,15 @@
 (** Runtime events - ring buffer-based runtime tracing
 
     This module enables users to enable and subscribe to tracing events
-    from the Garbage Collector and other parts of the OCaml runtime. This can
+    from the Garbage Collector and other parts of the travlang runtime. This can
     be useful for diagnostic or performance monitoring purposes. This module
     can be used to subscribe to events for the current process or external
     processes asynchronously.
 
-    When enabled (either via setting the OCAML_RUNTIME_EVENTS_START environment
+    When enabled (either via setting the travlang_RUNTIME_EVENTS_START environment
     variable or calling Runtime_events.start) a file with the pid of the process
     and extension .events will be created. By default this is in the
-    current directory but can be over-ridden by the OCAML_RUNTIME_EVENTS_DIR
+    current directory but can be over-ridden by the travlang_RUNTIME_EVENTS_DIR
     environment variable. Each domain maintains its own ring buffer in a section
     of the larger file into which it emits events.
 
@@ -34,14 +34,14 @@
     The runtime events system's behaviour can be controlled by the following
     environment variables:
 
-    - OCAML_RUNTIME_EVENTS_START if set will cause the runtime events system
-    to be started as part of the OCaml runtime initialization.
+    - travlang_RUNTIME_EVENTS_START if set will cause the runtime events system
+    to be started as part of the travlang runtime initialization.
 
-    - OCAML_RUNTIME_EVENTS_DIR sets the directory where the runtime events
+    - travlang_RUNTIME_EVENTS_DIR sets the directory where the runtime events
     ring buffers will be located. If not present the program's working directory
     will be used.
 
-  - OCAML_RUNTIME_EVENTS_PRESERVE if set will prevent the OCaml runtime from
+  - travlang_RUNTIME_EVENTS_PRESERVE if set will prevent the travlang runtime from
     removing its ring buffers when it terminates. This can help if monitoring
     very short running programs.
 *)
@@ -268,13 +268,13 @@ val start : unit -> unit
 val pause : unit -> unit
 (** [pause ()] will pause the collection of events in the runtime.
    Traces are collected if the program has called [Runtime_events.start ()] or
-   the OCAML_RUNTIME_EVENTS_START environment variable has been set.
+   the travlang_RUNTIME_EVENTS_START environment variable has been set.
 *)
 
 val resume : unit -> unit
 (** [resume ()] will resume the collection of events in the runtime.
    Traces are collected if the program has called [Runtime_events.start ()] or
-   the OCAML_RUNTIME_EVENTS_START environment variable has been set.
+   the travlang_RUNTIME_EVENTS_START environment variable has been set.
 *)
 
 val create_cursor : (string * int) option -> cursor

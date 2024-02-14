@@ -1,7 +1,7 @@
 (* TEST
  arch_power;
  native;
- ocamlopt.byte;
+ travlangopt.byte;
  run;
 *)
 

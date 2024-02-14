@@ -1,17 +1,17 @@
 (* TEST
  readonly_files = "original.ml middle.ml";
- setup-ocamlc.byte-build-env;
+ setup-travlangc.byte-build-env;
  module = "original.ml";
- ocamlc.byte;
+ travlangc.byte;
  module = "middle.ml";
- ocamlc.byte;
+ travlangc.byte;
  script = "rm -f original.cmi";
  script;
  expect;
 *)
 
 
-#directory "ocamlc.byte";;
+#directory "travlangc.byte";;
 #load "original.cmo"
 #load "middle.cmo"
 

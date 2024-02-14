@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                        Nicolas Ojeda Bar, LexiFi                       *)
@@ -24,7 +24,7 @@
 
 (** Floating-point arithmetic.
 
-    OCaml's floating-point numbers follow the
+    travlang's floating-point numbers follow the
     IEEE 754 standard, using double precision (64 bits) numbers.
     Floating-point operations never raise an exception on overflow,
     underflow, division by zero, etc.  Instead, special IEEE numbers
@@ -118,7 +118,7 @@ val nan : float
     [nan] is [quiet_nan] since 5.1; it was a signaling NaN before. *)
 
 val signaling_nan : float
-(** Signaling NaN. The corresponding signals do not raise OCaml exception,
+(** Signaling NaN. The corresponding signals do not raise travlang exception,
     but the value can be useful for interoperability with C libraries.
 
     @since 5.1 *)

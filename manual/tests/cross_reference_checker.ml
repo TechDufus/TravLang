@@ -21,7 +21,7 @@
 (** {1 Error printing } *)
 type error =
   | Reference_mismatch of
-      {loc:Location.t; label:string; ocaml:int list; tex:int list}
+      {loc:Location.t; label:string; travlang:int list; tex:int list}
   | Unknown_label of Location.t * string
   | Tuple_or_list_expected of Location.t
   | No_aux_file
@@ -41,10 +41,10 @@ let print_error error =
   | Reference_mismatch r ->
     Location.errorf ~loc:r.loc
       "@[<v 2>References for label %S do not match:@,\
-       OCaml side %a,@,\
+       travlang side %a,@,\
        manual     %a@]@."
       r.label
-      pp_ref r.ocaml
+      pp_ref r.travlang
       pp_ref r.tex
   | No_aux_file ->
       Location.errorf "No aux file provided@."
@@ -54,7 +54,7 @@ let print_error error =
 
 (** {1 Main types} *)
 
-(** Maps of ocaml reference to manual labels *)
+(** Maps of travlang reference to manual labels *)
 module Refs = Map.Make(String)
 
 (** Reference extracted from TeX aux files *)
@@ -66,7 +66,7 @@ type tex_reference =
 
 type status = Ok | Bad | Unknown
 
-(** Reference extracted from OCaml source files *)
+(** Reference extracted from travlang source files *)
 type ml_reference = { loc: Location.t; pos: int list; status:status }
 
 (** {1 Consistency check } *)
@@ -75,7 +75,7 @@ let check_consistency (ref:tex_reference) {loc; pos; _ } =
   if ref.pos = pos then
     { loc; pos; status = Ok }
   else begin
-    print_error @@ Reference_mismatch {loc;label=ref.label;tex=ref.pos;ocaml=pos};
+    print_error @@ Reference_mismatch {loc;label=ref.label;tex=ref.pos;travlang=pos};
     {loc; pos;  status = Bad }
   end
 
@@ -124,14 +124,14 @@ module TeX = struct
           lines @@ check_line refs line in
     let refs = lines refs in
     close_in chan;
-    let error = Refs.fold (fun label ocaml_refs error ->
-        List.fold_left (check_final_status label) error ocaml_refs)
+    let error = Refs.fold (fun label travlang_refs error ->
+        List.fold_left (check_final_status label) error travlang_refs)
         refs false in
     if error then exit 2 else exit 0
 end
 
-(** {1 Extract references from Ocaml source files} *)
-module OCaml_refs = struct
+(** {1 Extract references from travlang source files} *)
+module travlang_refs = struct
 
   let parse sourcefile  =
     Pparse.parse_implementation ~tool_name:"manual_cross_reference_check"
@@ -166,7 +166,7 @@ module OCaml_refs = struct
     try Some (List.map int l) with
     | Exit -> None
 
-  (** We keep a list of OCaml-side references to the same label *)
+  (** We keep a list of travlang-side references to the same label *)
   let add_ref label ref refs =
     let l = match Refs.find_opt label refs with
       | None -> [ref]
@@ -254,7 +254,7 @@ let args =
 
 let () =
   let m = ref Refs.empty in
-  Arg.parse args (OCaml_refs.from_file m) usage;
+  Arg.parse args (travlang_refs.from_file m) usage;
   match !aux_file with
   | None -> print_error No_aux_file; exit 2
   |  Some aux ->

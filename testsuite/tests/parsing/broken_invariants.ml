@@ -28,11 +28,11 @@ let g: int -> [%empty_poly_binder] = fun n x -> x;;
 
 (* TEST
  readonly_files = "illegal_ppx.ml";
- setup-ocamlc.byte-build-env;
+ setup-travlangc.byte-build-env;
  all_modules = "illegal_ppx.ml";
  program = "ppx.exe";
- ocamlc.byte with ocamlcommon;
+ travlangc.byte with travlangcommon;
  all_modules = "broken_invariants.ml";
- flags = "-ppx '${ocamlrun} ${test_build_directory_prefix}/ocamlc.byte/ppx.exe'";
+ flags = "-ppx '${travlangrun} ${test_build_directory_prefix}/travlangc.byte/ppx.exe'";
  toplevel;
 *)

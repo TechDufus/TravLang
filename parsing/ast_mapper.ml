@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*                         Alain Frisch, LexiFi                           *)
 (*                                                                        *)
@@ -16,12 +16,12 @@
 (* A generic Parsetree mapping class *)
 
 (*
-[@@@ocaml.warning "+9"]
+[@@@travlang.warning "+9"]
   (* Ensure that record patterns don't miss any field. *)
 *)
 
-[@@@ocaml.warning "-60"] module Str = Ast_helper.Str (* For ocamldep *)
-[@@@ocaml.warning "+60"]
+[@@@travlang.warning "-60"] module Str = Ast_helper.Str (* For travlangdep *)
+[@@@travlang.warning "+60"]
 
 open Parsetree
 open Ast_helper
@@ -620,7 +620,7 @@ module CE = struct
 end
 
 (* Now, a generic AST mapper, to be extended to cover all kinds and
-   cases of the OCaml grammar.  The default behavior of the mapper is
+   cases of the travlang grammar.  The default behavior of the mapper is
    the identity. *)
 
 let default_mapper =
@@ -830,18 +830,18 @@ let extension_of_error {kind; main; sub} =
     raise (Invalid_argument "extension_of_error: expected kind Report_error");
   let str_of_pp pp_msg = Format.asprintf "%t" pp_msg in
   let extension_of_sub sub =
-    { loc = sub.loc; txt = "ocaml.error" },
+    { loc = sub.loc; txt = "travlang.error" },
     PStr ([Str.eval (Exp.constant
                        (Pconst_string (str_of_pp sub.txt, sub.loc, None)))])
   in
-  { loc = main.loc; txt = "ocaml.error" },
+  { loc = main.loc; txt = "travlang.error" },
   PStr (Str.eval (Exp.constant
                     (Pconst_string (str_of_pp main.txt, main.loc, None))) ::
         List.map (fun msg -> Str.extension (extension_of_sub msg)) sub)
 
 let attribute_of_warning loc s =
   Attr.mk
-    {loc; txt = "ocaml.ppwarning" }
+    {loc; txt = "travlang.ppwarning" }
     (PStr ([Str.eval ~loc (Exp.constant (Pconst_string (s, loc, None)))]))
 
 let cookies = ref String.Map.empty
@@ -894,7 +894,7 @@ module PpxContext = struct
 
   let mk fields =
     {
-      attr_name = { txt = "ocaml.ppx.context"; loc = Location.none };
+      attr_name = { txt = "travlang.ppx.context"; loc = Location.none };
       attr_payload = Parsetree.PStr [Str.eval (Exp.record fields None)];
       attr_loc = Location.none
     }
@@ -930,13 +930,13 @@ module PpxContext = struct
                  ({ pexp_desc = Pexp_record (fields, None) }, [])}] ->
         fields
     | _ ->
-        raise_errorf "Internal error: invalid [@@@ocaml.ppx.context] syntax"
+        raise_errorf "Internal error: invalid [@@@travlang.ppx.context] syntax"
 
   let restore fields =
     let field name payload =
       let rec get_string = function
         | { pexp_desc = Pexp_constant (Pconst_string (str, _, None)) } -> str
-        | _ -> raise_errorf "Internal error: invalid [@@@ocaml.ppx.context \
+        | _ -> raise_errorf "Internal error: invalid [@@@travlang.ppx.context \
                              { %s }] string syntax" name
       and get_bool pexp =
         match pexp with
@@ -946,7 +946,7 @@ module PpxContext = struct
         | {pexp_desc = Pexp_construct ({txt = Longident.Lident "false"},
                                        None)} ->
             false
-        | _ -> raise_errorf "Internal error: invalid [@@@ocaml.ppx.context \
+        | _ -> raise_errorf "Internal error: invalid [@@@travlang.ppx.context \
                              { %s }] bool syntax" name
       and get_list elem = function
         | {pexp_desc =
@@ -956,12 +956,12 @@ module PpxContext = struct
         | {pexp_desc =
              Pexp_construct ({txt = Longident.Lident "[]"}, None)} ->
             []
-        | _ -> raise_errorf "Internal error: invalid [@@@ocaml.ppx.context \
+        | _ -> raise_errorf "Internal error: invalid [@@@travlang.ppx.context \
                              { %s }] list syntax" name
       and get_pair f1 f2 = function
         | {pexp_desc = Pexp_tuple [e1; e2]} ->
             (f1 e1, f2 e2)
-        | _ -> raise_errorf "Internal error: invalid [@@@ocaml.ppx.context \
+        | _ -> raise_errorf "Internal error: invalid [@@@travlang.ppx.context \
                              { %s }] pair syntax" name
       and get_option elem = function
         | { pexp_desc =
@@ -970,7 +970,7 @@ module PpxContext = struct
         | { pexp_desc =
               Pexp_construct ({ txt = Longident.Lident "None" }, None) } ->
             None
-        | _ -> raise_errorf "Internal error: invalid [@@@ocaml.ppx.context \
+        | _ -> raise_errorf "Internal error: invalid [@@@travlang.ppx.context \
                              { %s }] option syntax" name
       in
       match name with
@@ -1039,7 +1039,7 @@ let extension_of_exn exn =
   match error_of_exn exn with
   | Some (`Ok error) -> extension_of_error error
   | Some `Already_displayed ->
-      { loc = Location.none; txt = "ocaml.error" }, PStr []
+      { loc = Location.none; txt = "travlang.error" }, PStr []
   | None -> raise exn
 
 
@@ -1047,7 +1047,7 @@ let apply_lazy ~source ~target mapper =
   let implem ast =
     let fields, ast =
       match ast with
-      | {pstr_desc = Pstr_attribute ({attr_name = {txt = "ocaml.ppx.context"};
+      | {pstr_desc = Pstr_attribute ({attr_name = {txt = "travlang.ppx.context"};
                                       attr_payload = x})} :: l ->
           PpxContext.get_fields x, l
       | _ -> [], ast
@@ -1067,7 +1067,7 @@ let apply_lazy ~source ~target mapper =
   let iface ast =
     let fields, ast =
       match ast with
-      | {psig_desc = Psig_attribute ({attr_name = {txt = "ocaml.ppx.context"};
+      | {psig_desc = Psig_attribute ({attr_name = {txt = "travlang.ppx.context"};
                                       attr_payload = x;
                                       attr_loc = _})} :: l ->
           PpxContext.get_fields x, l
@@ -1103,7 +1103,7 @@ let apply_lazy ~source ~target mapper =
     close_out oc
   and fail () =
     close_in ic;
-    failwith "Ast_mapper: OCaml version mismatch or malformed input";
+    failwith "Ast_mapper: travlang version mismatch or malformed input";
   in
 
   if magic = Config.ast_impl_magic_number then
@@ -1114,7 +1114,7 @@ let apply_lazy ~source ~target mapper =
 
 let drop_ppx_context_str ~restore = function
   | {pstr_desc = Pstr_attribute
-                   {attr_name = {Location.txt = "ocaml.ppx.context"};
+                   {attr_name = {Location.txt = "travlang.ppx.context"};
                     attr_payload = a;
                     attr_loc = _}}
     :: items ->
@@ -1125,7 +1125,7 @@ let drop_ppx_context_str ~restore = function
 
 let drop_ppx_context_sig ~restore = function
   | {psig_desc = Psig_attribute
-                   {attr_name = {Location.txt = "ocaml.ppx.context"};
+                   {attr_name = {Location.txt = "travlang.ppx.context"};
                     attr_payload = a;
                     attr_loc = _}}
     :: items ->

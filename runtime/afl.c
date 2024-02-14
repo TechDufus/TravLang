@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*                 Stephen Dolan, University of Cambridge                 */
 /*                                                                        */
@@ -32,7 +32,7 @@ uintnat caml_afl_prev_loc;
 CAMLexport value caml_setup_afl(value unit)
 {
   /* AFL is not supported, but we still need to allocate space for the bitmap
-       (the instrumented OCaml code will write into it). */
+       (the instrumented travlang code will write into it). */
   if (caml_afl_area_ptr == NULL) {
     caml_afl_area_ptr = caml_stat_alloc(INITIAL_AFL_AREA_SIZE);
     memset(caml_afl_area_ptr, 0, INITIAL_AFL_AREA_SIZE);
@@ -96,7 +96,7 @@ CAMLexport value caml_setup_afl(value unit)
   shm_id_str = caml_secure_getenv("__AFL_SHM_ID");
   if (shm_id_str == NULL) {
     /* Not running under afl-fuzz.  Allocate space for the bitmap
-       (the instrumented OCaml code will write into it),
+       (the instrumented travlang code will write into it),
        and continue as normal. */
     caml_afl_area_ptr = caml_stat_alloc(INITIAL_AFL_AREA_SIZE);
     memset(caml_afl_area_ptr, 0, INITIAL_AFL_AREA_SIZE);

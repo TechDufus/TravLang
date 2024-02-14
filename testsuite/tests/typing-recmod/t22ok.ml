@@ -1,8 +1,8 @@
 (* TEST
  flags = " -w -a ";
- setup-ocamlc.byte-build-env;
- ocamlc.byte;
- check-ocamlc.byte-output;
+ setup-travlangc.byte-build-env;
+ travlangc.byte;
+ check-travlangc.byte-output;
 *)
 
 (* Tests for recursive modules *)

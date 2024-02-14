@@ -1,5 +1,5 @@
 (* TEST
- ocamldoc with html;
+ travlangdoc with html;
 *)
 
 (** Check that all toplevel items are given a unique id. *)

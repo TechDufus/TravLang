@@ -1,6 +1,6 @@
 #**************************************************************************
 #*                                                                        *
-#*                                 OCaml                                  *
+#*                                 travlang                                  *
 #*                                                                        *
 #*             Florian Angeletti, projet Cambium, Inria Paris             *
 #*                                                                        *
@@ -19,8 +19,8 @@ ROOTDIR = ..
 odoc-%:
 	$(MAKE) -C odoc $*
 
-ocamldoc-%:
-	$(MAKE) -C ocamldoc $*
+travlangdoc-%:
+	$(MAKE) -C travlangdoc $*
 
 ifeq ($(DOCUMENTATION_TOOL),odoc)
 man: odoc-man
@@ -30,18 +30,18 @@ html: odoc-html
 all: html latex man
 install: odoc-install
 else
-man: ocamldoc-man
-latex: ocamldoc-latex
-html: ocamldoc-html
-	@echo "documentation is in ./api_docgen/ocamldoc/build/html/"
-texi: ocamldoc-texi
-pdf: ocamldoc-pdf
+man: travlangdoc-man
+latex: travlangdoc-latex
+html: travlangdoc-html
+	@echo "documentation is in ./api_docgen/travlangdoc/build/html/"
+texi: travlangdoc-texi
+pdf: travlangdoc-pdf
 all: html pdf man latex texi
-install: ocamldoc-install
+install: travlangdoc-install
 endif
 
 clean:
-	rm -rf build odoc/build ocamldoc/build
+	rm -rf build odoc/build travlangdoc/build
 
 distclean: clean
 

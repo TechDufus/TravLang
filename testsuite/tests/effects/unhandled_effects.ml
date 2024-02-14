@@ -1,5 +1,5 @@
 (* TEST
- set OCAMLRUNPARAM = "s32";
+ set travlangRUNPARAM = "s32";
  native;
 *)
 
@@ -10,7 +10,7 @@
    By using a very small initial heap (s32), this test guarantees the GC
    will get triggered.
 
-   Refer to https://github.com/ocaml/ocaml/issues/12486 for more
+   Refer to https://github.com/travlang/travlang/issues/12486 for more
    information.
 *)
 

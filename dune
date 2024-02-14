@@ -1,6 +1,6 @@
 ;**************************************************************************
 ;*                                                                        *
-;*                                 OCaml                                  *
+;*                                 travlang                                  *
 ;*                                                                        *
 ;*                     Thomas Refis, Jane Street Europe                   *
 ;*                                                                        *
@@ -18,7 +18,7 @@
 
 ;; Too annoying to get to work. Use (copy_files# ...) instead
 ; (include_subdirs unqualified)
-; (ignored_subdirs (lex yacc testsuite ocamldoc ocamltest toplevel otherlibs))
+; (ignored_subdirs (lex yacc testsuite travlangdoc travlangtest toplevel otherlibs))
 
 (copy_files# utils/*.ml{,i})
 (copy_files# parsing/*.ml{,i})
@@ -34,7 +34,7 @@
 (copy_files# middle_end/flambda/base_types/*.ml{,i})
 
 (library
- (name ocamlcommon)
+ (name travlangcommon)
  (wrapped false)
  (flags (:standard -principal -nostdlib \ -short-paths))
  (libraries stdlib)
@@ -83,10 +83,10 @@
  ))
 
 (library
- (name ocamlbytecomp)
+ (name travlangbytecomp)
  (wrapped false)
  (flags (:standard -principal -nostdlib))
- (libraries stdlib ocamlcommon)
+ (libraries stdlib travlangcommon)
  (modules
     ;; bytecomp/
     bytegen bytelibrarian bytelink bytepackager emitcode printinstr
@@ -96,10 +96,10 @@
  ))
 
 (library
- (name ocamlmiddleend)
+ (name travlangmiddleend)
  (wrapped false)
  (flags (:standard -principal -nostdlib))
- (libraries stdlib ocamlcommon)
+ (libraries stdlib travlangcommon)
  (modules_without_implementation
    cmx_format cmxs_format backend_intf inlining_decision_intf
    simplify_boxed_integer_ops_intf)
@@ -141,10 +141,10 @@
 )
 
 (library
- (name ocamloptcomp)
+ (name travlangoptcomp)
  (wrapped false)
  (flags (:standard -principal -nostdlib))
- (libraries stdlib ocamlcommon ocamlmiddleend)
+ (libraries stdlib travlangcommon travlangmiddleend)
  (modules_without_implementation x86_ast emitenv branch_relaxation_intf)
  (modules
    ;; asmcomp/
@@ -172,59 +172,59 @@
 )
 
 ;;;;;;;;;;;;;;
-;;; ocamlc ;;;
+;;; travlangc ;;;
 ;;;;;;;;;;;;;;
 
 (executable
  (name main)
  (modes byte)
  (flags (:standard -principal -nostdlib))
- (libraries ocamlbytecomp ocamlcommon runtime stdlib)
+ (libraries travlangbytecomp travlangcommon runtime stdlib)
  (modules main))
 
 (rule
- (copy main.exe ocamlc.byte))
+ (copy main.exe travlangc.byte))
 
 ;;;;;;;;;;;;;;;;
-;;; ocamlopt ;;;
+;;; travlangopt ;;;
 ;;;;;;;;;;;;;;;;
 
 (executable
  (name optmain)
  (modes byte)
  (flags (:standard -principal -nostdlib))
- (libraries ocamloptcomp ocamlmiddleend ocamlcommon runtime stdlib)
+ (libraries travlangoptcomp travlangmiddleend travlangcommon runtime stdlib)
  (modules optmain))
 
 (rule
- (copy optmain.exe ocamlopt.byte))
+ (copy optmain.exe travlangopt.byte))
 
 ;;;;;;;;;;;;;;;
 ;;; aliases ;;;
 ;;;;;;;;;;;;;;;
 
-; mshinwell: The debugger and ocamldoc are currently disabled as Dynlink is
+; mshinwell: The debugger and travlangdoc are currently disabled as Dynlink is
 ; not built correctly.
 (alias
  (name world)
- (deps ocamlc.byte
-       ocamlopt.byte
-;       debugger/ocamldebug.byte
-;       ocamldoc/ocamldoc.byte
-       ocamltest/ocamltest.byte
-       toplevel/ocaml.byte
+ (deps travlangc.byte
+       travlangopt.byte
+;       debugger/travlangdebug.byte
+;       travlangdoc/travlangdoc.byte
+       travlangtest/travlangtest.byte
+       toplevel/travlang.byte
        toplevel/expunge.exe
        ))
 
 (alias
   (name libs)
   (deps
-    ocamloptcomp.cma
-    ocamlmiddleend.cma
-    ocamlcommon.cma
+    travlangoptcomp.cma
+    travlangmiddleend.cma
+    travlangcommon.cma
     runtime/runtime.cma
     stdlib/stdlib.cma
-    ocamlbytecomp.cma
-    ocamltest/ocamltest_core_and_plugin.cma
-    toplevel/ocamltoplevel.cma
+    travlangbytecomp.cma
+    travlangtest/travlangtest_core_and_plugin.cma
+    toplevel/travlangtoplevel.cma
   ))

@@ -1,4 +1,4 @@
-(Introduced in OCaml 3.12)
+(Introduced in travlang 3.12)
 
 \begin{syntax}
 module-type:

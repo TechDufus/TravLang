@@ -1,13 +1,13 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*      KC Sivaramakrishnan, Indian Institute of Technology, Madras       */
-/*                   Tom Kelly, OCaml Labs Consultancy                    */
+/*                   Tom Kelly, travlang Labs Consultancy                    */
 /*                Stephen Dolan, University of Cambridge                  */
 /*                                                                        */
 /*   Copyright 2021 Indian Institute of Technology, Madras                */
-/*   Copyright 2021 OCaml Labs Consultancy                                */
+/*   Copyright 2021 travlang Labs Consultancy                                */
 /*   Copyright 2019 University of Cambridge                               */
 /*                                                                        */
 /*   All rights reserved.  This file is distributed under the terms of    */
@@ -32,18 +32,18 @@ struct stack_handler {
   value handle_value;
   value handle_exn;
   value handle_effect;
-  struct stack_info* parent; /* parent OCaml stack if any */
+  struct stack_info* parent; /* parent travlang stack if any */
 };
 
-/* stack_info describes the OCaml stack. It is used for:
- *  - storing information about the OCaml stack allowing it to be switched
+/* stack_info describes the travlang stack. It is used for:
+ *  - storing information about the travlang stack allowing it to be switched
  *  - accessing the stack_handler for the stack to handle effects
- *  - handling a freelist of OCaml stacks in a stack_cache
+ *  - handling a freelist of travlang stacks in a stack_cache
  */
 struct stack_info {
 #ifdef NATIVE_CODE
-  void* sp;            /* stack pointer of the OCaml stack when suspended */
-  void* exception_ptr; /* exception pointer of OCaml stack when suspended */
+  void* sp;            /* stack pointer of the travlang stack when suspended */
+  void* exception_ptr; /* exception pointer of travlang stack when suspended */
 #else
   value* sp;
   value* exception_ptr;
@@ -80,7 +80,7 @@ struct stack_info {
  * |   caml_start_program   |
  * +------------------------+
  * |                        |
- * .      OCaml frames      . <--- sp
+ * .      travlang frames      . <--- sp
  * |                        |
  * +------------------------+ <--- Stack_threshold
  * |                        |
@@ -105,24 +105,24 @@ struct stack_info {
   #define Reserved_space_c_stack_link 0
 #endif
 
-/* This structure is used for storing the OCaml return pointer when
- * transitioning from an OCaml stack to a C stack at a C call. When an OCaml
- * stack is reallocated, this linked list is walked to update the OCaml stack
+/* This structure is used for storing the travlang return pointer when
+ * transitioning from an travlang stack to a C stack at a C call. When an travlang
+ * stack is reallocated, this linked list is walked to update the travlang stack
  * pointers. It is also used for DWARF backtraces. */
 struct c_stack_link {
 #if Reserved_space_c_stack_link > 0
   char reserved[Reserved_space_c_stack_link];
 #endif
-  /* The reference to the OCaml stack */
+  /* The reference to the travlang stack */
   struct stack_info* stack;
-  /* OCaml return address */
+  /* travlang return address */
   void* sp;
   struct c_stack_link* prev;
 };
 
 /* `gc_regs` and `gc_regs_buckets`.
 
-   When entering certain runtime functions, the OCaml runtime saves
+   When entering certain runtime functions, the travlang runtime saves
    all registers into a `gc_regs` "bucket", a value array allocated on
    the C heap. This is notably used by the garbage collector to know
    which registers contain local roots.
@@ -135,28 +135,28 @@ struct c_stack_link {
    that are not currently in use. It has a linked list structure
    (the first element of each bucket is a pointer to the next
    available bucket or 0). It is guaranteed to be non-empty, to
-   contain at least one free bucket, whenever we are running OCaml
+   contain at least one free bucket, whenever we are running travlang
    code on the domain. This invariant is maintained by calling
-   [caml_maybe_expand_stack] before calling OCaml code from C code,
+   [caml_maybe_expand_stack] before calling travlang code from C code,
    which allocates a new bucket if the list is empty.
 
-   When OCaml code needs to save all registers, it pops the next
+   When travlang code needs to save all registers, it pops the next
    bucket from `gc_regs_bucket`. It is pushed back on return.
 
-   When C code passes control to an OCaml callback, the current
-   `Caml_state->gc_regs` value is saved to the top of the OCaml stack
+   When C code passes control to an travlang callback, the current
+   `Caml_state->gc_regs` value is saved to the top of the travlang stack
    (see the `caml_start_program` logic, which is also used by
    `caml_callback` functions). In general we can thus have several
    buckets storing registers, one for each nested call to runtime
    functions saving all registers, with the currently-active one in
-   `Caml_state` and the rest at the beginning of each OCaml stack
+   `Caml_state` and the rest at the beginning of each travlang stack
    fragment created from C.
 */
 
 /* Overview of the stack switching primitives for effects
  *
- * For an understanding of effect handlers in OCaml please see:
- *  Retrofitting Effect Handlers onto OCaml, KC Sivaramakrishnan, et al.
+ * For an understanding of effect handlers in travlang please see:
+ *  Retrofitting Effect Handlers onto travlang, KC Sivaramakrishnan, et al.
  *  PLDI 2021
  *
  *  Native code
@@ -167,26 +167,26 @@ struct c_stack_link {
  * implemented in the assembly files for an architecture (such as
  * runtime/amd64.S).
  *
- * A continuation object represents a suspended OCaml stack. It contains
+ * A continuation object represents a suspended travlang stack. It contains
  * the stack pointer tagged as an integer to avoid being followed by the GC.
  * In the code the tagged pointer can be referred to as a 'fiber':
  *     fiber := Val_ptr(stack)
  *
  * caml_runstack new_stack function argument
- *  caml_runstack launches a function (with an argument) in a new OCaml
- *  stack. It switches execution from the parent OCaml stack to the fresh
- *  stack and installs an exception handler. On return the new OCaml stack
- *  is freed, the stack is restored to the parent OCaml stack and the
- *  handle_value/handle_exn function is executed on the parent OCaml stack.
+ *  caml_runstack launches a function (with an argument) in a new travlang
+ *  stack. It switches execution from the parent travlang stack to the fresh
+ *  stack and installs an exception handler. On return the new travlang stack
+ *  is freed, the stack is restored to the parent travlang stack and the
+ *  handle_value/handle_exn function is executed on the parent travlang stack.
  *
  * caml_perform effect continuation
- *  caml_perform captures the current OCaml stack in the continuation object
- *  provided and raises the effect by switching to the parent OCaml stack and
- *  then executing the handle_effect function. Should there be no parent OCaml
+ *  caml_perform captures the current travlang stack in the continuation object
+ *  provided and raises the effect by switching to the parent travlang stack and
+ *  then executing the handle_effect function. Should there be no parent travlang
  *  stack then the Effect.Unhandled exception is raised.
  *
  * caml_reperform effect continuation last_fiber
- *  caml_reperform is used to walk up the parent OCaml stacks to execute the
+ *  caml_reperform is used to walk up the parent travlang stacks to execute the
  *  next effect handler installed in the chain. This function is implemented
  *  by setting up the required registers then jumping into caml_perform which
  *  does the switch to the parent and execution of the handle_effect function.
@@ -210,7 +210,7 @@ struct c_stack_link {
  *   continuation that has already been resumed). The stacks are then switched
  *   with the old stack becoming the parent of the new stack. Care is taken
  *   to setup the exception handler for the new stack. Execution continues
- *   on the new OCaml stack with the passed function and argument.
+ *   on the new travlang stack with the passed function and argument.
  *
  *  Pperform -> PERFORM
  *   PERFORM captures the current stack in a continuation object it allocates.
@@ -219,7 +219,7 @@ struct c_stack_link {
  *   Effect.Unhandled exception is raised.
  *
  *  Preperform -> REPERFORMTERM
- *   REPERFORMTERM is used to walk up the parent OCaml stacks to execute the
+ *   REPERFORMTERM is used to walk up the parent travlang stacks to execute the
  *   next effect handler installed in the chain. The instruction takes care to
  *   switch back to the continuation stack to raise the Effect.Unhandled
  *   exception in in the case no parent is left. Otherwise the instruction

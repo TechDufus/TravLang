@@ -47,7 +47,7 @@ end
 and ASet : Set.S with type elt = A.t
 \end{caml_example*}
 
-This is an experimental extension of OCaml: the class of
+This is an experimental extension of travlang: the class of
 recursive definitions accepted, as well as its dynamic semantics are
 not final and subject to change in future releases.
 

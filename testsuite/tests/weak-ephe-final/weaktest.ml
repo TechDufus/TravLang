@@ -59,8 +59,8 @@ for j = 0 to 99 do
   r := [];
   incr added;
 
-  (* Ephemeron / Weak array implementation in multicore OCaml differs
-     significantly from stock OCaml. In particular, ephemerons keys and data in
+  (* Ephemeron / Weak array implementation in multicore travlang differs
+     significantly from stock travlang. In particular, ephemerons keys and data in
      the minor heap are considered roots for the minor collection. Moreover,
      When blit'ing ephemerons, the source keys and data are marked as live to
      play nicely with the concurrent major GC. As a result, this test keeps the

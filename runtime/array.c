@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           */
 /*                                                                        */
@@ -44,7 +44,7 @@ CAMLexport int caml_is_double_array(value array)
   return (Tag_val(array) == Double_array_tag);
 }
 
-/* Note: the OCaml types on the following primitives will work both with
+/* Note: the travlang types on the following primitives will work both with
    and without the -no-flat-float-array configure-time option. If you
    respect them, your C code should work in both configurations.
 */
@@ -153,7 +153,7 @@ static value caml_array_unsafe_set_addr(value array, value index,value newval)
 }
 
 /* [ floatarray -> int -> float -> unit ] */
-/* [MM]: [caml_array_unsafe_set_addr] has a fence for enforcing the OCaml
+/* [MM]: [caml_array_unsafe_set_addr] has a fence for enforcing the travlang
    memory model through its use of [caml_modify].
    [MM] [TODO]: [caml_floatarray_unsafe_set] will also need a similar fence in
    [Store_double_flat_field]. */
@@ -347,7 +347,7 @@ static void wo_memmove (volatile value* const dst,
 }
 
 /* [MM] [TODO]: Not consistent with the memory model. See the discussion in
-   https://github.com/ocaml-multicore/ocaml-multicore/pull/822. */
+   https://github.com/travlang-multicore/travlang-multicore/pull/822. */
 CAMLprim value caml_floatarray_blit(value a1, value ofs1, value a2, value ofs2,
                                     value n)
 {

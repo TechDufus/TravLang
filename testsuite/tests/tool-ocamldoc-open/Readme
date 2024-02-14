@@ -1,6 +1,6 @@
-This test focuses on ocamldoc "-open" command line option.
+This test focuses on travlangdoc "-open" command line option.
 It ensures that the modules passed as argument to this "-open" option
-are opened in the initial environment of ocamldoc.
+are opened in the initial environment of travlangdoc.
 
 More precisely, it checks that
 
@@ -8,5 +8,5 @@ More precisely, it checks that
 * modules are opened in the left-to-right order
 
 The test builds a latex documentation file for the three modules
-"Main", "Alias" and "Inner". Changes to ocamldoc latex output might
+"Main", "Alias" and "Inner". Changes to travlangdoc latex output might
 trigger spurious errors in this test.

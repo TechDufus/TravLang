@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           */
 /*                                                                        */
@@ -166,7 +166,7 @@ value caml_input_val (struct channel * chan);
 #endif /* CAML_INTERNALS */
 
 CAMLextern value caml_input_val_from_string (value str, intnat ofs);
-  /* Read a structured value from the OCaml string [str], starting
+  /* Read a structured value from the travlang string [str], starting
      at offset [ofs]. */
 CAMLextern value caml_input_value_from_malloc(char * data, intnat ofs);
   /* Read a structured value from a malloced buffer.  [data] points

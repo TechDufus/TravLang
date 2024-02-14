@@ -1,7 +1,7 @@
 #!/bin/sh
 #**************************************************************************
 #*                                                                        *
-#*                                 OCaml                                  *
+#*                                 travlang                                  *
 #*                                                                        *
 #*             Sebastien Hinderer projet Cambium, INRIA Paris             *
 #*                                                                        *
@@ -18,7 +18,7 @@
 set -ex
 
 jobs=-j8
-instdir="$HOME/ocaml-tmp-install-$$"
+instdir="$HOME/travlang-tmp-install-$$"
 
 # Make sure the repository is clean
 git clean -q -f -d -x

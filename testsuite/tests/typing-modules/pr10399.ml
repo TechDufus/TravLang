@@ -2,7 +2,7 @@
  expect;
 *)
 
-(* From jctis: <https://github.com/ocaml/ocaml/issues/10399> *)
+(* From jctis: <https://github.com/travlang/travlang/issues/10399> *)
 
 module PR10399 : sig
   type t = < x : int >

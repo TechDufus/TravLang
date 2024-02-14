@@ -72,10 +72,10 @@ end
 
 (* TEST
  flags = "-w +A";
- setup-ocamlc.byte-build-env;
+ setup-travlangc.byte-build-env;
  module = "w32.mli";
- ocamlc.byte;
+ travlangc.byte;
  module = "w32.ml";
- ocamlc.byte;
- check-ocamlc.byte-output;
+ travlangc.byte;
+ check-travlangc.byte-output;
 *)

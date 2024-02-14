@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -16,8 +16,8 @@
 (* Definitions for the interactive toplevel loop that are common between
    bytecode and native *)
 
-[@@@ocaml.warning "-60"] module Str = Ast_helper.Str (* For ocamldep *)
-[@@@ocaml.warning "+60"]
+[@@@travlang.warning "-60"] module Str = Ast_helper.Str (* For travlangdep *)
+[@@@travlang.warning "+60"]
 
 open Format
 open Parsetree
@@ -200,7 +200,7 @@ let preprocess_phrase ppf phr =
     match phr with
     | Ptop_def str ->
         let str =
-          Pparse.apply_rewriters_str ~restore:true ~tool_name:"ocaml" str
+          Pparse.apply_rewriters_str ~restore:true ~tool_name:"travlang" str
         in
         Ptop_def str
     | phr -> phr
@@ -262,7 +262,7 @@ let refill_lexbuf buffer len =
 
 let set_paths ?(auto_include=Compmisc.auto_include) ?(dir="") () =
   (* Add whatever -I options have been specified on the command line,
-     but keep the directories that user code linked in with ocamlmktop
+     but keep the directories that user code linked in with travlangmktop
      may have added to load_path. *)
   let expand = Misc.expand_directory Config.standard_library in
   let Load_path.{ visible; hidden } = Load_path.get_paths () in
@@ -285,7 +285,7 @@ let set_paths ?(auto_include=Compmisc.auto_include) ?(dir="") () =
 
 let update_search_path_from_env () =
   let extra_paths =
-    let env = Sys.getenv_opt "OCAMLTOP_INCLUDE_PATH" in
+    let env = Sys.getenv_opt "travlangTOP_INCLUDE_PATH" in
     Option.fold ~none:[] ~some:Misc.split_path_contents env
   in
   Clflags.include_dirs := List.rev_append extra_paths !Clflags.include_dirs

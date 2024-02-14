@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*                   Jeremie Dimino, Jane Street Europe                   *)
 (*                                                                        *)
@@ -30,7 +30,7 @@
    ]}
 *)
 
-[@@@ocaml.warning "-40"]
+[@@@travlang.warning "-40"]
 
 open StdLabels
 
@@ -60,7 +60,7 @@ type correction =
 
 let match_expect_extension (ext : Parsetree.extension) =
   match ext with
-  | ({Asttypes.txt="expect"|"ocaml.expect"; loc = extid_loc}, payload) ->
+  | ({Asttypes.txt="expect"|"travlang.expect"; loc = extid_loc}, payload) ->
     let invalid_payload () =
       Location.raise_errorf ~loc:extid_loc "invalid [%%%%expect payload]"
     in
@@ -323,7 +323,7 @@ let main fname =
   Toploop.override_sys_argv
     (Array.sub Sys.argv ~pos:!Arg.current
        ~len:(Array.length Sys.argv - !Arg.current));
-  (* Ignore OCAMLRUNPARAM=b to be reproducible *)
+  (* Ignore travlangRUNPARAM=b to be reproducible *)
   Printexc.record_backtrace false;
   if not !Clflags.no_std_include then begin
     match !repo_root with
@@ -354,7 +354,7 @@ end);;
 let args =
   Arg.align
     ( [ "-repo-root", Arg.String (fun s -> repo_root := Some s),
-        "<dir> root of the OCaml repository. This causes the tool to use \
+        "<dir> root of the travlang repository. This causes the tool to use \
          the stdlib from the current source tree rather than the installed one."
       ; "-keep-original-error-size", Arg.Set keep_original_error_size,
         " truncate long error messages as the compiler would"

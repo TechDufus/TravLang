@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Sebastien Hinderer, projet Cambium, INRIA Paris            *)
 (*                                                                        *)

@@ -12,7 +12,7 @@
    New: implicit pack is also supported, and you only need to be able
    to infer the the module type path from the context.
  *)
-(* ocaml -principal *)
+(* travlang -principal *)
 
 (* Use a module pattern *)
 let sort (type s) (module Set : Set.S with type elt = s) l =

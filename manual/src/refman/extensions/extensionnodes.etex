@@ -1,4 +1,4 @@
-(Introduced in OCaml 4.02,
+(Introduced in travlang 4.02,
 infix notations for constructs other than expressions added in 4.03,
 infix notation (e1 ;\%ext e2) added in 4.04.
 )
@@ -87,7 +87,7 @@ operators (See \ref{ss:letops-punning}).
 
 Furthermore, quoted strings "{|...|}" can be combined with extension nodes
 to embed foreign syntax fragments. Those fragments can be interpreted
-by a preprocessor and turned into OCaml code without requiring escaping
+by a preprocessor and turned into travlang code without requiring escaping
 quotes. A syntax shortcut is available for them:
 
 \begin{verbatim}
@@ -109,12 +109,12 @@ escaping issues.
 
 \subsection{ss:builtin-extension-nodes}{Built-in extension nodes}
 
-(Introduced in OCaml 4.03)
+(Introduced in travlang 4.03)
 
 Some extension nodes are understood by the compiler itself:
 \begin{itemize}
   \item
-    ``ocaml.extension_constructor'' or ``extension_constructor''
+    ``travlang.extension_constructor'' or ``extension_constructor''
     take as payload a constructor from an extensible variant type
     (see \ref{s:extensible-variants}) and return its extension
     constructor slot.

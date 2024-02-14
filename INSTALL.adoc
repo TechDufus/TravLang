@@ -1,4 +1,4 @@
-= Installing OCaml from sources on a Unix(-like) machine =
+= Installing travlang from sources on a Unix(-like) machine =
 
 == Prerequisites
 
@@ -14,7 +14,7 @@
 
   ** For macOS +
    `clang` is the default C compiler under macOS. If macOS complains
-   no C compiler was installed while OCaml is building, please run
+   no C compiler was installed while travlang is building, please run
    command `xcode-select --install` to install command-line tools and
    required libraries and header files.
 
@@ -23,9 +23,9 @@
    provided by the vendor of the system.
 
   ** For Windows +
-   To produce native Windows executables from OCaml sources, you need to use
-   the MSVC or MinGW-w64 ports of OCaml, described in file
-   https://github.com/ocaml/ocaml/blob/trunk/README.win32.adoc[README.win32.adoc]. +
+   To produce native Windows executables from travlang sources, you need to use
+   the MSVC or MinGW-w64 ports of travlang, described in file
+   https://github.com/travlang/travlang/blob/trunk/README.win32.adoc[README.win32.adoc]. +
    For a more Unix-like experience, you can use WSL, the
    https://aka.ms/wsl[Windows Subsystem for Linux], or the
    https://www.cygwin.com/[Cygwin environment]. You will need the
@@ -63,7 +63,7 @@ The `configure` script accepts options that can be discovered by running:
         ./configure --help
 
 Some options or variables like LDLIBS may not be taken into account
-by the OCaml build system at the moment. Please report an issue if you
+by the travlang build system at the moment. Please report an issue if you
 discover such a variable or option and this causes troubles to you.
 
 Examples:
@@ -72,7 +72,7 @@ Examples:
     ./configure --prefix=/usr
 
 
-* On a Linux x86-64 host, to build a 32-bit version of OCaml:
+* On a Linux x86-64 host, to build a 32-bit version of travlang:
 
     ./configure --build=x86_64-pc-linux-gnu --host=i686-linux-gnu
 
@@ -82,7 +82,7 @@ Examples:
 +
 By default, build is 32-bit. For 64-bit build, please set environment variable `OBJECT_MODE=64`
   for _both_ `configure` and `make world` phases. Note, if this variable is set for only one phase,
-  your build will break (`ocamlrun` segfaults).
+  your build will break (`travlangrun` segfaults).
 +
 * For Solaris/Illumos on SPARC machines with Sun PRO compiler only 64-bit
   bytecode target is supported (32-bit fails due to alignment issues; the optimization
@@ -106,7 +106,7 @@ From the top directory, do:
 
         make
 
-This builds the OCaml compiler for the first time.  This phase is
+This builds the travlang compiler for the first time.  This phase is
 fairly verbose; consider redirecting the output to a file:
 
         make > make.log 2>&1     # in sh
@@ -121,24 +121,24 @@ To be sure everything works well, you can run the test suite
 
 == Installing the compiler
 
-You can now install the OCaml system. This will create the following commands
+You can now install the travlang system. This will create the following commands
    (in the binary directory selected during autoconfiguration):
 
 [width="70%",frame="topbot",cols="25%,75%"]
 |===============================================================================
-| `ocamlc`     | the batch bytecode compiler
-| `ocamlopt`   | the batch native-code compiler (if supported)
-| `ocamlrun`   | the runtime system for the bytecode compiler
-| `ocamlyacc`  | the parser generator
-| `ocamllex`   | the lexer generator
-| `ocaml`      | the interactive, toplevel-based system
-| `ocamlmktop` | a tool to make toplevel systems that integrate user-defined C
-                 primitives and OCaml code
-| `ocamldebug` | the source-level replay debugger
-| `ocamldep`   | generator of "make" dependencies for OCaml sources
-| `ocamldoc`   | the documentation generator
-| `ocamlprof`  | the execution count profiler
-| `ocamlcp`    | the bytecode compiler in profiling mode
+| `travlangc`     | the batch bytecode compiler
+| `travlangopt`   | the batch native-code compiler (if supported)
+| `travlangrun`   | the runtime system for the bytecode compiler
+| `travlangyacc`  | the parser generator
+| `travlanglex`   | the lexer generator
+| `travlang`      | the interactive, toplevel-based system
+| `travlangmktop` | a tool to make toplevel systems that integrate user-defined C
+                 primitives and travlang code
+| `travlangdebug` | the source-level replay debugger
+| `travlangdep`   | generator of "make" dependencies for travlang sources
+| `travlangdoc`   | the documentation generator
+| `travlangprof`  | the execution count profiler
+| `travlangcp`    | the bytecode compiler in profiling mode
 |===============================================================================
 
 From the top directory, become superuser and do:
@@ -150,10 +150,10 @@ Installation is complete. Time to clean up. From the toplevel directory,
 
         make clean
 
-After installation, do *not* strip the `ocamldebug` executables.
+After installation, do *not* strip the `travlangdebug` executables.
    This is a mixed-mode executable (containing both compiled C
-   code and OCaml bytecode) and stripping erases the bytecode!  Other
-   executables such as `ocamlrun` can safely be stripped.
+   code and travlang bytecode) and stripping erases the bytecode!  Other
+   executables such as `travlangrun` can safely be stripped.
 
 == If something goes wrong
 
@@ -176,7 +176,7 @@ of the vendor-supplied `cc`).
 
 You can also use the debug version of the runtime system which is
 normally built and installed by default. Run the bytecode program
-that causes troubles with `ocamlrund` rather than with `ocamlrun`.
+that causes troubles with `travlangrund` rather than with `travlangrun`.
 This version of the runtime system contains lots of assertions
 and sanity checks that could help you pinpoint the problem.
 
@@ -188,7 +188,7 @@ and sanity checks that could help you pinpoint the problem.
 
 * On some systems, localization causes build problems.  You should try to set
   the C locale (`export LC_ALL=C`) before compiling if you have strange errors
-  while compiling OCaml.
+  while compiling travlang.
 
 * In the unlikely case that a platform does not offer all C99 float operations
   that the runtime needs, a configuration error will result.  Users

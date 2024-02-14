@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 #**************************************************************************
 #*                                                                        *
-#*                                 OCaml                                  *
+#*                                 travlang                                  *
 #*                                                                        *
-#*                 David Allsopp, OCaml Labs, Cambridge.                  *
+#*                 David Allsopp, travlang Labs, Cambridge.                  *
 #*                                                                        *
 #*   Copyright 2021 David Allsopp Ltd.                                    *
 #*                                                                        *
@@ -17,8 +17,8 @@ set -e
 
 # Test whether the manual/ has been touched by this PR.
 
-if [[ $2 = 'push' && ${11} = 'ocaml/ocaml' ]]; then
-  # Always build the manual for pushes to ocaml/ocaml
+if [[ $2 = 'push' && ${11} = 'travlang/travlang' ]]; then
+  # Always build the manual for pushes to travlang/travlang
   result=true
 else
   # We need all the commits in the PR to be available

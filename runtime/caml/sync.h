@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*          Xavier Leroy and Damien Doligez, INRIA Rocquencourt           */
 /*                                                                        */
@@ -13,7 +13,7 @@
 /*                                                                        */
 /**************************************************************************/
 
-/* Operations on mutexes from the OCaml stdlib */
+/* Operations on mutexes from the travlang stdlib */
 
 #ifndef CAML_SYNC_H
 #define CAML_SYNC_H

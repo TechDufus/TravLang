@@ -2,7 +2,7 @@
  expect;
 *)
 
-[@@@ocaml.warning "+a"]
+[@@@travlang.warning "+a"]
 
 module M : sig end = struct
   module rec Foo : sig

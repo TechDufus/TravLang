@@ -1,9 +1,9 @@
 (* TEST
  native-compiler;
- setup-ocamlopt.byte-build-env;
+ setup-travlangopt.byte-build-env;
  flags = "-save-ir-after scheduling -S";
- ocamlopt.byte;
- check-ocamlopt.byte-output;
+ travlangopt.byte;
+ check-travlangopt.byte-output;
  script = "sh ${test_source_directory}/save_ir_after_scheduling.sh";
  script;
 *)

@@ -1,6 +1,6 @@
 #**************************************************************************
 #*                                                                        *
-#*                                 OCaml                                  *
+#*                                 travlang                                  *
 #*                                                                        *
 #*            Gabriel Scherer, projet Parsifal, INRIA Saclay              *
 #*                                                                        *
@@ -13,7 +13,7 @@
 #*                                                                        *
 #**************************************************************************
 
-# The rules in this Makefile use Menhir to rebuild the OCaml compiler
+# The rules in this Makefile use Menhir to rebuild the travlang compiler
 # parser. They are included in the main Makefile, so should be invoked
 # directly, for example 'make promote-menhir'. They must be called
 # after any modification to parsing/parser.mly, for the modification
@@ -40,9 +40,9 @@
 #   keeping only the reference sources for the grammar.
 #
 # - depend-menhir updates the dependency information for the
-#   Menhir-generated parser, which is versioned in the OCaml repository
+#   Menhir-generated parser, which is versioned in the travlang repository
 #   like all other .depend files. It should be used when the dependencies
-#   (of the OCaml code in the grammar semantic actions) change.
+#   (of the travlang code in the grammar semantic actions) change.
 
 MENHIR ?= menhir
 
@@ -76,7 +76,7 @@ MENHIRBASICFLAGS := \
 MENHIRFLAGS := \
   $(MENHIRBASICFLAGS) \
   --infer \
-  --ocamlc "$(call CONVERT_PATH, $(CAMLC)) $(OC_COMMON_COMPFLAGS) $(INCLUDES)" \
+  --travlangc "$(call CONVERT_PATH, $(CAMLC)) $(OC_COMMON_COMPFLAGS) $(INCLUDES)" \
   --fixed-exception \
   --table \
   --strategy simplified \
@@ -159,12 +159,12 @@ clean-menhir: partialclean-menhir
 
 ## depend-menhir
 
-# The following rule depends on the OCAMLDEP_CMD variable defined in
+# The following rule depends on the travlangDEP_CMD variable defined in
 # Makefile.common, so it can only be invoked from the main (root) Makefile
 
 .PHONY: depend-menhir
 depend-menhir:
-	$(MENHIR) --depend --ocamldep "$(OCAMLDEP_CMD)" \
+	$(MENHIR) --depend --travlangdep "$(travlangDEP_CMD)" \
 	  parsing/parser.mly > .depend.menhir
 
 include .depend.menhir
@@ -222,7 +222,7 @@ list-parse-errors:
 # into one .ml file.
 
 # (It would in principle be preferable to create one file per sentence, but
-# that would be much slower. We abuse the ability of the OCaml toplevel to
+# that would be much slower. We abuse the ability of the travlang toplevel to
 # resynchronize after an error, and put all sentences into a single file.)
 
 # This requires Menhir 20201214 or newer.

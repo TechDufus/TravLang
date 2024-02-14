@@ -1,13 +1,13 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*      KC Sivaramakrishnan, Indian Institute of Technology, Madras       */
-/*                   Tom Kelly, OCaml Labs Consultancy                    */
+/*                   Tom Kelly, travlang Labs Consultancy                    */
 /*                Stephen Dolan, University of Cambridge                  */
 /*                                                                        */
 /*   Copyright 2021 Indian Institute of Technology, Madras                */
-/*   Copyright 2021 OCaml Labs Consultancy                                */
+/*   Copyright 2021 travlang Labs Consultancy                                */
 /*   Copyright 2019 University of Cambridge                               */
 /*                                                                        */
 /*   All rights reserved.  This file is distributed under the terms of    */
@@ -307,7 +307,7 @@ void caml_maybe_expand_stack (void)
 
   if (Caml_state->gc_regs_buckets == NULL) {
     /* Ensure there is at least one gc_regs bucket available before
-       running any OCaml code. See fiber.h for documentation. */
+       running any travlang code. See fiber.h for documentation. */
     value* bucket = caml_stat_alloc(sizeof(value) * Wosize_gc_regs);
     bucket[0] = 0; /* no next bucket */
     Caml_state->gc_regs_buckets = bucket;

@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*          Xavier Leroy and Damien Doligez, INRIA Rocquencourt           */
 /*                                                                        */
@@ -85,11 +85,11 @@ static void scanmult (char_os *opt, uintnat *var)
   }
 }
 
-void caml_parse_ocamlrunparam(void)
+void caml_parse_travlangrunparam(void)
 {
   init_startup_params();
 
-  char_os *opt = caml_secure_getenv (T("OCAMLRUNPARAM"));
+  char_os *opt = caml_secure_getenv (T("travlangRUNPARAM"));
   if (opt == NULL) opt = caml_secure_getenv (T("CAMLRUNPARAM"));
 
   if (opt != NULL){
@@ -134,9 +134,9 @@ int caml_startup_aux(int pooling)
                      "was shut down with caml_shutdown");
 
 #ifdef DEBUG
-  /* Note this must be executed after the call to caml_parse_ocamlrunparam. */
-  caml_gc_message (-1, "### OCaml runtime: debug mode ###\n");
-  caml_gc_message (-1, "### set OCAMLRUNPARAM=v=0 to silence this message\n");
+  /* Note this must be executed after the call to caml_parse_travlangrunparam. */
+  caml_gc_message (-1, "### travlang runtime: debug mode ###\n");
+  caml_gc_message (-1, "### set travlangRUNPARAM=v=0 to silence this message\n");
 #endif
 
   /* Second and subsequent calls are ignored,

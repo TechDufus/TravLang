@@ -15,52 +15,52 @@ byte: main.byt
 opt: clean main.opt
 
 main.byt: lib.cma main.cmo
-	$(OCAMLC) lib.cma main.cmo -o $@
+	$(travlangC) lib.cma main.cmo -o $@
 
 lib.ml: lib_impl.ml
 	cp lib_impl.ml lib.ml
 
 lib.cma: $(OBJECTS)
-	$(OCAMLC) -a -o $@ $(OBJECTS)
+	$(travlangC) -a -o $@ $(OBJECTS)
 
 lib.cmi: lib.mli
-	$(OCAMLC) -c -no-alias-deps -w -49 lib.mli
+	$(travlangC) -c -no-alias-deps -w -49 lib.mli
 
 lib.cmo: lib.ml
-	$(OCAMLC) -c -no-alias-deps -w -49 lib.ml
+	$(travlangC) -c -no-alias-deps -w -49 lib.ml
 
 LibA.cmo: A.ml
-	$(OCAMLC) -c -open Lib -o LibA.cmo A.ml
+	$(travlangC) -c -open Lib -o LibA.cmo A.ml
 
 LibB.cmo: B.ml
-	$(OCAMLC) -c -open Lib -o LibB.cmo B.ml
+	$(travlangC) -c -open Lib -o LibB.cmo B.ml
 
 LibC.cmo: C.ml
-	$(OCAMLC) -c -open Lib -o LibC.cmo C.ml
+	$(travlangC) -c -open Lib -o LibC.cmo C.ml
 
 LibD.cmo: D.ml
-	$(OCAMLC) -c -open Lib -o LibD.cmo D.ml
+	$(travlangC) -c -open Lib -o LibD.cmo D.ml
 
 main.opt: lib.cmxa main.cmx
-	$(OCAMLOPT) lib.cmxa main.cmx -o $@
+	$(travlangOPT) lib.cmxa main.cmx -o $@
 
 lib.cmxa: $(NOBJECTS)
-	$(OCAMLOPT) -a -o $@ $(NOBJECTS)
+	$(travlangOPT) -a -o $@ $(NOBJECTS)
 
 lib.cmx: lib.ml
-	$(OCAMLOPT) -c -no-alias-deps -w -49 $<
+	$(travlangOPT) -c -no-alias-deps -w -49 $<
 
 LibA.cmx: A.ml
-	$(OCAMLOPT) -c -open Lib -o LibA.cmx A.ml
+	$(travlangOPT) -c -open Lib -o LibA.cmx A.ml
 
 LibB.cmx: B.ml
-	$(OCAMLOPT) -c -open Lib -o LibB.cmx B.ml
+	$(travlangOPT) -c -open Lib -o LibB.cmx B.ml
 
 LibC.cmx: C.ml
-	$(OCAMLOPT) -c -open Lib -o LibC.cmx C.ml
+	$(travlangOPT) -c -open Lib -o LibC.cmx C.ml
 
 LibD.cmx: D.ml
-	$(OCAMLOPT) -c -open Lib -o LibD.cmx D.ml
+	$(travlangOPT) -c -open Lib -o LibD.cmx D.ml
 
 include depend.mk
 
@@ -69,7 +69,7 @@ clean:
 	rm -f *.cm* lib.ml
 
 %.cmo: %.ml
-	$(OCAMLC) -c $<
+	$(travlangC) -c $<
 
 %.cmx: %.ml
-	$(OCAMLOPT) -c $<
+	$(travlangOPT) -c $<

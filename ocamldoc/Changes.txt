@@ -35,7 +35,7 @@ Release 3.09.1:
    from text files handled as modules.
  - fix: display only text for "text modules"
  - extensible {foo } syntax
- - user can give .txt files on the command line, containing ocamldoc formatted
+ - user can give .txt files on the command line, containing travlangdoc formatted
    text, to be able to include bigger texts out of source files
  - -o option is now used by the html generator to indicate the prefix
    of generated index files (to avoid conflict when a Index module exists
@@ -73,13 +73,13 @@ Release 3.08.0:
  - generate html from module_kind rather than from module_type
    + same for classes and class types
  - add the kind to module parameters (the way the parameter was build in the parsetree)
- - fix: the generated ocamldoc.sty is more robust for paragraphs in
-     ocamldocdescription environment
+ - fix: the generated travlangdoc.sty is more robust for paragraphs in
+     travlangdocdescription environment
  - fix: when generating separated files in latex, generate them in
      the same directory than the main file, (the one specified by -o)
  - mod: one section per to module in latex output + improve latex output
  - mod: odoc_latex: use buffers instead of string concatenation
- - add: new ocamldoc man page, thanks to Samuel Mimram
+ - add: new travlangdoc man page, thanks to Samuel Mimram
  - fix: useless parentheses around arguments of arguments of a type constructor in
      type definitions, and aournd arguments of exceptions in exception definitions.
  - fix: blank lines in verbatim, latex, code pre, code and ele ref modes
@@ -113,7 +113,7 @@ Release 3.08.0:
      ( ]} meaning end of code and something else instead of end of precode)
  - add: in Odoc_info: text_of_string, text_string_of_text, info_of_string
  - fix: better output of titles in html (use more the style)
- - add: -intro option to use a file content as ocamldoc comment to use as
+ - add: -intro option to use a file content as travlangdoc comment to use as
    introduction for LaTeX document and HTML index page
  - add: the HTML generator generates the code of the module if available
  - add: field m_code for modules, to keep the code of top modules
@@ -136,7 +136,7 @@ Release 3.05 :
  - added texinfo generator, by Olivier Andrieu
  - removed iso generator, which became the odoc_check custom generator
  - link syntax {{:url}text} added to the manual
- - (** comments in code is colorized in ocaml code html pages
+ - (** comments in code is colorized in travlang code html pages
  - new class .code in style
  - new generator : -dot . Output dot code to display
    modules or types dependencies.
@@ -152,7 +152,7 @@ Release 3.05 :
    a comment.
 
 Pre-release 4 :
- - new option -werr to treat ocamldoc warnings as errors
+ - new option -werr to treat travlangdoc warnings as errors
  - new option -hide to remove some modules from complete names,
    (e.g., print ref instead of Pervasives.ref)
  - HTML doc in classic style only contain indexes to existing element kinds
@@ -183,11 +183,11 @@ Pre-release 4 :
 Pre-release 3 :
  - option -stars
  - complete paths of executables in the generated Makefile
- - names of executables changed to ocamldoc and ocamldoc.opt
+ - names of executables changed to travlangdoc and travlangdoc.opt
  - better LaTeX output
  - option -sepfiles for LaTeX
- - ocamldoc.sty used by the generated LaTeX
- - ocamldoc.hva added to use Hevea on the generated LaTeX
+ - travlangdoc.sty used by the generated LaTeX
+ - travlangdoc.hva added to use Hevea on the generated LaTeX
  - user manual updated
  - {[ ]} marks to put pre-formatted code on more than one line
  - {!Toto.tutu} to add cross references between elements

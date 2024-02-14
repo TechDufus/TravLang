@@ -1,5 +1,5 @@
 # @configure_input@
 
 version = "@VERSION@"
-description = "ocamldoc plugin interface"
+description = "travlangdoc plugin interface"
 requires = "compiler-libs"

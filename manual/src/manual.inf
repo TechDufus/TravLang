@@ -6,14 +6,14 @@
 \newenvironment{camlunder}{\@style{U}}{}
 \newcommand{\?}{\black\#\blue }
 
-\newcommand{\ocamltag}[2]{\begin{ocaml#1}#2\end{ocaml#1}}
-\newcommand{\ocamlkeyword}{\bfseries}
-\newcommand{\ocamlhighlight}{\bfseries\underline}
-\newcommand{\ocamlerror}{\bfseries}
-\newcommand{\ocamlwarning}{\bfseries}
-\newcommand{\ocamlcomment}{\normalfont\small}
-\newcommand{\ocamlstring}{\bfseries}
-\newenvironment{ocamllongtable}[2][]{\begin{tabular}{#2}}{\end{tabular}}
+\newcommand{\travlangtag}[2]{\begin{travlang#1}#2\end{travlang#1}}
+\newcommand{\travlangkeyword}{\bfseries}
+\newcommand{\travlanghighlight}{\bfseries\underline}
+\newcommand{\travlangerror}{\bfseries}
+\newcommand{\travlangwarning}{\bfseries}
+\newcommand{\travlangcomment}{\normalfont\small}
+\newcommand{\travlangstring}{\bfseries}
+\newenvironment{travlanglongtable}[2][]{\begin{tabular}{#2}}{\end{tabular}}
 
 \newenvironment{caml}{\begin{alltt}}{\\\end{alltt}}
 \newenvironment{camlexample}[1]{}{}
@@ -38,8 +38,8 @@
 \let\@oldsubsection*=\subsection*
 \let\@oldsubsubsection*=\subsubsection*
 
-%We go back to standard macros for ocamldoc generated files
-\newcommand{\ocamldocinputstart}{%
+%We go back to standard macros for travlangdoc generated files
+\newcommand{\travlangdocinputstart}{%
 \let\section=\@oldsection
 \let\subsection=\@oldsubsection
 \let\subsubsection=\@oldsubsubsection
@@ -154,11 +154,11 @@
 
 
 % Linking to modules
-\newenvironment{linklist}{\begingroup\ocamldocinputstart}{\endgroup}
+\newenvironment{linklist}{\begingroup\travlangdocinputstart}{\endgroup}
 
 \newcommand{\compilerdocitem}[2]{\input{#1.tex}}
 \newcommand{\libdocitem}[2]{\input{#1.tex}}
-\ifocamldoc
+\iftravlangdoc
 \newcommand{\stddocitem}[2]{\libdocitem{#1}{#2}}
 \else
 \newcommand{\stddocitem}[2]{\libdocitem{Stdlib.#1}{#2}}

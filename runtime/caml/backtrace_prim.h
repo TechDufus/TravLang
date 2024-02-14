@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           */
 /*                                                                        */
@@ -71,7 +71,7 @@ void caml_debuginfo_location(debuginfo dbg, /*out*/ struct caml_loc_info * li);
 
 /* In order to prevent the GC from walking through the debug
    information (which have no headers), we transform slots to 31/63 bits
-   ocaml integers by shifting them by 1 to the right. We do not lose
+   travlang integers by shifting them by 1 to the right. We do not lose
    information as slots are aligned.
 
    In particular, we do not need to use [caml_modify] when setting
@@ -101,7 +101,7 @@ value caml_remove_debug_info(code_t start);
  * It defines the [caml_stash_backtrace] function, which is called to quickly
  * fill the backtrace buffer by walking the stack when an exception is raised.
  *
- * It also defines the [caml_get_current_callstack] OCaml primitive, which also
+ * It also defines the [caml_get_current_callstack] travlang primitive, which also
  * walks the stack but directly turns it into a [raw_backtrace] and is called
  * explicitly.
  */

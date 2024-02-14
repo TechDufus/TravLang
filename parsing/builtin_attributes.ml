@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*                         Alain Frisch, LexiFi                           *)
 (*                                                                        *)
@@ -75,14 +75,14 @@ let builtin_attrs =
   List.iter (fun attr -> Hashtbl.add tbl attr ()) builtin_attrs;
   tbl
 
-let drop_ocaml_attr_prefix s =
+let drop_travlang_attr_prefix s =
   let len = String.length s in
-  if String.starts_with ~prefix:"ocaml." s && len > 6 then
+  if String.starts_with ~prefix:"travlang." s && len > 6 then
     String.sub s 6 (len - 6)
   else
     s
 
-let is_builtin_attr s = Hashtbl.mem builtin_attrs (drop_ocaml_attr_prefix s)
+let is_builtin_attr s = Hashtbl.mem builtin_attrs (drop_travlang_attr_prefix s)
 
 type current_phase = Parser | Invariant_check
 
@@ -110,7 +110,7 @@ let string_of_opt_payload p =
 let error_of_extension ext =
   let submessage_from main_loc main_txt = function
     | {pstr_desc=Pstr_extension
-           (({txt = ("ocaml.error"|"error"); loc}, p), _)} ->
+           (({txt = ("travlang.error"|"error"); loc}, p), _)} ->
         begin match p with
         | PStr([{pstr_desc=Pstr_eval
                      ({pexp_desc=Pexp_constant(Pconst_string(msg,_,_))}, _)}
@@ -130,7 +130,7 @@ let error_of_extension ext =
               "Invalid syntax for sub-message of extension '%s'." main_txt }
   in
   match ext with
-  | ({txt = ("ocaml.error"|"error") as txt; loc}, p) ->
+  | ({txt = ("travlang.error"|"error") as txt; loc}, p) ->
       begin match p with
       | PStr [] -> raise Location.Already_displayed_error
       | PStr({pstr_desc=Pstr_eval
@@ -145,10 +145,10 @@ let error_of_extension ext =
       Location.errorf ~loc "Uninterpreted extension '%s'." txt
 
 let attr_equals_builtin {attr_name = {txt; _}; _} s =
-  (* Check for attribute s or ocaml.s.  Avoid allocating a fresh string. *)
+  (* Check for attribute s or travlang.s.  Avoid allocating a fresh string. *)
   txt = s ||
   (   String.length txt = 6 + String.length s
-   && String.starts_with ~prefix:"ocaml." txt
+   && String.starts_with ~prefix:"travlang." txt
    && String.ends_with ~suffix:s txt)
 
 let mark_alert_used a =
@@ -376,7 +376,7 @@ let immediate attrs = has_attribute "immediate" attrs
 
 let immediate64 attrs = has_attribute "immediate64" attrs
 
-(* The "ocaml.boxed (default)" and "ocaml.unboxed (default)"
+(* The "travlang.boxed (default)" and "travlang.unboxed (default)"
    attributes cannot be input by the user, they are added by the
    compiler when applying the default setting. This is done to record
    in the .cmi the default used by the compiler when compiling the

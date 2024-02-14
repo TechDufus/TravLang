@@ -1,54 +1,54 @@
 (* TEST *)
 
-[@@@ocaml.warning "@A"]
-[@@@ocaml.alert "++all"]
+[@@@travlang.warning "@A"]
+[@@@travlang.alert "++all"]
 
 (* Fixture *)
 
 module type DEPRECATED = sig end
-[@@ocaml.deprecated]
+[@@travlang.deprecated]
 
 module T = struct
   type deprecated
-  [@@ocaml.deprecated]
+  [@@travlang.deprecated]
 end
 
 (* Structure items *)
 
 let _ = let x = 1 in ()
-[@@ocaml.warning "-26"]
+[@@travlang.warning "-26"]
 
 include (struct let _ = let x = 1 in () end)
-[@@ocaml.warning "-26"]
+[@@travlang.warning "-26"]
 
 module A = struct let _ = let x = 1 in () end
-[@@ocaml.warning "-26"]
+[@@travlang.warning "-26"]
 
 module rec B : sig type t end = struct type t = T.deprecated end
-[@@ocaml.alert "-deprecated"]
+[@@travlang.alert "-deprecated"]
 
 module type T = sig type t = T.deprecated end
-[@@ocaml.alert "-deprecated"]
+[@@travlang.alert "-deprecated"]
 
 (* Warning 27 is unused function parameter. *)
-let f _ = function[@ocaml.warning "-27"]
+let f _ = function[@travlang.warning "-27"]
   | x -> ()
 
 (* Signature items *)
 
 module type S = sig
   val x : T.deprecated
-  [@@ocaml.alert "-deprecated"]
+  [@@travlang.alert "-deprecated"]
 
   module AA : sig type t = T.deprecated end
-  [@@ocaml.alert "-deprecated"]
+  [@@travlang.alert "-deprecated"]
 
   module rec BB : sig type t = T.deprecated end
-  [@@ocaml.alert "-deprecated"]
+  [@@travlang.alert "-deprecated"]
 
   module type T = sig type t = T.deprecated end
-  [@@ocaml.alert "-deprecated"]
+  [@@travlang.alert "-deprecated"]
 
   include DEPRECATED
-  [@@ocaml.alert "-deprecated"]
+  [@@travlang.alert "-deprecated"]
 end

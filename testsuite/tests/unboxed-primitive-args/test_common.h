@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                OCaml                                   */
+/*                                travlang                                   */
 /*                                                                        */
 /*                  Jeremie Dimino, Jane Street Europe                    */
 /*                                                                        */
@@ -16,25 +16,25 @@
 #ifndef __TEST_COMMON_H
 #define __TEST_COMMON_H
 
-/* Where the OCaml side stores the arguments and result for a test
+/* Where the travlang side stores the arguments and result for a test
    case. The C function will read the result it is supposed to return
    from this buffer.
 
    Argument [n] is stored at [n * 8] and the result is stored at
    [arity * 8].
 */
-extern char *ocaml_buffer;
+extern char *travlang_buffer;
 
 /* Where the C function stores the arguments it receive for a test
-   case. The OCaml side will store the result from the C function in
+   case. The travlang side will store the result from the C function in
    this buffer. At the of a test case, both these buffers must be
    equal. */
 extern char *c_buffer;
 
-#define get_intnat(n) *(intnat*)(ocaml_buffer+((n)*8))
-#define get_int32(n) *(int32_t*)(ocaml_buffer+((n)*8))
-#define get_int64(n) *(int64_t*)(ocaml_buffer+((n)*8))
-#define get_double(n) *(double*)(ocaml_buffer+((n)*8))
+#define get_intnat(n) *(intnat*)(travlang_buffer+((n)*8))
+#define get_int32(n) *(int32_t*)(travlang_buffer+((n)*8))
+#define get_int64(n) *(int64_t*)(travlang_buffer+((n)*8))
+#define get_double(n) *(double*)(travlang_buffer+((n)*8))
 
 #define set_intnat(n, x) *(intnat*)(c_buffer+((n)*8)) = (x)
 #define set_int32(n, x) *(int32_t*)(c_buffer+((n)*8)) = (x)

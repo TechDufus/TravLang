@@ -19,7 +19,7 @@
 
 # Note: this bug will happen every time you have a | (pipe) character
 # in an index entry (properly quoted with a " (double-quote) before it).
-# We fix only the one case that appears in the OCaml documentation.
+# We fix only the one case that appears in the travlang documentation.
 # We do not attempt a general solution because hyperref erases part
 # of the argument, so we cannot recover the correct string from its
 # output.

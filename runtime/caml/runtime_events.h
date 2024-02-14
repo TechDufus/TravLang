@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*                          Sadiq Jaffer, Opsian                          */
 /*                 Stephen Dolan, University of Cambridge                 */
@@ -19,7 +19,7 @@
 /* Runtime events - ring buffer-based runtime tracing
 
    This file contains the C API for runtime events. It is intended for use
-   cases where the OCaml API is impractical. See the Runtime_events OCaml
+   cases where the travlang API is impractical. See the Runtime_events travlang
    module source for more detailed information about the system and
    environment variables to control it externally.
 
@@ -209,7 +209,7 @@ typedef union {
    ev_user_message_type user;
 } ev_message_type;
 
-/* The type for event messages in OCaml. */
+/* The type for event messages in travlang. */
 typedef enum {
    EV_USER_ML_TYPE_UNIT,
    EV_USER_ML_TYPE_INT,

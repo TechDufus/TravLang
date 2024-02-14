@@ -1,51 +1,51 @@
-\chapter{The runtime system (ocamlrun)} \label{c:runtime}
+\chapter{The runtime system (travlangrun)} \label{c:runtime}
 %HEVEA\cutname{runtime.html}
 
-The "ocamlrun" command executes bytecode files produced by the
-linking phase of the "ocamlc" command.
+The "travlangrun" command executes bytecode files produced by the
+linking phase of the "travlangc" command.
 
-\section{s:ocamlrun-overview}{Overview}
+\section{s:travlangrun-overview}{Overview}
 
-The "ocamlrun" command comprises three main parts: the bytecode
+The "travlangrun" command comprises three main parts: the bytecode
 interpreter, that actually executes bytecode files; the memory
 allocator and garbage collector; and a set of C functions that
 implement primitive operations such as input/output.
 
-The usage for "ocamlrun" is:
+The usage for "travlangrun" is:
 \begin{alltt}
-        ocamlrun \var{options} \var{bytecode-executable} \nth{arg}{1} ... \nth{arg}{n}
+        travlangrun \var{options} \var{bytecode-executable} \nth{arg}{1} ... \nth{arg}{n}
 \end{alltt}
 The first non-option argument is taken to be the name of the file
 containing the executable bytecode. (That file is searched in the
 executable path as well as in the current directory.) The remaining
-arguments are passed to the OCaml program, in the string array
+arguments are passed to the travlang program, in the string array
 "Sys.argv". Element 0 of this array is the name of the
 bytecode executable file; elements 1 to \var{n} are the remaining
 arguments \nth{arg}{1} to \nth{arg}{n}.
 
 As mentioned in chapter~\ref{c:camlc}, the bytecode executable files
-produced by the "ocamlc" command are self-executable, and manage to
-launch the "ocamlrun" command on themselves automatically. That is,
+produced by the "travlangc" command are self-executable, and manage to
+launch the "travlangrun" command on themselves automatically. That is,
 assuming "a.out" is a bytecode executable file,
 \begin{alltt}
         a.out \nth{arg}{1} ... \nth{arg}{n}
 \end{alltt}
 works exactly as
 \begin{alltt}
-        ocamlrun a.out \nth{arg}{1} ... \nth{arg}{n}
+        travlangrun a.out \nth{arg}{1} ... \nth{arg}{n}
 \end{alltt}
-Notice that it is not possible to pass options to "ocamlrun" when
+Notice that it is not possible to pass options to "travlangrun" when
 invoking "a.out" directly.
 
 \begin{windows}
 Under several versions of Windows, bytecode executable files are
 self-executable only if their name ends in ".exe".  It is recommended
 to always give ".exe" names to bytecode executables, e.g. compile
-with "ocamlc -o myprog.exe ..." rather than "ocamlc -o myprog ...".
+with "travlangc -o myprog.exe ..." rather than "travlangc -o myprog ...".
 \end{windows}
 
-\section{s:ocamlrun-options}{Options}
-The following command-line options are recognized by "ocamlrun".
+\section{s:travlangrun-options}{Options}
+The following command-line options are recognized by "travlangrun".
 
 \begin{options}
 
@@ -55,15 +55,15 @@ When the program aborts due to an uncaught exception, print a detailed
 raised and which function calls were outstanding at this point.  The
 back trace is printed only if the bytecode executable contains
 debugging information, i.e. was compiled and linked with the "-g"
-option to "ocamlc" set.  This is equivalent to setting the "b" flag
-in the "OCAMLRUNPARAM" environment variable (see below).
+option to "travlangc" set.  This is equivalent to setting the "b" flag
+in the "travlangRUNPARAM" environment variable (see below).
 \item["-config"]
-Print the version number of "ocamlrun" and a detailed summary of its
+Print the version number of "travlangrun" and a detailed summary of its
 configuration, then exit.
 \item["-I" \var{dir}]
 Search the directory \var{dir} for dynamically-loaded libraries,
 in addition to the standard search path (see
-section~\ref{s:ocamlrun-dllpath}).
+section~\ref{s:travlangrun-dllpath}).
 \item["-m"]
 Print the magic number of the bytecode executable given as argument
 and exit.
@@ -72,13 +72,13 @@ Print the magic number expected for bytecode executables by this version
 of the runtime and exit.
 \item["-p"]
 Print the names of the primitives known to this version of
-"ocamlrun" and exit.
+"travlangrun" and exit.
 \item["-t"]
 Increments the trace level for the debug runtime (ignored otherwise).
 \item["-v"]
 Direct the memory manager to print some progress messages on
 standard error.  This is equivalent to setting "v=61" in the
-"OCAMLRUNPARAM" environment variable (see below).
+"travlangRUNPARAM" environment variable (see below).
 \item["-version"]
 Print version string and exit.
 \item["-vnum"]
@@ -91,17 +91,17 @@ The following environment variables are also consulted:
 
 \begin{options}
 \item["CAML_LD_LIBRARY_PATH"]  Additional directories to search for
-  dynamically-loaded libraries (see section~\ref{s:ocamlrun-dllpath}).
+  dynamically-loaded libraries (see section~\ref{s:travlangrun-dllpath}).
 
-\item["OCAMLLIB"] The directory containing the OCaml standard
-  library.  (If "OCAMLLIB" is not set, "CAMLLIB" will be used instead.)
+\item["travlangLIB"] The directory containing the travlang standard
+  library.  (If "travlangLIB" is not set, "CAMLLIB" will be used instead.)
   Used to locate the "ld.conf" configuration file for
-  dynamic loading (see section~\ref{s:ocamlrun-dllpath}).  If not set,
-  default to the library directory specified when compiling OCaml.
+  dynamic loading (see section~\ref{s:travlangrun-dllpath}).  If not set,
+  default to the library directory specified when compiling travlang.
 
-\item["OCAMLRUNPARAM"] Set the runtime system options
+\item["travlangRUNPARAM"] Set the runtime system options
   and garbage collection parameters.
-  (If "OCAMLRUNPARAM" is not set, "CAMLRUNPARAM" will be used instead.)
+  (If "travlangRUNPARAM" is not set, "CAMLRUNPARAM" will be used instead.)
   This variable must be a sequence of parameter specifications separated
   by commas.
   For convenience, commas at the beginning of the variable are ignored,
@@ -162,7 +162,7 @@ The following environment variables are also consulted:
   \item[o] ("space_overhead")  The major GC speed setting.
         See the Gc module documentation for details.
   \item[p] (parser trace) Turn on debugging support for
-        "ocamlyacc"-generated parsers.  When this option is on,
+        "travlangyacc"-generated parsers.  When this option is on,
         the pushdown automaton that executes the parsers prints a
         trace of its actions.  This option takes no argument.
   \item[R] (randomize) Turn on randomization of all hash tables by default
@@ -204,14 +204,14 @@ The following environment variables are also consulted:
 
   For example, on a 32-bit machine, under "bash" the command
 \begin{verbatim}
-        export OCAMLRUNPARAM='b,s=256k,v=0x015'
+        export travlangRUNPARAM='b,s=256k,v=0x015'
 \end{verbatim}
-  tells a subsequent "ocamlrun" to print backtraces for uncaught exceptions,
+  tells a subsequent "travlangrun" to print backtraces for uncaught exceptions,
   set its initial minor heap size to 1~megabyte and
   print a message at the start of each major GC cycle, when the heap
   size changes, and when compaction is triggered.
 
-\item["CAMLRUNPARAM"]  If "OCAMLRUNPARAM" is not found in the
+\item["CAMLRUNPARAM"]  If "travlangRUNPARAM" is not found in the
   environment, then "CAMLRUNPARAM" will be used instead.  If
   "CAMLRUNPARAM" is also not found, then the default values will be used.
 
@@ -219,30 +219,30 @@ The following environment variables are also consulted:
 executable file.
 \end{options}
 
-\section{s:ocamlrun-dllpath}{Dynamic loading of shared libraries}
+\section{s:travlangrun-dllpath}{Dynamic loading of shared libraries}
 
-On platforms that support dynamic loading, "ocamlrun" can link
+On platforms that support dynamic loading, "travlangrun" can link
 dynamically with C shared libraries (DLLs) providing additional C primitives
 beyond those provided by the standard runtime system.  The names for
 these libraries are provided at link time as described in
 section~\ref{ss:dynlink-c-code}), and recorded in the bytecode executable
-file;  "ocamlrun", then, locates these libraries and resolves references
+file;  "travlangrun", then, locates these libraries and resolves references
 to their primitives when the bytecode executable program starts.
 
-The "ocamlrun" command searches shared libraries in the following
+The "travlangrun" command searches shared libraries in the following
 directories, in the order indicated:
 \begin{enumerate}
-\item Directories specified on the "ocamlrun" command line with the
+\item Directories specified on the "travlangrun" command line with the
 "-I" option.
 \item Directories specified in the "CAML_LD_LIBRARY_PATH" environment
 variable.
 \item Directories specified at link-time via the "-dllpath" option to
-"ocamlc".  (These directories are recorded in the bytecode executable
+"travlangc".  (These directories are recorded in the bytecode executable
 file.)
 \item Directories specified in the file "ld.conf".  This file resides
-in the OCaml standard library directory, and lists directory
+in the travlang standard library directory, and lists directory
 names (one per line) to be searched.  Typically, it contains only one
-line naming the "stublibs" subdirectory of the OCaml standard
+line naming the "stublibs" subdirectory of the travlang standard
 library directory.  Users can add there the names of other directories
 containing frequently-used shared libraries; however, for consistency
 of installation, we recommend that shared libraries are installed
@@ -256,7 +256,7 @@ system directories, plus the directories listed in the "PATH"
 environment variable.
 \end{enumerate}
 
-\section{s:ocamlrun-common-errors}{Common errors}
+\section{s:travlangrun-common-errors}{Common errors}
 
 This section describes and explains the most frequently encountered
 error messages.
@@ -266,22 +266,22 @@ error messages.
 \item[{\it filename}": no such file or directory"]
 If {\it filename} is the name of a self-executable bytecode file, this
 means that either that file does not exist, or that it failed to run
-the "ocamlrun" bytecode interpreter on itself. The second possibility
-indicates that OCaml has not been properly installed on your
+the "travlangrun" bytecode interpreter on itself. The second possibility
+indicates that travlang has not been properly installed on your
 system.
 
-\item["Cannot exec ocamlrun"]
-(When launching a self-executable bytecode file.) The "ocamlrun"
- could not be found in the executable path. Check that OCaml
+\item["Cannot exec travlangrun"]
+(When launching a self-executable bytecode file.) The "travlangrun"
+ could not be found in the executable path. Check that travlang
  has been properly installed on your system.
 
 \item["Cannot find the bytecode file"]
-The file that "ocamlrun" is trying to execute (e.g. the file given as
-first non-option argument to "ocamlrun") either does not exist, or is
+The file that "travlangrun" is trying to execute (e.g. the file given as
+first non-option argument to "travlangrun") either does not exist, or is
 not a valid executable bytecode file.
 
 \item["Truncated bytecode file"]
-The file that "ocamlrun" is trying to execute is not a valid executable
+The file that "travlangrun" is trying to execute is not a valid executable
 bytecode file. Probably it has been truncated or mangled since
 created. Erase and rebuild it.
 
@@ -293,9 +293,9 @@ the exception is printed, along with its string, byte sequence, and
 integer arguments
 (arguments of more complex types are not correctly printed).
 To locate the context of the uncaught exception, compile the program
-with the "-g" option and either run it again under the "ocamldebug"
-debugger (see chapter~\ref{c:debugger}), or run it with "ocamlrun -b"
-or with the "OCAMLRUNPARAM" environment variable set to "b=1".
+with the "-g" option and either run it again under the "travlangdebug"
+debugger (see chapter~\ref{c:debugger}), or run it with "travlangrun -b"
+or with the "travlangRUNPARAM" environment variable set to "b=1".
 
 \item["Out of memory"]
 The program being executed requires more memory than available. Either
@@ -309,7 +309,7 @@ string or byte sequence, attempts to build an infinite list or other
 data structure, \ldots
 
 To help you diagnose this error, run your program with the "-v" option
-to "ocamlrun", or with the "OCAMLRUNPARAM" environment variable set to
+to "travlangrun", or with the "travlangRUNPARAM" environment variable set to
 "v=63". If it displays lots of ``"Growing stack"\ldots''
 messages, this is probably a looping recursive function. If it
 displays lots of ``"Growing heap"\ldots'' messages, with the heap size

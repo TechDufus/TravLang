@@ -1,9 +1,9 @@
-\chapter{Interfacing\label{c:intf-c} C with OCaml}
+\chapter{Interfacing\label{c:intf-c} C with travlang}
 %HEVEA\cutname{intfc.html}
 
 This chapter describes how user-defined primitives, written in C, can
-be linked with OCaml code and called from OCaml functions, and how
-these C functions can call back to OCaml code.
+be linked with travlang code and called from travlang functions, and how
+these C functions can call back to travlang code.
 
 \section{s:c-overview}{Overview and compilation information}
 
@@ -43,13 +43,13 @@ thus hiding their implementation as C functions, or explicitly as
 \end{alltt}
 The latter is slightly more efficient, as it allows clients of the
 module to call directly the C function instead of going through the
-corresponding OCaml function. On the other hand, it should not be used
+corresponding travlang function. On the other hand, it should not be used
 in library modules if they have side-effects at toplevel, as this
 direct call interferes with the linker's algorithm for removing unused
 modules from libraries at link-time.
 
 The arity (number of arguments) of a primitive is automatically
-determined from its OCaml type in the "external" declaration, by
+determined from its travlang type in the "external" declaration, by
 counting the number of function arrows in the type.  For instance,
 "seek_in" above has arity 2, and the "caml_ml_seek_in" C function
 is called with two arguments.  Similarly,
@@ -57,7 +57,7 @@ is called with two arguments.  Similarly,
     external seek_in_pair: in_channel * int -> unit = "caml_ml_seek_in_pair"
 \end{verbatim}
 has arity 1, and the "caml_ml_seek_in_pair" C function receives one argument
-(which is a pair of OCaml values).
+(which is a pair of travlang values).
 
 Type abbreviations are not expanded when determining the arity of a
 primitive.  For instance,
@@ -78,9 +78,9 @@ reserved for the implementation of the standard library.
 
 User primitives with arity $n \leq 5$ are implemented by C functions
 that take $n$ arguments of type "value", and return a result of type
-"value". The type "value" is the type of the representations for OCaml
+"value". The type "value" is the type of the representations for travlang
 values. It encodes objects of several base types (integers,
-floating-point numbers, strings,~\ldots) as well as OCaml data
+floating-point numbers, strings,~\ldots) as well as travlang data
 structures. The type "value" and the associated conversion
 functions and macros are described in detail below.  For instance,
 here is the declaration for the C function implementing the "In_channel.input"
@@ -91,18 +91,18 @@ CAMLprim value input(value channel, value buffer, value offset, value length)
   ...
 }
 \end{verbatim}
-When the primitive function is applied in an OCaml program, the C
+When the primitive function is applied in an travlang program, the C
 function is called with the values of the expressions to which the
 primitive is applied as arguments. The value returned by the function is
-passed back to the OCaml program as the result of the function
+passed back to the travlang program as the result of the function
 application.
 
 User primitives with arity greater than 5 should be implemented by two
 C functions. The first function, to be used in conjunction with the
-bytecode compiler "ocamlc", receives two arguments: a pointer to an
-array of OCaml values (the values for the arguments), and an
+bytecode compiler "travlangc", receives two arguments: a pointer to an
+array of travlang values (the values for the arguments), and an
 integer which is the number of arguments provided. The other function,
-to be used in conjunction with the native-code compiler "ocamlopt",
+to be used in conjunction with the native-code compiler "travlangopt",
 takes its arguments directly. For instance, here are the two C
 functions for the 7-argument primitive "Nat.add_nat":
 \begin{verbatim}
@@ -132,15 +132,15 @@ For instance, in the case of "add_nat", the declaration is:
 
 Implementing a user primitive is actually two separate tasks: on the
 one hand, decoding the arguments to extract C values from the given
-OCaml values, and encoding the return value as an OCaml
+travlang values, and encoding the return value as an travlang
 value; on the other hand, actually computing the result from the arguments.
 Except for very simple primitives, it is often preferable to have two
 distinct C functions to implement these two tasks. The first function
 actually implements the primitive, taking native C values as
 arguments and returning a native C value. The second function,
 often called the ``stub code'', is a simple wrapper around the first
-function that converts its arguments from OCaml values to C values,
-calls the first function, and converts the returned C value to an OCaml
+function that converts its arguments from travlang values to C values,
+calls the first function, and converts the returned C value to an travlang
 value. For instance, here is the stub code for the "Int64.float_of_bits"
 primitive:
 \begin{verbatim}
@@ -152,7 +152,7 @@ CAMLprim value caml_int64_float_of_bits(value vi)
 (Here, "caml_copy_double" and "Int64_val" are conversion functions and
 macros for the type "value", that will be described later.  The "CAMLprim" macro
 expands to the required compiler directives to ensure that the
-function is exported and accessible from OCaml.)
+function is exported and accessible from travlang.)
 The hard work is performed by the function "caml_int64_float_of_bits_unboxed", which is
 declared as:
 \begin{verbatim}
@@ -162,18 +162,18 @@ double caml_int64_float_of_bits_unboxed(int64_t i)
 }
 \end{verbatim}
 
-To write C code that operates on OCaml values, the following
+To write C code that operates on travlang values, the following
 include files are provided:
 \begin{tableau}{|l|p{12cm}|}{Include file}{Provides}
 \entree{"caml/mlvalues.h"}{definition of the "value" type, and conversion
 macros}
-\entree{"caml/alloc.h"}{allocation functions (to create structured OCaml
+\entree{"caml/alloc.h"}{allocation functions (to create structured travlang
 objects)}
 \entree{"caml/memory.h"}{miscellaneous memory-related functions
 and macros (for GC interface, in-place modification of structures, etc).}
 \entree{"caml/fail.h"}{functions for raising exceptions
 (see section~\ref{ss:c-exceptions})}
-\entree{"caml/callback.h"}{callback from C to OCaml (see
+\entree{"caml/callback.h"}{callback from C to travlang (see
 section~\ref{s:c-callback}).}
 \entree{"caml/custom.h"}{operations on custom blocks (see
 section~\ref{s:c-custom}).}
@@ -183,25 +183,25 @@ serialization and deserialization functions for custom blocks
 \entree{"caml/threads.h"}{operations for interfacing in the presence
   of multiple threads (see section~\ref{s:C-multithreading}).}
 \end{tableau}
-These files reside in the "caml/" subdirectory of the OCaml
+These files reside in the "caml/" subdirectory of the travlang
 standard library directory, which is returned by the command
-"ocamlc -where" (usually "/usr/local/lib/ocaml" or "/usr/lib/ocaml").
+"travlangc -where" (usually "/usr/local/lib/travlang" or "/usr/lib/travlang").
 
-\subsection{ss:staticlink-c-code}{Statically linking C code with OCaml code}
+\subsection{ss:staticlink-c-code}{Statically linking C code with travlang code}
 
-The OCaml runtime system comprises three main parts: the bytecode
+The travlang runtime system comprises three main parts: the bytecode
 interpreter, the memory manager, and a set of C functions that
 implement the primitive operations. Some bytecode instructions are
 provided to call these C functions, designated by their offset in a
 table of functions (the table of primitives).
 
-In the default mode, the OCaml linker produces bytecode for the
+In the default mode, the travlang linker produces bytecode for the
 standard runtime system, with a standard set of primitives. References
 to primitives that are not in this standard set result in the
 ``unavailable C primitive'' error.  (Unless dynamic loading of C
 libraries is supported -- see section~\ref{ss:dynlink-c-code} below.)
 
-In the ``custom runtime'' mode, the OCaml linker scans the
+In the ``custom runtime'' mode, the travlang linker scans the
 object files and determines the set of required primitives. Then, it
 builds a suitable runtime system, by calling the native code linker with:
 \begin{itemize}
@@ -209,92 +209,92 @@ builds a suitable runtime system, by calling the native code linker with:
 \item a library that provides the bytecode interpreter, the
 memory manager, and the standard primitives;
 \item libraries and object code files (".o" files) mentioned on the
-command line for the OCaml linker, that provide implementations
+command line for the travlang linker, that provide implementations
 for the user's primitives.
 \end{itemize}
-This builds a runtime system with the required primitives. The OCaml
+This builds a runtime system with the required primitives. The travlang
 linker generates bytecode for this custom runtime system. The
 bytecode is appended to the end of the custom runtime system, so that
 it will be automatically executed when the output file (custom
 runtime + bytecode) is launched.
 
-To link in ``custom runtime'' mode, execute the "ocamlc" command with:
+To link in ``custom runtime'' mode, execute the "travlangc" command with:
 \begin{itemize}
 \item the "-custom" option;
-\item the names of the desired OCaml object files (".cmo" and ".cma" files) ;
+\item the names of the desired travlang object files (".cmo" and ".cma" files) ;
 \item the names of the C object files and libraries (".o" and ".a"
 files) that implement the required primitives. Under Unix and Windows,
 a library named "lib"\var{name}".a" (respectively, ".lib") residing in one of
 the standard library directories can also be specified as "-cclib -l"\var{name}.
 \end{itemize}
 
-If you are using the native-code compiler "ocamlopt", the "-custom"
-flag is not needed, as the final linking phase of "ocamlopt" always
-builds a standalone executable.  To build a mixed OCaml/C executable,
-execute the "ocamlopt" command with:
+If you are using the native-code compiler "travlangopt", the "-custom"
+flag is not needed, as the final linking phase of "travlangopt" always
+builds a standalone executable.  To build a mixed travlang/C executable,
+execute the "travlangopt" command with:
 \begin{itemize}
-\item the names of the desired OCaml native object files (".cmx" and
+\item the names of the desired travlang native object files (".cmx" and
 ".cmxa" files);
 \item the names of the C object files and libraries (".o", ".a",
 ".so" or ".dll" files) that implement the required primitives.
 \end{itemize}
 
 Starting with Objective Caml 3.00, it is possible to record the
-"-custom" option as well as the names of C libraries in an OCaml
-library file ".cma" or ".cmxa".  For instance, consider an OCaml library
-"mylib.cma", built from the OCaml object files "a.cmo" and "b.cmo",
+"-custom" option as well as the names of C libraries in an travlang
+library file ".cma" or ".cmxa".  For instance, consider an travlang library
+"mylib.cma", built from the travlang object files "a.cmo" and "b.cmo",
 which reference C code in "libmylib.a".  If the library is
 built as follows:
 \begin{alltt}
-        ocamlc -a -o mylib.cma -custom a.cmo b.cmo -cclib -lmylib
+        travlangc -a -o mylib.cma -custom a.cmo b.cmo -cclib -lmylib
 \end{alltt}
 users of the library can simply link with "mylib.cma":
 \begin{alltt}
-        ocamlc -o myprog mylib.cma ...
+        travlangc -o myprog mylib.cma ...
 \end{alltt}
 and the system will automatically add the "-custom" and "-cclib
 -lmylib" options, achieving the same effect as
 \begin{alltt}
-        ocamlc -o myprog -custom a.cmo b.cmo ... -cclib -lmylib
+        travlangc -o myprog -custom a.cmo b.cmo ... -cclib -lmylib
 \end{alltt}
 The alternative is of course to build the library without extra
 options:
 \begin{alltt}
-        ocamlc -a -o mylib.cma a.cmo b.cmo
+        travlangc -a -o mylib.cma a.cmo b.cmo
 \end{alltt}
 and then ask users to provide the "-custom" and "-cclib -lmylib"
 options themselves at link-time:
 \begin{alltt}
-        ocamlc -o myprog -custom mylib.cma ... -cclib -lmylib
+        travlangc -o myprog -custom mylib.cma ... -cclib -lmylib
 \end{alltt}
 The former alternative is more convenient for the final users of the
 library, however.
 
-\subsection{ss:dynlink-c-code}{Dynamically linking C code with OCaml code}
+\subsection{ss:dynlink-c-code}{Dynamically linking C code with travlang code}
 
 Starting with Objective Caml 3.03, an alternative to static linking of C code
-using the "-custom" code is provided.  In this mode, the OCaml linker
+using the "-custom" code is provided.  In this mode, the travlang linker
 generates a pure bytecode executable (no embedded custom runtime
 system) that simply records the names of dynamically-loaded libraries
-containing the C code.  The standard OCaml runtime system "ocamlrun"
+containing the C code.  The standard travlang runtime system "travlangrun"
 then loads dynamically these libraries, and resolves references to the
 required primitives, before executing the bytecode.
 
 This facility is currently available on all platforms supported by
-OCaml except Cygwin 64 bits.
+travlang except Cygwin 64 bits.
 
-To dynamically link C code with OCaml code, the C code must first be
+To dynamically link C code with travlang code, the C code must first be
 compiled into a shared library (under Unix) or DLL (under Windows).
 This involves 1- compiling the C files with appropriate C compiler
 flags for producing position-independent code (when required by the
 operating system), and 2- building a
 shared library from the resulting object files.  The resulting shared
-library or DLL file must be installed in a place where "ocamlrun" can
+library or DLL file must be installed in a place where "travlangrun" can
 find it later at program start-up time (see
-section~\ref{s:ocamlrun-dllpath}).
-Finally (step 3), execute the "ocamlc" command with
+section~\ref{s:travlangrun-dllpath}).
+Finally (step 3), execute the "travlangc" command with
 \begin{itemize}
-\item the names of the desired OCaml object files (".cmo" and ".cma" files) ;
+\item the names of the desired travlang object files (".cmo" and ".cma" files) ;
 \item the names of the C shared libraries (".so" or ".dll" files) that
 implement the required primitives.  Under Unix and Windows,
 a library named "dll"\var{name}".so" (respectively, ".dll") residing
@@ -303,26 +303,26 @@ in one of the standard library directories can also be specified as
 \end{itemize}
 Do {\em not} set the "-custom" flag, otherwise you're back to static linking
 as described in section~\ref{ss:staticlink-c-code}.
-The "ocamlmklib" tool (see section~\ref{s:ocamlmklib})
+The "travlangmklib" tool (see section~\ref{s:travlangmklib})
 automates steps 2 and 3.
 
 As in the case of static linking, it is possible (and recommended) to
-record the names of C libraries in an OCaml ".cma" library archive.
-Consider again an OCaml library
-"mylib.cma", built from the OCaml object files "a.cmo" and "b.cmo",
+record the names of C libraries in an travlang ".cma" library archive.
+Consider again an travlang library
+"mylib.cma", built from the travlang object files "a.cmo" and "b.cmo",
 which reference C code in "dllmylib.so".  If the library is
 built as follows:
 \begin{alltt}
-        ocamlc -a -o mylib.cma a.cmo b.cmo -dllib -lmylib
+        travlangc -a -o mylib.cma a.cmo b.cmo -dllib -lmylib
 \end{alltt}
 users of the library can simply link with "mylib.cma":
 \begin{alltt}
-        ocamlc -o myprog mylib.cma ...
+        travlangc -o myprog mylib.cma ...
 \end{alltt}
 and the system will automatically add the "-dllib -lmylib" option,
 achieving the same effect as
 \begin{alltt}
-        ocamlc -o myprog a.cmo b.cmo ... -dllib -lmylib
+        travlangc -o myprog a.cmo b.cmo ... -dllib -lmylib
 \end{alltt}
 Using this mechanism, users of the library "mylib.cma" do not need to
 know that it references C code, nor whether this C code must be
@@ -330,16 +330,16 @@ statically linked (using "-custom") or dynamically linked.
 
 \subsection{ss:c-static-vs-dynamic}{Choosing between static linking and dynamic linking}
 
-After having described two different ways of linking C code with OCaml
+After having described two different ways of linking C code with travlang
 code, we now review the pros and cons of each, to help developers of
-mixed OCaml/C libraries decide.
+mixed travlang/C libraries decide.
 
 The main advantage of dynamic linking is that it preserves the
 platform-independence of bytecode executables.  That is, the bytecode
 executable contains no machine code, and can therefore be compiled on
 platform $A$ and executed on other platforms $B$, $C$, \ldots, as long
 as the required shared libraries are available on all these
-platforms.  In contrast, executables generated by "ocamlc -custom" run
+platforms.  In contrast, executables generated by "travlangc -custom" run
 only on the platform on which they were created, because they embark a
 custom-tailored runtime system specific to that platform.  In
 addition, dynamic linking results in smaller executables.
@@ -348,14 +348,14 @@ Another advantage of dynamic linking is that the final users of the
 library do not need to have a C compiler, C linker, and C runtime
 libraries installed on their machines.  This is no big deal under
 Unix and Cygwin, but many Windows users are reluctant to install
-Microsoft Visual C just to be able to do "ocamlc -custom".
+Microsoft Visual C just to be able to do "travlangc -custom".
 
 There are two drawbacks to dynamic linking.  The first is that the
 resulting executable is not stand-alone: it requires the shared
-libraries, as well as "ocamlrun", to be installed on the machine
+libraries, as well as "travlangrun", to be installed on the machine
 executing the code.  If you wish to distribute a stand-alone
-executable, it is better to link it statically, using "ocamlc -custom
--ccopt -static" or "ocamlopt -ccopt -static".  Dynamic linking also
+executable, it is better to link it statically, using "travlangc -custom
+-ccopt -static" or "travlangopt -ccopt -static".  Dynamic linking also
 raises the ``DLL hell'' problem: some care must be taken to ensure
 that the right versions of the shared libraries are found at start-up
 time.
@@ -365,8 +365,8 @@ construction of the library.  The C compiler and linker flags to
 compile to position-independent code and build a shared library vary
 wildly between different Unix systems.  Also, dynamic linking is not
 supported on all Unix systems, requiring a fall-back case to static
-linking in the Makefile for the library.  The "ocamlmklib" command
-(see section~\ref{s:ocamlmklib}) tries to hide some of these system
+linking in the Makefile for the library.  The "travlangmklib" command
+(see section~\ref{s:travlangmklib}) tries to hide some of these system
 dependencies.
 
 In conclusion: dynamic linking is highly recommended under the native
@@ -380,40 +380,40 @@ portable way.
 \subsection{ss:custom-runtime}{Building standalone custom runtime systems}
 
 It is sometimes inconvenient to build a custom runtime system each
-time OCaml code is linked with C libraries, like "ocamlc -custom" does.
+time travlang code is linked with C libraries, like "travlangc -custom" does.
 For one thing, the building of the runtime system is slow on some
 systems (that have bad linkers or slow remote file systems); for
 another thing, the platform-independence of bytecode files is lost,
-forcing to perform one "ocamlc -custom" link per platform of interest.
+forcing to perform one "travlangc -custom" link per platform of interest.
 
-An alternative to "ocamlc -custom" is to build separately a custom
+An alternative to "travlangc -custom" is to build separately a custom
 runtime system integrating the desired C libraries, then generate
 ``pure'' bytecode executables (not containing their own runtime
 system) that can run on this custom runtime.  This is achieved by the
-"-make-runtime" and "-use-runtime" flags to "ocamlc".  For example,
+"-make-runtime" and "-use-runtime" flags to "travlangc".  For example,
 to build a custom runtime system integrating the C parts of the
 ``Unix'' and ``Threads'' libraries, do:
 \begin{verbatim}
-        ocamlc -make-runtime -o /home/me/ocamlunixrun unix.cma threads.cma
+        travlangc -make-runtime -o /home/me/travlangunixrun unix.cma threads.cma
 \end{verbatim}
 To generate a bytecode executable that runs on this runtime system,
 do:
 \begin{alltt}
-        ocamlc -use-runtime /home/me/ocamlunixrun -o myprog \char92
+        travlangc -use-runtime /home/me/travlangunixrun -o myprog \char92
                 unix.cma threads.cma {\it{your .cmo and .cma files}}
 \end{alltt}
 The bytecode executable "myprog" can then be launched as usual:
-"myprog" \var{args} or "/home/me/ocamlunixrun myprog" \var{args}.
+"myprog" \var{args} or "/home/me/travlangunixrun myprog" \var{args}.
 
 Notice that the bytecode libraries "unix.cma" and "threads.cma" must
-be given twice: when building the runtime system (so that "ocamlc"
+be given twice: when building the runtime system (so that "travlangc"
 knows which C primitives are required) and also when building the
 bytecode executable (so that the bytecode from "unix.cma" and
 "threads.cma" is actually linked in).
 
 \section{s:c-value}{The \texttt{value} type}
 
-All OCaml objects are represented by the C type "value",
+All travlang objects are represented by the C type "value",
 defined in the include file "caml/mlvalues.h", along with macros to
 manipulate values of that type. An object of type "value" is either:
 \begin{itemize}
@@ -443,7 +443,7 @@ structured input-output, structured and raw blocks are further
 classified according to their tags as follows:
 \begin{tableau}{|l|p{10cm}|}{Tag}{Contents of the block}
 \entree{0 to $\hbox{"No_scan_tag"}-1$}{A structured block (an array of
-OCaml objects). Each field is a "value".}
+travlang objects). Each field is a "value".}
 \entree{"Closure_tag"}{A closure representing a functional value. The first
 word is a pointer to a piece of code, the remaining words are
 "value" containing the environment.}
@@ -459,21 +459,21 @@ floating-point numbers.}
 
 \subsection{ss:c-outside-head}{Pointers outside the heap}
 
-In earlier versions of OCaml, it was possible to use
-word-aligned pointers to addresses outside the heap as OCaml values,
+In earlier versions of travlang, it was possible to use
+word-aligned pointers to addresses outside the heap as travlang values,
 just by casting the pointer to type "value".  This usage is no longer
-supported since OCaml 5.0.
+supported since travlang 5.0.
 
 A correct way to manipulate pointers to out-of-heap blocks from
-OCaml is to store those pointers in OCaml blocks with tag
-"Abstract_tag" or "Custom_tag", then use the blocks as the OCaml
+travlang is to store those pointers in travlang blocks with tag
+"Abstract_tag" or "Custom_tag", then use the blocks as the travlang
 values.
 
 Here is an example of encapsulation of out-of-heap pointers of C type
 "ty *" inside "Abstract_tag" blocks.  Section~\ref{s:c-intf-example}
 gives a more complete example using "Custom_tag" blocks.
 \begin{verbatim}
-/* Create an OCaml value encapsulating the pointer p */
+/* Create an travlang value encapsulating the pointer p */
 static value val_of_typtr(ty * p)
 {
   value v = caml_alloc(1, Abstract_tag);
@@ -481,7 +481,7 @@ static value val_of_typtr(ty * p)
   return v;
 }
 
-/* Extract the pointer encapsulated in the given OCaml value */
+/* Extract the pointer encapsulated in the given travlang value */
 static ty * typtr_of_val(value v)
 {
   return *((ty **) Data_abstract_val(v));
@@ -491,30 +491,30 @@ Alternatively, out-of-heap pointers can be treated as ``native''
 integers, that is, boxed 32-bit integers on a 32-bit platform and
 boxed 64-bit integers on a 64-bit platform.
 \begin{verbatim}
-/* Create an OCaml value encapsulating the pointer p */
+/* Create an travlang value encapsulating the pointer p */
 static value val_of_typtr(ty * p)
 {
   return caml_copy_nativeint((intnat) p);
 }
 
-/* Extract the pointer encapsulated in the given OCaml value */
+/* Extract the pointer encapsulated in the given travlang value */
 static ty * typtr_of_val(value v)
 {
   return (ty *) Nativeint_val(v);
 }
 \end{verbatim}
 For pointers that are at least 2-aligned (the low bit is guaranteed to
-be zero), we have yet another valid representation as an OCaml tagged
+be zero), we have yet another valid representation as an travlang tagged
 integer.
 \begin{verbatim}
-/* Create an OCaml value encapsulating the pointer p */
+/* Create an travlang value encapsulating the pointer p */
 static value val_of_typtr(ty * p)
 {
   assert (((uintptr_t) p & 1) == 0);  /* check correct alignment */
   return (value) p | 1;
 }
 
-/* Extract the pointer encapsulated in the given OCaml value */
+/* Extract the pointer encapsulated in the given travlang value */
 static ty * typtr_of_val(value v)
 {
   return (ty *) (v & ~1);
@@ -522,14 +522,14 @@ static ty * typtr_of_val(value v)
 \end{verbatim}
 
 
-\section{s:c-ocaml-datatype-repr}{Representation of OCaml data types}
+\section{s:c-travlang-datatype-repr}{Representation of travlang data types}
 
-This section describes how OCaml data types are encoded in the
+This section describes how travlang data types are encoded in the
 "value" type.
 
 \subsection{ss:c-atomic}{Atomic types}
 
-\begin{tableau}{|l|l|}{OCaml type}{Encoding}
+\begin{tableau}{|l|l|}{travlang type}{Encoding}
 \entree{"int"}{Unboxed integer values.}
 \entree{"char"}{Unboxed integer values (ASCII code).}
 \entree{"float"}{Blocks with tag "Double_tag".}
@@ -567,7 +567,7 @@ order of priority:
 \begin{itemize}
 \item An attribute ("[\@\@boxed]" or "[\@\@unboxed]") on the type declaration.
 \item A compiler option ("-unboxed-types" or "-no-unboxed-types").
-\item The default representation. In the present version of OCaml, the
+\item The default representation. In the present version of travlang, the
 default is the boxed representation.
 \end{itemize}
 
@@ -581,7 +581,7 @@ Values of type "floatarray" (as manipulated by the "Float.Array"
 module), as well as records whose declaration contains only float
 fields, use an efficient unboxed representation: blocks with tag
 "Double_array_tag" whose content consist of raw double values, which are
-not themselves valid OCaml values. They should be accessed using the
+not themselves valid travlang values. They should be accessed using the
 "Double_flat_field" and "Store_double_flat_field" macros.
 
 Finally, arrays of type "float array" may use either the boxed or the
@@ -667,7 +667,7 @@ Like constructed terms, polymorphic variant values are represented either
 as integers (for polymorphic variants without argument), or as blocks
 (for polymorphic variants with an argument).  Unlike constructed
 terms, variant constructors are not numbered starting from 0, but
-identified by a hash value (an OCaml integer), as computed by the C function
+identified by a hash value (an travlang integer), as computed by the C function
 "hash_variant" (declared in "<caml/mlvalues.h>"):
 the hash value for a variant constructor named, say, "VConstr"
 is "hash_variant(\"VConstr\")".
@@ -706,13 +706,13 @@ type) corresponds to the "Some" constructor.
 \item "Long_val("\var{v}")" returns the "long int" encoded in value \var{v}.
 \item "Val_int("\var{i}")" returns the value encoding the "int" \var{i}.
 \item "Int_val("\var{v}")" returns the "int" encoded in value \var{v}.
-\item "Val_bool("\var{x}")" returns the OCaml boolean representing the
+\item "Val_bool("\var{x}")" returns the travlang boolean representing the
 truth value of the C integer \var{x}.
-\item "Bool_val("\var{v}")" returns 0 if \var{v} is the OCaml boolean
+\item "Bool_val("\var{v}")" returns 0 if \var{v} is the travlang boolean
 "false", 1 if \var{v} is "true".
-\item "Val_true", "Val_false" represent the OCaml booleans "true" and "false".
+\item "Val_true", "Val_false" represent the travlang booleans "true" and "false".
 \item "Val_emptylist", "Val_emptylist" represents the empty list.
-\item "Val_none" represents the OCaml value "None".
+\item "Val_none" represents the travlang value "None".
 \end{itemize}
 
 \subsection{ss:c-block-access}{Accessing blocks}
@@ -739,7 +739,7 @@ numbered from 0 to $\hbox{"string_length"}(v)-1$.
 \item "String_val("\var{v}")" returns a pointer to the first byte of the string
 \var{v}, with type "const char *".
 This pointer is a valid C string: there is a null byte after the last
-byte in the string. However, OCaml strings can contain embedded null bytes,
+byte in the string. However, travlang strings can contain embedded null bytes,
 which will confuse the usual C functions over strings.
 \item "Bytes_val("\var{v}")" returns a pointer to the first byte of the
 byte sequence \var{v}, with type "unsigned char *".
@@ -771,7 +771,7 @@ of a value \var{v} of any unboxed type (record or concrete data type).
 of a value \var{v} of any boxed type (record or concrete data type).
 \item "caml_field_unboxable("\var{v}")" calls either
 "caml_field_unboxed" or "caml_field_boxed" according to the default
-representation of unboxable types in the current version of OCaml.
+representation of unboxable types in the current version of travlang.
 \item "Some_val("\var{v}")" returns the argument "\var{x}" of a value \var{v} of
 the form "Some("\var{x}")".
 \end{itemize}
@@ -817,7 +817,7 @@ containing a copy of the null-terminated C string \var{s} (a "char *").
 with the "double" \var{d}.
 \item
 "caml_copy_int32("\var{i}")", "caml_copy_int64("\var{i}")" and
-"caml_copy_nativeint("\var{i}")" return a value of OCaml type "int32",
+"caml_copy_nativeint("\var{i}")" return a value of travlang type "int32",
 "int64" and "nativeint", respectively, initialized with the integer
 \var{i}.
 \item
@@ -841,7 +841,7 @@ type) whose field is the value \var{v}.
 any boxed type) whose field is the value \var{v}.
 \item "caml_alloc_unboxable("\var{v}")" calls either
 "caml_alloc_unboxed" or "caml_alloc_boxed" according to the default
-representation of unboxable types in the current version of OCaml.
+representation of unboxable types in the current version of travlang.
 \item "caml_alloc_some("\var{v}")" allocates a block representing
 "Some("\var{v}")".
 \end{itemize}
@@ -893,7 +893,7 @@ with argument \var{s}.
 \end{itemize}
 
 Raising arbitrary exceptions from C is more delicate: the
-exception identifier is dynamically allocated by the OCaml program, and
+exception identifier is dynamically allocated by the travlang program, and
 therefore must be communicated to the C function using the
 registration facility described below in section~\ref{ss:c-register-exn}.
 Once the exception identifier is recovered in C, the following
@@ -902,9 +902,9 @@ functions actually raise the exception:
 \item "caml_raise_constant("\var{id}")" raises the exception \var{id} with
 no argument;
 \item "caml_raise_with_arg("\var{id}", "\var{v}")" raises the exception
-\var{id} with the OCaml value \var{v} as argument;
+\var{id} with the travlang value \var{v} as argument;
 \item "caml_raise_with_args("\var{id}", "\var{n}", "\var{v}")"
-raises the exception \var{id} with the OCaml values
+raises the exception \var{id} with the travlang values
 \var{v}"[0]", \ldots, \var{v}"["\var{n}"-1]" as arguments;
 \item "caml_raise_with_string("\var{id}", "\var{s}")", where \var{s} is a
 null-terminated C string, raises the exception \var{id} with a copy of
@@ -939,9 +939,9 @@ the remaining parameters ("CAMLxparam1" to "CAMLxparam5").
 The macros "CAMLreturn", "CAMLreturn0", and "CAMLreturnT" are used to
 replace the C keyword "return"; any function using a "CAMLparam" macro
 on entry should use "CAMLreturn" on all exit points. C functions
-exported as OCaml externals must return a "value", and they should use
+exported as travlang externals must return a "value", and they should use
 "CAMLreturn (x)" instead of "return x". Some helper functions may
-manipulate OCaml values yet return "void" or another
+manipulate travlang values yet return "void" or another
 datatype. "void"-returning procedures should explicitly use
 "CAMLreturn0", and not have any implicit return. Helper functions
 returning C data of some type "t" should use "CAMLreturnT (t, x)"
@@ -983,8 +983,8 @@ for use with the byte-code runtime, its arguments are not "value"s and
 must not be declared (they have types "value *" and "int").
 
 \paragraph{Warning:} "CAMLreturn0" should only be used for internal procedures that return void.
-"CAMLreturn(Val_unit)" should be used for functions that return an OCaml unit value.
-Primitives (C functions that can be called from OCaml) should never return void.
+"CAMLreturn(Val_unit)" should be used for functions that return an travlang unit value.
+Primitives (C functions that can be called from travlang) should never return void.
 
 \begin{gcrule}
 Local variables of type "value" must be declared with one of the
@@ -1064,10 +1064,10 @@ Use the normal C array syntax instead.
 
 \begin{gcrule} Global variables containing values must be registered
 with the garbage collector using the "caml_register_global_root" function,
-save that global variables and locations that will only ever contain OCaml
+save that global variables and locations that will only ever contain travlang
 integers (and never pointers) do not have to be registered.
 
-The same is true for any memory location outside the OCaml heap that contains a
+The same is true for any memory location outside the travlang heap that contains a
 value and is not guaranteed to be reachable---for as long as it contains such
 value---from either another registered global variable or location, local
 variable declared with "CAMLlocal" or function parameter declared with
@@ -1079,14 +1079,14 @@ Registration of a global variable "v" is achieved by calling
 stored in "v" for the first time; likewise, registration of an arbitrary
 location "p" is achieved by calling "caml_register_global_root(p)".
 
-You must not call any of the OCaml runtime functions or macros between
+You must not call any of the travlang runtime functions or macros between
 registering and storing the value. Neither must you store anything in the
 variable "v" (likewise, the location "p") that is not a valid value.
 
 The registration causes the contents of the variable or memory location to be
 updated by the garbage collector whenever the value in such variable or location
-is moved within the OCaml heap. In the presence of threads care must be taken to
-ensure appropriate synchronisation with the OCaml runtime to avoid a race
+is moved within the travlang heap. In the presence of threads care must be taken to
+ensure appropriate synchronisation with the travlang runtime to avoid a race
 condition against the garbage collector when reading or writing the value. (See
 section
 \ref{ss:parallel-execution-long-running-c-code}.)
@@ -1174,7 +1174,7 @@ value (see rule~6).
 %% Each of the "Begin_roots" macros open a C block that must be closed
 %% with a matching "End_roots" at the same nesting level.  The block must
 %% be exited normally (i.e. not with "return" or "goto").  However, the
-%% roots are automatically un-registered if an OCaml exception is raised,
+%% roots are automatically un-registered if an travlang exception is raised,
 %% so you can exit the block with "failwith", "invalid_argument", or one
 %% of the "raise" functions.
 %%
@@ -1268,7 +1268,7 @@ has taken place since "r" was allocated.
 
 \subsection{ss:c-process-pending-actions}{Pending actions and asynchronous exceptions}
 
-Since 4.10, allocation functions are guaranteed not to call any OCaml
+Since 4.10, allocation functions are guaranteed not to call any travlang
 callbacks from C, including finalisers and signal handlers, and delay
 their execution instead.
 
@@ -1280,7 +1280,7 @@ is recommended to call it regularly at safe points inside long-running
 non-blocking C code.
 
 The variant \verb"caml_process_pending_actions_exn" is provided, that
-returns the exception instead of raising it directly into OCaml code.
+returns the exception instead of raising it directly into travlang code.
 Its result must be tested using {\tt Is_exception_result}, and
 followed by {\tt Extract_exception} if appropriate. It is typically
 used for clean up before re-raising:
@@ -1302,7 +1302,7 @@ garbage collection, is further detailed in Section~\ref{ss:c-callbacks}.
 \section{s:c-intf-example}{A complete example}
 
 This section outlines how the functions from the Unix "curses" library
-can be made available to OCaml programs. First of all, here is
+can be made available to travlang programs. First of all, here is
 the interface "curses.ml" that declares the "curses" primitives and
 data types:
 \begin{verbatim}
@@ -1322,7 +1322,7 @@ external mvwaddstr: window -> int -> int -> string -> unit
 \end{verbatim}
 To compile this interface:
 \begin{verbatim}
-        ocamlc -c curses.ml
+        travlangc -c curses.ml
 \end{verbatim}
 
 To implement these functions, we just have to provide the stub code;
@@ -1337,7 +1337,7 @@ The stub code file, "curses_stubs.c", looks like this:
 #include <caml/custom.h>
 
 /* Encapsulation of opaque window handles (of type WINDOW *)
-   as OCaml custom blocks. */
+   as travlang custom blocks. */
 
 static struct custom_operations curses_window_ops = {
   "fr.inria.caml.curses_windows",
@@ -1350,10 +1350,10 @@ static struct custom_operations curses_window_ops = {
   custom_fixed_length_default
 };
 
-/* Accessing the WINDOW * part of an OCaml custom block */
+/* Accessing the WINDOW * part of an travlang custom block */
 #define Window_val(v) (*((WINDOW **) Data_custom_val(v)))
 
-/* Allocating an OCaml custom block to hold the given WINDOW * */
+/* Allocating an travlang custom block to hold the given WINDOW * */
 static value alloc_window(WINDOW * w)
 {
   value v = caml_alloc_custom(&curses_window_ops, sizeof(WINDOW *), 0, 1);
@@ -1428,16 +1428,16 @@ CAMLprim value caml_curses_mvwaddstr(value win, value x, value y, value s)
 
 The file "curses_stubs.c" can be compiled with:
 \begin{verbatim}
-        cc -c -I`ocamlc -where` curses_stubs.c
+        cc -c -I`travlangc -where` curses_stubs.c
 \end{verbatim}
 or, even simpler,
 \begin{verbatim}
-        ocamlc -c curses_stubs.c
+        travlangc -c curses_stubs.c
 \end{verbatim}
-(When passed a ".c" file, the "ocamlc" command simply calls the C
+(When passed a ".c" file, the "travlangc" command simply calls the C
 compiler on that file, with the right "-I" option.)
 
-Now, here is a sample OCaml program "prog.ml" that uses the "curses"
+Now, here is a sample travlang program "prog.ml" that uses the "curses"
 module:
 \begin{verbatim}
 (* File prog.ml -- main program using curses *)
@@ -1452,7 +1452,7 @@ let small_window = newwin 10 5 20 10 in
 \end{verbatim}
 To compile and link this program, run:
 \begin{verbatim}
-       ocamlc -custom -o prog unix.cma curses.cmo prog.ml curses_stubs.o -cclib -lcurses
+       travlangc -custom -o prog unix.cma curses.cmo prog.ml curses_stubs.o -cclib -lcurses
 \end{verbatim}
 (On some machines, you may need to put
 "-cclib -lcurses -cclib -ltermcap" or "-cclib -ltermcap"
@@ -1461,49 +1461,49 @@ instead of "-cclib -lcurses".)
 %% Note by Damien: when I launch the program, it only displays "Hello"
 %% and not "world". Why?
 
-\section{s:c-callback}{Advanced topic: callbacks from C to OCaml}
+\section{s:c-callback}{Advanced topic: callbacks from C to travlang}
 
-So far, we have described how to call C functions from OCaml. In this
-section, we show how C functions can call OCaml functions, either as
-callbacks (OCaml calls C which calls OCaml), or with the main program
+So far, we have described how to call C functions from travlang. In this
+section, we show how C functions can call travlang functions, either as
+callbacks (travlang calls C which calls travlang), or with the main program
 written in C.
 
-\subsection{ss:c-callbacks}{Applying OCaml closures from C}
+\subsection{ss:c-callbacks}{Applying travlang closures from C}
 
-C functions can apply OCaml function values (closures) to OCaml values.
+C functions can apply travlang function values (closures) to travlang values.
 The following functions are provided to perform the applications:
 \begin{itemize}
 \item "caml_callback("\var{f, a}")" applies the functional value \var{f} to
 the value \var{a} and returns the value returned by~\var{f}.
 \item "caml_callback2("\var{f, a, b}")" applies the functional value \var{f}
-(which is assumed to be a curried OCaml function with two arguments) to
+(which is assumed to be a curried travlang function with two arguments) to
 \var{a} and \var{b}.
 \item "caml_callback3("\var{f, a, b, c}")" applies the functional value \var{f}
-(a curried OCaml function with three arguments) to \var{a}, \var{b} and \var{c}.
+(a curried travlang function with three arguments) to \var{a}, \var{b} and \var{c}.
 \item "caml_callbackN("\var{f, n, args}")" applies the functional value \var{f}
 to the \var{n} arguments contained in the C array of values \var{args}.
 \end{itemize}
 If the function \var{f} does not return, but raises an exception that
 escapes the scope of the application, then this exception is
-propagated to the next enclosing OCaml code, skipping over the C
-code. That is, if an OCaml function \var{f} calls a C function \var{g} that
-calls back an OCaml function \var{h} that raises a stray exception, then the
+propagated to the next enclosing travlang code, skipping over the C
+code. That is, if an travlang function \var{f} calls a C function \var{g} that
+calls back an travlang function \var{h} that raises a stray exception, then the
 execution of \var{g} is interrupted and the exception is propagated back
 into \var{f}.
 
-If the C code wishes to catch exceptions escaping the OCaml function,
+If the C code wishes to catch exceptions escaping the travlang function,
 it can use the functions "caml_callback_exn", "caml_callback2_exn",
 "caml_callback3_exn", "caml_callbackN_exn".  These functions take the same
 arguments as their non-"_exn" counterparts, but catch escaping
 exceptions and return them to the C code.  The return value \var{v} of the
 "caml_callback*_exn" functions must be tested with the macro
 "Is_exception_result("\var{v}")".  If the macro returns ``false'', no
-exception occurred, and \var{v} is the value returned by the OCaml
+exception occurred, and \var{v} is the value returned by the travlang
 function.  If "Is_exception_result("\var{v}")" returns ``true'',
 an exception escaped, and its value (the exception descriptor) can be
 recovered using "Extract_exception("\var{v}")".
 
-\paragraph{Warning:} If the OCaml function returned with an exception,
+\paragraph{Warning:} If the travlang function returned with an exception,
 "Extract_exception" should be applied to the exception result prior
 to calling a function that may trigger garbage collection.
 Otherwise, if \var{v} is reachable during garbage collection, the runtime
@@ -1525,12 +1525,12 @@ Example:
     }
 \end{verbatim}
 
-\subsection{ss:c-closures}{Obtaining or registering OCaml closures for use in C functions}
+\subsection{ss:c-closures}{Obtaining or registering travlang closures for use in C functions}
 
-There are two ways to obtain OCaml function values (closures) to
+There are two ways to obtain travlang function values (closures) to
 be passed to the "callback" functions described above.  One way is to
-pass the OCaml function as an argument to a primitive function.  For
-example, if the OCaml code contains the declaration
+pass the travlang function as an argument to a primitive function.  For
+example, if the travlang code contains the declaration
 \begin{verbatim}
     external apply : ('a -> 'b) -> 'a -> 'b = "caml_apply"
 \end{verbatim}
@@ -1546,13 +1546,13 @@ the corresponding C stub can be written as follows:
 \end{verbatim}
 
 Another possibility is to use the registration mechanism provided by
-OCaml.  This registration mechanism enables OCaml code to register
-OCaml functions under some global name, and C code to retrieve the
+travlang.  This registration mechanism enables travlang code to register
+travlang functions under some global name, and C code to retrieve the
 corresponding closure by this global name.
 
-On the OCaml side, registration is performed by evaluating
+On the travlang side, registration is performed by evaluating
 "Callback.register" \var{n} \var{v}. Here, \var{n} is the global name
-(an arbitrary string) and \var{v} the OCaml value. For instance:
+(an arbitrary string) and \var{v} the travlang value. For instance:
 \begin{verbatim}
     let f x = print_string "f is applied to "; print_int x; print_newline()
     let _ = Callback.register "test function" f
@@ -1560,9 +1560,9 @@ On the OCaml side, registration is performed by evaluating
 
 On the C side, a pointer to the value registered under name \var{n} is
 obtained by calling "caml_named_value("\var{n}")". The returned
-pointer must then be dereferenced to recover the actual OCaml value.
+pointer must then be dereferenced to recover the actual travlang value.
 If no value is registered under the name \var{n}, the null pointer is
-returned. For example, here is a C wrapper that calls the OCaml function "f"
+returned. For example, here is a C wrapper that calls the travlang function "f"
 above:
 \begin{verbatim}
     void call_caml_f(int arg)
@@ -1589,10 +1589,10 @@ calls "caml_named_value" only once:
     }
 \end{verbatim}
 
-\subsection{ss:c-register-exn}{Registering OCaml exceptions for use in C functions}
+\subsection{ss:c-register-exn}{Registering travlang exceptions for use in C functions}
 
 The registration mechanism described above can also be used to
-communicate exception identifiers from OCaml to C. The OCaml code
+communicate exception identifiers from travlang to C. The travlang code
 registers the exception by evaluating
 "Callback.register_exception" \var{n} \var{exn}, where \var{n} is an
 arbitrary name and \var{exn} is an exception value of the
@@ -1616,69 +1616,69 @@ the given argument:
 
 \subsection{ss:main-c}{Main program in C}
 
-In normal operation, a mixed OCaml/C program starts by executing the
-OCaml initialization code, which then may proceed to call C
-functions. We say that the main program is the OCaml code. In some
+In normal operation, a mixed travlang/C program starts by executing the
+travlang initialization code, which then may proceed to call C
+functions. We say that the main program is the travlang code. In some
 applications, it is desirable that the C code plays the role of the
-main program, calling OCaml functions when needed. This can be achieved as
+main program, calling travlang functions when needed. This can be achieved as
 follows:
 \begin{itemize}
 \item The C part of the program must provide a "main" function,
-which will override the default "main" function provided by the OCaml
+which will override the default "main" function provided by the travlang
 runtime system. Execution will start in the user-defined "main" function
 just like for a regular C program.
 
 \item At some point, the C code must call "caml_main(argv)" to
-initialize the OCaml code. The "argv" argument is a C array of strings
+initialize the travlang code. The "argv" argument is a C array of strings
 (type "char **"), terminated with a "NULL" pointer,
 which represents the command-line arguments, as
-passed as second argument to "main". The OCaml array "Sys.argv" will
+passed as second argument to "main". The travlang array "Sys.argv" will
 be initialized from this parameter. For the bytecode compiler,
 "argv[0]" and "argv[1]" are also consulted to find the file containing
 the bytecode.
 
-\item The call to "caml_main" initializes the OCaml runtime system,
+\item The call to "caml_main" initializes the travlang runtime system,
 loads the bytecode (in the case of the bytecode compiler), and
-executes the initialization code of the OCaml program. Typically, this
+executes the initialization code of the travlang program. Typically, this
 initialization code registers callback functions using "Callback.register".
-Once the OCaml initialization code is complete, control returns to the
+Once the travlang initialization code is complete, control returns to the
 C code that called "caml_main".
 
-\item The C code can then invoke OCaml functions using the callback
+\item The C code can then invoke travlang functions using the callback
 mechanism (see section~\ref{ss:c-callbacks}).
 \end{itemize}
 
-\subsection{ss:c-embedded-code}{Embedding the OCaml code in the C code}
+\subsection{ss:c-embedded-code}{Embedding the travlang code in the C code}
 
-The bytecode compiler in custom runtime mode ("ocamlc -custom")
+The bytecode compiler in custom runtime mode ("travlangc -custom")
 normally appends the bytecode to the executable file containing the
 custom runtime. This has two consequences. First, the final linking
-step must be performed by "ocamlc". Second, the OCaml runtime library
+step must be performed by "travlangc". Second, the travlang runtime library
 must be able to find the name of the executable file from the
 command-line arguments. When using "caml_main(argv)" as in
 section~\ref{ss:main-c}, this means that "argv[0]" or "argv[1]" must
 contain the executable file name.
 
 An alternative is to embed the bytecode in the C code. The
-"-output-obj" and "-output-complete-obj" options to "ocamlc" are
-provided for this purpose. They cause the "ocamlc" compiler to output a
+"-output-obj" and "-output-complete-obj" options to "travlangc" are
+provided for this purpose. They cause the "travlangc" compiler to output a
 C object file (".o" file, ".obj" under Windows) containing the
-bytecode for the OCaml part of the program, as well as a
-"caml_startup" function. The C object file produced by "ocamlc
+bytecode for the travlang part of the program, as well as a
+"caml_startup" function. The C object file produced by "travlangc
 -output-complete-obj" also contains the runtime and autolink
-libraries. The C object file produced by "ocamlc -output-obj" or
-"ocamlc -output-complete-obj" can then be linked with C code using the
+libraries. The C object file produced by "travlangc -output-obj" or
+"travlangc -output-complete-obj" can then be linked with C code using the
 standard C compiler, or stored in a C library.
 
 The "caml_startup" function must be called from the main C program in
-order to initialize the OCaml runtime and execute the OCaml
+order to initialize the travlang runtime and execute the travlang
 initialization code. Just like "caml_main", it takes one "argv"
 parameter containing the command-line parameters. Unlike "caml_main",
 this "argv" parameter is used only to initialize "Sys.argv", but not
 for finding the name of the executable file.
 
 The "caml_startup" function calls the uncaught exception handler (or
-enters the debugger, if running under ocamldebug) if an exception escapes
+enters the debugger, if running under travlangdebug) if an exception escapes
 from a top-level module initialiser.  Such exceptions may be caught in the
 C code by instead using the "caml_startup_exn" function and testing the result
 using {\tt Is_exception_result} (followed by {\tt Extract_exception} if
@@ -1688,64 +1688,64 @@ The "-output-obj" and "-output-complete-obj" options can also be used to
 obtain the C source file.
 More interestingly, these options can also produce
 directly a shared library (".so" file, ".dll" under Windows) that
-contains the OCaml code, the OCaml runtime system and any other static
-C code given to "ocamlc" (".o", ".a", respectively, ".obj", ".lib").
+contains the travlang code, the travlang runtime system and any other static
+C code given to "travlangc" (".o", ".a", respectively, ".obj", ".lib").
 This use of "-output-obj" and "-output-complete-obj"
 is very similar to a normal linking
 step, but instead of producing a main program that automatically runs
-the OCaml code, it produces a shared library that can run the OCaml
+the travlang code, it produces a shared library that can run the travlang
 code on demand. The three possible behaviors of "-output-obj"
 and "-output-complete-obj"
 (to produce a C source code ".c", a C object file ".o", a shared library ".so"),
 are selected according to the extension of the resulting file (given
 with "-o").
 
-The native-code compiler "ocamlopt" also supports the "-output-obj"
+The native-code compiler "travlangopt" also supports the "-output-obj"
 and "-output-complete-obj" options, causing it to output a C object
-file or a shared library containing the native code for all OCaml
-modules on the command-line, as well as the OCaml startup code.
+file or a shared library containing the native code for all travlang
+modules on the command-line, as well as the travlang startup code.
 Initialization is performed by calling "caml_startup" (or
 "caml_startup_exn") as in the case of the bytecode compiler. The file
-produced by "ocamlopt -output-complete-obj" also contains the runtime
+produced by "travlangopt -output-complete-obj" also contains the runtime
 and autolink libraries.
 
 For the final linking phase, in addition to the object file produced
-by "-output-obj", you will have to provide the OCaml runtime
+by "-output-obj", you will have to provide the travlang runtime
 library ("libcamlrun.a" for bytecode, "libasmrun.a" for native-code),
-as well as all C libraries that are required by the OCaml libraries
-used.  For instance, assume the OCaml part of your program uses the
-Unix library.  With "ocamlc", you should do:
+as well as all C libraries that are required by the travlang libraries
+used.  For instance, assume the travlang part of your program uses the
+Unix library.  With "travlangc", you should do:
 \begin{alltt}
-        ocamlc -output-obj -o camlcode.o unix.cma {\it{other}} .cmo {\it{and}} .cma {\it{files}}
+        travlangc -output-obj -o camlcode.o unix.cma {\it{other}} .cmo {\it{and}} .cma {\it{files}}
         cc -o myprog {\it{C objects and libraries}} \char92
-           camlcode.o -L`ocamlc -where` -lunix -lcamlrun
+           camlcode.o -L`travlangc -where` -lunix -lcamlrun
 \end{alltt}
-With "ocamlopt", you should do:
+With "travlangopt", you should do:
 \begin{alltt}
-        ocamlopt -output-obj -o camlcode.o unix.cmxa {\it{other}} .cmx {\it{and}} .cmxa {\it{files}}
+        travlangopt -output-obj -o camlcode.o unix.cmxa {\it{other}} .cmx {\it{and}} .cmxa {\it{files}}
         cc -o myprog {\it{C objects and libraries}} \char92
-           camlcode.o -L`ocamlc -where` -lunix -lasmrun
+           camlcode.o -L`travlangc -where` -lunix -lasmrun
 \end{alltt}
 
 % -- This seems completely wrong -- Damien
-% The shared libraries produced by "ocamlc -output-obj" or by "ocamlopt
-% -output-obj" already contains the OCaml runtime library as
+% The shared libraries produced by "travlangc -output-obj" or by "travlangopt
+% -output-obj" already contains the travlang runtime library as
 % well as all the needed C libraries.
 
 For the final linking phase, in addition to the object file produced
 by "-output-complete-obj", you will have only to provide the C
-libraries required by the OCaml runtime.
+libraries required by the travlang runtime.
 
-For instance, assume the OCaml part of your program uses the
-Unix library.  With "ocamlc", you should do:
+For instance, assume the travlang part of your program uses the
+Unix library.  With "travlangc", you should do:
 \begin{alltt}
-        ocamlc -output-complete-obj -o camlcode.o unix.cma {\it{other}} .cmo {\it{and}} .cma {\it{files}}
+        travlangc -output-complete-obj -o camlcode.o unix.cma {\it{other}} .cmo {\it{and}} .cma {\it{files}}
         cc -o myprog {\it{C objects and libraries}} \char92
            camlcode.o {\it{C libraries required by the runtime, eg -lm  -ldl -lcurses -lpthread}}
 \end{alltt}
-With "ocamlopt", you should do:
+With "travlangopt", you should do:
 \begin{alltt}
-        ocamlopt -output-complete-obj -o camlcode.o unix.cmxa {\it{other}} .cmx {\it{and}} .cmxa {\it{files}}
+        travlangopt -output-complete-obj -o camlcode.o unix.cmxa {\it{other}} .cmx {\it{and}} .cmxa {\it{files}}
         cc -o myprog {\it{C objects and libraries}} \char92
            camlcode.o {\it{C libraries required by the runtime, eg -lm -ldl}}
 \end{alltt}
@@ -1754,33 +1754,33 @@ With "ocamlopt", you should do:
 linking phase that links together the object file produced by the
 "-output-obj" and "-output-complete-obj" options and the remainder of the program.  Those options
 are shown in the configuration file "Makefile.config" generated during
-compilation of OCaml, as the variable "OC_LDFLAGS".
+compilation of travlang, as the variable "OC_LDFLAGS".
 \begin{itemize}
 \item Windows with the MSVC compiler: the object file produced by
-OCaml have been compiled with the "/MD" flag, and therefore
+travlang have been compiled with the "/MD" flag, and therefore
 all other object files linked with it should also be compiled with
 "/MD".
 \item other systems: you may have to add one or both of
 "-lm" and "-ldl", depending on your OS and C compiler.
 \end{itemize}
 
-\paragraph{Stack backtraces.}  When OCaml bytecode produced by
-"ocamlc -g" is embedded in a C program, no debugging information is
+\paragraph{Stack backtraces.}  When travlang bytecode produced by
+"travlangc -g" is embedded in a C program, no debugging information is
 included, and therefore it is impossible to print stack backtraces on
 uncaught exceptions.  This is not the case when native code produced
-by "ocamlopt -g" is embedded in a C program: stack backtrace
+by "travlangopt -g" is embedded in a C program: stack backtrace
 information is available, but the backtrace mechanism needs to be
-turned on programmatically.   This can be achieved from the OCaml side
+turned on programmatically.   This can be achieved from the travlang side
 by calling "Printexc.record_backtrace true" in the initialization of
-one of the OCaml modules.  This can also be achieved from the C side
-by calling "caml_record_backtraces(1);" in the OCaml-C glue code.
+one of the travlang modules.  This can also be achieved from the C side
+by calling "caml_record_backtraces(1);" in the travlang-C glue code.
 ("caml_record_backtraces" is declared in "backtrace.h")
 
 \paragraph{Unloading the runtime.}
 
 In case the shared library produced with "-output-obj" is to be loaded and
 unloaded repeatedly by a single process, care must be taken to unload the
-OCaml runtime explicitly, in order to avoid various system resource leaks.
+travlang runtime explicitly, in order to avoid various system resource leaks.
 
 Since 4.05, "caml_shutdown" function can be used to shut the runtime down
 gracefully, which equals the following:
@@ -1821,13 +1821,13 @@ program written in~C should not try to handle these signals itself.
 \section{s:c-advexample}{Advanced example with callbacks}
 
 This section illustrates the callback facilities described in
-section~\ref{s:c-callback}. We are going to package some OCaml functions
+section~\ref{s:c-callback}. We are going to package some travlang functions
 in such a way that they can be linked with C code and called from C
-just like any C functions. The OCaml functions are defined in the
-following "mod.ml" OCaml source:
+just like any C functions. The travlang functions are defined in the
+following "mod.ml" travlang source:
 
 \begin{verbatim}
-(* File mod.ml -- some "useful" OCaml functions *)
+(* File mod.ml -- some "useful" travlang functions *)
 
 let rec fib n = if n < 2 then 1 else fib(n-1) + fib(n-2)
 
@@ -1842,7 +1842,7 @@ let _ = Callback.register "format_result" format_result
 Here is the C stub code for calling these functions from C:
 
 \begin{verbatim}
-/* File modwrap.c -- wrappers around the OCaml functions */
+/* File modwrap.c -- wrappers around the travlang functions */
 
 #include <stdio.h>
 #include <string.h>
@@ -1867,15 +1867,15 @@ char * format_result(int n)
 }
 \end{verbatim}
 
-We now compile the OCaml code to a C object file and put it in a C
-library along with the stub code in "modwrap.c" and the OCaml runtime system:
+We now compile the travlang code to a C object file and put it in a C
+library along with the stub code in "modwrap.c" and the travlang runtime system:
 \begin{verbatim}
-        ocamlc -custom -output-obj -o modcaml.o mod.ml
-        ocamlc -c modwrap.c
-        cp `ocamlc -where`/libcamlrun.a mod.a && chmod +w mod.a
+        travlangc -custom -output-obj -o modcaml.o mod.ml
+        travlangc -c modwrap.c
+        cp `travlangc -where`/libcamlrun.a mod.a && chmod +w mod.a
         ar r mod.a modcaml.o modwrap.o
 \end{verbatim}
-(One can also use "ocamlopt -output-obj" instead of "ocamlc -custom
+(One can also use "travlangopt -output-obj" instead of "travlangc -custom
 -output-obj".  In this case, replace "libcamlrun.a" (the bytecode
 runtime library) by "libasmrun.a" (the native-code runtime library).)
 
@@ -1884,7 +1884,7 @@ program, just like regular C functions. Just remember to call
 "caml_startup" (or "caml_startup_exn") once before.
 
 \begin{verbatim}
-/* File main.c -- a sample client for the OCaml functions */
+/* File main.c -- a sample client for the travlang functions */
 
 #include <stdio.h>
 #include <caml/callback.h>
@@ -1896,7 +1896,7 @@ int main(int argc, char ** argv)
 {
   int result;
 
-  /* Initialize OCaml code */
+  /* Initialize travlang code */
   caml_startup(argv);
   /* Do some computation */
   result = fib(10);
@@ -1907,7 +1907,7 @@ int main(int argc, char ** argv)
 
 To build the whole program, just invoke the C compiler as follows:
 \begin{verbatim}
-        cc -o prog -I `ocamlc -where` main.c mod.a -lcurses
+        cc -o prog -I `travlangc -where` main.c mod.a -lcurses
 \end{verbatim}
 (On some machines, you may need to put "-ltermcap" or
 "-lcurses -ltermcap" instead of "-lcurses".)
@@ -1937,7 +1937,7 @@ finalization function is associated with the block.
 
 \item "int (*compare)(value v1, value v2)" \\
 The "compare" field contains a pointer to a C function that is
-called whenever two custom blocks are compared using OCaml's generic
+called whenever two custom blocks are compared using travlang's generic
 comparison operators ("=", "<>", "<=", ">=", "<", ">" and
 "compare").  The C function should return 0 if the data contained in
 the two blocks are structurally equal, a negative integer if the data
@@ -1951,7 +1951,7 @@ default comparison function simply raises "Failure".
 \item "int (*compare_ext)(value v1, value v2)" \\
 (Since 3.12.1)
 The "compare_ext" field contains a pointer to a C function that is
-called whenever one custom block and one unboxed integer are compared using OCaml's generic
+called whenever one custom block and one unboxed integer are compared using travlang's generic
 comparison operators ("=", "<>", "<=", ">=", "<", ">" and
 "compare").  As in the case of the "compare" field, the C function
 should return 0 if the two arguments are structurally equal, a
@@ -1964,7 +1964,7 @@ default comparison function simply raises "Failure".
 
 \item "intnat (*hash)(value v)" \\
 The "hash" field contains a pointer to a C function that is called
-whenever OCaml's generic hash operator (see module \stdmoduleref{Hashtbl}) is
+whenever travlang's generic hash operator (see module \stdmoduleref{Hashtbl}) is
 applied to a custom block.  The C function can return an arbitrary
 integer representing the hash value of the data contained in the
 given custom block.  The hash value must be compatible with the
@@ -1978,7 +1978,7 @@ the custom block is ignored during hash computation.
 \item "void (*serialize)(value v, uintnat * bsize_32, uintnat * bsize_64)" \\
 The "serialize" field contains a pointer to a C function that is
 called whenever the custom block needs to be serialized (marshaled)
-using the OCaml functions "output_value" or "Marshal.to_...".
+using the travlang functions "output_value" or "Marshal.to_...".
 For a custom block, those functions first write the identifier of the
 block (as given by the "identifier" field) to the output stream,
 then call the user-provided "serialize" function.  That function is
@@ -1996,7 +1996,7 @@ serialize the custom block.
 \item "uintnat (*deserialize)(void * dst)" \\
 The "deserialize" field contains a pointer to a C function that is
 called whenever a custom block with identifier "identifier" needs to
-be deserialized (un-marshaled) using the OCaml functions "input_value"
+be deserialized (un-marshaled) using the travlang functions "input_value"
 or "Marshal.from_...".  This user-provided function is responsible for
 reading back the data written by the "serialize" operation, using the
 "deserialize_..." functions defined in "<caml/intext.h>" and listed
@@ -2025,8 +2025,8 @@ the serialized output.
 
 Note: the "finalize", "compare", "hash", "serialize", and "deserialize"
 functions attached to custom blocks descriptors are only allowed limited
-interactions with the OCaml runtime. Within these functions, do not call any of
-the OCaml allocation functions, and do not perform any callback into OCaml
+interactions with the travlang runtime. Within these functions, do not call any of
+the travlang allocation functions, and do not perform any callback into travlang
 code. Do not use "CAMLparam" to register the parameters to these functions, and
 do not use "CAMLreturn" to return the result. Do not raise exceptions (to
 signal an error during deserialization, use "caml_deserialize_error"). Do not
@@ -2049,7 +2049,7 @@ as a C global variable).
 The two parameters \var{used} and \var{max} are used to control the
 speed of garbage collection when the finalized object contains
 pointers to out-of-heap resources.  Generally speaking, the
-OCaml incremental major collector adjusts its speed relative to the
+travlang incremental major collector adjusts its speed relative to the
 allocation rate of the program.  The faster the program allocates, the
 harder the GC works in order to reclaim quickly unreachable blocks
 and avoid having large amount of ``floating garbage'' (unreferenced
@@ -2099,7 +2099,7 @@ memory that are held by your custom block. This function works like
 "caml_alloc_custom" except that the "max" parameter is under the
 control of the user (via the "custom_major_ratio",
 "custom_minor_ratio", and "custom_minor_max_size" parameters) and
-proportional to the heap sizes. It has been available since OCaml 4.08.0.
+proportional to the heap sizes. It has been available since travlang 4.08.0.
 
 \subsection{ss:c-custom-access}{Accessing custom blocks}
 
@@ -2109,8 +2109,8 @@ has type "void *" and should be cast to the actual type of the data
 stored in the custom block.
 
 The contents of custom blocks are not scanned by the garbage
-collector, and must therefore not contain any pointer inside the OCaml
-heap.  In other terms, never store an OCaml "value" in a custom block,
+collector, and must therefore not contain any pointer inside the travlang
+heap.  In other terms, never store an travlang "value" in a custom block,
 and do not use "Field", "Store_field" nor "caml_modify" to access the data
 part of a custom block.  Conversely, any C data structure (not
 containing heap pointers) can be stored in a custom block.
@@ -2174,7 +2174,7 @@ be changed later, yet backward-compatible deserialisation functions
 can be provided.
 
 Identifiers starting with "_" (an underscore character) are reserved
-for the OCaml runtime system; do not use them for your custom
+for the travlang runtime system; do not use them for your custom
 data.  We recommend to use a URL
 ("http://mymachine.mydomain.com/mylibrary/version-number")
 or a Java-style package name
@@ -2184,12 +2184,12 @@ as identifiers, to minimize the risk of identifier collision.
 \subsection{ss:c-finalized}{Finalized blocks}
 
 Custom blocks generalize the finalized blocks that were present in
-OCaml prior to version 3.00. For backwards compatibility, the format
+travlang prior to version 3.00. For backwards compatibility, the format
 of custom blocks is compatible with that of finalized blocks, and the
 "caml_alloc_final" function is still available to allocate a custom
 block with a given finalization function, but default comparison,
 hashing and serialization functions. (In particular, the finalization
-function must not access the OCaml runtime.)
+function must not access the travlang runtime.)
 
 "caml_alloc_final("\var{n}", "\var{f}", "\var{used}", "\var{max}")"
 returns a fresh custom block of size \var{n}+1 words, with
@@ -2198,10 +2198,10 @@ the custom operations; the other \var{n} words are available for your
 data. The two parameters \var{used} and \var{max} are used to control
 the speed of garbage collection, as described for "caml_alloc_custom".
 
-\section{s:C-Bigarrays}{Advanced topic: Bigarrays and the OCaml-C interface}
+\section{s:C-Bigarrays}{Advanced topic: Bigarrays and the travlang-C interface}
 
 This section explains how C stub code that interfaces C or Fortran
-code with OCaml code can use Bigarrays.
+code with travlang code can use Bigarrays.
 
 \subsection{ss:C-Bigarrays-include}{Include file}
 
@@ -2209,14 +2209,14 @@ The include file "<caml/bigarray.h>" must be included in the C stub
 file.  It declares the functions, constants and macros discussed
 below.
 
-\subsection{ss:C-Bigarrays-access}{Accessing an OCaml bigarray from C or Fortran}
+\subsection{ss:C-Bigarrays-access}{Accessing an travlang bigarray from C or Fortran}
 
-If \var{v} is a OCaml "value" representing a Bigarray, the expression
+If \var{v} is a travlang "value" representing a Bigarray, the expression
 "Caml_ba_data_val("\var{v}")" returns a pointer to the data part of the array.
 This pointer is of type "void *" and can be cast to the appropriate C
 type for the array (e.g. "double []", "char [][10]", etc).
 
-Various characteristics of the OCaml Bigarray can be consulted from C
+Various characteristics of the travlang Bigarray can be consulted from C
 as follows:
 \begin{tableau}{|l|l|}{C expression}{Returns}
 \entree{"Caml_ba_array_val("\var{v}")->num_dims"}{number of dimensions}
@@ -2244,7 +2244,7 @@ The kind of array elements is one of the following constants:
 \paragraph{Warning:}
 "Caml_ba_array_val("\var{v}")" must always be dereferenced immediately and not stored
 anywhere, including local variables.
-It resolves to a derived pointer: it is not a valid OCaml value but points to
+It resolves to a derived pointer: it is not a valid travlang value but points to
 a memory region managed by the GC. For this reason this value must not be
 stored in any memory location that could be live cross a GC.
 
@@ -2266,16 +2266,16 @@ to a C function and a Fortran function.
     }
 \end{verbatim}
 
-\subsection{ss:C-Bigarrays-wrap}{Wrapping a C or Fortran array as an OCaml Bigarray}
+\subsection{ss:C-Bigarrays-wrap}{Wrapping a C or Fortran array as an travlang Bigarray}
 
 A pointer \var{p} to an already-allocated C or Fortran array can be
-wrapped and returned to OCaml as a Bigarray using the "caml_ba_alloc"
+wrapped and returned to travlang as a Bigarray using the "caml_ba_alloc"
 or "caml_ba_alloc_dims" functions.
 \begin{itemize}
 \item
 "caml_ba_alloc("\var{kind} "|" \var{layout}, \var{numdims}, \var{p}, \var{dims}")"
 
-Return an OCaml Bigarray wrapping the data pointed to by \var{p}.
+Return an travlang Bigarray wrapping the data pointed to by \var{p}.
 \var{kind} is the kind of array elements (one of the "CAML_BA_"
 kind constants above).  \var{layout} is "CAML_BA_C_LAYOUT" for an
 array with C layout and "CAML_BA_FORTRAN_LAYOUT" for an array with
@@ -2293,7 +2293,7 @@ passed as an array.
 \end{itemize}
 %
 The following example illustrates how statically-allocated C and
-Fortran arrays can be made available to OCaml.
+Fortran arrays can be made available to travlang.
 \begin{verbatim}
     extern long my_c_array[100][200];
     extern float my_fortran_array_[300][400];
@@ -2323,14 +2323,14 @@ stub that ignores all the special annotations.
 
 \subsection{ss:c-unboxed}{Passing unboxed values}
 
-We said earlier that all OCaml objects are represented by the C type
+We said earlier that all travlang objects are represented by the C type
 "value", and one has to use macros such as "Int_val" to decode data from
-the "value" type.  It is however possible to tell the OCaml native-code
+the "value" type.  It is however possible to tell the travlang native-code
 compiler to do this for us and pass arguments unboxed to the C function.
-Similarly it is possible to tell OCaml to expect the result unboxed and box
+Similarly it is possible to tell travlang to expect the result unboxed and box
 it for us.
 
-The motivation is that, by letting `ocamlopt` deal with boxing, it can
+The motivation is that, by letting `travlangopt` deal with boxing, it can
 often decide to suppress it entirely.
 
 For instance let's consider this example:
@@ -2347,9 +2347,9 @@ let f a b =
   done
 \end{verbatim}
 
-Float arrays are unboxed in OCaml, however the C function "foo" expect
+Float arrays are unboxed in travlang, however the C function "foo" expect
 its arguments as boxed floats and returns a boxed float. Hence the
-OCaml compiler has no choice but to box "a.(i)" and "b.(i)" and unbox
+travlang compiler has no choice but to box "a.(i)" and "b.(i)" and unbox
 the result of "foo".  This results in the allocation of "3 * len"
 temporary float values.
 
@@ -2386,18 +2386,18 @@ declaration itself. So we can also write instead:
 external foo : float -> float -> float = "foo_byte" "foo" [@@unboxed]
 \end{verbatim}
 
-The following table summarize what OCaml types can be unboxed, and
+The following table summarize what travlang types can be unboxed, and
 what C types should be used in correspondence:
 
-\begin{tableau}{|l|l|}{OCaml type}{C type}
+\begin{tableau}{|l|l|}{travlang type}{C type}
 \entree{"float"}{"double"}
 \entree{"int32"}{"int32_t"}
 \entree{"int64"}{"int64_t"}
 \entree{"nativeint"}{"intnat"}
 \end{tableau}
 
-Similarly, it is possible to pass untagged OCaml integers between
-OCaml and C. This is done by annotating the arguments and/or result
+Similarly, it is possible to pass untagged travlang integers between
+travlang and C. This is done by annotating the arguments and/or result
 with "[\@untagged]":
 
 \begin{verbatim}
@@ -2417,30 +2417,30 @@ type with only constant constructors. Note: this does not include
 \subsection{ss:c-direct-call}{Direct C call}
 
 In order to be able to run the garbage collector in the middle of
-a C function, the OCaml native-code compiler generates some bookkeeping
+a C function, the travlang native-code compiler generates some bookkeeping
 code around C calls.  Technically it wraps every C call with the C function
-"caml_c_call" which is part of the OCaml runtime.
+"caml_c_call" which is part of the travlang runtime.
 
 For small functions that are called repeatedly, this indirection can have
 a big impact on performances.  However this is not needed if we know that
 the C function doesn't allocate, doesn't raise exceptions, and doesn't release
 the domain lock (see section~\ref{ss:parallel-execution-long-running-c-code}).
-We can instruct the OCaml native-code compiler of this fact by annotating the
+We can instruct the travlang native-code compiler of this fact by annotating the
 external declaration with the attribute "[\@\@noalloc]":
 
 \begin{verbatim}
 external bar : int -> int -> int = "foo" [@@noalloc]
 \end{verbatim}
 
-In this case calling "bar" from OCaml is as cheap as calling any other
-OCaml function, except for the fact that the OCaml compiler can't
+In this case calling "bar" from travlang is as cheap as calling any other
+travlang function, except for the fact that the travlang compiler can't
 inline C functions...
 
 \subsection{ss:c-direct-call-example}{Example: calling C library functions without indirection}
 
 Using these attributes, it is possible to call C library functions
 with no indirection. For instance many math functions are defined this
-way in the OCaml standard library:
+way in the travlang standard library:
 
 \begin{verbatim}
 external sqrt : float -> float = "caml_sqrt_float" "sqrt"
@@ -2456,86 +2456,86 @@ external log : float -> float = "caml_log_float" "log" [@@unboxed] [@@noalloc]
 
 \section{s:C-multithreading}{Advanced topic: multithreading}
 
-Using multiple threads (shared-memory concurrency) in a mixed OCaml/C
+Using multiple threads (shared-memory concurrency) in a mixed travlang/C
 application requires special precautions, which are described in this
 section.
 
 \subsection{ss:c-thread-register}{Registering threads created from C}
 
-Callbacks from C to OCaml are possible only if the calling thread is
-known to the OCaml run-time system.  Threads created from OCaml (through
+Callbacks from C to travlang are possible only if the calling thread is
+known to the travlang run-time system.  Threads created from travlang (through
 the "Thread.create" function of the system threads library) are
 automatically known to the run-time system.  If the application
-creates additional threads from C and wishes to callback into OCaml
+creates additional threads from C and wishes to callback into travlang
 code from these threads, it must first register them with the run-time
 system.  The following functions are declared in the include file
 "<caml/threads.h>".
 
 \begin{itemize}
 \item
-"caml_c_thread_register()" registers the calling thread with the OCaml
+"caml_c_thread_register()" registers the calling thread with the travlang
 run-time system.  Returns 1 on success, 0 on error.  Registering an
 already-registered thread does nothing and returns 0.
 \item
 "caml_c_thread_unregister()"  must be called before the thread
-  terminates, to unregister it from the OCaml run-time system.
+  terminates, to unregister it from the travlang run-time system.
 Returns 1 on success, 0 on error.  If the calling thread was not
 previously registered, does nothing and returns 0.
 \end{itemize}
 
 \subsection{ss:parallel-execution-long-running-c-code}{Parallel execution of long-running C code with systhreads}
 
-Domains are the unit of parallelism for OCaml programs. When using
+Domains are the unit of parallelism for travlang programs. When using
 the systhreads library, multiple threads might be attached to the same
 domain. However, at any time, at most one of those thread can be executing
-OCaml code or C code that uses the OCaml run-time system by domain.
+travlang code or C code that uses the travlang run-time system by domain.
 Technically, this is enforced by a ``domain lock''
 that any thread must hold while executing such code within a domain.
 
-When OCaml calls the C code implementing a primitive, the domain lock
+When travlang calls the C code implementing a primitive, the domain lock
 is held, therefore the C code has full access to the facilities of the
 run-time system.  However, no other thread in the same domain can execute
-OCaml code concurrently with the C code of the primitive.
+travlang code concurrently with the C code of the primitive.
 See also chapter~\ref{s:par_c_bindings} for the behaviour with multiple domains.
 
 If a C primitive runs for a long time or performs potentially blocking
 input-output operations, it can explicitly release the domain lock,
-enabling other OCaml threads in the same domain to run concurrently with
+enabling other travlang threads in the same domain to run concurrently with
 its operations.
-The C code must re-acquire the domain lock before returning to OCaml.
+The C code must re-acquire the domain lock before returning to travlang.
 This is achieved with the following functions, declared in
 the include file "<caml/threads.h>".
 
 \begin{itemize}
 \item
 "caml_release_runtime_system()"
-The calling thread releases the domain lock and other OCaml resources,
-enabling other threads to run OCaml code in parallel with the execution
+The calling thread releases the domain lock and other travlang resources,
+enabling other threads to run travlang code in parallel with the execution
 of the calling thread.
 \item
 "caml_acquire_runtime_system()"
-The calling thread re-acquires the domain lock and other OCaml
+The calling thread re-acquires the domain lock and other travlang
 resources.  It may block until no other thread in the same domain uses
-the OCaml run-time system.
+the travlang run-time system.
 \end{itemize}
 
 These functions poll for pending signals by calling asynchronous
 callbacks (section~\ref{ss:c-process-pending-actions}) before releasing and
-after acquiring the lock. They can therefore execute arbitrary OCaml
+after acquiring the lock. They can therefore execute arbitrary travlang
 code including raising an asynchronous exception.
 
 After "caml_release_runtime_system()" was called and until
 "caml_acquire_runtime_system()" is called, the C code must not access
-any OCaml data, nor call any function of the run-time system, nor call
-back into OCaml code.  Consequently, arguments provided by OCaml to the
+any travlang data, nor call any function of the run-time system, nor call
+back into travlang code.  Consequently, arguments provided by travlang to the
 C primitive must be copied into C data structures before calling
-"caml_release_runtime_system()", and results to be returned to OCaml
-must be encoded as OCaml values after "caml_acquire_runtime_system()"
+"caml_release_runtime_system()", and results to be returned to travlang
+must be encoded as travlang values after "caml_acquire_runtime_system()"
 returns.
 
 Example: the following C primitive invokes "gethostbyname" to find the
 IP address of a host name.  The "gethostbyname" function can block for
-a long time, so we choose to release the OCaml run-time system while it
+a long time, so we choose to release the travlang run-time system while it
 is running.
 \begin{verbatim}
 CAMLprim stub_gethostbyname(value vname)
@@ -2546,20 +2546,20 @@ CAMLprim stub_gethostbyname(value vname)
   char * name;
 
   /* Copy the string argument to a C string, allocated outside the
-     OCaml heap. */
+     travlang heap. */
   name = caml_stat_strdup(String_val(vname));
-  /* Release the OCaml run-time system */
+  /* Release the travlang run-time system */
   caml_release_runtime_system();
   /* Resolve the name */
   h = gethostbyname(name);
   /* Free the copy of the string, which we might as well do before
      acquiring the runtime system to benefit from parallelism. */
   caml_stat_free(name);
-  /* Re-acquire the OCaml run-time system */
+  /* Re-acquire the travlang run-time system */
   caml_acquire_runtime_system();
-  /* Encode the relevant fields of h as the OCaml value vres */
+  /* Encode the relevant fields of h as the travlang value vres */
   ... /* Omitted */
-  /* Return to OCaml */
+  /* Return to travlang */
   CAMLreturn (vres);
 }
 \end{verbatim}
@@ -2574,25 +2574,25 @@ evaluates to "NULL" when the domain lock is not held. This lets you
 determine whether a thread belonging to a domain currently holds its
 domain lock, for various purposes.
 
-Callbacks from C to OCaml must be performed while holding the domain
-lock to the OCaml run-time system.  This is naturally the case if the
+Callbacks from C to travlang must be performed while holding the domain
+lock to the travlang run-time system.  This is naturally the case if the
 callback is performed by a C primitive that did not release the
 run-time system.  If the C primitive released the run-time system
 previously, or the callback is performed from other C code that was
-not invoked from OCaml (e.g. an event loop in a GUI application), the
+not invoked from travlang (e.g. an event loop in a GUI application), the
 run-time system must be acquired before the callback and released
 after:
 \begin{verbatim}
   caml_acquire_runtime_system();
-  /* Resolve OCaml function vfun to be invoked */
-  /* Build OCaml argument varg to the callback */
+  /* Resolve travlang function vfun to be invoked */
+  /* Build travlang argument varg to the callback */
   vres = callback(vfun, varg);
   /* Copy relevant parts of result vres to C data structures */
   caml_release_runtime_system();
 \end{verbatim}
 
 Note: the "acquire" and "release" functions described above were
-introduced in OCaml 3.12.  Older code uses the following historical
+introduced in travlang 3.12.  Older code uses the following historical
 names, declared in "<caml/signals.h>":
 \begin{itemize}
 \item "caml_enter_blocking_section" as an alias for
@@ -2601,28 +2601,28 @@ names, declared in "<caml/signals.h>":
   "caml_acquire_runtime_system"
 \end{itemize}
 Intuition: a ``blocking section'' is a piece of C code that does not
-use the OCaml run-time system, typically a blocking input/output operation.
+use the travlang run-time system, typically a blocking input/output operation.
 
 \section{s:interfacing-windows-unicode-apis}{Advanced topic: interfacing with Windows Unicode APIs}
 
 This section contains some general guidelines for writing C stubs that use
 Windows Unicode APIs.
 
-The OCaml system under Windows can be configured at build time in one of two
+The travlang system under Windows can be configured at build time in one of two
 modes:
 
 \begin{itemize}
 
 \item {\bf legacy mode:} All path names, environment variables, command line
-arguments, etc. on the OCaml side are assumed to be encoded using the current
+arguments, etc. on the travlang side are assumed to be encoded using the current
 8-bit code page of the system.
 
 \item {\bf Unicode mode:} All path names, environment variables, command line
-arguments, etc. on the OCaml side are assumed to be encoded using UTF-8.
+arguments, etc. on the travlang side are assumed to be encoded using UTF-8.
 
 \end{itemize}
 
-In what follows, we say that a string has the \emph{OCaml encoding} if it is
+In what follows, we say that a string has the \emph{travlang encoding} if it is
 encoded in UTF-8 when in Unicode mode, in the current code page in legacy mode,
 or is an arbitrary string under Unix. A string has the \emph{platform encoding}
 if it is encoded in UTF-16 under Windows or is an arbitrary string under Unix.
@@ -2633,8 +2633,8 @@ with Windows Unicode APIs are twofold:
 \begin{itemize}
 
 \item The Windows API uses the UTF-16 encoding to support Unicode. The runtime
-system performs the necessary conversions so that the OCaml programmer only
-needs to deal with the OCaml encoding. C stubs that call Windows Unicode APIs
+system performs the necessary conversions so that the travlang programmer only
+needs to deal with the travlang encoding. C stubs that call Windows Unicode APIs
 need to use specific runtime functions to perform the necessary conversions in a
 compatible way.
 
@@ -2656,8 +2656,8 @@ them, you need to include both "<caml/misc.h>" and "<caml/osdeps.h>".
 \begin{itemize}
 
 \item "char_os* caml_stat_strdup_to_os(const char *)" copies the argument while
-translating from OCaml encoding to the platform encoding. This function is
-typically used to convert the "char *" underlying an OCaml string before passing
+translating from travlang encoding to the platform encoding. This function is
+typically used to convert the "char *" underlying an travlang string before passing
 it to an operating system API that takes a Unicode argument. Under Unix, it is
 equivalent to "caml_stat_strdup".
 
@@ -2666,13 +2666,13 @@ is not a valid UTF-8 string, this function will fall back to assuming that it is
 encoded in the current code page.
 
 \item "char* caml_stat_strdup_of_os(const char_os *)" copies the argument while
-translating from the platform encoding to the OCaml encoding. It is the inverse
+translating from the platform encoding to the travlang encoding. It is the inverse
 of "caml_stat_strdup_to_os". This function is typically used to convert a string
-obtained from the operating system before passing it on to OCaml code. Under
+obtained from the operating system before passing it on to travlang code. Under
 Unix, it is equivalent to "caml_stat_strdup".
 
-\item "value caml_copy_string_of_os(char_os *)" allocates an OCaml string with
-contents equal to the argument string converted to the OCaml encoding.  This
+\item "value caml_copy_string_of_os(char_os *)" allocates an travlang string with
+contents equal to the argument string converted to the travlang encoding.  This
 function is essentially equivalent to "caml_stat_strdup_of_os" followed by
 "caml_copy_string", except that it avoids the allocation of the intermediate
 string returned by "caml_stat_strdup_of_os". Under Unix, it is equivalent to
@@ -2736,29 +2736,29 @@ CAMLprim value stub_getenv(value var_name)
 }
 \end{verbatim}
 
-\section{s:ocamlmklib}{Building mixed C/OCaml libraries: \texttt{ocamlmklib}}
+\section{s:travlangmklib}{Building mixed C/travlang libraries: \texttt{travlangmklib}}
 
-The "ocamlmklib" command facilitates the construction of libraries
-containing both OCaml code and C code, and usable both in static
+The "travlangmklib" command facilitates the construction of libraries
+containing both travlang code and C code, and usable both in static
 linking and dynamic linking modes.  This command is available under
 Windows since Objective Caml 3.11 and under other operating systems since
 Objective Caml 3.03.
 
-The "ocamlmklib" command takes three kinds of arguments:
+The "travlangmklib" command takes three kinds of arguments:
 \begin{itemize}
-\item OCaml source files and object files (".cmo", ".cmx", ".ml")
-comprising the OCaml part of the library;
+\item travlang source files and object files (".cmo", ".cmx", ".ml")
+comprising the travlang part of the library;
 \item C object files (".o", ".a", respectively, ".obj", ".lib")
   comprising the C part of the library;
 \item Support libraries for the C part ("-l"\var{lib}).
 \end{itemize}
 It generates the following outputs:
 \begin{itemize}
-\item An OCaml bytecode library ".cma" incorporating the ".cmo" and
-".ml" OCaml files given as arguments, and automatically referencing the
+\item An travlang bytecode library ".cma" incorporating the ".cmo" and
+".ml" travlang files given as arguments, and automatically referencing the
 C library generated with the C object files.
-\item An OCaml native-code library ".cmxa" incorporating the ".cmx" and
-".ml" OCaml files given as arguments, and automatically referencing the
+\item An travlang native-code library ".cmxa" incorporating the ".cmx" and
+".ml" travlang files given as arguments, and automatically referencing the
 C library generated with the C object files.
 \item If dynamic linking is supported on the target platform, a
 ".so" (respectively, ".dll") shared library built from the C object files given as arguments,
@@ -2768,7 +2768,7 @@ and automatically referencing the support libraries.
 In addition, the following options are recognized:
 \begin{options}
 \item["-cclib", "-ccopt", "-I", "-linkall"]
-These options are passed as is to "ocamlc" or "ocamlopt".
+These options are passed as is to "travlangc" or "travlangopt".
 See the documentation of these commands.
 \item["-rpath", "-R", "-Wl,-rpath", "-Wl,-R"]
 These options are passed as is to the C compiler.  Refer to the
@@ -2780,35 +2780,35 @@ if a problem occurs while building the shared library (e.g. some of
 the support libraries are not available as shared libraries).
 \item["-L"\var{dir}] Add \var{dir} to the search path for support
 libraries ("-l"\var{lib}).
-\item["-ocamlc" \var{cmd}] Use \var{cmd} instead of "ocamlc" to call
+\item["-travlangc" \var{cmd}] Use \var{cmd} instead of "travlangc" to call
 the bytecode compiler.
-\item["-ocamlopt" \var{cmd}] Use \var{cmd} instead of "ocamlopt" to call
+\item["-travlangopt" \var{cmd}] Use \var{cmd} instead of "travlangopt" to call
 the native-code compiler.
-\item["-o" \var{output}] Set the name of the generated OCaml library.
-"ocamlmklib" will generate \var{output}".cma" and/or \var{output}".cmxa".
+\item["-o" \var{output}] Set the name of the generated travlang library.
+"travlangmklib" will generate \var{output}".cma" and/or \var{output}".cmxa".
 If not specified, defaults to "a".
 \item["-oc" \var{outputc}] Set the name of the generated C library.
-"ocamlmklib" will generate "lib"\var{outputc}".so" (if shared
+"travlangmklib" will generate "lib"\var{outputc}".so" (if shared
 libraries are supported) and "lib"\var{outputc}".a".
 If not specified, defaults to the output name given with "-o".
 \end{options}
 
-\paragraph{Example} Consider an OCaml interface to the standard "libz"
+\paragraph{Example} Consider an travlang interface to the standard "libz"
 C library for reading and writing compressed files.  Assume this
 library resides in "/usr/local/zlib".  This interface is
-composed of an OCaml part "zip.cmo"/"zip.cmx" and a C part "zipstubs.o"
+composed of an travlang part "zip.cmo"/"zip.cmx" and a C part "zipstubs.o"
 containing the stub code around the "libz" entry points.  The
-following command builds the OCaml libraries "zip.cma" and "zip.cmxa",
+following command builds the travlang libraries "zip.cma" and "zip.cmxa",
 as well as the companion C libraries "dllzip.so" and "libzip.a":
 \begin{verbatim}
-ocamlmklib -o zip zip.cmo zip.cmx zipstubs.o -lz -L/usr/local/zlib
+travlangmklib -o zip zip.cmo zip.cmx zipstubs.o -lz -L/usr/local/zlib
 \end{verbatim}
 If shared libraries are supported, this performs the following
 commands:
 \begin{verbatim}
-ocamlc -a -o zip.cma zip.cmo -dllib -lzip \
+travlangc -a -o zip.cma zip.cmo -dllib -lzip \
         -cclib -lzip -cclib -lz -ccopt -L/usr/local/zlib
-ocamlopt -a -o zip.cmxa zip.cmx -cclib -lzip \
+travlangopt -a -o zip.cmxa zip.cmx -cclib -lzip \
         -cclib -lzip -cclib -lz -ccopt -L/usr/local/zlib
 gcc -shared -o dllzip.so zipstubs.o -lz -L/usr/local/zlib
 ar rc libzip.a zipstubs.o
@@ -2819,29 +2819,29 @@ may be different on other systems.
 If shared libraries are not supported, the following commands are
 performed instead:
 \begin{verbatim}
-ocamlc -a -custom -o zip.cma zip.cmo -cclib -lzip \
+travlangc -a -custom -o zip.cma zip.cmo -cclib -lzip \
         -cclib -lz -ccopt -L/usr/local/zlib
-ocamlopt -a -o zip.cmxa zip.cmx -lzip \
+travlangopt -a -o zip.cmxa zip.cmx -lzip \
         -cclib -lz -ccopt -L/usr/local/zlib
 ar rc libzip.a zipstubs.o
 \end{verbatim}
 Instead of building simultaneously the bytecode library, the
-native-code library and the C libraries, "ocamlmklib" can be called
+native-code library and the C libraries, "travlangmklib" can be called
 three times to build each separately.  Thus,
 \begin{verbatim}
-ocamlmklib -o zip zip.cmo -lz -L/usr/local/zlib
+travlangmklib -o zip zip.cmo -lz -L/usr/local/zlib
 \end{verbatim}
 builds the bytecode library "zip.cma", and
 \begin{verbatim}
-ocamlmklib -o zip zip.cmx -lz -L/usr/local/zlib
+travlangmklib -o zip zip.cmx -lz -L/usr/local/zlib
 \end{verbatim}
 builds the native-code library "zip.cmxa", and
 \begin{verbatim}
-ocamlmklib -o zip zipstubs.o -lz -L/usr/local/zlib
+travlangmklib -o zip zipstubs.o -lz -L/usr/local/zlib
 \end{verbatim}
 builds the C libraries "dllzip.so" and "libzip.a".  Notice that the
 support libraries ("-lz") and the corresponding options
-("-L/usr/local/zlib") must be given on all three invocations of "ocamlmklib",
+("-L/usr/local/zlib") must be given on all three invocations of "travlangmklib",
 because they are needed at different times depending on whether shared
 libraries are supported.
 
@@ -2853,19 +2853,19 @@ sections. All those unmentioned headers are part of the internal runtime API,
 for which there is \emph{no} stability guarantee. If you really need access
 to this internal runtime API, this section provides some guidelines
 that may help you to write code that might not break on every new version
-of OCaml.
+of travlang.
 \paragraph{Note} Programmers which come to rely on the internal API
 for a use-case which they find realistic and useful are encouraged to open
 a request for improvement on the bug tracker.
 
 \subsection{ss:c-internals}{Internal variables and CAML_INTERNALS}
-Since OCaml 4.04, it is possible to get access to every part of the internal
+Since travlang 4.04, it is possible to get access to every part of the internal
 runtime API by defining the "CAML_INTERNALS" macro before loading caml header files.
 If this macro is not defined, parts of the internal runtime API are hidden.
 
 If you are using internal C variables, do not redefine them by hand. You should
 import those variables by including the corresponding header files. The
-representation of those variables has already changed once in OCaml 4.10, and is
+representation of those variables has already changed once in travlang 4.10, and is
 still under evolution.
 If your code relies on such internal and brittle properties, it will be broken
 at some point in time.
@@ -2874,23 +2874,23 @@ For instance, rather than redefining "caml_young_limit":
 \begin{verbatim}
 extern int caml_young_limit;
 \end{verbatim}
-which breaks in OCaml $\ge$ 4.10, you should include the "minor_gc" header:
+which breaks in travlang $\ge$ 4.10, you should include the "minor_gc" header:
 \begin{verbatim}
 #include <caml/minor_gc.h>
 \end{verbatim}
 
-\subsection{ss:c-internal-macros}{OCaml version macros}
+\subsection{ss:c-internal-macros}{travlang version macros}
 Finally, if including the right headers is not enough, or if you need to support
-version older than OCaml 4.04, the header file "caml/version.h" should help
+version older than travlang 4.04, the header file "caml/version.h" should help
 you to define your own compatibility layer.
-This file provides few macros defining the current OCaml version.
-In particular, the "OCAML_VERSION" macro describes the current version,
+This file provides few macros defining the current travlang version.
+In particular, the "travlang_VERSION" macro describes the current version,
 its format is "MmmPP".
 For example, if you need some specific handling for versions older than 4.10.0,
 you could write
 \begin{verbatim}
 #include <caml/version.h>
-#if OCAML_VERSION >= 41000
+#if travlang_VERSION >= 41000
 ...
 #else
 ...

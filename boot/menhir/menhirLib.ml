@@ -100,11 +100,11 @@ module Convert = struct
 (*                                                                            *)
 (******************************************************************************)
 
-(* An ocamlyacc-style, or Menhir-style, parser requires access to
+(* An travlangyacc-style, or Menhir-style, parser requires access to
    the lexer, which must be parameterized with a lexing buffer, and
    to the lexing buffer itself, where it reads position information. *)
 
-(* This traditional API is convenient when used with ocamllex, but
+(* This traditional API is convenient when used with travlanglex, but
    inelegant when used with other lexer generators. *)
 
 type ('token, 'semantic_value) traditional =
@@ -120,7 +120,7 @@ type ('token, 'semantic_value) revised =
 
 (* --------------------------------------------------------------------------- *)
 
-(* Converting a traditional parser, produced by ocamlyacc or Menhir,
+(* Converting a traditional parser, produced by travlangyacc or Menhir,
    into a revised parser. *)
 
 (* A token of the revised lexer is essentially a triple of a token
@@ -1056,7 +1056,7 @@ end
 module type INCREMENTAL_ENGINE_START = sig
 
   (* [start] is an entry point. It requires a start state and a start position
-     and begins the parsing process. If the lexer is based on an OCaml lexing
+     and begins the parsing process. If the lexer is based on an travlang lexing
      buffer, the start position should be [lexbuf.lex_curr_p]. [start] produces
      a checkpoint, which usually will be an [InputNeeded] checkpoint. (It could
      be [Accepted] if this starting state accepts only the empty word. It could
@@ -1421,7 +1421,7 @@ module Make (T : TABLE) = struct
     (* If the semantic action raises [Error], we catch it and initiate error
        handling. *)
 
-    (* This [match/with/exception] construct requires OCaml 4.02. *)
+    (* This [match/with/exception] construct requires travlang 4.02. *)
 
     match T.semantic_action prod env with
     | stack ->
@@ -1887,7 +1887,7 @@ module Make (T : TABLE) = struct
            as the semantic value contained in the top stack cell. This semantic
            value is associated with the incoming symbol of this state, so it
            makes sense to pair them together. The state has type ['a state] and
-           the semantic value has type ['a], for some type ['a]. Here, the OCaml
+           the semantic value has type ['a], for some type ['a]. Here, the travlang
            type-checker thinks ['a] is [semantic_value] and considers this code
            well-typed. Outside, we will use magic to provide the user with a way
            of inspecting states and recovering the value of ['a]. *)
@@ -1916,7 +1916,7 @@ module Make (T : TABLE) = struct
       Some (Element (env.current, cell.semv, cell.startp, cell.endp))
 
   (* [equal] compares the stacks for physical equality, and compares the
-     current states via their numbers (this seems cleaner than using OCaml's
+     current states via their numbers (this seems cleaner than using travlang's
      polymorphic equality). *)
 
   (* The two fields that are not compared by [equal], namely [error] and
@@ -2488,11 +2488,11 @@ module PackedIntArray = struct
    use. The string [s] is just an array of bits, which is read in 8-bit
    chunks. *)
 
-(* The ocaml programming language treats string literals and array literals
+(* The travlang programming language treats string literals and array literals
    in slightly different ways: the former are statically allocated, while
    the latter are dynamically allocated. (This is rather arbitrary.) In the
    context of Menhir's table-based back-end, where compact, immutable
-   integer arrays are needed, ocaml strings are preferable to ocaml arrays. *)
+   integer arrays are needed, travlang strings are preferable to travlang arrays. *)
 
 type t =
   int * string
@@ -2508,8 +2508,8 @@ let magnitude (v : int) =
     let rec check k max = (* [max] equals [2^k] *)
       if (max <= 0) || (v < max) then
         k
-          (* if [max] just overflew, then [v] requires a full ocaml
-             integer, and [k] is the number of bits in an ocaml integer
+          (* if [max] just overflew, then [v] requires a full travlang
+             integer, and [k] is the number of bits in an travlang integer
              plus one, that is, [Sys.word_size]. *)
       else
         check (2 * k) (max * max)
@@ -2536,7 +2536,7 @@ let pack (a : int array) : t =
     ) 1 a
   in
 
-  (* Because access to ocaml strings is performed on an 8-bit basis,
+  (* Because access to travlang strings is performed on an 8-bit basis,
      two cases arise. If [k] is less than 8, then we can pack multiple
      array entries into a single character. If [k] is greater than 8,
      then we must use multiple characters to represent a single array

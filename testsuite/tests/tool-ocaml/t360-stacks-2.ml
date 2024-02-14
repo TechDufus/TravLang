@@ -1,10 +1,10 @@
 (* TEST
- include tool-ocaml-lib;
+ include tool-travlang-lib;
  flags = "-w -a";
- ocaml_script_as_argument = "true";
- ocamlrunparam = "l=1000000";
- setup-ocaml-build-env;
- ocaml;
+ travlang_script_as_argument = "true";
+ travlangrunparam = "l=1000000";
+ setup-travlang-build-env;
+ travlang;
 *)
 
 open Lib;;

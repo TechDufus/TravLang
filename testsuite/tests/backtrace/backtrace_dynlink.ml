@@ -30,8 +30,8 @@
 *)
 
 (* test for backtrace and stack unwinding with dynlink. *)
-(* https://github.com/ocaml-multicore/ocaml-multicore/issues/440 *)
-(* https://github.com/ocaml-multicore/ocaml-multicore/pull/499 *)
+(* https://github.com/travlang-multicore/travlang-multicore/issues/440 *)
+(* https://github.com/travlang-multicore/travlang-multicore/pull/499 *)
 
 let ()  =
   Dynlink.allow_unsafe_modules true;
@@ -51,22 +51,22 @@ let ()  =
  libraries = "";
  shared-libraries;
  native-dynlink;
- setup-ocamlopt.byte-build-env;
+ setup-travlangopt.byte-build-env;
  {
    module = "backtrace_dynlink.ml";
    flags = "-g";
-   ocamlopt.byte;
+   travlangopt.byte;
  }{
    program = "backtrace_dynlink_plugin.cmxs";
    flags = "-shared -g";
    all_modules = "backtrace_dynlink_plugin.ml";
-   ocamlopt.byte;
+   travlangopt.byte;
  }{
    program = "${test_build_directory}/main.exe";
    libraries = "dynlink";
    all_modules = "backtrace_dynlink.cmx";
-   ocamlopt.byte;
-   ocamlrunparam += ",b=1";
+   travlangopt.byte;
+   travlangrunparam += ",b=1";
    run;
    {
      no-flambda;

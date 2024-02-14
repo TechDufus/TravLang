@@ -4,7 +4,7 @@
 \usepackage{textcomp}
 \usepackage{fullpage} 
 \usepackage{url} 
-\usepackage{ocamldoc}
+\usepackage{travlangdoc}
 \begin{document}
 \tableofcontents
 \section{Module {\tt{Test}} : Ten comments for tests}
@@ -13,7 +13,7 @@
 
 
 
-\ocamldocvspace{0.5cm}
+\travlangdocvspace{0.5cm}
 
 
 
@@ -22,7 +22,7 @@
 
 
 
-\subsubsection*{A subsection for ocamldoc *}
+\subsubsection*{A subsection for travlangdoc *}
 
 
 
@@ -61,12 +61,12 @@ Encore! Encore!
 
 
 
-\begin{ocamldoccode}
-{\tt{module }}{\tt{End}}{\tt{ : }}\end{ocamldoccode}
+\begin{travlangdoccode}
+{\tt{module }}{\tt{End}}{\tt{ : }}\end{travlangdoccode}
 \label{Test.End}\index{End@\verb`End`}
 
-\begin{ocamldocsigend}
-\end{ocamldocsigend}
+\begin{travlangdocsigend}
+\end{travlangdocsigend}
 
 
 

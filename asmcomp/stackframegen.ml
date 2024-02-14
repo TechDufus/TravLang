@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cambium, INRIA Paris                  *)
 (*                                                                        *)
@@ -36,7 +36,7 @@ method virtual trap_handler_size : int
    be allocated.
 
    At a minimum, these instructions include all non-tail calls,
-   both to OCaml functions or to C functions.
+   both to travlang functions or to C functions.
 
    For exception-raising constructs, we get better stack backtraces
    by treating them as non-tail calls, even if they are implemented as
@@ -69,7 +69,7 @@ method frame_required f contains_calls =
   f.fun_num_stack_slots.(0) > 0 || f.fun_num_stack_slots.(1) > 0
 
 (* Analyze the body of a Mach function to determine
-   - whether it contains non-tail-calls to OCaml functions
+   - whether it contains non-tail-calls to travlang functions
    - whether it requires allocating a stack frame and saving the return address
    - how much extra stack space is needed for exception handlers
      and for passing parameters to C function on stack.

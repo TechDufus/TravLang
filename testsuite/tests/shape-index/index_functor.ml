@@ -2,14 +2,14 @@
 
 flags = "-bin-annot -bin-annot-occurrences";
 compile_only = "true";
-setup-ocamlc.byte-build-env;
+setup-travlangc.byte-build-env;
 all_modules = "index_functor.ml";
-ocamlc.byte;
-check-ocamlc.byte-output;
+travlangc.byte;
+check-travlangc.byte-output;
 
 program = "-quiet -index -decls index_functor.cmt";
 output = "out_objinfo";
-ocamlobjinfo;
+travlangobjinfo;
 
 check-program-output;
 *)

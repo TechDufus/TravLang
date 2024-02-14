@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Sebastien Hinderer, projet Gallium, INRIA Paris            *)
 (*                                                                        *)
@@ -15,7 +15,7 @@
 
 (* Run programs and log their stdout/stderr, with a timer... *)
 
-open Ocamltest_stdlib
+open travlangtest_stdlib
 
 type settings = {
   progname : string;

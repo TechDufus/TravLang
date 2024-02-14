@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*       Damien Doligez and Francois Rouaix, INRIA Rocquencourt           *)
 (*    Ported to Caml Special Light by John Malecki and Xavier Leroy       *)
@@ -25,7 +25,7 @@ exception Bad_profile
 
 let dump_counters () =
   let dumpfile =
-    try Sys.getenv "OCAMLPROF_DUMP" with Not_found -> "ocamlprof.dump"
+    try Sys.getenv "travlangPROF_DUMP" with Not_found -> "travlangprof.dump"
   in
   begin try
     let ic = open_in_bin dumpfile in

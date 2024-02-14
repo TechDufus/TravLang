@@ -25,8 +25,8 @@ let _ = B [@warning "-53"]
 
 (* TEST
  flags = "-w +A-70";
- setup-ocamlc.byte-build-env;
+ setup-travlangc.byte-build-env;
  compile_only = "true";
- ocamlc.byte;
- check-ocamlc.byte-output;
+ travlangc.byte;
+ check-travlangc.byte-output;
 *)

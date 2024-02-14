@@ -1600,7 +1600,7 @@ Error: This application of the functor "F" is ill-typed.
 
 (** Final state in the presence of extensions
     Test provided by Leo White in
-    https://github.com/ocaml/ocaml/pull/9331#pullrequestreview-492359720
+    https://github.com/travlang/travlang/pull/9331#pullrequestreview-492359720
 *)
 
 module type A = sig type a end

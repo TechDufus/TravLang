@@ -3,15 +3,15 @@
  readonly_files = "fdstatus_aux.c fdstatus_main.ml";
  (*
    This test is temporarily disabled on the MinGW and MSVC ports,
-   because since fdstatus has been wrapped in an OCaml program,
+   because since fdstatus has been wrapped in an travlang program,
    it does not work as well as before.
-   Presumably this is because the OCaml runtime opens files, so that handles
+   Presumably this is because the travlang runtime opens files, so that handles
    that have actually been closed at execution look open and make the
    test fail.
 
-   One possible fix for this would be to make it possible for ocamltest to
+   One possible fix for this would be to make it possible for travlangtest to
    compile C-only programs, which will be a bit of work to handle the
-   output of msvc and will also duplicate what the OCaml compiler itself
+   output of msvc and will also duplicate what the travlang compiler itself
    already does.
  *)
  hasunix;
@@ -19,26 +19,26 @@
  libunix;
  {
    program = "${test_build_directory}/cloexec.byte";
-   setup-ocamlc.byte-build-env;
+   setup-travlangc.byte-build-env;
    program = "${test_build_directory}/fdstatus.exe";
    all_modules = "fdstatus_aux.c fdstatus_main.ml";
-   ocamlc.byte;
+   travlangc.byte;
    program = "${test_build_directory}/cloexec.byte";
    all_modules = "cloexec.ml";
-   ocamlc.byte;
-   check-ocamlc.byte-output;
+   travlangc.byte;
+   check-travlangc.byte-output;
    run;
    check-program-output;
  }{
    program = "${test_build_directory}/cloexec.opt";
-   setup-ocamlopt.byte-build-env;
+   setup-travlangopt.byte-build-env;
    program = "${test_build_directory}/fdstatus.exe";
    all_modules = "fdstatus_aux.c fdstatus_main.ml";
-   ocamlopt.byte;
+   travlangopt.byte;
    program = "${test_build_directory}/cloexec.opt";
    all_modules = "cloexec.ml";
-   ocamlopt.byte;
-   check-ocamlopt.byte-output;
+   travlangopt.byte;
+   check-travlangopt.byte-output;
    run;
    check-program-output;
  }
@@ -47,10 +47,10 @@
 (* This is a terrible hack that plays on the internal representation
    of file descriptors.  The result is a number (as a string)
    that the fdstatus.exe auxiliary program can use to check whether
-   the fd is open. Moreover, since fdstatus.exe is an OCaml program,
-   we must take into account that the Windows OCaml runtime opens a few handles
+   the fd is open. Moreover, since fdstatus.exe is an travlang program,
+   we must take into account that the Windows travlang runtime opens a few handles
    for its own use, hence we do likewise to try to get handle numbers
-   Windows will not allocate to the OCaml runtime of fdstatus.exe *)
+   Windows will not allocate to the travlang runtime of fdstatus.exe *)
 
 let string_of_fd (fd: Unix.file_descr) : string =
   match Sys.os_type with

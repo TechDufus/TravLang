@@ -1,6 +1,6 @@
 ;**************************************************************************
 ;*                                                                        *
-;*                                 OCaml                                  *
+;*                                 travlang                                  *
 ;*                                                                        *
 ;*                     Thomas Refis, Jane Street Europe                   *
 ;*                                                                        *
@@ -15,29 +15,29 @@
 (copy_files# byte/*.ml)
 
 (library
- (name ocamltoplevel)
+ (name travlangtoplevel)
  (wrapped false)
  (flags (:standard -principal -nostdlib))
- (libraries stdlib ocamlcommon ocamlbytecomp)
+ (libraries stdlib travlangcommon travlangbytecomp)
  (modules :standard \ topstart expunge))
 
 (executable
  (name topstart)
  (modes byte)
  (flags (:standard -principal -nostdlib))
- (libraries ocamlbytecomp ocamlcommon ocamltoplevel runtime stdlib)
+ (libraries travlangbytecomp travlangcommon travlangtoplevel runtime stdlib)
  (modules topstart))
 
 (executable
  (name expunge)
  (modes byte)
  (flags (:standard -principal -nostdlib))
- (libraries ocamlbytecomp ocamlcommon runtime stdlib)
+ (libraries travlangbytecomp travlangcommon runtime stdlib)
  (modules expunge))
 
 (rule
- (targets ocaml.byte)
- (action (run %{ocaml_where}/expunge %{dep:topstart.exe} %{targets}
+ (targets travlang.byte)
+ (action (run %{travlang_where}/expunge %{dep:topstart.exe} %{targets}
                     ; FIXME: inlined $(STDLIB_MODULES) ... minus Labels ones ...
                     stdlib__Arg
                     stdlib__Array

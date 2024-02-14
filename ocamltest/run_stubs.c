@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*             Sebastien Hinderer, projet Gallium, INRIA Paris            */
 /*                                                                        */
@@ -13,7 +13,7 @@
 /*                                                                        */
 /**************************************************************************/
 
-/* Stubs to let OCaml programs use the run library */
+/* Stubs to let travlang programs use the run library */
 
 #define _GNU_SOURCE
 

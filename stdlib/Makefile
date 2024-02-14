@@ -1,6 +1,6 @@
 #**************************************************************************
 #*                                                                        *
-#*                                 OCaml                                  *
+#*                                 travlang                                  *
 #*                                                                        *
 #*            Xavier Leroy, projet Cristal, INRIA Rocquencourt            *
 #*                                                                        *
@@ -14,38 +14,38 @@
 #**************************************************************************
 
 ROOTDIR = ..
-# NOTE: it is important that the OCAMLDEP variable is defined *before*
+# NOTE: it is important that the travlangDEP variable is defined *before*
 # Makefile.common gets included, so that its local definition here
 # take precedence over its general shared definitions in Makefile.common.
-OCAMLDEP ?= $(BOOT_OCAMLDEP)
+travlangDEP ?= $(BOOT_travlangDEP)
 
 include $(ROOTDIR)/Makefile.common
 
 # There are three ways the Standard Library is compiled in bytecode:
 # 1. During coldstart
-#      - using ../boot/ocamlc which runs on ../boot/ocamlrun
+#      - using ../boot/travlangc which runs on ../boot/travlangrun
 # 2. During coreall (via library),
-#      - using ../ocamlc which runs on ../boot/ocamlrun
+#      - using ../travlangc which runs on ../boot/travlangrun
 # 3. During coreboot (via library-cross),
-#      - using ../ocamlc which at that point runs on ../runtime/ocamlrun
-# If $(USE_BOOT_OCAMLC) is non-empty, we select case 1 and use $(BOOT_OCAMLC).
-# Otherwise, we use $(OCAMLRUN) ../ocamlc, with $(OCAMLRUN) being
-# ../boot/ocamlrun by default, but able to overridden by library-cross to
-# ../runtime/ocamlrun.
-USE_BOOT_OCAMLC ?=
+#      - using ../travlangc which at that point runs on ../runtime/travlangrun
+# If $(USE_BOOT_travlangC) is non-empty, we select case 1 and use $(BOOT_travlangC).
+# Otherwise, we use $(travlangRUN) ../travlangc, with $(travlangRUN) being
+# ../boot/travlangrun by default, but able to overridden by library-cross to
+# ../runtime/travlangrun.
+USE_BOOT_travlangC ?=
 
-ifeq "$(USE_BOOT_OCAMLC)" ""
-CAMLC = $(OCAMLRUN) $(ROOTDIR)/ocamlc$(EXE)
+ifeq "$(USE_BOOT_travlangC)" ""
+CAMLC = $(travlangRUN) $(ROOTDIR)/travlangc$(EXE)
 else
-CAMLC = $(BOOT_OCAMLC)
+CAMLC = $(BOOT_travlangC)
 endif
 COMPFLAGS = -strict-sequence -absname -w +a-4-9-41-42-44-45-48 \
             -g -warn-error +A -bin-annot -nostdlib -principal
 ifeq "$(FLAMBDA)" "true"
 OPTCOMPFLAGS += -O3
 endif
-OPTCOMPILER=$(ROOTDIR)/ocamlopt$(EXE)
-CAMLOPT=$(OCAMLRUN) $(OPTCOMPILER)
+OPTCOMPILER=$(ROOTDIR)/travlangopt$(EXE)
+CAMLOPT=$(travlangRUN) $(OPTCOMPILER)
 
 include StdlibModules
 
@@ -118,39 +118,39 @@ clean::
 export AWK
 
 %.cmi: %.mli
-	$(V_OCAMLC)$(CAMLC) $(COMPFLAGS) $(shell ./Compflags $@) -c $<
+	$(V_travlangC)$(CAMLC) $(COMPFLAGS) $(shell ./Compflags $@) -c $<
 
 # The dependency on the .mli file is in .depend (since stdlib__Foo.cmi
 # depends on stdlib__foo.mli)
 stdlib__%.cmi:
-	$(V_OCAMLC)$(CAMLC) $(COMPFLAGS) $(shell ./Compflags $@) \
+	$(V_travlangC)$(CAMLC) $(COMPFLAGS) $(shell ./Compflags $@) \
 	         -o $@ -c $(filter %.mli, $^)
 
 %.cmo: %.ml
-	$(V_OCAMLC)$(CAMLC) $(COMPFLAGS) $(shell ./Compflags $@) -c $<
+	$(V_travlangC)$(CAMLC) $(COMPFLAGS) $(shell ./Compflags $@) -c $<
 
 # The dependency on the .ml file is in .depend (since stdlib__Foo.cmo
 # depends on stdlib__foo.ml)
 stdlib__%.cmo:
-	$(V_OCAMLC)$(CAMLC) $(COMPFLAGS) $(shell ./Compflags $@) \
+	$(V_travlangC)$(CAMLC) $(COMPFLAGS) $(shell ./Compflags $@) \
 	         -o $@ -c $(filter %.ml, $^)
 
 %.cmx: %.ml
-	$(V_OCAMLOPT)$(CAMLOPT) $(COMPFLAGS) $(OPTCOMPFLAGS) $(shell ./Compflags $@) -c $<
+	$(V_travlangOPT)$(CAMLOPT) $(COMPFLAGS) $(OPTCOMPFLAGS) $(shell ./Compflags $@) -c $<
 
 # The dependency on the .ml file is in .depend (since stdlib__Foo.cmx
 # depends on stdlib__foo.ml)
 stdlib__%.cmx:
-	$(V_OCAMLOPT)$(CAMLOPT) $(COMPFLAGS) $(OPTCOMPFLAGS) $(shell ./Compflags $@) \
+	$(V_travlangOPT)$(CAMLOPT) $(COMPFLAGS) $(OPTCOMPFLAGS) $(shell ./Compflags $@) \
 	           -o $@ -c $(filter %.ml, $^)
 
 # Dependencies on the compiler
-COMPILER_DEPS=$(filter-out $(OCAMLRUN), $(CAMLC))
+COMPILER_DEPS=$(filter-out $(travlangRUN), $(CAMLC))
 $(OBJS) std_exit.cmo: $(COMPILER_DEPS)
 $(OBJS:.cmo=.cmi) std_exit.cmi: $(COMPILER_DEPS)
 $(OBJS:.cmo=.cmx) std_exit.cmx: $(OPTCOMPILER)
 
-# Dependencies on Stdlib (not tracked by ocamlc -depend)
+# Dependencies on Stdlib (not tracked by travlangc -depend)
 
 $(OTHERS) std_exit.cmo: stdlib.cmi
 $(OTHERS:.cmo=.cmi) std_exit.cmi: stdlib.cmi
@@ -170,9 +170,9 @@ GNUISH_SED = \
 
 .PHONY: depend
 depend:
-	$(V_OCAMLDEP){ \
-	  $(OCAMLDEP_CMD) $(filter-out stdlib.%,$(wildcard *.mli *.ml)); \
-	  $(OCAMLDEP_CMD) -pp "$(AWK) -f ./remove_module_aliases.awk" \
+	$(V_travlangDEP){ \
+	  $(travlangDEP_CMD) $(filter-out stdlib.%,$(wildcard *.mli *.ml)); \
+	  $(travlangDEP_CMD) -pp "$(AWK) -f ./remove_module_aliases.awk" \
 	  stdlib.ml stdlib.mli; \
 	} | \
 	$(GNUISH_SED) -E \

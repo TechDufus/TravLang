@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*              Damien Doligez, projet Para, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -14,7 +14,7 @@
 (**************************************************************************)
 
 (* ATTENTION ! When you add or modify a parsing or typing option, do not forget
-  to update ocamldoc options too, in odoc_args.ml. *)
+  to update travlangdoc options too, in odoc_args.ml. *)
 
 module type Common_options = sig
   val _absname : unit -> unit
@@ -249,7 +249,7 @@ module type Opttop_options = sig
   val _S : unit -> unit
 end
 
-module type Ocamldoc_options = sig
+module type travlangdoc_options = sig
   include Common_options
   val _impl : string -> unit
   val _intf : string -> unit
@@ -269,13 +269,13 @@ module Make_bytecomp_options : Bytecomp_options -> Arg_list
 module Make_bytetop_options : Bytetop_options -> Arg_list
 module Make_optcomp_options : Optcomp_options -> Arg_list
 module Make_opttop_options : Opttop_options -> Arg_list
-module Make_ocamldoc_options : Ocamldoc_options -> Arg_list
+module Make_travlangdoc_options : travlangdoc_options -> Arg_list
 
 (** [options_with_command_line_syntax options r] returns [options2] that behaves
     like [options], but additionally pushes command line argument on [r] (quoted
     by [Filename.quote] when necessary).
-    This is meant for ocaml{c,opt}p, which use this to forward most of their
-    arguments to ocaml{c,opt}. *)
+    This is meant for travlang{c,opt}p, which use this to forward most of their
+    arguments to travlang{c,opt}. *)
 val options_with_command_line_syntax
   : (string * Arg.spec * string) list
   -> string list ref
@@ -286,5 +286,5 @@ module Default: sig
   module Opttopmain: Opttop_options
   module Main: Bytecomp_options
   module Optmain: Optcomp_options
-  module Odoc_args: Ocamldoc_options
+  module Odoc_args: travlangdoc_options
 end

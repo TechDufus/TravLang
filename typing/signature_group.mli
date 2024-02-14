@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*  Florian Angeletti, projet Cambium, Inria Paris                        *)
 (*                                                                        *)

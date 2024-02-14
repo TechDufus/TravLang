@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -32,7 +32,7 @@ open Format
 val set_paths :
   ?auto_include:Load_path.auto_include_callback -> ?dir:string -> unit -> unit
 
-(* Add directories listed in OCAMLTOP_INCLUDE_PATH to the end of the search
+(* Add directories listed in travlangTOP_INCLUDE_PATH to the end of the search
    path *)
 
 val update_search_path_from_env : unit -> unit
@@ -196,7 +196,7 @@ type event +=
   (* Just after the setup, when the toplevel is ready to evaluate user
      input. This happens before the toplevel has evaluated any kind of
      user input, in particular this happens before loading the
-     [.ocamlinit] file. *)
+     [.travlanginit] file. *)
 
 val add_hook : (event -> unit) -> unit
 (* Add a function that will be called at key points of the toplevel
@@ -213,11 +213,11 @@ val override_sys_argv : string array -> unit
 
    This is called by [run_script] so that [Sys.argv] represents
    "script.ml args..." instead of the full command line:
-   "ocamlrun unix.cma ... script.ml args...". *)
+   "travlangrun unix.cma ... script.ml args...". *)
 
 (** [is_command_like_name s] is [true] if [s] is an implicit basename with no
     file extension and which doesn't begin with a hyphen. Basically, if it looks
-    like a sub-command name (e.g. ocaml help). *)
+    like a sub-command name (e.g. travlang help). *)
 val is_command_like_name : string -> bool
 
 (**/**)

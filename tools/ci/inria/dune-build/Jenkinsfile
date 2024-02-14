@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*                    Sebastien Hinderer, INRIA Paris                     */
 /*                                                                        */
@@ -16,12 +16,12 @@
 /* Pipeline for the dune-build job on Inria's CI */
 
 pipeline {
-  agent { label 'ocaml-linux-64' }
+  agent { label 'travlang-linux-64' }
   options {
     timeout(time: 1, unit: 'HOURS')
   }
   stages {
-    stage('Building the OCaml compiler with Dune') {
+    stage('Building the travlang compiler with Dune') {
       steps {
         sh 'tools/ci/inria/dune-build/script'
       }

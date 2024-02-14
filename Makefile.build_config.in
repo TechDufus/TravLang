@@ -2,9 +2,9 @@
 
 #**************************************************************************
 #*                                                                        *
-#*                                 OCaml                                  *
+#*                                 travlang                                  *
 #*                                                                        *
-#*                 David Allsopp, OCaml Labs, Cambridge.                  *
+#*                 David Allsopp, travlang Labs, Cambridge.                  *
 #*                                                                        *
 #*   Copyright 2020 MetaStack Solutions Ltd.                              *
 #*                                                                        *
@@ -16,7 +16,7 @@
 
 # This Makefile contains configuration gleaned by configure but which should not
 # be installed in Makefile.config. The file is designed to be included in
-# OCaml's build system and so itself includes Makefile.config. It assumes that
+# travlang's build system and so itself includes Makefile.config. It assumes that
 # $(ROOTDIR) has been defined.
 
 # This variable is added to prevent double-inclusion of this Makefile by
@@ -31,20 +31,20 @@ INSTALL_PROG ?= @INSTALL_PROGRAM@
 
 # Whether to build certain libraries and tools
 
-build_ocamldebug = @build_ocamldebug@
+build_travlangdebug = @build_travlangdebug@
 
-build_ocamldoc = @build_ocamldoc@
+build_travlangdoc = @build_travlangdoc@
 build_libraries_manpages = @build_libraries_manpages@
 
-OCAMLDOC_TARGET = @ocamldoc_target@
-OCAMLTEST_TARGET = @ocamltest_target@
+travlangDOC_TARGET = @travlangdoc_target@
+travlangTEST_TARGET = @travlangtest_target@
 
-OCAMLDOC_OPT_TARGET = @ocamldoc_opt_target@
-OCAMLTEST_OPT_TARGET = @ocamltest_opt_target@
+travlangDOC_OPT_TARGET = @travlangdoc_opt_target@
+travlangTEST_OPT_TARGET = @travlangtest_opt_target@
 
-build_ocamltest = @build_ocamltest@
+build_travlangtest = @build_travlangtest@
 
-build_ocamltex = @build_ocamltex@
+build_travlangtex = @build_travlangtex@
 
 lib_dynlink = @lib_dynlink@
 lib_runtime_events = @lib_runtime_events@
@@ -56,8 +56,8 @@ OPTIONAL_LIBRARIES = @optional_libraries@
 OPTIONAL_BYTECODE_TOOLS = @optional_bytecode_tools@
 OPTIONAL_NATIVE_TOOLS = @optional_native_tools@
 
-# Whether to install the native toplevel (ocamlnat)
-INSTALL_OCAMLNAT = @install_ocamlnat@
+# Whether to install the native toplevel (travlangnat)
+INSTALL_travlangNAT = @install_travlangnat@
 
 # The command to generate C dependency information
 DEP_CC=@DEP_CC@ -MM
@@ -101,7 +101,7 @@ RLWRAP=@rlwrap@
 # The best sed which is available (GNU sed if available)
 SED=@SED@
 
-# Which document generator: odoc or ocamldoc?
+# Which document generator: odoc or travlangdoc?
 DOCUMENTATION_TOOL=@documentation_tool@
 DOCUMENTATION_TOOL_CMD=@documentation_tool_cmd@
 
@@ -123,13 +123,13 @@ unix_library = @unix_library@
 
 DEFAULT_BUILD_TARGET = @default_build_target@
 
-# Flags to use when compiling and linking OCaml programs
+# Flags to use when compiling and linking travlang programs
 
 # The names of the variables below take the form XXX_YYY_ZZZ where
 #
-# XXX is one of OC, OCAML or the lower-case name of a module. The OC prefix
+# XXX is one of OC, travlang or the lower-case name of a module. The OC prefix
 # is for private variables (i.e. reserved by the compiler's build system),
-# the OCAML prefix is used for variables users can define to add their
+# the travlang prefix is used for variables users can define to add their
 # own flags and the module-name prefix is for flags that apply only
 # to one module.
 #
@@ -160,8 +160,8 @@ LN = @ln@
 # Platform-dependent assembler files to use to build the runtime
 runtime_ASM_OBJECTS = $(addprefix runtime/,@runtime_asm_objects@)
 
-# Platform-dependent module for ocamlyacc
-ocamlyacc_WSTR_MODULE = @ocamlyacc_wstr_module@
+# Platform-dependent module for travlangyacc
+travlangyacc_WSTR_MODULE = @travlangyacc_wstr_module@
 
 # Architecture-specific modules, if any
 arch_specific_SOURCES = @arch_specific_SOURCES@

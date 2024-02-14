@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           */
 /*                                                                        */
@@ -1277,7 +1277,7 @@ CAMLprim value caml_obj_reachable_words(value v)
   sp = s->extern_stack;
   size = 0;
 
-  /* In Multicore OCaml, we don't distinguish between major heap blocks and
+  /* In Multicore travlang, we don't distinguish between major heap blocks and
    * out-of-heap blocks, so we end up counting out-of-heap blocks too. */
   while (1) {
     if (Is_long(v)) {

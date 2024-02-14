@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*                     Anmol Sahoo, Purdue University                     *)
 (*                        Olivier Nicole, Tarides                         *)
@@ -205,7 +205,7 @@ let instrument body =
       | Assignment ->
         (* We make sure that 1. the location and value expressions are
            evaluated before the call to TSan, and 2. the location expression is
-           evaluated right before that call, as it might not be a valid OCaml
+           evaluated right before that call, as it might not be a valid travlang
            value (e.g. a pointer into an array), in which case it must not be
            live across a function call or allocation point. *)
         let loc_id = VP.create (V.create_local "loc") in

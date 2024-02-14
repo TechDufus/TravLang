@@ -15,7 +15,7 @@
 *)
 
 (* This test is skipped in "runtime cleanup at exit" mode
-   (OCAMLRUNPARAM contains c=1) because the cleanup in the main thread
+   (travlangRUNPARAM contains c=1) because the cleanup in the main thread
    destroys condition variables that are waited for by other threads,
    causing a deadlock on some systems. *)
 

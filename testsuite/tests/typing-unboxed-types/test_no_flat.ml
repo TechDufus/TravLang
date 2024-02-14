@@ -15,14 +15,14 @@
 
 (* should fail *)
 type 'a abs;;
-type t16 = A : _ abs -> t16 [@@ocaml.unboxed];;
+type t16 = A : _ abs -> t16 [@@travlang.unboxed];;
 [%%expect{|
 type 'a abs
 type t16 = A : 'a abs -> t16 [@@unboxed]
 |}];;
 
 (* should fail (the existential _ still occurs in an abstract type) *)
-type t18 = A : _ list abs -> t18 [@@ocaml.unboxed];;
+type t18 = A : _ list abs -> t18 [@@travlang.unboxed];;
 [%%expect{|
 type t18 = A : 'a list abs -> t18 [@@unboxed]
 |}];;

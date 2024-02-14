@@ -1,5 +1,5 @@
 (* TEST
- ocamlopt_flags = "-dcmm-invariants";
+ travlangopt_flags = "-dcmm-invariants";
  native;
 *)
 

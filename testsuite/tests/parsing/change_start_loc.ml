@@ -1,6 +1,6 @@
 (* TEST
- flags = "-I ${ocamlsrcdir}/parsing -I ${ocamlsrcdir}/toplevel";
- include ocamlcommon;
+ flags = "-I ${travlangsrcdir}/parsing -I ${travlangsrcdir}/toplevel";
+ include travlangcommon;
 *)
 let position = Lexing.{ (* This corresponds to File "file.ml", line 100, character 10 *)
     pos_fname = "------should not appear------";

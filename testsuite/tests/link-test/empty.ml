@@ -1,31 +1,31 @@
 (* TEST
  {
-   setup-ocamlc.byte-build-env;
+   setup-travlangc.byte-build-env;
    module = "empty.ml";
-   ocamlc.byte;
+   travlangc.byte;
    module = "";
    flags = "-a";
    all_modules = "";
    program = "empty.cma";
-   ocamlc.byte;
+   travlangc.byte;
    flags = "";
    program = "${test_build_directory}/empty.byte";
    all_modules = "empty.cma empty.cmo";
-   ocamlc.byte;
-   check-ocamlc.byte-output;
+   travlangc.byte;
+   check-travlangc.byte-output;
  }{
-   setup-ocamlopt.byte-build-env;
+   setup-travlangopt.byte-build-env;
    module = "empty.ml";
-   ocamlopt.byte;
+   travlangopt.byte;
    module = "";
    flags = "-a";
    all_modules = "";
    program = "empty.cmxa";
-   ocamlopt.byte;
+   travlangopt.byte;
    flags = "";
    program = "${test_build_directory}/empty.native";
    all_modules = "empty.cmxa empty.cmx";
-   ocamlopt.byte;
-   check-ocamlopt.byte-output;
+   travlangopt.byte;
+   check-travlangopt.byte-output;
  }
 *)

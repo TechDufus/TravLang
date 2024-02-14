@@ -1,7 +1,7 @@
 #!/bin/sh
 #**************************************************************************
 #*                                                                        *
-#*                                 OCaml                                  *
+#*                                 travlang                                  *
 #*                                                                        *
 #*     Damien Doligez and Xavier Leroy, projet Cambium, INRIA Paris       *
 #*                                                                        *
@@ -14,15 +14,15 @@
 #*                                                                        *
 #**************************************************************************
 
-# This script performs a minimal build of the OCaml system
+# This script performs a minimal build of the travlang system
 # sufficient to run the test suite.
 # It is a lightweight version of the 'main' script, intended to run
 # on slow machines such as QEMU virtual machines.
 # It does not work under Windows.
 
 # Environment variables that are honored:
-#   OCAML_ARCH                architecture of the test machine
-#   OCAML_JOBS                number of jobs to run in parallel (make -j)
+#   travlang_ARCH                architecture of the test machine
+#   travlang_JOBS                number of jobs to run in parallel (make -j)
 
 # Command-line arguments:
 # -jNN                    pass "-jNN" option to make for parallel builds
@@ -44,20 +44,20 @@ jobs=''
 memory_model_tests="tests/memory-model/forbidden.ml \
 tests/memory-model/publish.ml"
 
-case "${OCAML_ARCH}" in
+case "${travlang_ARCH}" in
   bsd|solaris)
     make=gmake
   ;;
   cygwin|cygwin64)
-    export OCAMLTEST_SKIP_TESTS="$memory_model_tests"
+    export travlangTEST_SKIP_TESTS="$memory_model_tests"
   ;;
   mingw|mingw64|msvc|msvc64)
-    error "Unsupported architecture ${OCAML_ARCH}"
+    error "Unsupported architecture ${travlang_ARCH}"
   ;;
 esac
 
-case "${OCAML_JOBS}" in
-  [1-9]|[1-9][0-9]) jobs="-j${OCAML_JOBS}" ;;
+case "${travlang_JOBS}" in
+  [1-9]|[1-9][0-9]) jobs="-j${travlang_JOBS}" ;;
 esac
 
 #########################################################################
@@ -84,7 +84,7 @@ git clean -q -f -d -x
    --disable-debug-runtime \
    --disable-instrumented-runtime \
    --disable-dependency-generation \
-   --disable-ocamldoc \
+   --disable-travlangdoc \
    --disable-stdlib-manpages
 
 $make $jobs --warn-undefined-variables

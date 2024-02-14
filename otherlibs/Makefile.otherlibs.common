@@ -1,6 +1,6 @@
 #**************************************************************************
 #*                                                                        *
-#*                                 OCaml                                  *
+#*                                 travlang                                  *
 #*                                                                        *
 #*            Xavier Leroy, projet Cristal, INRIA Rocquencourt            *
 #*                                                                        *
@@ -19,8 +19,8 @@ ROOTDIR=../..
 include $(ROOTDIR)/Makefile.common
 include $(ROOTDIR)/Makefile.best_binaries
 
-CAMLC := $(BEST_OCAMLC) $(STDLIBFLAGS)
-CAMLOPT := $(BEST_OCAMLOPT) $(STDLIBFLAGS)
+CAMLC := $(BEST_travlangC) $(STDLIBFLAGS)
+CAMLOPT := $(BEST_travlangOPT) $(STDLIBFLAGS)
 
 ifneq "$(CCOMPTYPE)" "msvc"
 OC_CFLAGS += -g
@@ -34,7 +34,7 @@ COMPFLAGS=-absname -w +a-4-9-41-42-44-45-48 -warn-error +A -bin-annot -g \
 ifeq "$(FLAMBDA)" "true"
 OPTCOMPFLAGS += -O3
 endif
-MKLIB=$(OCAMLRUN) $(ROOTDIR)/tools/ocamlmklib
+MKLIB=$(travlangRUN) $(ROOTDIR)/tools/travlangmklib
 
 # Variables that must be defined by individual libraries:
 # LIBNAME
@@ -74,26 +74,26 @@ $(LIBNAME).cma: $(CAMLOBJS)
 ifeq "$(COBJS)" ""
 	$(V_LINKC)$(CAMLC) -o $@ -a -linkall $(CAMLOBJS) $(LINKOPTS)
 else
-	$(V_OCAMLMKLIB)$(MKLIB) -o $(LIBNAME) -oc $(CLIBNAME_BYTECODE) -ocamlc '$(CAMLC)' \
+	$(V_travlangMKLIB)$(MKLIB) -o $(LIBNAME) -oc $(CLIBNAME_BYTECODE) -travlangc '$(CAMLC)' \
                 -linkall $(CAMLOBJS) $(LINKOPTS)
 endif
 
 $(LIBNAME).cmxa: $(CAMLOBJS_NAT)
 ifeq "$(COBJS)" ""
-	$(V_OCAMLOPT)$(CAMLOPT) -o $@ -a -linkall $(CAMLOBJS_NAT) $(LINKOPTS)
+	$(V_travlangOPT)$(CAMLOPT) -o $@ -a -linkall $(CAMLOBJS_NAT) $(LINKOPTS)
 else
-	$(V_OCAMLMKLIB)$(MKLIB) -o $(LIBNAME) -oc $(CLIBNAME_NATIVE) -ocamlopt '$(CAMLOPT)' \
+	$(V_travlangMKLIB)$(MKLIB) -o $(LIBNAME) -oc $(CLIBNAME_NATIVE) -travlangopt '$(CAMLOPT)' \
                 -linkall $(CAMLOBJS_NAT) $(LINKOPTS)
 endif
 
 $(LIBNAME).cmxs: $(LIBNAME).cmxa $(STUBSLIB_NATIVE)
-	$(V_OCAMLOPT)$(CAMLOPT) -shared -o $(LIBNAME).cmxs -I . $(LIBNAME).cmxa
+	$(V_travlangOPT)$(CAMLOPT) -shared -o $(LIBNAME).cmxs -I . $(LIBNAME).cmxa
 
 lib$(CLIBNAME_BYTECODE).$(A): $(COBJS)
-	$(V_OCAMLMKLIB)$(MKLIB) -oc $(CLIBNAME_BYTECODE) $(COBJS_BYTECODE) $(LDOPTS)
+	$(V_travlangMKLIB)$(MKLIB) -oc $(CLIBNAME_BYTECODE) $(COBJS_BYTECODE) $(LDOPTS)
 
 lib$(CLIBNAME_NATIVE).$(A): $(COBJS)
-	$(V_OCAMLMKLIB)$(MKLIB) -oc $(CLIBNAME_NATIVE) $(COBJS_NATIVE) $(LDOPTS)
+	$(V_travlangMKLIB)$(MKLIB) -oc $(CLIBNAME_NATIVE) $(COBJS_NATIVE) $(LDOPTS)
 
 INSTALL_LIBDIR_LIBNAME = $(INSTALL_LIBDIR)/$(LIBNAME)
 
@@ -105,7 +105,7 @@ install::
 ifneq "$(STUBSLIB_BYTECODE)" ""
 	$(INSTALL_DATA) $(STUBSLIB_BYTECODE) "$(INSTALL_LIBDIR)/"
 endif
-# If installing over a previous OCaml version, ensure the library is removed
+# If installing over a previous travlang version, ensure the library is removed
 # from the previous installation.
 	rm -f $(addprefix "$(INSTALL_LIBDIR)"/, \
           $(LIBNAME).cma $(CMIFILES) \
@@ -152,13 +152,13 @@ distclean:: clean
 	rm -f META
 
 %.cmi: %.mli
-	$(V_OCAMLC)$(CAMLC) -c $(COMPFLAGS) $<
+	$(V_travlangC)$(CAMLC) -c $(COMPFLAGS) $<
 
 %.cmo: %.ml
-	$(V_OCAMLC)$(CAMLC) -c $(COMPFLAGS) $<
+	$(V_travlangC)$(CAMLC) -c $(COMPFLAGS) $<
 
 %.cmx: %.ml
-	$(V_OCAMLOPT)$(CAMLOPT) -c $(COMPFLAGS) $(OPTCOMPFLAGS) $<
+	$(V_travlangOPT)$(CAMLOPT) -c $(COMPFLAGS) $(OPTCOMPFLAGS) $<
 
 %.b.$(O): %.c $(REQUIRED_HEADERS)
 	$(V_CC)$(CC) -c $(OC_CFLAGS) $(CFLAGS) $(OC_CPPFLAGS) $(CPPFLAGS) \

@@ -1,8 +1,8 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
-(*    Thomas Gazagnaire (OCamlPro), Fabrice Le Fessant (INRIA Saclay)     *)
+(*    Thomas Gazagnaire (travlangPro), Fabrice Le Fessant (INRIA Saclay)     *)
 (*                                                                        *)
 (*   Copyright 2007 Institut National de Recherche en Informatique et     *)
 (*     en Automatique.                                                    *)
@@ -13,8 +13,8 @@
 (*                                                                        *)
 (**************************************************************************)
 
-[@@@ocaml.warning "-60"] module Str = Ast_helper.Str (* For ocamldep *)
-[@@@ocaml.warning "+60"]
+[@@@travlang.warning "-60"] module Str = Ast_helper.Str (* For travlangdep *)
+[@@@travlang.warning "+60"]
 
 open Asttypes
 open Parsetree
@@ -530,7 +530,7 @@ let expression sub exp =
     | Texp_unreachable ->
         Pexp_unreachable
     | Texp_extension_constructor (lid, _) ->
-        Pexp_extension ({ txt = "ocaml.extension_constructor"; loc },
+        Pexp_extension ({ txt = "travlang.extension_constructor"; loc },
                         PStr [ Str.eval ~loc
                                  (Exp.construct ~loc (map_loc sub lid) None)
                              ])

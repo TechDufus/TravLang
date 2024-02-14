@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -27,7 +27,7 @@ open Asttypes
 (** Type expressions for the core language.
 
     The [type_desc] variant defines all the possible type expressions one can
-    find in OCaml. [type_expr] wraps this with some annotations.
+    find in travlang. [type_expr] wraps this with some annotations.
 
     The [level] field tracks the level of polymorphism associated to a type,
     guiding the generalization algorithm.
@@ -41,13 +41,13 @@ open Asttypes
     Note about [type_declaration]: one should not make the confusion between
     [type_expr] and [type_declaration].
 
-    [type_declaration] refers specifically to the [type] construct in OCaml
+    [type_declaration] refers specifically to the [type] construct in travlang
     language, where you create and name a new type or type alias.
 
     [type_expr] is used when you refer to existing types, e.g. when annotating
     the expected type of a value.
 
-    Also, as the type system of OCaml is generative, a [type_declaration] can
+    Also, as the type system of travlang is generative, a [type_declaration] can
     have the side-effect of introducing a new type constructor, different from
     all other known types.
     Whereas [type_expr] is a pure construct which allows referring to existing

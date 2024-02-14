@@ -6,7 +6,7 @@ open Domain
    from parallel domains *)
 
 let test_size =
-  try int_of_string (Sys.getenv "OCAML_TEST_SIZE")
+  try int_of_string (Sys.getenv "travlang_TEST_SIZE")
   with Not_found | Failure _ -> 0
 
 (* Don't run the test if we have only 2 cores available, it times out often. *)

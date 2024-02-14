@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -18,7 +18,7 @@
 open Misc
 open Compile_common
 
-let tool_name = "ocamlopt"
+let tool_name = "travlangopt"
 
 let with_info =
   Compile_common.with_info ~native:true ~tool_name

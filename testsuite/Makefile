@@ -1,6 +1,6 @@
 #**************************************************************************
 #*                                                                        *
-#*                                 OCaml                                  *
+#*                                 travlang                                  *
 #*                                                                        *
 #*                 Xavier Clerc, SED, INRIA Rocquencourt                  *
 #*                                                                        *
@@ -18,7 +18,7 @@
 BASEDIR := $(shell pwd)
 ifneq "$(words |$(BASEDIR)|)" "1"
 $(error The Testsuite does not handle spaces\
-   in the ocaml working directory path: $(BASEDIR))
+   in the travlang working directory path: $(BASEDIR))
 endif
 
 ROOTDIR = ..
@@ -37,17 +37,17 @@ endif
 BASEDIR_HOST := $(shell $(CYGPATH) "$(BASEDIR)")
 ROOTDIR_HOST := $(BASEDIR_HOST)/$(ROOTDIR)
 
-OCAMLTESTDIR = $(BASEDIR_HOST)/$(DIR)/_ocamltest
+travlangTESTDIR = $(BASEDIR_HOST)/$(DIR)/_travlangtest
 
 failstamp := failure.stamp
 
 TESTLOG ?= _log
 
-ocamltest_directory := ../ocamltest
+travlangtest_directory := ../travlangtest
 
-ocamltest_program := $(or \
-  $(wildcard $(ocamltest_directory)/ocamltest.opt$(EXE)),\
-  $(wildcard $(ocamltest_directory)/ocamltest$(EXE)))
+travlangtest_program := $(or \
+  $(wildcard $(travlangtest_directory)/travlangtest.opt$(EXE)),\
+  $(wildcard $(travlangtest_directory)/travlangtest$(EXE)))
 
 ifeq "$(UNIX_OR_WIN32)" "unix"
   ifeq "$(SYSTEM)" "cygwin"
@@ -59,7 +59,7 @@ ifeq "$(UNIX_OR_WIN32)" "unix"
   IFS_LINE = IFS=''
 else # Windows
   find := /usr/bin/find
-  # On Windows, ocamltest will produce Windows line-endings (\r\n) and the final
+  # On Windows, travlangtest will produce Windows line-endings (\r\n) and the final
   # \r is kept by the shell. This can either be stripped with tr -d '\r' but we
   # can avoid the additional process by instead setting IFS in the while loop to
   # be the CR character (i.e. treat \r as a field delimiter).
@@ -69,29 +69,29 @@ else # Windows
   IFS_LINE = IFS="$$CR_CHAR"
 endif
 
-ifeq "$(ocamltest_program)" ""
-  ocamltest = $(error ocamltest not found in $(ocamltest_directory))
+ifeq "$(travlangtest_program)" ""
+  travlangtest = $(error travlangtest not found in $(travlangtest_directory))
 else
-  ocamltest := SORT=$(SORT) MAKE=$(MAKE) $(ocamltest_program)
+  travlangtest := SORT=$(SORT) MAKE=$(MAKE) $(travlangtest_program)
 endif
 
 # PROMOTE is only meant to be used internally in recursive calls;
 # users should call the 'promote' target explicitly.
 PROMOTE =
 ifeq "$(PROMOTE)" ""
-  OCAMLTEST_PROMOTE_FLAG =
+  travlangTEST_PROMOTE_FLAG =
 else
-  OCAMLTEST_PROMOTE_FLAG = -promote
+  travlangTEST_PROMOTE_FLAG = -promote
 endif
 
 # KEEP_TEST_DIR_ON_SUCCESS should be set by the user (to a non-empty value)
-# if they want to pass the -keep-test-dir-on-success option to ocamltest,
+# if they want to pass the -keep-test-dir-on-success option to travlangtest,
 # to preserve test data of successful tests.
 KEEP_TEST_DIR_ON_SUCCESS ?=
 ifeq "$(KEEP_TEST_DIR_ON_SUCCESS)" ""
-  OCAMLTEST_KEEP_TEST_DIR_ON_SUCCESS_FLAG =
+  travlangTEST_KEEP_TEST_DIR_ON_SUCCESS_FLAG =
 else
-  OCAMLTEST_KEEP_TEST_DIR_ON_SUCCESS_FLAG = -keep-test-dir-on-success
+  travlangTEST_KEEP_TEST_DIR_ON_SUCCESS_FLAG = -keep-test-dir-on-success
 endif
 
 TIMEOUT ?= 600 # 10 minutes
@@ -99,18 +99,18 @@ TIMEOUT ?= 600 # 10 minutes
 # SHOW_TIMINGS should be set by the user (to a non-empty value) if they want
 # the timings for each test file to be included in the log
 SHOW_TIMINGS ?=
-OCAMLTEST_SHOW_TIMINGS_FLAG =
+travlangTEST_SHOW_TIMINGS_FLAG =
 ifneq "$(SHOW_TIMINGS)" ""
 ifeq "$(lib_unix)" "true"
-  OCAMLTEST_SHOW_TIMINGS_FLAG = -show-timings
+  travlangTEST_SHOW_TIMINGS_FLAG = -show-timings
 endif
 endif
 
-OCAMLTESTFLAGS = \
+travlangTESTFLAGS = \
   -timeout $(TIMEOUT) \
-  $(OCAMLTEST_PROMOTE_FLAG) \
-  $(OCAMLTEST_KEEP_TEST_DIR_ON_SUCCESS_FLAG) \
-  $(OCAMLTEST_SHOW_TIMINGS_FLAG)
+  $(travlangTEST_PROMOTE_FLAG) \
+  $(travlangTEST_KEEP_TEST_DIR_ON_SUCCESS_FLAG) \
+  $(travlangTEST_SHOW_TIMINGS_FLAG)
 
 # Make sure USE_RUNTIME is defined
 USE_RUNTIME ?=
@@ -123,7 +123,7 @@ $(error If set, USE_RUNTIME must be equal to "d" (debug runtime) \
 endif
 # When using the debug or instrumented runtime,
 # set the runtime's verbosity to 0 by default
-export OCAMLRUNPARAM?=v=0
+export travlangRUNPARAM?=v=0
 endif
 
 .PHONY: default
@@ -159,10 +159,10 @@ all:
 .PHONY: new-without-report
 new-without-report:
 	@rm -f $(failstamp)
-	@($(ocamltest) -find-test-dirs tests | while $(IFS_LINE) read -r dir; do \
+	@($(travlangtest) -find-test-dirs tests | while $(IFS_LINE) read -r dir; do \
 	  echo Running tests from \'$$dir\' ... ; \
-	  $(MAKE) exec-ocamltest DIR="$$dir" \
-	    OCAMLTESTENV=""; \
+	  $(MAKE) exec-travlangtest DIR="$$dir" \
+	    travlangTESTENV=""; \
 	done || echo outer loop >> $(failstamp)) 2>&1 | tee $(TESTLOG)
 	@$(MAKE) check-failstamp
 
@@ -261,7 +261,7 @@ one:
       2>&1 | tee $(TESTLOG).one ; \
    fi
 	@if [ -n '$(TEST)' ] ; then \
-    TERM=dumb $(OCAMLTESTENV) $(ocamltest) $(OCAMLTESTFLAGS) $(TEST) \
+    TERM=dumb $(travlangTESTENV) $(travlangtest) $(travlangTESTFLAGS) $(TEST) \
      2>&1 | tee $(TESTLOG).one; fi
 	@if [ -n '$(LIST)' ] ; then \
      while IFS='' read -r LINE; do \
@@ -273,19 +273,19 @@ one:
 
 .PHONY: exec-one
 exec-one:
-	@$(ocamltest) -find-test-dirs $(DIR) | while $(IFS_LINE) read -r dir; do \
+	@$(travlangtest) -find-test-dirs $(DIR) | while $(IFS_LINE) read -r dir; do \
 	  echo "Running tests from '$$dir' ..."; \
-	  $(MAKE) exec-ocamltest DIR="$$dir" \
-	    OCAMLTESTENV="OCAMLTESTDIR=$(OCAMLTESTDIR)"; \
+	  $(MAKE) exec-travlangtest DIR="$$dir" \
+	    travlangTESTENV="travlangTESTDIR=$(travlangTESTDIR)"; \
 	done
 
-.PHONY: exec-ocamltest
-exec-ocamltest:
+.PHONY: exec-travlangtest
+exec-travlangtest:
 	@if [ -z "$(DIR)" ]; then exit 1; fi
 	@if [ ! -d "$(DIR)" ]; then exit 1; fi
-	@($(ocamltest) -list-tests $(DIR) | while $(IFS_LINE) read -r testfile; do \
-	   TERM=dumb $(OCAMLTESTENV) \
-	     $(ocamltest) $(OCAMLTESTFLAGS) "$(DIR)/$$testfile" || \
+	@($(travlangtest) -list-tests $(DIR) | while $(IFS_LINE) read -r testfile; do \
+	   TERM=dumb $(travlangTESTENV) \
+	     $(travlangtest) $(travlangTESTFLAGS) "$(DIR)/$$testfile" || \
 	   echo " ... testing '$$testfile' => unexpected error"; \
 	done) || echo directory "$(DIR)" >>$(failstamp)
 
@@ -307,7 +307,7 @@ promote:
 
 .PHONY: clean
 clean:
-	find . -name '*_ocamltest*' | xargs rm -rf
+	find . -name '*_travlangtest*' | xargs rm -rf
 	rm -f $(failstamp)
 
 .PHONY: distclean

@@ -4,14 +4,14 @@
 *)
 
 (***********************************************************************)
-(* Test based on the example in the ocamldoc manual
+(* Test based on the example in the travlangdoc manual
    Obviously some parts are different due to the simplified
    rules used by the compiler *)
 
 module Manual : sig
 
   (** Special comments can be placed between elements and are kept
-      by the OCamldoc tool, but are not associated to any element.
+      by the travlangdoc tool, but are not associated to any element.
       @-tags in these comments are ignored.*)
 
   (*******************************************************************)
@@ -78,7 +78,7 @@ module Manual : sig
 
   (** The comment for the class type my_class_type *)
   class type my_class_type = object
-    (** This is a docstring that OCaml <= 4.07.1 drops.
+    (** This is a docstring that travlang <= 4.07.1 drops.
         For some reason, when a class type begins with two docstrings,
         it keeps only the second one.
         This is fixed by GPR#2151. *)
@@ -89,12 +89,12 @@ module Manual : sig
     (** The comment for method m. *)
     method m : int -> int
 
-    (** This is a docstring that OCaml <= 4.07.1 misplaces.
+    (** This is a docstring that travlang <= 4.07.1 misplaces.
         For some reason, when a class type ends with two docstrings,
         it keeps both of them, but exchanges their order.
         This is again fixed by GPR#2151. *)
 
-    (** Another docstring that OCaml <= 4.07.1 misplaces. *)
+    (** Another docstring that travlang <= 4.07.1 misplaces. *)
 
   end
 
@@ -199,117 +199,117 @@ end;;
 
 module Manual :
   sig
-    [@@@ocaml.text
-      " Special comments can be placed between elements and are kept\n      by the OCamldoc tool, but are not associated to any element.\n      @-tags in these comments are ignored."]
-    [@@@ocaml.text
+    [@@@travlang.text
+      " Special comments can be placed between elements and are kept\n      by the travlangdoc tool, but are not associated to any element.\n      @-tags in these comments are ignored."]
+    [@@@travlang.text
       " Comments like the one above, with more than two asterisks,\n      are ignored. "]
-    val f : int -> int -> int[@@ocaml.doc " The comment for function f. "]
-    [@@ocaml.doc " The continuation of the comment for function f. "]
+    val f : int -> int -> int[@@travlang.doc " The comment for function f. "]
+    [@@travlang.doc " The continuation of the comment for function f. "]
     exception My_exception of (int -> int) * int
-      [@ocaml.doc
+      [@travlang.doc
         " Comment for exception My_exception, even with a simple comment\n      between the special comment and the exception."]
     type weather =
-      | Rain of int [@ocaml.doc " The comment for constructor Rain "]
-      | Sun [@ocaml.doc " The comment for constructor Sun "][@@ocaml.doc
+      | Rain of int [@travlang.doc " The comment for constructor Rain "]
+      | Sun [@travlang.doc " The comment for constructor Sun "][@@travlang.doc
                                                               " Comment for type weather  "]
     type weather2 =
-      | Rain of int [@ocaml.doc " The comment for constructor Rain "]
-      | Sun [@ocaml.doc " The comment for constructor Sun "][@@ocaml.doc
+      | Rain of int [@travlang.doc " The comment for constructor Rain "]
+      | Sun [@travlang.doc " The comment for constructor Sun "][@@travlang.doc
                                                               " Comment for type weather2  "]
-    [@@ocaml.doc
+    [@@travlang.doc
       " I can continue the comment for type weather2 here\n      because there is already a comment associated to the last constructor."]
     type my_record =
       {
-      foo: int [@ocaml.doc " Comment for field foo "];
-      bar: string [@ocaml.doc " Comment for field bar "]}[@@ocaml.doc
+      foo: int [@travlang.doc " Comment for field foo "];
+      bar: string [@travlang.doc " Comment for field bar "]}[@@travlang.doc
                                                            " The comment for type my_record "]
-    [@@ocaml.doc " Continuation of comment for type my_record "]
-    val foo : string[@@ocaml.doc " Comment for foo "][@@ocaml.doc
+    [@@travlang.doc " Continuation of comment for type my_record "]
+    val foo : string[@@travlang.doc " Comment for foo "][@@travlang.doc
                                                        " This comment is ambiguous and associated to both foo and bar. "]
-    val bar : string[@@ocaml.doc
+    val bar : string[@@travlang.doc
                       " This comment is ambiguous and associated to both foo and bar. "]
-    [@@ocaml.doc " This comment is associated to bar. "]
+    [@@travlang.doc " This comment is associated to bar. "]
     class my_class :
       object
-        inherit cl[@@ocaml.doc " A comment to describe inheritance from cl "]
-        val  mutable tutu : string[@@ocaml.doc
+        inherit cl[@@travlang.doc " A comment to describe inheritance from cl "]
+        val  mutable tutu : string[@@travlang.doc
                                     " The comment for attribute tutu "]
-        val  toto : int[@@ocaml.doc " The comment for attribute toto. "]
-        [@@@ocaml.text
+        val  toto : int[@@travlang.doc " The comment for attribute toto. "]
+        [@@@travlang.text
           " This comment is not attached to titi since\n        there is a blank line before titi, but is kept\n        as a comment in the class. "]
         val  titi : string
-        method  toto : string[@@ocaml.doc " Comment for method toto "]
-        method  m : float -> int[@@ocaml.doc " Comment for method m "]
-      end[@@ocaml.doc " The comment for class my_class "]
+        method  toto : string[@@travlang.doc " Comment for method toto "]
+        method  m : float -> int[@@travlang.doc " Comment for method m "]
+      end[@@travlang.doc " The comment for class my_class "]
     class type my_class_type =
       object
-        [@@@ocaml.text
-          " This is a docstring that OCaml <= 4.07.1 drops.\n        For some reason, when a class type begins with two docstrings,\n        it keeps only the second one.\n        This is fixed by GPR#2151. "]
-        val  mutable x : int[@@ocaml.doc " The comment for variable x. "]
-        method  m : int -> int[@@ocaml.doc " The comment for method m. "]
-        [@@@ocaml.text
-          " This is a docstring that OCaml <= 4.07.1 misplaces.\n        For some reason, when a class type ends with two docstrings,\n        it keeps both of them, but exchanges their order.\n        This is again fixed by GPR#2151. "]
-        [@@@ocaml.text " Another docstring that OCaml <= 4.07.1 misplaces. "]
-      end[@@ocaml.doc " The comment for the class type my_class_type "]
+        [@@@travlang.text
+          " This is a docstring that travlang <= 4.07.1 drops.\n        For some reason, when a class type begins with two docstrings,\n        it keeps only the second one.\n        This is fixed by GPR#2151. "]
+        val  mutable x : int[@@travlang.doc " The comment for variable x. "]
+        method  m : int -> int[@@travlang.doc " The comment for method m. "]
+        [@@@travlang.text
+          " This is a docstring that travlang <= 4.07.1 misplaces.\n        For some reason, when a class type ends with two docstrings,\n        it keeps both of them, but exchanges their order.\n        This is again fixed by GPR#2151. "]
+        [@@@travlang.text " Another docstring that travlang <= 4.07.1 misplaces. "]
+      end[@@travlang.doc " The comment for the class type my_class_type "]
     module Foo :
     sig
-      val x : int[@@ocaml.doc " The comment for x "]
-      [@@@ocaml.text
+      val x : int[@@travlang.doc " The comment for x "]
+      [@@@travlang.text
         " A special comment that is kept but not associated to any element "]
-    end[@@ocaml.doc " The comment for module Foo "]
+    end[@@travlang.doc " The comment for module Foo "]
     module type my_module_type  =
       sig
-        val x : int[@@ocaml.doc " The comment for value x. "]
+        val x : int[@@travlang.doc " The comment for value x. "]
         module M :
-        sig val y : int[@@ocaml.doc " The comment for value y. "] end
-        [@@ocaml.doc " The comment for module M. "]
-      end[@@ocaml.doc " The comment for module type my_module_type. "]
+        sig val y : int[@@travlang.doc " The comment for value y. "] end
+        [@@travlang.doc " The comment for module M. "]
+      end[@@travlang.doc " The comment for module type my_module_type. "]
   end =
   struct
-    let f x y = x + y[@@ocaml.doc " The comment for function f "]
-    [@@@ocaml.text
+    let f x y = x + y[@@travlang.doc " The comment for function f "]
+    [@@@travlang.text
       " This comment is not attached to any element since there is another\n      special comment just before the next element. "]
     exception My_exception of (int -> int) * int
-      [@ocaml.doc
+      [@travlang.doc
         " Comment for exception My_exception, even with a simple comment\n      between the special comment and the exception."]
     type weather =
-      | Rain of int [@ocaml.doc " The comment for constructor Rain "]
-      | Sun [@ocaml.doc " The comment for constructor Sun "][@@ocaml.doc
+      | Rain of int [@travlang.doc " The comment for constructor Rain "]
+      | Sun [@travlang.doc " The comment for constructor Sun "][@@travlang.doc
                                                               " Comment for type weather  "]
     type my_record =
       {
-      foo: int [@ocaml.doc " Comment for field foo "];
-      bar: string [@ocaml.doc " Comment for field bar "]}[@@ocaml.doc
+      foo: int [@travlang.doc " Comment for field foo "];
+      bar: string [@travlang.doc " Comment for field bar "]}[@@travlang.doc
                                                            " The comment for type my_record "]
     class my_class =
       object
-        inherit  cl[@@ocaml.doc
+        inherit  cl[@@travlang.doc
                      " A comment to describe inheritance from cl "]
-        val mutable tutu = "tutu"[@@ocaml.doc
+        val mutable tutu = "tutu"[@@travlang.doc
                                    " The comment for the instance variable tutu "]
-        val toto = 1[@@ocaml.doc " The comment for toto "]
-        val titi = "titi"[@@ocaml.doc
+        val toto = 1[@@travlang.doc " The comment for toto "]
+        val titi = "titi"[@@travlang.doc
                            " Ambiguous comment on both titi and toto "]
-        method toto = tutu ^ "!"[@@ocaml.doc
+        method toto = tutu ^ "!"[@@travlang.doc
                                   " Ambiguous comment on both titi and toto "]
-        [@@@ocaml.text " floating 1 "]
-        [@@@ocaml.text " floating 2 "]
-        method m (f : float) = 1[@@ocaml.doc " The comment for method m "]
-      end[@@ocaml.doc " The comment for class my_class "]
+        [@@@travlang.text " floating 1 "]
+        [@@@travlang.text " floating 2 "]
+        method m (f : float) = 1[@@travlang.doc " The comment for method m "]
+      end[@@travlang.doc " The comment for class my_class "]
     class type my_class_type =
       object
-        val  mutable x : int[@@ocaml.doc
+        val  mutable x : int[@@travlang.doc
                               " The comment for the instance variable x. "]
-        [@@@ocaml.text " floating 1 "]
-        [@@@ocaml.text " floating 2 "]
-        method  m : int -> int[@@ocaml.doc " The comment for method m. "]
-      end[@@ocaml.doc " The comment for class type my_class_type "]
+        [@@@travlang.text " floating 1 "]
+        [@@@travlang.text " floating 2 "]
+        method  m : int -> int[@@travlang.doc " The comment for method m. "]
+      end[@@travlang.doc " The comment for class type my_class_type "]
     module Foo =
       struct
-        external x : int[@@ocaml.doc " The comment for x "][@@ocaml.doc
+        external x : int[@@travlang.doc " The comment for x "][@@travlang.doc
                                                              " Another comment for x "]
-      end[@@ocaml.doc " The comment for module Foo "]
-    module type my_module_type  = sig val x : int end[@@ocaml.doc
+      end[@@travlang.doc " The comment for module Foo "]
+    module type my_module_type  = sig val x : int end[@@travlang.doc
                                                        " The comment for module type my_module_type. "]
   end ;;
 Line 141, characters 12-14:
@@ -336,8 +336,8 @@ end;;
 module M =
   struct
     type t =
-      | Label [@@ocaml.doc " attached to t "]
-    [@@@ocaml.text
+      | Label [@@travlang.doc " attached to t "]
+    [@@@travlang.text
       " Empty docstring comments should not generate attributes "]
     type w
   end;;
@@ -356,8 +356,8 @@ module M = struct
 end;;
 [%%expect {|
 
-module M = struct type t[@@ocaml.doc " foo "]
-                  type s[@@ocaml.doc " bar "] end;;
+module M = struct type t[@@travlang.doc " foo "]
+                  type s[@@travlang.doc " bar "] end;;
 module M : sig type t type s end
 |}]
 
@@ -372,8 +372,8 @@ module M = struct
 end;;
 [%%expect {|
 
-module M = struct type t[@@ocaml.doc " foo "]
-                  type s[@@ocaml.doc " bar "] end;;
+module M = struct type t[@@travlang.doc " foo "]
+                  type s[@@travlang.doc " bar "] end;;
 module M : sig type t type s end
 |}]
 
@@ -385,35 +385,35 @@ module M = struct
   type s
 
   (** bar *)
-end;;
-[%%expect {|
-
-module M =
-  struct [@@@ocaml.text " foo "]
-         type t
-         type s
-         [@@@ocaml.text " bar "] end;;
-module M : sig type t type s end
-|}]
-
-module M = struct
-
-  (** foo *)
-
-  type t
-
-  type s
-
-  (** bar *)
-
 end;;
 [%%expect {|
 
 module M =
-  struct [@@@ocaml.text " foo "]
+  struct [@@@travlang.text " foo "]
          type t
          type s
-         [@@@ocaml.text " bar "] end;;
+         [@@@travlang.text " bar "] end;;
+module M : sig type t type s end
+|}]
+
+module M = struct
+
+  (** foo *)
+
+  type t
+
+  type s
+
+  (** bar *)
+
+end;;
+[%%expect {|
+
+module M =
+  struct [@@@travlang.text " foo "]
+         type t
+         type s
+         [@@@travlang.text " bar "] end;;
 module M : sig type t type s end
 |}]
 
@@ -431,8 +431,8 @@ end;;
 [%%expect {|
 
 module M =
-  struct type t[@@ocaml.doc " foo2 "]
-         type s[@@ocaml.doc " bar1 "] end;;
+  struct type t[@@travlang.doc " foo2 "]
+         type s[@@travlang.doc " bar1 "] end;;
 module M : sig type t type s end
 |}]
 
@@ -453,12 +453,12 @@ end;;
 
 module M =
   struct
-    [@@@ocaml.text " foo1 "]
-    [@@@ocaml.text " foo2 "]
+    [@@@travlang.text " foo1 "]
+    [@@@travlang.text " foo2 "]
     type t
     type s
-    [@@@ocaml.text " bar1 "]
-    [@@@ocaml.text " bar2 "]
+    [@@@travlang.text " bar1 "]
+    [@@@travlang.text " bar2 "]
   end;;
 module M : sig type t type s end
 |}]
@@ -482,12 +482,12 @@ end;;
 
 module M =
   struct
-    [@@@ocaml.text " foo1 "]
-    [@@@ocaml.text " foo2 "]
+    [@@@travlang.text " foo1 "]
+    [@@@travlang.text " foo2 "]
     type t
     type s
-    [@@@ocaml.text " bar1 "]
-    [@@@ocaml.text " bar2 "]
+    [@@@travlang.text " bar1 "]
+    [@@@travlang.text " bar2 "]
   end;;
 module M : sig type t type s end
 |}]
@@ -495,7 +495,7 @@ module M : sig type t type s end
 module M = struct (** foo *) type t (** bar *) end;;
 [%%expect {|
 
-module M = struct type t[@@ocaml.doc " foo "][@@ocaml.doc " bar "] end;;
+module M = struct type t[@@travlang.doc " foo "][@@travlang.doc " bar "] end;;
 module M : sig type t end
 |}]
 
@@ -506,16 +506,16 @@ type t
 (** bar *) end;;
 [%%expect {|
 
-module M = struct [@@@ocaml.text " foo "]
+module M = struct [@@@travlang.text " foo "]
                   type t
-                  [@@@ocaml.text " bar "] end;;
+                  [@@@travlang.text " bar "] end;;
 module M : sig type t end
 |}]
 
 module M = struct (** foo *) end;;
 [%%expect {|
 
-module M = struct [@@@ocaml.text " foo "] end;;
+module M = struct [@@@travlang.text " foo "] end;;
 module M : sig end
 |}]
 
@@ -524,7 +524,7 @@ module M = struct (** foo *)
 end;;
 [%%expect {|
 
-module M = struct [@@@ocaml.text " foo "] end;;
+module M = struct [@@@travlang.text " foo "] end;;
 module M : sig end
 |}]
 
@@ -533,7 +533,7 @@ module M = struct
 (** foo *) end;;
 [%%expect {|
 
-module M = struct [@@@ocaml.text " foo "] end;;
+module M = struct [@@@travlang.text " foo "] end;;
 module M : sig end
 |}]
 
@@ -542,7 +542,7 @@ module M = struct
 end;;
 [%%expect {|
 
-module M = struct [@@@ocaml.text " foo "] end;;
+module M = struct [@@@travlang.text " foo "] end;;
 module M : sig end
 |}]
 
@@ -552,7 +552,7 @@ module M = struct
 end;;
 [%%expect {|
 
-module M = struct [@@@ocaml.text " foo "] end;;
+module M = struct [@@@travlang.text " foo "] end;;
 module M : sig end
 |}]
 
@@ -562,7 +562,7 @@ module M = struct
 end;;
 [%%expect {|
 
-module M = struct [@@@ocaml.text " foo "] end;;
+module M = struct [@@@travlang.text " foo "] end;;
 module M : sig end
 |}]
 
@@ -573,33 +573,33 @@ module M = struct
 end;;
 [%%expect {|
 
-module M = struct [@@@ocaml.text " foo "] end;;
+module M = struct [@@@travlang.text " foo "] end;;
 module M : sig end
 |}]
 
 module M = struct
 
-(** foo *)
-
-(** bar *)
-
-end;;
-[%%expect {|
-
-module M = struct [@@@ocaml.text " foo "]
-                  [@@@ocaml.text " bar "] end;;
-module M : sig end
-|}]
-
-module M = struct
 (** foo *)
 
 (** bar *)
+
 end;;
 [%%expect {|
 
-module M = struct [@@@ocaml.text " foo "]
-                  [@@@ocaml.text " bar "] end;;
+module M = struct [@@@travlang.text " foo "]
+                  [@@@travlang.text " bar "] end;;
+module M : sig end
+|}]
+
+module M = struct
+(** foo *)
+
+(** bar *)
+end;;
+[%%expect {|
+
+module M = struct [@@@travlang.text " foo "]
+                  [@@@travlang.text " bar "] end;;
 module M : sig end
 |}]
 
@@ -614,8 +614,8 @@ type 'a with_default
 [%%expect {|
 
 type 'a with_default =
-  ?size:((int)[@ocaml.doc " default [42] "]) ->
-    ?resizable:((bool)[@ocaml.doc " default [true] "]) -> 'a;;
+  ?size:((int)[@travlang.doc " default [42] "]) ->
+    ?resizable:((bool)[@travlang.doc " default [true] "]) -> 'a;;
 type 'a with_default = ?size:int -> ?resizable:bool -> 'a
 |}]
 
@@ -629,8 +629,8 @@ type obj = <
 
 type obj =
   <
-    meth1: int -> int [@ocaml.doc " method 1 "] ;meth2: unit -> float
-                                                   [@ocaml.doc " method 2 "]
+    meth1: int -> int [@travlang.doc " method 1 "] ;meth2: unit -> float
+                                                   [@travlang.doc " method 2 "]
     > ;;
 type obj = < meth1 : int -> int; meth2 : unit -> float >
 |}]
@@ -642,7 +642,7 @@ type var = [
 [%%expect {|
 
 type var =
-  [ `Foo [@ocaml.doc " foo "] | `Bar of (int * string) [@ocaml.doc " bar "]];;
+  [ `Foo [@travlang.doc " foo "] | `Bar of (int * string) [@travlang.doc " bar "]];;
 type var = [ `Bar of int * string | `Foo ]
 |}]
 
@@ -661,10 +661,10 @@ end;;
 
 module type S  =
   sig
-    val before : unit -> unit[@@ocaml.doc " docstring before "]
+    val before : unit -> unit[@@travlang.doc " docstring before "]
     [@@@foo ]
     [@@@foo ]
-    val after : unit -> unit[@@ocaml.doc " docstring after "]
+    val after : unit -> unit[@@travlang.doc " docstring after "]
   end;;
 module type S = sig val before : unit -> unit val after : unit -> unit end
 |}]

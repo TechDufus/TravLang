@@ -1,9 +1,9 @@
 (* TEST
- include tool-ocaml-lib;
+ include tool-travlang-lib;
  flags = "-w -a";
- ocaml_script_as_argument = "true";
- setup-ocaml-build-env;
- ocaml;
+ travlang_script_as_argument = "true";
+ setup-travlang-build-env;
+ travlang;
 *)
 
 let _ = () in 1;;

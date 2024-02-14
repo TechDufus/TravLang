@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -48,11 +48,11 @@ use \"Parse.longident\" or \"Longident.unflatten\""]
 
    If you want to generate long identifiers that are a list of
    dot-separated identifiers, the function {!unflatten} is safer and faster.
-   {!unflatten} is available since OCaml 4.06.0.
+   {!unflatten} is available since travlang 4.06.0.
 
    If you want to parse any identifier correctly, use the long-identifiers
    functions from the {!Parse} module, in particular {!Parse.longident}.
-   They are available since OCaml 4.11, and also provide proper
+   They are available since travlang 4.11, and also provide proper
    input-location support.
 
 *)

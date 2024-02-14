@@ -4,30 +4,30 @@
 \usepackage{textcomp}
 \usepackage{fullpage} 
 \usepackage{url} 
-\usepackage{ocamldoc}
+\usepackage{travlangdoc}
 \begin{document}
 \tableofcontents
 \section{Module {\tt{Alias}}}
 \label{module:Alias}\index{Alias@\verb`Alias`}
 
 
-\ocamldocvspace{0.5cm}
+\travlangdocvspace{0.5cm}
 
 
 
-\begin{ocamldoccode}
-{\tt{module }}{\tt{Container}}{\tt{ : }}\end{ocamldoccode}
+\begin{travlangdoccode}
+{\tt{module }}{\tt{Container}}{\tt{ : }}\end{travlangdoccode}
 \label{module:Alias.Container}\index{Container@\verb`Container`}
 
-\begin{ocamldocsigend}
+\begin{travlangdocsigend}
 
 
-\begin{ocamldoccode}
-{\tt{module }}{\tt{Aliased\_inner}}{\tt{ : }}\end{ocamldoccode}
+\begin{travlangdoccode}
+{\tt{module }}{\tt{Aliased\_inner}}{\tt{ : }}\end{travlangdoccode}
 \label{module:Alias.Container.Aliased-underscoreinner}\index{Aliased-underscoreinner@\verb`Aliased_inner`}
 {\tt{Inner}}
 
-\end{ocamldocsigend}
+\end{travlangdocsigend}
 
 
 
@@ -36,13 +36,13 @@
 \label{module:Inner}\index{Inner@\verb`Inner`}
 
 
-\ocamldocvspace{0.5cm}
+\travlangdocvspace{0.5cm}
 
 
 
-\label{type:Inner.a}\begin{ocamldoccode}
+\label{type:Inner.a}\begin{travlangdoccode}
 type a = int 
-\end{ocamldoccode}
+\end{travlangdoccode}
 \index{a@\verb`a`}
 
 
@@ -52,19 +52,19 @@ type a = int
 
 
 
-\ocamldocvspace{0.5cm}
+\travlangdocvspace{0.5cm}
 
 
 
-\label{type:Main.t}\begin{ocamldoccode}
+\label{type:Main.t}\begin{travlangdoccode}
 type t = Alias.Container.Aliased_inner.a 
-\end{ocamldoccode}
+\end{travlangdoccode}
 \index{t@\verb`t`}
-\begin{ocamldocdescription}
+\begin{travlangdocdescription}
 Alias to type Inner.a
 
 
-\end{ocamldocdescription}
+\end{travlangdocdescription}
 
 
 \end{document}

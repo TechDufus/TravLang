@@ -1,4 +1,4 @@
-INFO-DIR-SECTION OCaml Programming Language 
+INFO-DIR-SECTION travlang Programming Language 
 START-INFO-DIR-ENTRY
-* ocaml: (ocaml). OCaml Reference Manual
+* travlang: (travlang). travlang Reference Manual
 END-INFO-DIR-ENTRY

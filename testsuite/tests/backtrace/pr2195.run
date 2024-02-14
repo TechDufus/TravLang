@@ -6,4 +6,4 @@
 ulimit -n 32
 
 ${program} > ${output} 2>&1
-echo 'exit_status="'$?'"' > ${ocamltest_response}
+echo 'exit_status="'$?'"' > ${travlangtest_response}

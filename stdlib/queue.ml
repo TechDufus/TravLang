@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*         Francois Pottier, projet Cristal, INRIA Rocquencourt           *)
 (*                  Jeremie Dimino, Jane Street Europe                    *)

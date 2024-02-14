@@ -408,7 +408,7 @@ s#fold ( + ) 0;;
 s;;
 \end{caml_example}
 A better solution is to use polymorphic methods, which were
-introduced in OCaml version 3.05.  Polymorphic methods makes
+introduced in travlang version 3.05.  Polymorphic methods makes
 it possible to treat the type variable "'b" in the type of "fold" as
 universally quantified, giving "fold" the polymorphic type
 "Forall 'b. ('b -> 'a -> 'b) -> 'b -> 'b".
@@ -553,7 +553,7 @@ class ['observer, 'event] subject =
 \end{caml_example}
 The difficulty usually lies  in defining instances of the pattern above
 by inheritance. This can be done in a natural and obvious manner in
-OCaml, as shown on the following example manipulating windows.
+travlang, as shown on the following example manipulating windows.
 \begin{caml_example}{toplevel}
 type event = Raise | Resize | Move;;
 let string_of_event = function
@@ -633,4 +633,4 @@ window#move 1; window#resize 2;;
 
 % LocalWords:  objectexamples bsection init caml val int Oo succ incr ref
 % LocalWords:  typecheck leq bool cp eval sig struct ABSPOINT Abspoint iter neg
-% LocalWords:  accu mem rec repr Euro euro ccp inlined ostring len concat OCaml
+% LocalWords:  accu mem rec repr Euro euro ccp inlined ostring len concat travlang

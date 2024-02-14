@@ -2,13 +2,13 @@
  readonly_files = "A.ml B.ml C.ml D.ml lib_impl.ml lib.mli Makefile.build Makefile.build2";
  set sources = "A.ml B.ml C.ml D.ml";
  set links = "LibA.ml LibB.ml LibC.ml LibD.ml";
- set stdlib = "-nostdlib -I ${ocamlsrcdir}/stdlib";
- set OCAMLC = "${ocamlrun} ${ocamlc_byte} ${stdlib}";
- set OCAMLOPT = "${ocamlrun} ${ocamlopt_byte} ${stdlib}";
+ set stdlib = "-nostdlib -I ${travlangsrcdir}/stdlib";
+ set travlangC = "${travlangrun} ${travlangc_byte} ${stdlib}";
+ set travlangOPT = "${travlangrun} ${travlangopt_byte} ${stdlib}";
  {
    compiler_directory_suffix = ".depend.mk";
    compiler_output = "${test_build_directory}/depend.mk";
-   setup-ocamlc.byte-build-env;
+   setup-travlangc.byte-build-env;
    src = "A.ml";
    dst = "LibA.ml";
    copy;
@@ -25,11 +25,11 @@
    dst = "lib.ml";
    copy;
    commandline = "-depend -as-map lib.ml lib.mli";
-   ocamlc.byte;
+   travlangc.byte;
    commandline = "-depend -map lib.ml -open Lib ${links}";
-   ocamlc.byte;
+   travlangc.byte;
    compiler_reference = "${test_source_directory}/depend.mk.reference";
-   check-ocamlc.byte-output;
+   check-travlangc.byte-output;
    hasunix;
    script = "rm -f ${links}";
    script;
@@ -41,7 +41,7 @@
  }{
    compiler_directory_suffix = ".depend.mk2";
    compiler_output = "${test_build_directory}/depend.mk2";
-   setup-ocamlc.byte-build-env;
+   setup-travlangc.byte-build-env;
    src = "A.ml";
    dst = "LibA.ml";
    copy;
@@ -55,9 +55,9 @@
    dst = "LibD.ml";
    copy;
    commandline = "-depend -map lib.mli -open Lib ${links}";
-   ocamlc.byte;
+   travlangc.byte;
    compiler_reference = "${test_source_directory}/depend.mk2.reference";
-   check-ocamlc.byte-output;
+   check-travlangc.byte-output;
    hasunix;
    script = "rm -f ${links}";
    script;
@@ -68,7 +68,7 @@
    script;
  }{
    compiler_directory_suffix = ".depend.mod";
-   setup-ocamlc.byte-build-env;
+   setup-travlangc.byte-build-env;
    src = "A.ml";
    dst = "LibA.ml";
    copy;
@@ -85,14 +85,14 @@
    dst = "lib.ml";
    copy;
    commandline = "-depend -as-map -modules lib.ml lib.mli";
-   ocamlc.byte;
+   travlangc.byte;
    commandline = "-depend -modules -map lib.ml -open Lib ${links}";
-   ocamlc.byte;
+   travlangc.byte;
    compiler_reference = "${test_source_directory}/depend.mod.reference";
-   check-ocamlc.byte-output;
+   check-travlangc.byte-output;
  }{
    compiler_directory_suffix = ".depend.mod2";
-   setup-ocamlc.byte-build-env;
+   setup-travlangc.byte-build-env;
    src = "A.ml";
    dst = "LibA.ml";
    copy;
@@ -106,12 +106,12 @@
    dst = "LibD.ml";
    copy;
    commandline = "-depend -modules -map lib.mli ${links}";
-   ocamlc.byte;
+   travlangc.byte;
    compiler_reference = "${test_source_directory}/depend.mod2.reference";
-   check-ocamlc.byte-output;
+   check-travlangc.byte-output;
  }{
    compiler_directory_suffix = ".depend.mod3";
-   setup-ocamlc.byte-build-env;
+   setup-travlangc.byte-build-env;
    src = "A.ml";
    dst = "LibA.ml";
    copy;
@@ -125,9 +125,9 @@
    dst = "LibD.ml";
    copy;
    commandline = "-depend -modules -as-map -map lib.mli -open Lib ${links}";
-   ocamlc.byte;
+   travlangc.byte;
    compiler_reference = "${test_source_directory}/depend.mod3.reference";
-   check-ocamlc.byte-output;
+   check-travlangc.byte-output;
  }
 *)
 

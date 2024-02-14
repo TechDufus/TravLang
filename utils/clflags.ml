@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -139,9 +139,9 @@ let keep_startup_file = ref false       (* -dstartup *)
 let dump_combine = ref false            (* -dcombine *)
 let profile_columns : Profile.column list ref = ref [] (* -dprofile/-dtimings *)
 
-let native_code = ref false             (* set to true under ocamlopt *)
+let native_code = ref false             (* set to true under travlangopt *)
 
-let force_slash = ref false             (* for ocamldep *)
+let force_slash = ref false             (* for travlangdep *)
 let clambda_checks = ref false          (* -clambda-checks *)
 let cmm_invariants =
   ref Config.with_cmm_invariants        (* -dcmm-invariants *)
@@ -149,7 +149,7 @@ let cmm_invariants =
 let flambda_invariant_checks =
   ref Config.with_flambda_invariants    (* -flambda-(no-)invariants *)
 
-let dont_write_files = ref false        (* set to true under ocamldoc *)
+let dont_write_files = ref false        (* set to true under travlangdoc *)
 
 let insn_sched_default = true
 let insn_sched = ref insn_sched_default (* -[no-]insn-sched *)
@@ -397,7 +397,7 @@ let color_reader = {
     | Misc.Color.Always -> "always"
     | Misc.Color.Never -> "never");
   usage = "expected \"auto\", \"always\" or \"never\"";
-  env_var = "OCAML_COLOR";
+  env_var = "travlang_COLOR";
 }
 
 let error_style = ref None (* -error-style *)
@@ -411,7 +411,7 @@ let error_style_reader = {
     | Misc.Error_style.Contextual -> "contextual"
     | Misc.Error_style.Short -> "short");
   usage = "expected \"contextual\" or \"short\"";
-  env_var = "OCAML_ERROR_STYLE";
+  env_var = "travlang_ERROR_STYLE";
 }
 
 let unboxed_types = ref false
@@ -462,7 +462,7 @@ end
 module Compiler_pass = struct
   (* If you add a new pass, the following must be updated:
      - the variable `passes` below
-     - the manpages in man/ocaml{c,opt}.m
+     - the manpages in man/travlang{c,opt}.m
      - the manual manual/src/cmds/unified-options.etex
   *)
   type t = Parsing | Typing | Lambda | Scheduling | Emit

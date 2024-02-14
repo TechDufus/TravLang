@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Maxence Guesdon, projet Cristal, INRIA Rocquencourt        *)
 (*                                                                        *)
@@ -230,11 +230,11 @@ module Naming =
       type_prefix^name^".html"
   end
 
-(** A class with a method to colorize a string which represents OCaml code. *)
-class ocaml_code =
+(** A class with a method to colorize a string which represents travlang code. *)
+class travlang_code =
   object
     method html_of_code b ?(with_pre=true) code =
-      Odoc_ocamlhtml.html_of_code b ~with_pre: with_pre code
+      Odoc_travlanghtml.html_of_code b ~with_pre: with_pre code
   end
 
 let new_buf () = Buffer.create 1024
@@ -246,11 +246,11 @@ let bs = Buffer.add_string
 class virtual text =
   object (self)
     (** We want to display colorized code. *)
-    inherit ocaml_code
+    inherit travlang_code
 
     (** Escape the strings which would clash with html syntax, and
        make some replacements (double newlines replaced by <br>). *)
-    method escape s = Odoc_ocamlhtml.escape_base s
+    method escape s = Odoc_travlanghtml.escape_base s
 
     method keep_alpha_num s =
       let len = String.length s in
@@ -358,7 +358,7 @@ class virtual text =
       else
         (
          bs b "<code class=\"";
-         bs b Odoc_ocamlhtml.code_class ;
+         bs b Odoc_travlanghtml.code_class ;
          bs b "\">";
          bs b (self#escape s);
          bs b "</code>"
@@ -400,7 +400,7 @@ class virtual text =
       else
         (
          bs b "<pre class=\"codepre\"><code class=\"";
-         bs b Odoc_ocamlhtml.code_class;
+         bs b Odoc_travlanghtml.code_class;
          bs b "\">" ;
          bs b (self#escape (remove_useless_newlines s));
          bs b "</code></pre>"
@@ -1232,7 +1232,7 @@ class html =
     (** Return html code with the given string in the constructor style. *)
     method constructor s = "<span class=\"constructor\">"^s^"</span>"
 
-    (** Output the given ocaml code to the given file name. *)
+    (** Output the given travlang code to the given file name. *)
     method private output_code ?(with_pre=true) in_title file code =
       try
         let chanout = open_out file in
@@ -2944,7 +2944,7 @@ class html =
           incr Odoc_info.errors
 
     initializer
-      Odoc_ocamlhtml.html_of_comment :=
+      Odoc_travlanghtml.html_of_comment :=
         (fun s ->
           let b = new_buf () in
           self#html_of_text b (Odoc_text.Texter.text_of_string s);

@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Maxence Guesdon, projet Cristal, INRIA Rocquencourt        *)
 (*                                                                        *)
@@ -41,7 +41,7 @@ let initial_env () =
     let ln = if current = ln || ln = initial || ln = "" then [] else [ln] in
     ln @ List.rev !Clflags.open_modules in
   Typemod.initial_env
-    ~loc:(Location.in_file "ocamldoc command line")
+    ~loc:(Location.in_file "travlangdoc command line")
     ~open_implicit_modules
     ~initially_opened_module
 
@@ -57,7 +57,7 @@ let preprocess sourcefile =
 (** Analysis of an implementation file. Returns (Some typedtree) if
    no error occurred, else None and an error message is printed.*)
 
-let tool_name = "ocamldoc"
+let tool_name = "travlangdoc"
 
 (** Deactivate the generation of docstrings in the lexer *)
 let no_docstring f x =
@@ -126,7 +126,7 @@ let process_error exn =
   try Location.report_exception Format.err_formatter exn
   with exn ->
     fprintf Format.err_formatter
-      "Compilation error(%s). Use the OCaml compiler to get more details.@."
+      "Compilation error(%s). Use the travlang compiler to get more details.@."
       (Printexc.to_string exn)
 
 (** Process the given file, according to its extension. Return the Module.t created, if any.*)

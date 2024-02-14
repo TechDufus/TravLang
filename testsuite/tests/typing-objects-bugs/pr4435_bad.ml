@@ -20,8 +20,8 @@ class c (v : int) =
 
 (* TEST
  flags = " -w -a ";
- ocamlc_byte_exit_status = "2";
- setup-ocamlc.byte-build-env;
- ocamlc.byte;
- check-ocamlc.byte-output;
+ travlangc_byte_exit_status = "2";
+ setup-travlangc.byte-build-env;
+ travlangc.byte;
+ check-travlangc.byte-output;
 *)

@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*      KC Sivaramakrishnan, Indian Institute of Technology, Madras       *)
 (*                                                                        *)

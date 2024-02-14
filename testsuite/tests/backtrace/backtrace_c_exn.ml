@@ -4,7 +4,7 @@
 
 *)
 
-(* https://github.com/ocaml-multicore/ocaml-multicore/issues/498 *)
+(* https://github.com/travlang-multicore/travlang-multicore/issues/498 *)
 external stubbed_raise : unit -> unit = "caml_498_raise"
 
 let raise_exn () = failwith "exn"
@@ -22,5 +22,5 @@ let () =
 (* TEST
  modules = "backtrace_c_exn_.c";
  flags = "-g";
- ocamlrunparam += ",b=1";
+ travlangrunparam += ",b=1";
 *)

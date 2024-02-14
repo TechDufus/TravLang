@@ -1,8 +1,8 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
-(*                      Thomas Gazagnaire, OCamlPro                       *)
+(*                      Thomas Gazagnaire, travlangPro                       *)
 (*                   Fabrice Le Fessant, INRIA Saclay                     *)
 (*               Hongbo Zhang, University of Pennsylvania                 *)
 (*                                                                        *)
@@ -15,7 +15,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* Original Code from Ber-metaocaml, modified for 3.12.0 and fixed *)
+(* Original Code from Ber-metatravlang, modified for 3.12.0 and fixed *)
 (* Printing code expressions *)
 (* Authors:  Ed Pizzi, Fabrice Le Fessant *)
 (* Extensive Rewrite: Hongbo Zhang: University of Pennsylvania *)
@@ -94,7 +94,7 @@ let needs_parens txt =
 let needs_spaces txt =
   first_is '*' txt || last_is '*' txt
 
-(* Turn an arbitrary variable name into a valid OCaml identifier by adding \#
+(* Turn an arbitrary variable name into a valid travlang identifier by adding \#
   in case it is a keyword, or parenthesis when it is an infix or prefix
   operator. *)
 let ident_of_name ppf txt =

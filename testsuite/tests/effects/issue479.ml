@@ -2,7 +2,7 @@
  toplevel;
 *)
 
-(* https://github.com/ocaml-multicore/ocaml-multicore/issues/479 *)
+(* https://github.com/travlang-multicore/travlang-multicore/issues/479 *)
 
 open Effect
 open Effect.Deep

@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -73,16 +73,16 @@ let add_ccobjs origin l =
 
 (* A note on ccobj ordering:
    - Clflags.ccobjs is in reverse order w.r.t. what was given on the
-        ocamlc command line;
+        travlangc command line;
    - l.lib_ccobjs is also in reverse order w.r.t. what was given on the
-        ocamlc -a command line when the library was created;
+        travlangc -a command line when the library was created;
    - Clflags.ccobjs is reversed just before calling the C compiler for the
         custom link;
-   - .cma files on the command line of ocamlc are scanned right to left;
+   - .cma files on the command line of travlangc are scanned right to left;
    - Before linking, we add lib_ccobjs after Clflags.ccobjs.
-   Thus, for ocamlc a.cma b.cma obj1 obj2
-   where a.cma was built with ocamlc -i ... obja1 obja2
-     and b.cma was built with ocamlc -i ... objb1 objb2
+   Thus, for travlangc a.cma b.cma obj1 obj2
+   where a.cma was built with travlangc -i ... obja1 obja2
+     and b.cma was built with travlangc -i ... objb1 objb2
    lib_ccobjs starts as [],
    becomes objb2 objb1 when b.cma is scanned,
    then obja2 obja1 objb2 objb1 when a.cma is scanned.
@@ -326,7 +326,7 @@ let invalid_for_shebang_line path =
                     absolute location of sh. path must be valid for a shebang
                     line.
    The second "line" is interpreted as the next "\000\n"-terminated sequence and
-   is the directory containing the default runtimes (ocamlrun, ocamlrund, etc.).
+   is the directory containing the default runtimes (travlangrun, travlangrund, etc.).
    The null terminator is used since '\n' is valid in a nefarious installation
    prefix but Posix forbids filenames including the nul character.
    The remainder of the file is then the executable launcher for bytecode
@@ -387,7 +387,7 @@ let write_header outchan =
     if String.length !Clflags.use_runtime > 0 then
       (true, make_absolute !Clflags.use_runtime)
     else
-      (false, "ocamlrun" ^ !Clflags.runtime_variant)
+      (false, "travlangrun" ^ !Clflags.runtime_variant)
   in
   (* Write the header *)
   let runtime_info =
@@ -397,7 +397,7 @@ let write_header outchan =
   in
   let runtime =
     (* Historically, the native Windows ports are assumed to be finding
-       ocamlrun using a PATH search. *)
+       travlangrun using a PATH search. *)
     if use_runtime || Sys.win32 then
       runtime
     else

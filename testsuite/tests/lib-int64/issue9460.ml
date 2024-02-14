@@ -1,9 +1,9 @@
 (* TEST *)
 
-(* See https://github.com/ocaml/ocaml/issues/9460
+(* See https://github.com/travlang/travlang/issues/9460
    This test comes from Richard Jones
    at
-     https://github.com/libguestfs/libnbd/blob/0475bfe04a527051c0a37af59a733c4c8554e427/ocaml/tests/test_400_pread.ml#L21-L36
+     https://github.com/libguestfs/libnbd/blob/0475bfe04a527051c0a37af59a733c4c8554e427/travlang/tests/test_400_pread.ml#L21-L36
 *)
 let test_result =
   let b = Bytes.create 16 in
@@ -26,7 +26,7 @@ let () =
   assert (test_result = expected)
 
 (* Reproduction case by Jeremy Yallop in
-   https://github.com/ocaml/ocaml/pull/9463#issuecomment-615831765
+   https://github.com/travlang/travlang/pull/9463#issuecomment-615831765
 *)
 let () =
   let x = ref Int64.max_int in

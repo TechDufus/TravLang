@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*                David Allsopp, MetaStack Solutions Ltd.                 */
 /*                                                                        */
@@ -161,7 +161,7 @@ Caml_inline ULONGLONG convert_time(FILETIME time)
   return uli.QuadPart;
 }
 
-/* path allocated outside the OCaml heap */
+/* path allocated outside the travlang heap */
 static int safe_do_stat(int do_lstat, int use_64, wchar_t* path, HANDLE fstat, __int64* st_ino, struct _stat64* res)
 {
   BY_HANDLE_FILE_INFORMATION info;

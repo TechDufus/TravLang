@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*          Xavier Leroy and Damien Doligez, INRIA Rocquencourt           */
 /*                                                                        */
@@ -91,7 +91,7 @@ value caml_startup_common(char_os **argv, int pooling)
   value res;
 
   /* Determine options */
-  caml_parse_ocamlrunparam();
+  caml_parse_travlangrunparam();
 
   if (caml_params->cleanup_on_exit)
     pooling = 1;

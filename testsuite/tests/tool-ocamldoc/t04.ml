@@ -1,7 +1,7 @@
 (* TEST
  plugins = "odoc_test.ml";
- flags = "-I ${ocamlsrcdir}/ocamldoc";
- ocamldoc;
+ flags = "-I ${travlangsrcdir}/travlangdoc";
+ travlangdoc;
 *)
 
 (** Testing display of inline record.

@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Pierre Weis && Damien Doligez, INRIA Rocquencourt          *)
 (*                                                                        *)
@@ -69,7 +69,7 @@ type t =
   | Unused_var_strict of string             (* 27 *)
   | Wildcard_arg_to_constant_constr         (* 28 *)
   | Eol_in_string                           (* 29
-      Note: since OCaml 5.2, the lexer normalizes \r\n sequences in
+      Note: since travlang 5.2, the lexer normalizes \r\n sequences in
       the source file to a single \n character, so the behavior of
       newlines in string literals is portable. This warning is
       never emitted anymore. *)
@@ -165,6 +165,6 @@ type description =
   { number : int;
     names : string list;
     description : string;
-    since : Sys.ocaml_release_info option; }
+    since : Sys.travlang_release_info option; }
 
 val descriptions : description list

@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Maxence Guesdon, projet Cristal, INRIA Rocquencourt        *)
 (*                                                                        *)
@@ -816,11 +816,11 @@ val verbose : string -> unit
    error counter is incremented. *)
 val warning : string -> unit
 
-(** A flag to indicate whether ocamldoc warnings must be printed or not. *)
+(** A flag to indicate whether travlangdoc warnings must be printed or not. *)
 val print_warnings : bool ref
 
 (** Increment this counter when an error is encountered.
-   The ocamldoc tool will print the number of errors
+   The travlangdoc tool will print the number of errors
    encountered exit with code 1 if this number is greater
    than 0. *)
 val errors : int ref
@@ -844,7 +844,7 @@ val text_of_string : string -> text
 val text_string_of_text : text -> string
 
 (** [info_of_string s] parses the given string
-   like a regular ocamldoc comment and return an
+   like a regular travlangdoc comment and return an
    {!Odoc_info.info} structure.
    @return an empty structure if there was a syntax error. TODO: change this
 *)

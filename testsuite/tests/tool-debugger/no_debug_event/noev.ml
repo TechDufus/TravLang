@@ -1,27 +1,27 @@
 (* TEST
  readonly_files = "a.ml b.ml";
- ocamldebug_script = "${test_source_directory}/input_script";
+ travlangdebug_script = "${test_source_directory}/input_script";
  debugger;
  shared-libraries;
- setup-ocamlc.byte-build-env;
+ setup-travlangc.byte-build-env;
  module = "a.ml";
  flags = "-g -for-pack foo";
- ocamlc.byte;
+ travlangc.byte;
  module = "";
  all_modules = "a.cmo";
  program = "foo.cmo";
  flags = "-g -pack";
- ocamlc.byte;
+ travlangc.byte;
  module = "b.ml";
  flags = " -g ";
- ocamlc.byte;
+ travlangc.byte;
  module = "";
  flags = " -g ";
  all_modules = "foo.cmo b.cmo";
  program = "${test_build_directory}/noev.exe";
- ocamlc.byte;
- check-ocamlc.byte-output;
- ocamldebug;
+ travlangc.byte;
+ check-travlangc.byte-output;
+ travlangdebug;
  check-program-output;
 *)
 

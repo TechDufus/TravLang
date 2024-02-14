@@ -3,19 +3,19 @@
  readonly_files = "host.ml plugin.ml";
  libraries = "";
  flags += " -g ";
- ocamldebug_script = "${test_source_directory}/input_script";
+ travlangdebug_script = "${test_source_directory}/input_script";
  debugger;
  shared-libraries;
- setup-ocamlc.byte-build-env;
+ setup-travlangc.byte-build-env;
  module = "host.ml";
- ocamlc.byte;
+ travlangc.byte;
  module = "plugin.ml";
- ocamlc.byte;
+ travlangc.byte;
  module = "";
  all_modules = "host.cmo";
  program = "${test_build_directory}/host.byte";
  libraries = "dynlink";
- ocamlc.byte;
+ travlangc.byte;
  output = "host.output";
  run;
  {
@@ -23,7 +23,7 @@
    check-program-output;
  }{
    output = "host.debug.output";
-   ocamldebug;
+   travlangdebug;
    reference = "${test_source_directory}/host.debug.reference";
    check-program-output;
  }

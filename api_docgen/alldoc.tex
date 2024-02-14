@@ -3,21 +3,21 @@
 \usepackage{color}
 \usepackage{lmodern}
 \usepackage[T1]{fontenc}
-\input{ifocamldoc}
-\ifocamldoc
-\usepackage{ocamldoc}
+\input{iftravlangdoc}
+\iftravlangdoc
+\usepackage{travlangdoc}
 \usepackage{textcomp}
 \else
 \usepackage{changepage}
 \usepackage{listings}
-\newcommand{\ocamlkeyword}{\bfseries}
-\newcommand{\ocamlhighlight}{\bfseries\uline}
-\newcommand{\ocamlerror}{\bfseries}
-\newcommand{\ocamlwarning}{\bfseries}
+\newcommand{\travlangkeyword}{\bfseries}
+\newcommand{\travlanghighlight}{\bfseries\uline}
+\newcommand{\travlangerror}{\bfseries}
+\newcommand{\travlangwarning}{\bfseries}
 \definecolor{gray}{gray}{0.5}
-\newcommand{\ocamlcomment}{\color{gray}\normalfont\small}
-\newcommand{\ocamlstring}{\color{gray}\bfseries}
-\lstnewenvironment{ocamlcodeblock}{
+\newcommand{\travlangcomment}{\color{gray}\normalfont\small}
+\newcommand{\travlangstring}{\color{gray}\bfseries}
+\lstnewenvironment{travlangcodeblock}{
   \lstset{
     backgroundcolor = \color{lightgray},
     basicstyle=\ttfamily,
@@ -25,38 +25,38 @@
     language=caml,
     escapeinside={$}{$},
     columns=fullflexible,
-    stringstyle=\ocamlstring,
-    commentstyle=\ocamlcomment,
+    stringstyle=\travlangstring,
+    commentstyle=\travlangcomment,
     keepspaces=true,
-    keywordstyle=\ocamlkeyword,
-    moredelim=[is][\ocamlhighlight]{<<}{>>},
-    moredelim=[s][\ocamlstring]{\{|}{|\}},
-    moredelim=[s][\ocamlstring]{\{delimiter|}{|delimiter\}},
-    keywords={[2]{val,initializer,nonrec}}, keywordstyle={[2]\ocamlkeyword},
+    keywordstyle=\travlangkeyword,
+    moredelim=[is][\travlanghighlight]{<<}{>>},
+    moredelim=[s][\travlangstring]{\{|}{|\}},
+    moredelim=[s][\travlangstring]{\{delimiter|}{|delimiter\}},
+    keywords={[2]{val,initializer,nonrec}}, keywordstyle={[2]\travlangkeyword},
     belowskip=0\baselineskip,
     upquote=true,
     literate={'"'}{\textquotesingle "\textquotesingle}3
     {'\\"'}{\textquotesingle \textbackslash"\textquotesingle}4,
   }
   }{}
-\newcommand{\ocamltag}[2]{\begin{ocaml#1}#2\end{ocaml#1}}
-\newcommand{\ocamlcodefragment}[1]{{\ttfamily\setlength{\parindent}{0cm}%
+\newcommand{\travlangtag}[2]{\begin{travlang#1}#2\end{travlang#1}}
+\newcommand{\travlangcodefragment}[1]{{\ttfamily\setlength{\parindent}{0cm}%
 \raggedright#1}}
-\newcommand{\ocamlinlinecode}[1]{{\ttfamily#1}}
-\newenvironment{ocamlarrow}{}{}
-\newenvironment{ocamlexception}{\bfseries}{}
-\newenvironment{ocamlextension}{\bfseries}{}
-\newenvironment{ocamlconstructor}{\bfseries}{}
-\newenvironment{ocamltype-var}{\itshape\ttfamily}{}
+\newcommand{\travlanginlinecode}[1]{{\ttfamily#1}}
+\newenvironment{travlangarrow}{}{}
+\newenvironment{travlangexception}{\bfseries}{}
+\newenvironment{travlangextension}{\bfseries}{}
+\newenvironment{travlangconstructor}{\bfseries}{}
+\newenvironment{travlangtype-var}{\itshape\ttfamily}{}
 \definecolor{lightgray}{gray}{0.97}
 \definecolor{gray}{gray}{0.5}
-\newenvironment{ocamlindent}{\begin{adjustwidth}{2em}{0pt}}{\end{adjustwidth}}
-\newenvironment{ocamltabular}[1]{\begin{tabular}{#1}}%
+\newenvironment{travlangindent}{\begin{adjustwidth}{2em}{0pt}}{\end{adjustwidth}}
+\newenvironment{travlangtabular}[1]{\begin{tabular}{#1}}%
 {\end{tabular}}
 \newcommand{\bold}[1]{{\bfseries#1}}
 \fi
 
-\ifocamldoc
+\iftravlangdoc
 \newcommand{\docitem}[2]{\input{#2}}
 \else
 \newcommand{\docitem}[2]{\input{#1/#2}}
@@ -68,7 +68,7 @@
 \chapter{Stdlib}
 \docitem{libref}{Stdlib.tex}
 \input{stdlib_input}
-\docitem{libref}{Ocaml_operators.tex}
+\docitem{libref}{travlang_operators.tex}
 \chapter{Dynlink}
 \docitem{libref}{Dynlink.tex}
 \chapter{Str}

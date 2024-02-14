@@ -1,10 +1,10 @@
-(* ------------ Ocaml Web-manual -------------- *)
+(* ------------ travlang Web-manual -------------- *)
 
 (* Copyright San Vu Ngoc, 2020
 
    file: process_api.ml
 
-   Post-processing the HTML of the OCaml API.  *)
+   Post-processing the HTML of the travlang API.  *)
 
 open Soup
 open Printf
@@ -108,7 +108,7 @@ let make_toc ~version ~search file config title body =
         unwrap uli;
         if search then search_widget true |> prepend_child body;
         create_element "h1" ~inner_text:
-          (sprintf "The OCaml %sAPI" config.title)
+          (sprintf "The travlang %sAPI" config.title)
         |> prepend_child body;
     | None ->
         if search then search_widget false |> prepend_child nav;

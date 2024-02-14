@@ -1,4 +1,4 @@
-(Introduced in OCaml 3.12; pattern syntax and package type inference
+(Introduced in travlang 3.12; pattern syntax and package type inference
 introduced in 4.00; structural comparison of package types introduced in 4.02.;
 fewer parens required starting from 4.05)
 
@@ -59,13 +59,13 @@ subset of module types.
 This subset consists of named module types with optional constraints
 of a limited form: only non-parametrized types can be specified.
 
-For type-checking purposes (and starting from OCaml 4.02), package types
+For type-checking purposes (and starting from travlang 4.02), package types
 are compared using the structural comparison of module types.
 
 In general, the module expression @'(' "val" expr ":" package-type
 ')'@ cannot be used in the body of a functor, because this could cause
 unsoundness in conjunction with applicative functors.
-Since OCaml 4.02, this is relaxed in two ways:
+Since travlang 4.02, this is relaxed in two ways:
 if @package-type@ does not contain nominal type declarations ({\em
   i.e.} types that are created with a proper identity), then this
 expression can be used anywhere, and even if it contains such types

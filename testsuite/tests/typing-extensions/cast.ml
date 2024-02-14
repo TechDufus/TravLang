@@ -2,7 +2,7 @@
  toplevel;
 *)
 
-(* Ignore OCAMLRUNPARAM=b to be reproducible *)
+(* Ignore travlangRUNPARAM=b to be reproducible *)
 Printexc.record_backtrace false;;
 
 (* By using two types we can have a recursive constraint *)

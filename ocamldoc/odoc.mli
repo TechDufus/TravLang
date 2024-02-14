@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Sebastien Hinderer, projet Cambium, INRIA Paris            *)
 (*                                                                        *)
@@ -13,6 +13,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(** Main module for ocamldoc *)
+(** Main module for travlangdoc *)
 
 (* Empty interface, there is nothing to export at the moment *)

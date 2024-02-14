@@ -1,6 +1,6 @@
 ;**************************************************************************
 ;*                                                                        *
-;*                                 OCaml                                  *
+;*                                 travlang                                  *
 ;*                                                                        *
 ;*                     Thomas Refis, Jane Street Europe                   *
 ;*                                                                        *
@@ -16,10 +16,10 @@
  (names   make_opcodes cvt_emit)
  (modules make_opcodes cvt_emit))
 
-(ocamllex
+(travlanglex
  (modules make_opcodes)
  (mode    fallback))
 
-(ocamllex
+(travlanglex
  (modules cvt_emit)
  (mode    fallback))

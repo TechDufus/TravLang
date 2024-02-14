@@ -1,11 +1,11 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
-/*                       Pierre Chambart, OCamlPro                        */
+/*                       Pierre Chambart, travlangPro                        */
 /*                   Mark Shinwell, Jane Street Europe                    */
 /*                                                                        */
-/*   Copyright 2013--2016 OCamlPro SAS                                    */
+/*   Copyright 2013--2016 travlangPro SAS                                    */
 /*   Copyright 2014--2016 Jane Street Group LLC                           */
 /*                                                                        */
 /*   All rights reserved.  This file is distributed under the terms of    */

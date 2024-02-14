@@ -4,7 +4,7 @@
 \usepackage{textcomp}
 \usepackage{fullpage} 
 \usepackage{url} 
-\usepackage{ocamldoc}
+\usepackage{travlangdoc}
 \begin{document}
 \tableofcontents
 \section{Module {\tt{Latex\_ref}} : Latex-only test}
@@ -13,7 +13,7 @@
 
 
 
-\ocamldocvspace{0.5cm}
+\travlangdocvspace{0.5cm}
 
 
 

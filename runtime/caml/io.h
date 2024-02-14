@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           */
 /*                                                                        */
@@ -103,7 +103,7 @@ CAMLextern intnat caml_really_getblock (struct channel *, char *, intnat);
 CAMLextern void caml_channel_lock(struct channel *);
 CAMLextern void caml_channel_unlock(struct channel *);
 
-/* Lock and Unlock are compatibility aliases for OCaml<5.2.
+/* Lock and Unlock are compatibility aliases for travlang<5.2.
    Remove whenever 5.2 is old enough. (See #12792.) */
 #define Lock(channel) caml_channel_lock(channel)
 #define Unlock(channel) caml_channel_unlock(channel)

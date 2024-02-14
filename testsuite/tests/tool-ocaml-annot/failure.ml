@@ -1,15 +1,15 @@
 (* TEST
  flags = "-annot";
  script = "sh ${test_source_directory}/check-annot.sh failure";
- ocamlc_byte_exit_status = "2";
- ocamlopt_byte_exit_status = "2";
+ travlangc_byte_exit_status = "2";
+ travlangopt_byte_exit_status = "2";
  {
-   setup-ocamlc.byte-build-env;
-   ocamlc.byte;
+   setup-travlangc.byte-build-env;
+   travlangc.byte;
    script;
  }{
-   setup-ocamlopt.byte-build-env;
-   ocamlopt.byte;
+   setup-travlangopt.byte-build-env;
+   travlangopt.byte;
    script;
  }
 *)

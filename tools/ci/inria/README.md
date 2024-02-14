@@ -1,5 +1,5 @@
 This directory contains the configuration files of the Jenkins jobs
-used to test OCaml on Inria's continuous integration infrastructure.
+used to test travlang on Inria's continuous integration infrastructure.
 
 Each subdirectory under `tools/ci/inria` corresponds to one CI job
 and should contain at least a `Jenkinsfile` describing the pipeline

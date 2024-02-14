@@ -4,44 +4,44 @@
  libraries = "";
  shared-libraries;
  {
-   setup-ocamlc.byte-build-env;
+   setup-travlangc.byte-build-env;
    {
      module = "test6_main.ml";
-     ocamlc.byte;
+     travlangc.byte;
    }{
      module = "test6_plugin.ml";
-     ocamlc.byte;
+     travlangc.byte;
    }{
      module = "test6_second_plugin.ml";
-     ocamlc.byte;
+     travlangc.byte;
    }{
      program = "${test_build_directory}/test6.byte";
      libraries = "dynlink";
      all_modules = "test6_main.cmo";
-     ocamlc.byte;
+     travlangc.byte;
      run;
    }
  }{
    native-dynlink;
-   setup-ocamlopt.byte-build-env;
+   setup-travlangopt.byte-build-env;
    {
      module = "test6_main.ml";
-     ocamlopt.byte;
+     travlangopt.byte;
    }{
      program = "test6_plugin.cmxs";
      flags = "-shared";
      all_modules = "test6_plugin.ml";
-     ocamlopt.byte;
+     travlangopt.byte;
    }{
      program = "test6_second_plugin.cmxs";
      flags = "-shared";
      all_modules = "test6_second_plugin.ml";
-     ocamlopt.byte;
+     travlangopt.byte;
    }{
      program = "${test_build_directory}/test6.exe";
      libraries = "dynlink";
      all_modules = "test6_main.cmx";
-     ocamlopt.byte;
+     travlangopt.byte;
      run;
    }
  }

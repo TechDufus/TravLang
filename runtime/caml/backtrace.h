@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           */
 /*                                                                        */
@@ -22,7 +22,7 @@
  * This function can be called at runtime by user-code, or during
  * initialization if backtraces were requested.
  *
- * It might be called before GC initialization, so it shouldn't do OCaml
+ * It might be called before GC initialization, so it shouldn't do travlang
  * allocation.
  */
 CAMLextern void caml_record_backtraces(int);
@@ -56,13 +56,13 @@ CAMLextern void caml_record_backtraces(int);
  * [Caml_state->backtrace_buffer] (really cheap)
  *   Backend and process image dependent, abstracted by C-type backtrace_slot.
  * [raw_backtrace] (cheap)
- *   OCaml values of abstract type [Printexc.raw_backtrace_slot],
+ *   travlang values of abstract type [Printexc.raw_backtrace_slot],
  *   still backend and process image dependent (unsafe to marshal).
  * [backtrace] (more expensive)
- *   OCaml values of algebraic data-type [Printexc.backtrace_slot]
+ *   travlang values of algebraic data-type [Printexc.backtrace_slot]
  */
  /* [Caml_state->backtrace_active] is non zero iff backtraces are recorded.
- * This variable must be changed with [caml_record_backtrace] in OCaml or
+ * This variable must be changed with [caml_record_backtrace] in travlang or
  * [caml_record_backtraces] in C.
  */
 #define caml_backtrace_active (Caml_state_field(backtrace_active))
@@ -91,7 +91,7 @@ CAMLextern void caml_record_backtraces(int);
  */
 #define caml_backtrace_last_exn (Caml_state_field(backtrace_last_exn))
 
-/* FIXME: this shouldn't matter anymore. Since OCaml 4.02, non-parameterized
+/* FIXME: this shouldn't matter anymore. Since travlang 4.02, non-parameterized
  * exceptions are constant, so physical equality is no longer appropriate.
  * raise and re-raise are distinguished by:
  * - passing reraise = 1 to [caml_stash_backtrace] (see below) in the bytecode

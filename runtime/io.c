@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           */
 /*                                                                        */
@@ -96,7 +96,7 @@ CAMLexport void caml_channel_cleanup_on_raise(void)
   if (chan != NULL) caml_channel_unlock(chan);
 }
 
-/* List of channels opened from the OCaml side and managed by the GC */
+/* List of channels opened from the travlang side and managed by the GC */
 CAMLexport struct channel * caml_all_opened_channels = NULL;
 
 /* The mutex protecting the list above */
@@ -204,7 +204,7 @@ CAMLexport file_offset caml_channel_size(struct channel *channel)
   int fd;
 
   check_pending(channel);
-  /* We extract data from [channel] before dropping the OCaml lock, in case
+  /* We extract data from [channel] before dropping the travlang lock, in case
      someone else touches the block. */
   fd = channel->fd;
   here = channel->flags & CHANNEL_TEXT_MODE ? -1 : channel->offset;
@@ -516,7 +516,7 @@ intnat caml_input_scan_line(struct channel *channel)
   return (p - channel->curr);
 }
 
-/* OCaml entry points for the I/O functions.  Wrap struct channel *
+/* travlang entry points for the I/O functions.  Wrap struct channel *
    objects into a heap-allocated object.  Perform locking
    and unlocking around the I/O operations. */
 
@@ -528,21 +528,21 @@ void caml_finalize_channel(value vchan)
   /* Check for channels that have not been closed explicitly. */
   if (chan->fd != -1 && chan->name && caml_runtime_warnings_active())
     fprintf(stderr,
-            "[ocaml] channel opened on file '%s' dies without being closed\n",
+            "[travlang] channel opened on file '%s' dies without being closed\n",
             chan->name);
   if (chan->max == NULL && chan->curr != chan->buff) {
     /* This is an unclosed out channel (chan->max == NULL) with a
-       non-empty buffer: keep it around so the OCaml [at_exit] function
+       non-empty buffer: keep it around so the travlang [at_exit] function
        gets a chance to flush it.  We would want to simply flush the
        channel now, but (i) flushing can raise exceptions, and (ii) it
        is potentially a blocking operation.  Both are forbidden in a
        finalization function.
-       Refs: https://github.com/ocaml/ocaml/issues/6902
-             https://github.com/ocaml/ocaml/pull/210
+       Refs: https://github.com/travlang/travlang/issues/6902
+             https://github.com/travlang/travlang/pull/210
     */
     if (chan->name && caml_runtime_warnings_active())
       fprintf(stderr,
-              "[ocaml] (moreover, it has unflushed data)\n");
+              "[travlang] (moreover, it has unflushed data)\n");
     notflushed = 1;
   }
   /* Don't run concurrently with caml_ml_out_channels_list that may resurrect

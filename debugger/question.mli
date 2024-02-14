@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*        Nicolas Pouillard, projet Gallium, INRIA Rocquencourt           *)
 (*                                                                        *)

@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*       Fabrice Le Fessant, EPI Gallium, INRIA Paris-Rocquencourt        *)
 (*                                                                        *)
@@ -29,8 +29,8 @@ val first_ppx : string list ref
 val first_include_dirs : string list ref
 val last_include_dirs : string list ref
 
-(* return the list of objfiles, after OCAMLPARAM and List.rev *)
-val get_objfiles : with_ocamlparam:bool -> string list
+(* return the list of objfiles, after travlangPARAM and List.rev *)
+val get_objfiles : with_travlangparam:bool -> string list
 val last_objfiles : string list ref
 val first_objfiles : string list ref
 
@@ -68,8 +68,8 @@ val process_deferred_actions :
   (* compile implementation *)
   (source_file:string -> output_prefix:string -> unit) *
   (* compile interface *)
-  string * (* ocaml module extension *)
-  string -> (* ocaml library extension *)
+  string * (* travlang module extension *)
+  string -> (* travlang library extension *)
   unit
 (* [parse_arguments ?current argv anon_arg program] will parse the arguments,
  using the arguments provided in [Clflags.arg_spec].

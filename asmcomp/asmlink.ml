@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -397,7 +397,7 @@ let report_error ppf = function
         (Style.as_inline_code Location.print_filename) filename
         Style.inline_code ".cmx"
         Style.inline_code name
-        Style.inline_code "ocamlopt -for-pack"
+        Style.inline_code "travlangopt -for-pack"
         (Style.as_inline_code Location.print_filename) filename
         Style.inline_code "-I"
         Style.inline_code (name^".cmx")

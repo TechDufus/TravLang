@@ -1,5 +1,5 @@
-OCaml, before: 42
+travlang, before: 42
 C, before: 42
 C, after: 42
-OCaml, after: 42
-OCaml, after alloc: 17
+travlang, after: 42
+travlang, after alloc: 17

@@ -2,12 +2,12 @@
  flags = "-annot";
  script = "sh ${test_source_directory}/check-annot.sh success";
  {
-   setup-ocamlc.byte-build-env;
-   ocamlc.byte;
+   setup-travlangc.byte-build-env;
+   travlangc.byte;
    script;
  }{
-   setup-ocamlopt.byte-build-env;
-   ocamlopt.byte;
+   setup-travlangopt.byte-build-env;
+   travlangopt.byte;
    script;
  }
 *)

@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -21,15 +21,15 @@ let ml_automata = ref false
 let source_name = ref None
 let output_name = ref None
 
-let usage = "usage: ocamllex [options] sourcefile"
+let usage = "usage: travlanglex [options] sourcefile"
 
 let print_version_string () =
-  print_string "The OCaml lexer generator, version ";
-  print_string Sys.ocaml_version ; print_newline();
+  print_string "The travlang lexer generator, version ";
+  print_string Sys.travlang_version ; print_newline();
   exit 0
 
 let print_version_num () =
-  print_endline Sys.ocaml_version;
+  print_endline Sys.travlang_version;
   exit 0
 
 let specs =

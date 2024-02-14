@@ -1,13 +1,13 @@
 \chapter{The core library} \label{c:corelib}\cutname{core.html}
 
-This chapter describes the OCaml core library, which is
+This chapter describes the travlang core library, which is
  composed of declarations for built-in types and exceptions, plus
 the module "Stdlib" that provides basic operations on these
  built-in types.  The "Stdlib" module is special in two
 ways:
 \begin{itemize}
 \item It is automatically linked with the user's object code files by
-the "ocamlc" command (chapter~\ref{c:camlc}).
+the "travlangc" command (chapter~\ref{c:camlc}).
 
 \item It is automatically ``opened'' when a compilation starts, or
 when the toplevel system is launched. Hence, it is possible to use

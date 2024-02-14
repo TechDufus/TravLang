@@ -1,13 +1,13 @@
 (* TEST
  readonly_files = "a.ml b.ml b2.ml";
  subdirectories = "dir";
- setup-ocamlopt.byte-build-env;
+ setup-travlangopt.byte-build-env;
  module = "a.ml";
- ocamlopt.byte;
+ travlangopt.byte;
  module = "b.ml";
- ocamlopt.byte;
+ travlangopt.byte;
  module = "b2.ml";
- ocamlopt.byte;
+ travlangopt.byte;
  src = "b.cmx b.cmi b2.cmx b2.cmi";
  dst = "dir/";
  copy;
@@ -15,6 +15,6 @@
  cd;
  module = "c.ml";
  flags = "-w -58";
- ocamlopt.byte;
- check-ocamlopt.byte-output;
+ travlangopt.byte;
+ check-travlangopt.byte-output;
 *)

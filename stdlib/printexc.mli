@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -37,7 +37,7 @@ val print: ('a -> 'b) -> 'a -> 'b
    escape a function application. *)
 
 val catch: ('a -> 'b) -> 'a -> 'b
-[@@ocaml.deprecated "This function is no longer needed."]
+[@@travlang.deprecated "This function is no longer needed."]
 (** [Printexc.catch fn x] is similar to {!Printexc.print}, but
    aborts the program with exit code 2 after printing the
    uncaught exception.  This function is deprecated: the runtime
@@ -73,7 +73,7 @@ val record_backtrace: bool -> unit
 (** [Printexc.record_backtrace b] turns recording of exception backtraces
     on (if [b = true]) or off (if [b = false]).  Initially, backtraces
     are not recorded, unless the [b] flag is given to the program
-    through the [OCAMLRUNPARAM] variable.
+    through the [travlangRUNPARAM] variable.
     @since 3.11
 *)
 
@@ -244,7 +244,7 @@ val backtrace_slots : raw_backtrace -> backtrace_slot array option
     - none of the slots in the trace come from modules compiled with
     debug information ([-g])
     - the program is a bytecode program that has not been linked with
-    debug information enabled ([ocamlc -g])
+    debug information enabled ([travlangc -g])
 
     @since 4.02
 *)

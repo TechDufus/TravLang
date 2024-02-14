@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Pierre Weis, projet Cristal, INRIA Rocquencourt            *)
 (*                                                                        *)
@@ -1602,11 +1602,11 @@ val kasprintf : (string -> 'a) -> ('b, formatter, unit, 'a) format4 -> 'b
     "Using the Format module"}.
 
   A final note: the [Format] module is a starting point.
-  The OCaml ecosystem has libraries that makes formatting easier
+  The travlang ecosystem has libraries that makes formatting easier
   and more expressive, with more combinators, more concise names, etc.
   An example of such a library is {{: https://erratique.ch/software/fmt} Fmt}.
 
   Automatic deriving of pretty-printers from type definitions is also possible,
-  using {{: ppx_deriving.show} https://github.com/ocaml-ppx/ppx_deriving}
+  using {{: ppx_deriving.show} https://github.com/travlang-ppx/ppx_deriving}
   or similar ppx derivers.
 *)

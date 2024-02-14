@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*                            Simon Cruanes                               *)
 (*             Gabriel Scherer, projet Partout, INRIA Paris-Saclay        *)

@@ -98,7 +98,7 @@ and t' = Int of int | List of t list
 In the right-hand side of type definitions, references to one of the
 type constructor name being defined are considered as recursive,
 unless "type" is followed by "nonrec". The "nonrec" keyword was
-introduced in OCaml 4.02.2.
+introduced in travlang 4.02.2.
 
 The optional type parameters are either one type variable @"'" ident@,
 for type constructors with one parameter, or a list of type variables

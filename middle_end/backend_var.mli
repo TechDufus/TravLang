@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*                  Mark Shinwell, Jane Street Europe                     *)
 (*                                                                        *)
@@ -15,7 +15,7 @@
 (** Variables used in the backend, optionally equipped with "provenance"
     information, used for the emission of debugging information. *)
 
-[@@@ocaml.warning "+a-4-30-40-41-42"]
+[@@@travlang.warning "+a-4-30-40-41-42"]
 
 include module type of struct include Ident end
 

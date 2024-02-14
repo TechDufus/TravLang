@@ -2,28 +2,28 @@
 %HEVEA\cutname{parallelism.html}
 \label{c:parallelism}
 
-In this chapter, we shall look at the parallel programming facilities in OCaml.
-The OCaml standard library exposes low-level primitives for parallel
+In this chapter, we shall look at the parallel programming facilities in travlang.
+The travlang standard library exposes low-level primitives for parallel
 programming. We recommend the users to utilise higher-level parallel
 programming libraries such as
-\href{https://github.com/ocaml-multicore/domainslib}{domainslib}. This
+\href{https://github.com/travlang-multicore/domainslib}{domainslib}. This
 tutorial will first cover the high-level parallel programming using domainslib
 followed by low-level primitives exposed by the compiler.
 
-OCaml distinguishes concurrency and parallelism and provides distinct
+travlang distinguishes concurrency and parallelism and provides distinct
 mechanisms for expressing them. Concurrency is overlapped execution of tasks
 (section \ref{s:effects-concurrency}) whereas parallelism is simultaneous
 execution of tasks. In particular, parallel tasks overlap in time but
 concurrent tasks may or may not overlap in time. Tasks may execute concurrently
 by yielding control to each other. While concurrency is a program structuring
 mechanism, parallelism is a mechanism to make your programs run faster. If you
-are interested in the concurrent programming mechanisms in OCaml, please refer
+are interested in the concurrent programming mechanisms in travlang, please refer
 to the section \ref{s:effect-handlers} on effect handlers and the chapter
 \ref{c:threads} on the threads library.
 
 \section{s:par_domains}{Domains}
 
-Domains are the units of parallelism in OCaml. The module \stdmoduleref{Domain}
+Domains are the units of parallelism in travlang. The module \stdmoduleref{Domain}
 provides the primitives to create and manage domains. New domains can be
 spawned using the "spawn" function.
 
@@ -75,7 +75,7 @@ let _ = main ()
 The program can be compiled and benchmarked as follows.
 
 \begin{verbatim}
-$ ocamlopt -o fib.exe fib.ml
+$ travlangopt -o fib.exe fib.ml
 $ ./fib.exe 42
 fib(42) = 433494437
 $ hyperfine './fib.exe 42' # Benchmarking
@@ -113,7 +113,7 @@ result of the parallel computation. The "join" function blocks until the
 computation runs to completion.
 
 \begin{verbatim}
-$ ocamlopt -o fib_twice.exe fib_twice.ml
+$ travlangopt -o fib_twice.exe fib_twice.ml
 $ ./fib_twice.exe 42
 fib(42) = 433494437
 fib(42) = 433494437
@@ -151,25 +151,25 @@ let _ = main ()
 \end{caml_example}
 
 \begin{verbatim}
-$ ocamlopt -o fib_par1.exe fib_par1.ml
+$ travlangopt -o fib_par1.exe fib_par1.ml
 $ ./fib_par1.exe 42
 Fatal error: exception Failure("failed to allocate domain")
 \end{verbatim}
 
-OCaml has a limit of 128 domains that can be active at the same time. An
+travlang has a limit of 128 domains that can be active at the same time. An
 attempt to spawn more domains will raise an exception. How then can we
 parallelise the Fibonacci function?
 
 \subsection{s:par_parfib_domainslib}{Parallelising Fibonacci using domainslib}
 
-The OCaml standard library provides only low-level primitives for concurrent
+The travlang standard library provides only low-level primitives for concurrent
 and parallel programming, leaving high-level programming libraries to be
 developed and distributed outside the core compiler distribution.
-\href{https://github.com/ocaml-multicore/domainslib}{Domainslib} is such a
+\href{https://github.com/travlang-multicore/domainslib}{Domainslib} is such a
 library for nested-parallel programming, which is epitomised by the parallelism
 available in the recursive Fibonacci computation. Let us use domainslib to
 parallelise the recursive Fibonacci program. It is recommended that you install
-domainslib using the \href{https://opam.ocaml.org/}{opam} package manager. This
+domainslib using the \href{https://opam.travlang.org/}{opam} package manager. This
 tutorial uses domainslib version 0.5.0.
 
 Domainslib provides an async/await mechanism for spawning parallel tasks and
@@ -223,13 +223,13 @@ For small inputs, the "fib_par" function simply calls the sequential Fibonacci
 function "fib". It is important to switch to sequential mode for small problem
 sizes. If not, the cost of parallelisation will outweigh the work available.
 
-For simplicity, we use "ocamlfind" to compile this program. It is recommended
-that the users use \href{https://github.com/ocaml/dune}{dune} to build their
+For simplicity, we use "travlangfind" to compile this program. It is recommended
+that the users use \href{https://github.com/travlang/dune}{dune} to build their
 programs that utilise libraries installed through
-\href{https://opam.ocaml.org/}{opam}.
+\href{https://opam.travlang.org/}{opam}.
 
 \begin{verbatim}
-$ ocamlfind ocamlopt -package domainslib -linkpkg -o fib_par2.exe fib_par2.ml
+$ travlangfind travlangopt -package domainslib -linkpkg -o fib_par2.exe fib_par2.ml
 $ ./fib_par2.exe 1 42
 fib(42) = 433494437
 $ hyperfine './fib.exe 42' './fib_par2.exe 2 42' \
@@ -366,8 +366,8 @@ sequential version. No other change is required except for the boiler plate
 code to set up and tear down the pools.
 
 \begin{verbatim}
-$ ocamlopt -o spectralnorm.exe spectralnorm.ml
-$ ocamlfind ocamlopt -package domainslib -linkpkg -o spectralnorm_par.exe \
+$ travlangopt -o spectralnorm.exe spectralnorm.ml
+$ travlangfind travlangopt -package domainslib -linkpkg -o spectralnorm_par.exe \
   spectralnorm_par.ml
 $ hyperfine './spectralnorm.exe 4096' './spectralnorm_par.exe 2 4096' \
             './spectralnorm_par.exe 4 4096' './spectralnorm_par.exe 8 4096'
@@ -401,9 +401,9 @@ tutorial.
 
 \section{s:par_gc}{Parallel garbage collection}
 
-An important aspect of the scalability of parallel OCaml programs is the
-scalability of the garbage collector (GC). The OCaml GC is designed to have
-both low latency and good parallel scalability. OCaml has a generational
+An important aspect of the scalability of parallel travlang programs is the
+scalability of the garbage collector (GC). The travlang GC is designed to have
+both low latency and good parallel scalability. travlang has a generational
 garbage collector with a small minor heap and a large major heap. New objects
 (upto a certain size) are allocated in the minor heap. Each domain has its own
 domain-local minor heap arena into which new objects are allocated without
@@ -422,16 +422,16 @@ Overall, the users should expect the garbage collector to scale well with
 increasing number of domains, with the latency remaining low. For more
 information on the design and evaluation of the garbage collector, please have
 a look at the ICFP 2020 paper on
-\href{https://arxiv.org/abs/2004.11663}{"Retrofitting Parallelism onto OCaml"}.
+\href{https://arxiv.org/abs/2004.11663}{"Retrofitting Parallelism onto travlang"}.
 
 \section{s:par_mm_easy}{Memory model: The easy bits}
 
 Modern processors and compilers aggressively optimise programs. These
 optimisations accelerate without otherwise affecting sequential programs, but
 cause surprising behaviours to be visible in parallel programs. To benefit from
-these optimisations, OCaml adopts a \textit{relaxed memory model} that precisely
+these optimisations, travlang adopts a \textit{relaxed memory model} that precisely
 specifies which of these \emph{relaxed behaviours} programs may observe. While
-these models are difficult to program against directly, the OCaml memory model
+these models are difficult to program against directly, the travlang memory model
 provides recipes that retain the simplicity of sequential reasoning.
 
 Firstly, immutable values may be freely shared between multiple domains and may
@@ -440,18 +440,18 @@ arrays and mutable record fields, programmers should avoid \emph{data races}.
 Reference cells, arrays and mutable record fields are said to be
 \emph{non-atomic} data structures. A data race is said to occur when two
 domains concurrently access a non-atomic memory location without
-\emph{synchronisation} and at least one of the accesses is a write. OCaml
+\emph{synchronisation} and at least one of the accesses is a write. travlang
 provides a number of ways to introduce synchronisation including atomic
 variables (section \ref{s:par_atomics}) and mutexes (section \ref{s:par_sync}).
 
-Importantly, \textbf{for data race free (DRF) programs, OCaml provides
+Importantly, \textbf{for data race free (DRF) programs, travlang provides
 sequentially consistent (SC) semantics} -- the observed behaviour of such
 programs can be explained by the interleaving of operations from different
-domains. This property is known as DRF-SC guarantee. Moreover, in OCaml, DRF-SC
+domains. This property is known as DRF-SC guarantee. Moreover, in travlang, DRF-SC
 guarantee is modular -- if a part of a program is data race free, then the
-OCaml memory model ensures that those parts have sequential consistency despite
+travlang memory model ensures that those parts have sequential consistency despite
 other parts of the program having data races. Even for programs with data
-races, OCaml provides strong guarantees. While the user may observe non
+races, travlang provides strong guarantees. While the user may observe non
 sequentially consistent behaviours, there are no crashes.
 
 For more details on the relaxed behaviours in the presence of data races,
@@ -537,7 +537,7 @@ Hence, there are no data races when multiple domains use the stack in parallel.
 
 How do systhreads interact with domains? The systhreads created on a particular
 domain remain pinned to that domain. Only one systhread at a time is allowed to
-run OCaml code on a particular domain. However, systhreads belonging to a
+run travlang code on a particular domain. However, systhreads belonging to a
 particular domain may run C library or system code in parallel. Systhreads
 belonging to different domains may execute in parallel.
 
@@ -580,7 +580,7 @@ let _ = main ()
 \end{verbatim}
 
 \begin{verbatim}
-$ ocamlopt -I +threads unix.cmxa threads.cmxa -o dom_thr.exe dom_thr.ml
+$ travlangopt -I +threads unix.cmxa threads.cmxa -o dom_thr.exe dom_thr.ml
 $ ./dom_thr.exe
 Thread 1 running on domain 1 saw initial write
 Thread 0 running on domain 0 saw the write by thread 1
@@ -598,8 +598,8 @@ domain id as 1.
 
 During parallel execution with multiple domains, C code running on a domain may
 run in parallel with any C code running in other domains even if neither of
-them has released the ``domain lock''. Prior to OCaml 5.0, C bindings may have
-assumed that if the OCaml runtime lock is not released, then it would be safe
+them has released the ``domain lock''. Prior to travlang 5.0, C bindings may have
+assumed that if the travlang runtime lock is not released, then it would be safe
 to manipulate global C state (e.g. initialise a function-local static value).
 This is no longer true in the presence of parallel execution with multiple
 domains.
@@ -607,7 +607,7 @@ domains.
 \section{s:par_atomics}{Atomics}
 
 Mutex, condition variables and semaphores are used to implement blocking
-synchronisation between domains. For non-blocking synchronisation, OCaml
+synchronisation between domains. For non-blocking synchronisation, travlang
 provides \stdmoduleref{Atomic} variables. As the name suggests, non-blocking
 synchronisation does not provide mechanisms for suspending and waking up
 domains. On the other hand, primitives used in non-blocking synchronisation are
@@ -644,7 +644,7 @@ let _ = main ()
 \end{caml_example*}
 
 \begin{verbatim}
-$ ocamlopt -o incr.exe incr.ml
+$ travlangopt -o incr.exe incr.ml
 $ ./incr.exe 1_000_000
 Non-atomic ref count: 1187193
 Atomic ref count: 2000000

@@ -2,12 +2,12 @@
 
 Contributions to the standard library are very welcome.  There is some
 widespread belief in the community that the stdlib is somehow "frozen"
-and that its evolutions are mostly driven by the need of the OCaml
+and that its evolutions are mostly driven by the need of the travlang
 compiler itself.  Let's be clear: this is just plain wrong. The
 compiler is happy with its own local utility functions, and many
 recent additions to the stdlib are not used by the compiler.
 
-Another common and wrong idea is that core OCaml maintainers don't
+Another common and wrong idea is that core travlang maintainers don't
 really care about the standard library.  This is not true, and won't
 be unless one of the "alternative standard" libraries really gains
 enough "market share" in the community.
@@ -62,8 +62,8 @@ A good starting point for function names and API
 is checking if these functions are already contained in some of the
 popular alternative standard library function such as
 [Base](https://github.com/janestreet/base),
-[OCaml Batteries](https://github.com/ocaml-batteries-team/batteries-included),
-[ExtLib](https://github.com/ygrek/ocaml-extlib) or
-[OCaml-containers](https://github.com/c-cube/ocaml-containers).
+[travlang Batteries](https://github.com/travlang-batteries-team/batteries-included),
+[ExtLib](https://github.com/ygrek/travlang-extlib) or
+[travlang-containers](https://github.com/c-cube/travlang-containers).
 One can also take a look at the standard libraries from other
 programming languages for inspiration regarding names and API.

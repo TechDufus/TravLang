@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*            Xavier Leroy, projet Cristal, INRIA Rocquencourt            */
 /*                                                                        */
@@ -178,7 +178,7 @@ CAMLextern wchar_t* caml_stat_strdup_to_utf16(const char *s);
 */
 CAMLextern char* caml_stat_strdup_of_utf16(const wchar_t *s);
 
-/* [caml_copy_string_of_utf16(s)] returns an OCaml string containing a copy of
+/* [caml_copy_string_of_utf16(s)] returns an travlang string containing a copy of
    [s] re-encoded in UTF-8 if [caml_windows_unicode_runtime_enabled] is non-zero
    or in the current code page otherwise.
 */

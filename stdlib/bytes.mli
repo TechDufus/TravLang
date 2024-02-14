@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -45,7 +45,7 @@
    {!String}), which are almost the same data structure, but cannot be
    modified in place.
 
-   Bytes are represented by the OCaml type [char].
+   Bytes are represented by the travlang type [char].
 
    The labeled version of this module can be used as described in the
    {!StdLabels} module.
@@ -210,7 +210,7 @@ val trim : bytes -> bytes
 
 val escaped : bytes -> bytes
 (** Return a copy of the argument, with special characters represented
-    by escape sequences, following the lexical conventions of OCaml.
+    by escape sequences, following the lexical conventions of travlang.
     All characters outside the ASCII printable range (32..126) are
     escaped, as well as backslash and double-quote.
     @raise Invalid_argument if the result is longer than

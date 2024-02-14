@@ -63,18 +63,18 @@ let () =
  libraries = "";
  shared-libraries;
  {
-   setup-ocamlc.byte-build-env;
+   setup-travlangc.byte-build-env;
    {
      module = "test10_main.ml";
-     ocamlc.byte;
+     travlangc.byte;
    }{
      module = "test10_plugin.ml";
-     ocamlc.byte;
+     travlangc.byte;
    }{
      program = "${test_build_directory}/test10.byte";
      libraries = "dynlink";
      all_modules = "test10_main.cmo";
-     ocamlc.byte;
+     travlangc.byte;
      run;
      reference = "${test_source_directory}/test10_main.byte.reference";
      check-program-output;
@@ -82,20 +82,20 @@ let () =
  }{
    no-flambda;
    native-dynlink;
-   setup-ocamlopt.byte-build-env;
+   setup-travlangopt.byte-build-env;
    {
      module = "test10_main.ml";
-     ocamlopt.byte;
+     travlangopt.byte;
    }{
      program = "test10_plugin.cmxs";
      flags = "-shared";
      all_modules = "test10_plugin.ml";
-     ocamlopt.byte;
+     travlangopt.byte;
    }{
      program = "${test_build_directory}/test10.exe";
      libraries = "dynlink";
      all_modules = "test10_main.cmx";
-     ocamlopt.byte;
+     travlangopt.byte;
      run;
      reference = "${test_source_directory}/test10_main.native.reference";
      check-program-output;

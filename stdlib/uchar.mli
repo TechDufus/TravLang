@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*                           Daniel C. Buenzli                            *)
 (*                                                                        *)
@@ -75,13 +75,13 @@ val to_int : t -> int
 (** [to_int u] is [u] as an integer. *)
 
 val is_char : t -> bool
-(** [is_char u] is [true] if and only if [u] is a latin1 OCaml character. *)
+(** [is_char u] is [true] if and only if [u] is a latin1 travlang character. *)
 
 val of_char : char -> t
 (** [of_char c] is [c] as a Unicode character. *)
 
 val to_char : t -> char
-(** [to_char u] is [u] as an OCaml latin1 character.
+(** [to_char u] is [u] as an travlang latin1 character.
 
     @raise Invalid_argument if [u] does not satisfy {!is_char}. *)
 

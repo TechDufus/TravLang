@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           */
 /*                                                                        */
@@ -197,11 +197,11 @@ void getargs(int argc, char_os **argv)
 
         case 'v':
             if (!strcmp_os (argv[i], T("-version"))){
-              printf ("The OCaml parser generator, version "
-                      OCAML_VERSION_STRING "\n");
+              printf ("The travlang parser generator, version "
+                      travlang_VERSION_STRING "\n");
               exit (0);
             }else if (!strcmp_os (argv[i], T("-vnum"))){
-              printf (OCAML_VERSION_STRING "\n");
+              printf (travlang_VERSION_STRING "\n");
               exit (0);
             }else{
               vflag = 1;

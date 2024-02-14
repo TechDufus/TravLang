@@ -1,11 +1,11 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
-(*                       Pierre Chambart, OCamlPro                        *)
+(*                       Pierre Chambart, travlangPro                        *)
 (*     Mark Shinwell, Leo White and Fu Yong Quah, Jane Street Europe      *)
 (*                                                                        *)
-(*   Copyright 2013--2017 OCamlPro SAS                                    *)
+(*   Copyright 2013--2017 travlangPro SAS                                    *)
 (*   Copyright 2014--2017 Jane Street Group LLC                           *)
 (*                                                                        *)
 (*   All rights reserved.  This file is distributed under the terms of    *)
@@ -14,7 +14,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-[@@@ocaml.warning "+a-4-9-30-40-41-42-66"]
+[@@@travlang.warning "+a-4-9-30-40-41-42-66"]
 open! Int_replace_polymorphic_compare
 
 include Closure_id

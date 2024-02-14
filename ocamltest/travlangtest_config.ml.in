@@ -1,0 +1,97 @@
+(* @configure_input@ *)
+#2 "travlangtest/travlangtest_config.ml.in"
+(**************************************************************************)
+(*                                                                        *)
+(*                                 travlang                                  *)
+(*                                                                        *)
+(*             Sebastien Hinderer, projet Gallium, INRIA Paris            *)
+(*                                                                        *)
+(*   Copyright 2016 Institut National de Recherche en Informatique et     *)
+(*     en Automatique.                                                    *)
+(*                                                                        *)
+(*   All rights reserved.  This file is distributed under the terms of    *)
+(*   the GNU Lesser General Public License version 2.1, with the          *)
+(*   special exception on linking described in the file LICENSE.          *)
+(*                                                                        *)
+(**************************************************************************)
+
+(* The configuration module for travlangtest *)
+
+let arch = {@QS@|@arch@|@QS@}
+
+let afl_instrument = @afl@
+
+let asm = {@QS@|@AS@|@QS@}
+
+let cpp = {@QS@|@travlangtest_CPP@|@QS@}
+
+let cppflags = {@QS@|@oc_cppflags@|@QS@}
+
+let cc = {@QS@|@CC@|@QS@}
+
+let cflags = {@QS@|@oc_cflags@|@QS@}
+
+let ccomptype = {@QS@|@ccomptype@|@QS@}
+
+let diff = {@QS@|@DIFF@|@QS@}
+let diff_flags = {@QS@|@DIFF_FLAGS@|@QS@}
+
+let shared_libraries = @supports_shared_libraries@
+
+let libunix = @travlangtest_libunix@
+
+let systhreads = @lib_systhreads@
+
+let str = @lib_str@
+
+let objext = {@QS@|@OBJEXT@|@QS@}
+
+let libext = {@QS@|@libext@|@QS@}
+
+let asmext = {@QS@|@S@|@QS@}
+
+let system = {@QS@|@system@|@QS@}
+
+let travlangsrcdir = {@QS@|@travlangsrcdir@|@QS@}
+
+let flambda = @flambda@
+
+let travlangc_default_flags = ""
+let travlangopt_default_flags = ""
+
+let flat_float_array = @flat_float_array@
+
+let travlangdoc = @build_travlangdoc@
+
+let travlangdebug = @build_travlangdebug@
+
+let native_compiler = @native_compiler@
+
+let native_dynlink = @natdynlink@
+
+let shared_library_cflags = {@QS@|@sharedlib_cflags@|@QS@}
+
+let sharedobjext = {@QS@|@SO@|@QS@}
+
+let csc = {@QS@|@CSC@|@QS@}
+
+let csc_flags = {@QS@|@CSCFLAGS@|@QS@}
+
+let exe = {@QS@|@exeext@|@QS@}
+
+let mkdll = {@QS@|@mkdll_exp@|@QS@}
+let mkexe = {@QS@|@mkexe_exp@|@QS@}
+
+let bytecc_libs = {@QS@|@zstd_libs@ @cclibs@|@QS@}
+
+let nativecc_libs = {@QS@|@cclibs@|@QS@}
+
+let windows_unicode = @windows_unicode@ != 0
+
+let function_sections = @function_sections@
+
+let instrumented_runtime = @instrumented_runtime@
+
+let frame_pointers = @frame_pointers@
+
+let tsan = @tsan@

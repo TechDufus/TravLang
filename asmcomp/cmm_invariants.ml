@@ -1,10 +1,10 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
-(*                       Vincent Laviron, OCamlPro                        *)
+(*                       Vincent Laviron, travlangPro                        *)
 (*                                                                        *)
-(*   Copyright 2017 OCamlPro SAS                                          *)
+(*   Copyright 2017 travlangPro SAS                                          *)
 (*                                                                        *)
 (*   All rights reserved.  This file is distributed under the terms of    *)
 (*   the GNU Lesser General Public License version 2.1, with the          *)
@@ -12,7 +12,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-[@@@ocaml.warning "-40"]
+[@@@travlang.warning "-40"]
 
 module Int = Numbers.Int
 

@@ -1,6 +1,6 @@
 \subsection{ss:destructive-substitution}{Destructive substitutions}
 
-(Introduced in OCaml 3.12, generalized in 4.06)
+(Introduced in travlang 3.12, generalized in 4.06)
 
 \begin{syntax}
 mod-constraint:
@@ -13,7 +13,7 @@ A ``destructive'' substitution (@'with' ... ':=' ...@) behaves essentially like
 normal signature constraints (@'with' ... '=' ...@), but it additionally removes
 the redefined type or module from the signature.
 
-Prior to OCaml 4.06, there were a number of restrictions: one could only remove
+Prior to travlang 4.06, there were a number of restrictions: one could only remove
 types and modules at the outermost level (not inside submodules), and in the
 case of @'with type'@ the definition had to be another type constructor with the
 same type parameters.
@@ -56,7 +56,7 @@ module type CompareInt = ComparableInt with type t := int
 
 \subsection{ss:local-substitution}{Local substitution declarations}
 
-(Introduced in OCaml 4.08, module type substitution introduced in 4.13)
+(Introduced in travlang 4.08, module type substitution introduced in 4.13)
 
 \begin{syntax}
 specification:
@@ -125,7 +125,7 @@ type substitutions, see section \ref{ss:module-type-substitution}.
 
 \subsection{ss:module-type-substitution}{Module type substitutions}
 
-(Introduced in OCaml 4.13)
+(Introduced in travlang 4.13)
 
 \begin{syntax}
 mod-constraint:

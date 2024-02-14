@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -60,7 +60,7 @@ let handle_lexical_error fn arg lexbuf =
 
 let warning lexbuf msg =
   let p = Lexing.lexeme_start_p lexbuf in
-  Printf.eprintf "ocamllex warning:\nFile \"%s\", line %d, character %d: %s.\n"
+  Printf.eprintf "travlanglex warning:\nFile \"%s\", line %d, character %d: %s.\n"
     p.Lexing.pos_fname p.Lexing.pos_lnum
     (p.Lexing.pos_cnum - p.Lexing.pos_bol + 1) msg;
   flush stderr

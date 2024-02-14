@@ -2,7 +2,7 @@
 
 type u = U of unit
 let () =
-  (* See https://github.com/ocaml-multicore/ocaml-multicore/issues/252 *)
+  (* See https://github.com/travlang-multicore/travlang-multicore/issues/252 *)
   let make_cell (x : unit) : u Atomic.t =
     let cell = Atomic.make (U x) in
     Atomic.set cell (U x) ;

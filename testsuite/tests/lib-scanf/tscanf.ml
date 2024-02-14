@@ -620,7 +620,7 @@ and test27 () =
  (test27 ())
 ;;
 
-(* To scan an OCaml string:
+(* To scan an travlang string:
    the format is "\"%s@\"".
    A better way would be to add a %S (String.escaped), a %C (Char.escaped).
    This is now available. *)
@@ -985,7 +985,7 @@ test (test340 () && test35 ())
 
 (* The preferred reader functionnals. *)
 
-(* To read a list as in OCaml (elements are ``blank + semicolon + blank''
+(* To read a list as in travlang (elements are ``blank + semicolon + blank''
    separated, and the list is enclosed in brackets). *)
 let rec read_elems read_elem accu ib =
   kscanf ib (fun ib exc -> accu)

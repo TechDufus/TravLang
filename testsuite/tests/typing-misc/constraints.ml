@@ -403,7 +403,7 @@ val test_obj_with_expansion :
 |}]
 
 
-(* PR#12145 -- Loopy constraints cause ocamlc to loop *)
+(* PR#12145 -- Loopy constraints cause travlangc to loop *)
 
 type 'a t constraint 'a = 'b * 'c
 type cycle = cycle id

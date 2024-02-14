@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           */
 /*                                                                        */
@@ -210,7 +210,7 @@ value caml_add_debug_info(code_t code_start, value code_size, value events_heap)
   if (events_heap != Val_unit)
     caml_debugger(DEBUG_INFO_ADDED, events_heap);
 
-  /* build the OCaml-side debug_info value */
+  /* build the travlang-side debug_info value */
   debug_info = caml_stat_alloc(sizeof(struct debug_info));
 
   debug_info->start = code_start;
@@ -454,7 +454,7 @@ static void read_main_debug_info(struct debug_info *di)
   /* At the moment, bytecode programs built with --output-complete-exe
      do not contain any debug info.
 
-     See  https://github.com/ocaml/ocaml/issues/9344 for details.
+     See  https://github.com/travlang/travlang/issues/9344 for details.
   */
   if (caml_params->cds_file == NULL && caml_byte_program_mode == COMPLETE_EXE)
     CAMLreturn0;
@@ -554,7 +554,7 @@ static struct ev_info *event_for_location(code_t pc)
   }
   if (di->events[low].ev_pc == pc)
     return &di->events[low];
-  /* ocamlc sometimes moves an event past a following PUSH instruction;
+  /* travlangc sometimes moves an event past a following PUSH instruction;
      allow mismatch by 1 instruction. */
   if (di->events[low].ev_pc == pc + 1)
     return &di->events[low];

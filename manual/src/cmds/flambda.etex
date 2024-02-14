@@ -4,19 +4,19 @@
 \section{s:flambda-overview}{Overview}
 
 {\em Flambda} is the term used to describe a series of optimisation passes
-provided by the native code compilers as of OCaml 4.03.
+provided by the native code compilers as of travlang 4.03.
 
-Flambda aims to make it easier to write idiomatic OCaml code without
+Flambda aims to make it easier to write idiomatic travlang code without
 incurring performance penalties.
 
 To use the Flambda optimisers it is necessary to pass the {\tt -flambda}
-option to the OCaml {\tt configure} script.  (There is no support for a
+option to the travlang {\tt configure} script.  (There is no support for a
 single compiler that can operate in both Flambda and non-Flambda modes.)
 Code compiled with Flambda
 cannot be linked into the same program as code compiled without Flambda.
 Attempting to do this will result in a compiler error.
 
-Whether or not a particular {\tt ocamlopt} uses Flambda may be
+Whether or not a particular {\tt travlangopt} uses Flambda may be
 determined by invoking it with the {\tt -config} option and looking
 for any line starting with ``{\tt flambda:}''.  If such a line is present
 and says ``{\tt true}'', then Flambda is supported, otherwise it is not.
@@ -60,7 +60,7 @@ including unrolling of recursive functions.  Compilation times may be
 significantly lengthened.
 \item[\machine{-Oclassic}] Make inlining decisions at the point of
 definition of a function rather than at the call site(s).  This mirrors
-the behaviour of OCaml compilers not using Flambda.  Compared to compilation
+the behaviour of travlang compilers not using Flambda.  Compared to compilation
 using the new Flambda inlining heuristics (for example at {\tt -O2}) it
 produces
 smaller {\tt .cmx} files, shorter compilation times and code that probably
@@ -387,7 +387,7 @@ Method calls to objects are not at present inlined by Flambda.
 
 If the {\tt -inlining-report} option is provided to the compiler then a file
 will be emitted corresponding to each round of optimisation.  For the
-OCaml source file {\em basename}{\tt .ml} the files
+travlang source file {\em basename}{\tt .ml} the files
 are named {\em basename}{\tt .}{\em round}{\tt.inlining.org},
 with {\em round} a
 zero-based integer.  Inside the files, which are formatted as ``org mode'',
@@ -850,7 +850,7 @@ to the initialising array as a whole.
 \item Otherwise, the initialising array is lifted out and subject to the
 normal constant sharing procedure;
 creation of the array consists of bulk copying the initialising array
-into a fresh value on the OCaml heap.
+into a fresh value on the travlang heap.
 \end{itemize}
 \end{itemize}
 
@@ -1149,7 +1149,7 @@ location within the code due to inlining.)
 Flambda performs a simple analysis analogous to that performed elsewhere
 in the compiler that can transform {\tt ref}s into mutable variables
 that may then be held in registers (or on the stack as appropriate) rather
-than being allocated on the OCaml heap.  This only happens so long as the
+than being allocated on the travlang heap.  This only happens so long as the
 reference concerned can be shown to not escape from its defining scope.
 
 \subsection{ss:flambda-subst-closure-vars}{Substitution of closure variables for specialised arguments}
@@ -1231,7 +1231,7 @@ Especially when writing benchmarking suites that run non-side-effecting
 algorithms in loops, it may be found that the optimiser entirely
 elides the code being benchmarked.  This behaviour can be prevented by
 using the {\tt Sys.opaque\_identity} function (which indeed behaves as a
-normal OCaml function and does not possess any ``magic'' semantics).  The
+normal travlang function and does not possess any ``magic'' semantics).  The
 documentation of the {\tt Sys} module should be consulted for further details.
 
 \section{s:flambda-unsafe}{Use of unsafe operations}
@@ -1339,6 +1339,6 @@ at the level of symbols defined in the object file.  The address of a symbol is
 fixed, but it may be bound to both constant and non-constant expressions.
 \item[{\bf Toplevel}]  An expression in the current program which is not
 enclosed within any function declaration.
-\item[{\bf Variable}]  A named entity to which some OCaml value is bound by a
+\item[{\bf Variable}]  A named entity to which some travlang value is bound by a
 {\tt let} expression, pattern-matching construction, or similar.
 \end{options}

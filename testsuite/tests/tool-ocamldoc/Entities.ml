@@ -1,5 +1,5 @@
 (* TEST
- ocamldoc with html;
+ travlangdoc with html;
 *)
 
 type ul

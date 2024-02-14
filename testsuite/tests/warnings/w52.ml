@@ -34,10 +34,10 @@ and may change in future versions. (see manual section 13.5.3)
 |}];;
 
 type t =
-  | Warn of string  [@ocaml.warn_on_literal_pattern]
+  | Warn of string  [@travlang.warn_on_literal_pattern]
   | Without_warning of string
-  | Warn' of nativeint [@ocaml.warn_on_literal_pattern]
-  | Deep of (string * int) list [@ocaml.warn_on_literal_pattern];;
+  | Warn' of nativeint [@travlang.warn_on_literal_pattern]
+  | Deep of (string * int) list [@travlang.warn_on_literal_pattern];;
 [%%expect{|
 type t =
     Warn of string

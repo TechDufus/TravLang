@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #**************************************************************************
 #*                                                                        *
-#*                                 OCaml                                  *
+#*                                 travlang                                  *
 #*                                                                        *
 #*                David Allsopp, MetaStack Solutions Ltd.                 *
 #*                                                                        *
@@ -41,12 +41,12 @@ fi
 
 # Git's built-in mechanism for whitespace is neater than ours, so do it first.
 # The strange construction below creates a list of files which have either
-# white-at-eol or white-at-eof included in ocaml-typo in .gitattributes and by
+# white-at-eol or white-at-eof included in travlang-typo in .gitattributes and by
 # prefixing the names with :! causes git diff-index to skip over them.
 if [[ -n $(git diff-index --cached --name-only $against) ]] ; then
   FILES=$(git diff-index --cached --name-only $against \
-          | xargs git check-attr --cached ocaml-typo \
-          | sed -ne 's/\(.*\): ocaml-typo:.*[ ,]white-at-eo[fl]\(,\|$\)/:!\1/p')
+          | xargs git check-attr --cached travlang-typo \
+          | sed -ne 's/\(.*\): travlang-typo:.*[ ,]white-at-eo[fl]\(,\|$\)/:!\1/p')
   if ! git diff-index --check --cached $against -- $FILES ; then
     exit 1
   fi
@@ -74,9 +74,9 @@ not_pruned () {
 
 # Now run check-typo over all the files in the index
 STATUS=0
-export OCAML_CT_PREFIX=:
-export OCAML_CT_CAT="git cat-file --textconv"
-export OCAML_CT_CA_FLAG=--cached
+export travlang_CT_PREFIX=:
+export travlang_CT_CAT="git cat-file --textconv"
+export travlang_CT_CA_FLAG=--cached
 while IFS= read -r path
 do
   if not_pruned "$path" && ! tools/check-typo "./$path" ; then

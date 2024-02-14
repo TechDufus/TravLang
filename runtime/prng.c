@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*          Xavier Leroy, projet Cambium, College de France and Inria     */
 /*                                                                        */
@@ -31,7 +31,7 @@ struct LXM_state {
   uint64_t x[2];         /* state of the XBG subgenerator (not 0) */
 };
 
-/* In OCaml, states are represented as a 1D big array of 64-bit integers */
+/* In travlang, states are represented as a 1D big array of 64-bit integers */
 
 #define LXM_val(v) ((struct LXM_state *) Caml_ba_data_val(v))
 

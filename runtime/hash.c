@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           */
 /*                                                                        */
@@ -140,7 +140,7 @@ CAMLexport uint32_t caml_hash_mix_float(uint32_t hash, float d)
   return hash;
 }
 
-/* Mix an OCaml string */
+/* Mix an travlang string */
 
 CAMLexport uint32_t caml_hash_mix_string(uint32_t h, value s)
 {
@@ -293,7 +293,7 @@ CAMLprim value caml_hash(value count, value limit, value seed, value obj)
   /* Final mixing of bits */
   FINAL_MIX(h);
   /* Fold result to the range [0, 2^30-1] so that it is a nonnegative
-     OCaml integer both on 32 and 64-bit platforms. */
+     travlang integer both on 32 and 64-bit platforms. */
   return Val_int(h & 0x3FFFFFFFU);
 }
 

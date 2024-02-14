@@ -1,10 +1,10 @@
-OCAML DOCUMENTATION
+travlang DOCUMENTATION
 ===================
 
 Prerequisites
 -------------
 
-- Any prerequisites required to build the OCaml compiler from sources.
+- Any prerequisites required to build the travlang compiler from sources.
 
 - A LaTeX installation.
 
@@ -18,7 +18,7 @@ package manager may not do this for you. Run `kpsewhich hevea.sty` to check.
 Building the manual
 --------
 
-0. Build the OCaml compiler (including the native one) from sources.
+0. Build the travlang compiler (including the native one) from sources.
 
 You don't need to install the compiler since the manual is built using
 the one from the source tree.
@@ -49,50 +49,50 @@ formats using either LaTeX or hevea.
 Each part of the manual corresponds to a specific directory, and each distinct
 chapters (or sometimes sections) are mapped to a distinct `.etex` file:
 
-- Part I, Introduction to OCaml: `tutorials`
+- Part I, Introduction to travlang: `tutorials`
   - The core language: `coreexamples.etex`
   - The module system: `moduleexamples.etex`
-  - Objects in OCaml: `objectexamples.etex`
+  - Objects in travlang: `objectexamples.etex`
   - Labels and variants: `lablexamples.etex`
   - Advanced examples with classes and modules: `advexamples.etex`
 
-- Part II, The OCaml language: `refman`
+- Part II, The travlang language: `refman`
   This part is divided in two very distinct chapters; the
-  `OCaml language` chapter and the `Language extensions` chapter.
+  `travlang language` chapter and the `Language extensions` chapter.
 
-  - The OCaml language: `refman.etex`
-    This chapter consists in a technical description of the OCaml language.
+  - The travlang language: `refman.etex`
+    This chapter consists in a technical description of the travlang language.
     Each section of this chapter is mapped to a separate LaTeX file:
      - `lex.etex`, `values.etex`, `names.etex`, `types.etex`, `const.etex`,
      `patterns.etex`, `expr.etex`, `typedecl.etex`, `classes.etex`,
      `modtypes.etex`, `compunit.etex`
 
   - Language extensions: `exten.etex`
-  This chapter contains a description of all recent features of the OCaml
+  This chapter contains a description of all recent features of the travlang
   language.
 
-- Part III, The OCaml tools: 'cmds'
-    - Batch compilation (ocamlc): `comp.etex`
-    - The toplevel system (ocaml): `top.etex`
-    - The runtime system (ocamlrun): `runtime.etex`
-    - Native-code compilation (ocamlopt): `native.etex`
-    - Lexer and parser generators (ocamllex, ocamlyacc): `lexyacc.etex`
-    - Dependency generator (ocamldep): `ocamldep.etex`
-    - The documentation generator (ocamldoc): `ocamldoc.etex`
-    - The debugger (ocamldebug): `debugger.etex`
-    - Profiling (ocamlprof): `profil.etex`
-    - Interfacing C with OCaml: `intf-c.etex`
+- Part III, The travlang tools: 'cmds'
+    - Batch compilation (travlangc): `comp.etex`
+    - The toplevel system (travlang): `top.etex`
+    - The runtime system (travlangrun): `runtime.etex`
+    - Native-code compilation (travlangopt): `native.etex`
+    - Lexer and parser generators (travlanglex, travlangyacc): `lexyacc.etex`
+    - Dependency generator (travlangdep): `travlangdep.etex`
+    - The documentation generator (travlangdoc): `travlangdoc.etex`
+    - The debugger (travlangdebug): `debugger.etex`
+    - Profiling (travlangprof): `profil.etex`
+    - Interfacing C with travlang: `intf-c.etex`
     - Optimisation with Flambda: `flambda.etex`
     - Fuzzing with afl-fuzz: `afl-fuzz.etex`
     - Runtime tracing with Runtime_events: `runtime_tracing.etex`
 
-Note that ocamlc,ocamlopt and the toplevel options overlap a lot.
+Note that travlangc,travlangopt and the toplevel options overlap a lot.
 Consequently, these options are described together in the file
 `unified-options.etex` and then included from `comp.etex`, `native.etex`,
 and `top.etex`. If you need to update this list of options, the top comment
 of `unified-options.etex` contains the relevant information.
 
-- Part IV, The OCaml library: 'library'
+- Part IV, The travlang library: 'library'
  This parts contains an brief presentation of all libraries bundled with the
  compilers and the api documentation generated for these libraries.
     - The core library: `core.etex`
@@ -128,11 +128,11 @@ A similar macro, `\lparagraph`, is provided for paragraphs.
 
 ### Caml environments
 
-The tool `tools/ocamltex` is used to generate the LaTeX code for the examples
+The tool `tools/travlangtex` is used to generate the LaTeX code for the examples
 in the introduction and language extension parts of the manual. It implements
 two pseudo-environments: `caml_example` and `caml_eval`.
 
-The pseudo-environment `caml_example` evaluates its contents using an ocaml
+The pseudo-environment `caml_example` evaluates its contents using an travlang
 interpreter and then translates both the input code and the interpreter output
 to LaTeX code, e.g.
 ```latex
@@ -153,7 +153,7 @@ The `toplevel` mode mimics the appearance and behavior of the toplevel. In
 particular, toplevel examples must end with a double semi-colon `;;`, otherwise
 an error would be raised. The `verbatim` does not require a final `;;` and is
 intended to be a lighter mode for code examples. If you want to declare a
-signature instead of ocaml code, you must use the `{signature}` argument to the
+signature instead of travlang code, you must use the `{signature}` argument to the
 `caml_example` environment.
 
 ```latex
@@ -162,10 +162,10 @@ val none : 'a option
 \end{caml_example*}
 ```
 
-By default, `ocamltex` raises an error and stops if the output of one the
+By default, `travlangtex` raises an error and stops if the output of one the
 `caml_example` environment contains an unexpected error or warning. If such an
 error or warning is, in fact, expected, it is necessary to indicate the expected
-output status to `ocamltex` by adding either an option to the `caml_example`
+output status to `travlangtex` by adding either an option to the `caml_example`
 environment:
 ```latex
 \begin{caml_example}{toplevel}[error]
@@ -209,7 +209,7 @@ module M = struct
 
 Another possibility to avoid displaying distracting code is to use the
 `caml_eval` environment. This environment is a companion environment to
-`caml_example` and can be used to evaluate OCaml expressions in the toplevel
+`caml_example` and can be used to evaluate travlang expressions in the toplevel
 without printing anything:
 ```latex
 \begin{caml_eval}

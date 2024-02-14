@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -13,7 +13,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(** The OCaml Standard library.
+(** The travlang Standard library.
 
     This module is automatically opened at the beginning of each
     compilation. All components of this module can therefore be
@@ -46,19 +46,19 @@ exception Exit
     provided for use in your programs. *)
 
 exception Match_failure of (string * int * int)
-  [@ocaml.warn_on_literal_pattern]
+  [@travlang.warn_on_literal_pattern]
 (** Exception raised when none of the cases of a pattern-matching
    apply. The arguments are the location of the match keyword in the
    source code (file name, line number, column number). *)
 
 exception Assert_failure of (string * int * int)
-  [@ocaml.warn_on_literal_pattern]
+  [@travlang.warn_on_literal_pattern]
 (** Exception raised when an assertion fails. The arguments are the
    location of the assert keyword in the source code (file name, line
    number, column number). *)
 
 exception Invalid_argument of string
-  [@ocaml.warn_on_literal_pattern]
+  [@travlang.warn_on_literal_pattern]
 (** Exception raised by library functions to signal that the given
    arguments do not make sense. The string gives some information to
    the programmer. As a general rule, this exception should not be
@@ -66,7 +66,7 @@ exception Invalid_argument of string
    modified not to trigger it. *)
 
 exception Failure of string
-  [@ocaml.warn_on_literal_pattern]
+  [@travlang.warn_on_literal_pattern]
 (** Exception raised by library functions to signal that they are
    undefined on the given arguments. The string is meant to give some
    information to the programmer; you must not pattern match on the
@@ -91,7 +91,7 @@ exception Stack_overflow
    compiler. *)
 
 exception Sys_error of string
-  [@ocaml.warn_on_literal_pattern]
+  [@travlang.warn_on_literal_pattern]
 (** Exception raised by the input/output functions to report an
    operating system error. The string is meant to give some
    information to the programmer; you must not pattern match on the
@@ -111,7 +111,7 @@ exception Sys_blocked_io
    non-blocking I/O channel. *)
 
 exception Undefined_recursive_module of (string * int * int)
-  [@ocaml.warn_on_literal_pattern]
+  [@travlang.warn_on_literal_pattern]
 (** Exception raised when an ill-founded recursive module definition
    is evaluated. The arguments are the location of the definition in
    the source code (file name, line number, column number). *)
@@ -125,26 +125,26 @@ external ( = ) : 'a -> 'a -> bool = "%equal"
    even if the two mutable objects are not the same physical object.
    Equality between functional values raises [Invalid_argument].
    Equality between cyclic data structures may not terminate.
-   Left-associative operator, see {!Ocaml_operators} for more information. *)
+   Left-associative operator, see {!travlang_operators} for more information. *)
 
 external ( <> ) : 'a -> 'a -> bool = "%notequal"
 (** Negation of {!Stdlib.( = )}.
-    Left-associative operator, see {!Ocaml_operators} for more information.
+    Left-associative operator, see {!travlang_operators} for more information.
 *)
 
 external ( < ) : 'a -> 'a -> bool = "%lessthan"
 (** See {!Stdlib.( >= )}.
-    Left-associative operator, see {!Ocaml_operators} for more information.
+    Left-associative operator, see {!travlang_operators} for more information.
 *)
 
 external ( > ) : 'a -> 'a -> bool = "%greaterthan"
 (** See {!Stdlib.( >= )}.
-    Left-associative operator,  see {!Ocaml_operators} for more information.
+    Left-associative operator,  see {!travlang_operators} for more information.
 *)
 
 external ( <= ) : 'a -> 'a -> bool = "%lessequal"
 (** See {!Stdlib.( >= )}.
-    Left-associative operator,  see {!Ocaml_operators} for more information.
+    Left-associative operator,  see {!travlang_operators} for more information.
 *)
 
 external ( >= ) : 'a -> 'a -> bool = "%greaterequal"
@@ -156,7 +156,7 @@ external ( >= ) : 'a -> 'a -> bool = "%greaterequal"
    of [( = )], mutable structures are compared by contents.
    Comparison between functional values raises [Invalid_argument].
    Comparison between cyclic structures may not terminate.
-   Left-associative operator, see {!Ocaml_operators} for more information.
+   Left-associative operator, see {!travlang_operators} for more information.
 *)
 
 external compare : 'a -> 'a -> int = "%compare"
@@ -197,12 +197,12 @@ external ( == ) : 'a -> 'a -> bool = "%eq"
    On non-mutable types, the behavior of [( == )] is
    implementation-dependent; however, it is guaranteed that
    [e1 == e2] implies [compare e1 e2 = 0].
-   Left-associative operator,  see {!Ocaml_operators} for more information.
+   Left-associative operator,  see {!travlang_operators} for more information.
 *)
 
 external ( != ) : 'a -> 'a -> bool = "%noteq"
 (** Negation of {!Stdlib.( == )}.
-    Left-associative operator,  see {!Ocaml_operators} for more information.
+    Left-associative operator,  see {!travlang_operators} for more information.
 *)
 
 
@@ -215,14 +215,14 @@ external ( && ) : bool -> bool -> bool = "%sequand"
 (** The boolean 'and'. Evaluation is sequential, left-to-right:
    in [e1 && e2], [e1] is evaluated first, and if it returns [false],
    [e2] is not evaluated at all.
-   Right-associative operator,  see {!Ocaml_operators} for more information.
+   Right-associative operator,  see {!travlang_operators} for more information.
 *)
 
 external ( || ) : bool -> bool -> bool = "%sequor"
 (** The boolean 'or'. Evaluation is sequential, left-to-right:
    in [e1 || e2], [e1] is evaluated first, and if it returns [true],
    [e2] is not evaluated at all.
-   Right-associative operator,  see {!Ocaml_operators} for more information.
+   Right-associative operator,  see {!travlang_operators} for more information.
 *)
 
 (** {1 Debugging} *)
@@ -230,7 +230,7 @@ external ( || ) : bool -> bool -> bool = "%sequor"
 external __LOC__ : string = "%loc_LOC"
 (** [__LOC__] returns the location at which this expression appears in
     the file currently being parsed by the compiler, with the standard
-    error format of OCaml: "File %S, line %d, characters %d-%d".
+    error format of travlang: "File %S, line %d, characters %d-%d".
     @since 4.02
 *)
 
@@ -270,7 +270,7 @@ external __FUNCTION__ : string = "%loc_FUNCTION"
 external __LOC_OF__ : 'a -> string * 'a = "%loc_LOC"
 (** [__LOC_OF__ expr] returns a pair [(loc, expr)] where [loc] is the
     location of [expr] in the file currently being parsed by the
-    compiler, with the standard error format of OCaml: "File %S, line
+    compiler, with the standard error format of travlang: "File %S, line
     %d, characters %d-%d".
     @since 4.02
 *)
@@ -297,14 +297,14 @@ external __POS_OF__ : 'a -> (string * int * int * int) * 'a = "%loc_POS"
 external ( |> ) : 'a -> ('a -> 'b) -> 'b = "%revapply"
 (** Reverse-application operator: [x |> f |> g] is exactly equivalent
  to [g (f (x))].
- Left-associative operator, see {!Ocaml_operators} for more information.
+ Left-associative operator, see {!travlang_operators} for more information.
  @since 4.01
 *)
 
 external ( @@ ) : ('a -> 'b) -> 'a -> 'b = "%apply"
 (** Application operator: [g @@ f @@ x] is exactly equivalent to
  [g (f (x))].
- Right-associative operator, see {!Ocaml_operators} for more information.
+ Right-associative operator, see {!travlang_operators} for more information.
  @since 4.01
 *)
 
@@ -316,13 +316,13 @@ external ( @@ ) : ('a -> 'b) -> 'a -> 'b = "%apply"
 
 external ( ~- ) : int -> int = "%negint"
 (** Unary negation. You can also write [- e] instead of [~- e].
-    Unary operator, see {!Ocaml_operators} for more information.
+    Unary operator, see {!travlang_operators} for more information.
 *)
 
 
 external ( ~+ ) : int -> int = "%identity"
 (** Unary addition. You can also write [+ e] instead of [~+ e].
-    Unary operator, see {!Ocaml_operators} for more information.
+    Unary operator, see {!travlang_operators} for more information.
     @since 3.12
 *)
 
@@ -334,17 +334,17 @@ external pred : int -> int = "%predint"
 
 external ( + ) : int -> int -> int = "%addint"
 (** Integer addition.
-    Left-associative operator, see {!Ocaml_operators} for more information.
+    Left-associative operator, see {!travlang_operators} for more information.
 *)
 
 external ( - ) : int -> int -> int = "%subint"
 (** Integer subtraction.
-    Left-associative operator, , see {!Ocaml_operators} for more information.
+    Left-associative operator, , see {!travlang_operators} for more information.
 *)
 
 external ( * ) : int -> int -> int = "%mulint"
 (** Integer multiplication.
-    Left-associative operator, see {!Ocaml_operators} for more information.
+    Left-associative operator, see {!travlang_operators} for more information.
 *)
 
 external ( / ) : int -> int -> int = "%divint"
@@ -353,7 +353,7 @@ external ( / ) : int -> int -> int = "%divint"
    More precisely, if [x >= 0] and [y > 0], [x / y] is the greatest integer
    less than or equal to the real quotient of [x] by [y].  Moreover,
    [(- x) / y = x / (- y) = - (x / y)].
-   Left-associative operator, see {!Ocaml_operators} for more information.
+   Left-associative operator, see {!travlang_operators} for more information.
 
    @raise Division_by_zero if the second argument is 0.
 *)
@@ -365,7 +365,7 @@ external ( mod ) : int -> int -> int = "%modint"
    [abs(x mod y) <= abs(y) - 1].
    If [y = 0], [x mod y] raises [Division_by_zero].
    Note that [x mod y] is negative only if [x < 0].
-   Left-associative operator, see {!Ocaml_operators} for more information.
+   Left-associative operator, see {!travlang_operators} for more information.
 
    @raise Division_by_zero if [y] is zero.
 *)
@@ -385,17 +385,17 @@ val min_int : int
 
 external ( land ) : int -> int -> int = "%andint"
 (** Bitwise logical and.
-    Left-associative operator, see {!Ocaml_operators} for more information.
+    Left-associative operator, see {!travlang_operators} for more information.
 *)
 
 external ( lor ) : int -> int -> int = "%orint"
 (** Bitwise logical or.
-    Left-associative operator, see {!Ocaml_operators} for more information.
+    Left-associative operator, see {!travlang_operators} for more information.
 *)
 
 external ( lxor ) : int -> int -> int = "%xorint"
 (** Bitwise logical exclusive or.
-    Left-associative operator, see {!Ocaml_operators} for more information.
+    Left-associative operator, see {!travlang_operators} for more information.
 *)
 
 val lnot : int -> int
@@ -404,7 +404,7 @@ val lnot : int -> int
 external ( lsl ) : int -> int -> int = "%lslint"
 (** [n lsl m] shifts [n] to the left by [m] bits.
     The result is unspecified if [m < 0] or [m > Sys.int_size].
-    Right-associative operator, see {!Ocaml_operators} for more information.
+    Right-associative operator, see {!travlang_operators} for more information.
 *)
 
 external ( lsr ) : int -> int -> int = "%lsrint"
@@ -412,19 +412,19 @@ external ( lsr ) : int -> int -> int = "%lsrint"
     This is a logical shift: zeroes are inserted regardless of
     the sign of [n].
     The result is unspecified if [m < 0] or [m > Sys.int_size].
-    Right-associative operator, see {!Ocaml_operators} for more information.
+    Right-associative operator, see {!travlang_operators} for more information.
 *)
 
 external ( asr ) : int -> int -> int = "%asrint"
 (** [n asr m] shifts [n] to the right by [m] bits.
     This is an arithmetic shift: the sign bit of [n] is replicated.
     The result is unspecified if [m < 0] or [m > Sys.int_size].
-    Right-associative operator, see {!Ocaml_operators} for more information.
+    Right-associative operator, see {!travlang_operators} for more information.
 *)
 
 (** {1 Floating-point arithmetic}
 
-   OCaml's floating-point numbers follow the
+   travlang's floating-point numbers follow the
    IEEE 754 standard, using double precision (64 bits) numbers.
    Floating-point operations never raise an exception on overflow,
    underflow, division by zero, etc.  Instead, special IEEE numbers
@@ -438,39 +438,39 @@ external ( asr ) : int -> int -> int = "%asrint"
 
 external ( ~-. ) : float -> float = "%negfloat"
 (** Unary negation. You can also write [-. e] instead of [~-. e].
-    Unary operator, see {!Ocaml_operators} for more information.
+    Unary operator, see {!travlang_operators} for more information.
 *)
 
 external ( ~+. ) : float -> float = "%identity"
 (** Unary addition. You can also write [+. e] instead of [~+. e].
-    Unary operator, see {!Ocaml_operators} for more information.
+    Unary operator, see {!travlang_operators} for more information.
     @since 3.12
 *)
 
 external ( +. ) : float -> float -> float = "%addfloat"
 (** Floating-point addition.
-    Left-associative operator, see {!Ocaml_operators} for more information.
+    Left-associative operator, see {!travlang_operators} for more information.
 *)
 
 external ( -. ) : float -> float -> float = "%subfloat"
 (** Floating-point subtraction.
-    Left-associative operator, see {!Ocaml_operators} for more information.
+    Left-associative operator, see {!travlang_operators} for more information.
 *)
 
 external ( *. ) : float -> float -> float = "%mulfloat"
 (** Floating-point multiplication.
-    Left-associative operator, see {!Ocaml_operators} for more information.
+    Left-associative operator, see {!travlang_operators} for more information.
 *)
 
 external ( /. ) : float -> float -> float = "%divfloat"
 (** Floating-point division.
-    Left-associative operator, see {!Ocaml_operators} for more information.
+    Left-associative operator, see {!travlang_operators} for more information.
 *)
 
 external ( ** ) : float -> float -> float = "caml_power_float" "pow"
   [@@unboxed] [@@noalloc]
 (** Exponentiation.
-    Right-associative operator, see {!Ocaml_operators} for more information.
+    Right-associative operator, see {!travlang_operators} for more information.
 *)
 
 external sqrt : float -> float = "caml_sqrt_float" "sqrt"
@@ -689,7 +689,7 @@ external classify_float : (float [@unboxed]) -> fpclass =
 
 val ( ^ ) : string -> string -> string
 (** String concatenation.
-    Right-associative operator, see {!Ocaml_operators} for more information.
+    Right-associative operator, see {!travlang_operators} for more information.
 
     @raise Invalid_argument if the result is longer then
     than {!Sys.max_string_length} bytes.
@@ -816,7 +816,7 @@ external snd : 'a * 'b -> 'b = "%field1"
 
 val ( @ ) : 'a list -> 'a list -> 'a list
 (** [l0 @ l1] appends [l1] to [l0]. Same function as {!List.append}.
-  Right-associative operator, see {!Ocaml_operators} for more information.
+  Right-associative operator, see {!travlang_operators} for more information.
   @since 5.1 this function is tail-recursive.
 *)
 
@@ -1016,7 +1016,7 @@ val output_binary_int : out_channel -> int -> unit
    The given integer is taken modulo 2{^32}.
    The only reliable way to read it back is through the
    {!Stdlib.input_binary_int} function. The format is compatible across
-   all machines for a given version of OCaml. *)
+   all machines for a given version of travlang. *)
 
 val output_value : out_channel -> 'a -> unit
 (** Write the representation of a structured value of any type
@@ -1222,13 +1222,13 @@ external ref : 'a -> 'a ref = "%makemutable"
 external ( ! ) : 'a ref -> 'a = "%field0"
 (** [!r] returns the current contents of reference [r].
    Equivalent to [fun r -> r.contents].
-   Unary operator, see {!Ocaml_operators} for more information.
+   Unary operator, see {!travlang_operators} for more information.
 *)
 
 external ( := ) : 'a ref -> 'a -> unit = "%setfield0"
 (** [r := a] stores the value of [a] in reference [r].
    Equivalent to [fun r v -> r.contents <- v].
-   Right-associative operator, see {!Ocaml_operators} for more information.
+   Right-associative operator, see {!travlang_operators} for more information.
 *)
 
 external incr : int ref -> unit = "%incr"
@@ -1277,7 +1277,7 @@ type ('a,'b) result = Ok of 'a | Error of 'b
     [('a, 'b, 'c, 'd, 'e, 'f) format6].
     The two simplified types, [format] and [format4] below are
     included for backward compatibility with earlier releases of
-    OCaml.
+    travlang.
 
     The meaning of format string type parameters is as follows:
 
@@ -1343,7 +1343,7 @@ val ( ^^ ) :
   [f2]: in case of formatted output, it accepts arguments from [f1], then
   arguments from [f2]; in case of formatted input, it returns results from
   [f1], then results from [f2].
-  Right-associative operator, see {!Ocaml_operators} for more information.
+  Right-associative operator, see {!travlang_operators} for more information.
 *)
 
 (** {1 Program termination} *)

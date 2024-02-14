@@ -1159,14 +1159,14 @@ Ptop_def
       Pstr_value Nonrec
       [
         <def>
-            attribute "ocaml.doc"
+            attribute "travlang.doc"
               [
                 structure_item (//toplevel//[4,19+0]..[4,19+36])
                   Pstr_eval
                   expression (//toplevel//[4,19+0]..[4,19+36])
                     Pexp_constant PConst_string(" Some docstring attached to x. ",(//toplevel//[4,19+0]..[4,19+36]),None)
               ]
-            attribute "ocaml.doc"
+            attribute "travlang.doc"
               [
                 structure_item (//toplevel//[7,69+0]..[7,69+39])
                   Pstr_eval

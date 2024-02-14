@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -81,7 +81,7 @@ external command : string -> int = "caml_sys_system_command"
   command followed by zero, one or several arguments, separated
   by whitespace.  The given argument is interpreted by a
   shell: either the Windows shell [cmd.exe] for the Win32 ports of
-  OCaml, or the POSIX shell [sh] for other ports.  It can contain
+  travlang, or the POSIX shell [sh] for other ports.  It can contain
   shell builtin commands such as [echo], and also special characters
   such as file redirections [>] and [<], which will be honored by the
   shell.
@@ -132,13 +132,13 @@ val interactive : bool ref
 ]
  (** This reference is initially set to [false] in standalone
    programs and to [true] if the code is being executed under
-   the interactive toplevel system [ocaml]. *)
+   the interactive toplevel system [travlang]. *)
 
 val os_type : string
-(** Operating system currently executing the OCaml program. One of
+(** Operating system currently executing the travlang program. One of
 -  ["Unix"] (for all Unix versions, including Linux and Mac OS X),
--  ["Win32"] (for MS-Windows, OCaml compiled with MSVC++ or MinGW-w64),
--  ["Cygwin"] (for MS-Windows, OCaml compiled with Cygwin). *)
+-  ["Win32"] (for MS-Windows, travlang compiled with MSVC++ or MinGW-w64),
+-  ["Cygwin"] (for MS-Windows, travlang compiled with Cygwin). *)
 
 type backend_type =
   | Native
@@ -152,7 +152,7 @@ type backend_type =
 *)
 
 val backend_type : backend_type
-(** Backend type  currently executing the OCaml program.
+(** Backend type  currently executing the travlang program.
     @since 4.04
  *)
 
@@ -169,11 +169,11 @@ val cygwin : bool
     @since 4.01 *)
 
 val word_size : int
-(** Size of one word on the machine currently executing the OCaml
+(** Size of one word on the machine currently executing the travlang
     program, in bits: 32 or 64. *)
 
 val int_size : int
-(** Size of [int], in bits. It is 31 (resp. 63) when using OCaml on a
+(** Size of [int], in bits. It is 31 (resp. 63) when using travlang on a
     32-bit (resp. 64-bit) platform. It may differ for other implementations,
     e.g. it can be 32 bits when compiling to JavaScript.
     @since 4.03 *)
@@ -188,13 +188,13 @@ val max_string_length : int
 val max_array_length : int
 (** Maximum length of a normal array (i.e. any array whose elements are
     not of type [float]). The maximum length of a [float array]
-    is [max_floatarray_length] if OCaml was configured with
+    is [max_floatarray_length] if travlang was configured with
     [--enable-flat-float-array] and [max_array_length] if configured
     with [--disable-flat-float-array]. *)
 
 val max_floatarray_length : int
 (** Maximum length of a floatarray. This is also the maximum length of
-    a [float array] when OCaml is configured with
+    a [float array] when travlang is configured with
     [--enable-flat-float-array]. *)
 
 external runtime_variant : unit -> string = "caml_runtime_variant"
@@ -205,7 +205,7 @@ external runtime_variant : unit -> string = "caml_runtime_variant"
 
 external runtime_parameters : unit -> string = "caml_runtime_parameters"
 (** Return the value of the runtime parameters, in the same format
-    as the contents of the [OCAMLRUNPARAM] environment variable.
+    as the contents of the [travlangRUNPARAM] environment variable.
     @since 4.03 *)
 
 
@@ -348,8 +348,8 @@ val catch_break : bool -> unit
    specific thread. *)
 
 
-val ocaml_version : string
-(** [ocaml_version] is the version of OCaml.
+val travlang_version : string
+(** [travlang_version] is the version of travlang.
     It is a string of the form
       ["major.minor[.patchlevel][(+|~)additional-info]"],
     where [major], [minor], and [patchlevel] are integers, and
@@ -369,7 +369,7 @@ type extra_prefix = Plus | Tilde
 type extra_info = extra_prefix * string
 (** @since 4.14 *)
 
-type ocaml_release_info = {
+type travlang_release_info = {
   major : int;
   minor : int;
   patchlevel : int;
@@ -377,8 +377,8 @@ type ocaml_release_info = {
 }
 (** @since 4.14 *)
 
-val ocaml_release : ocaml_release_info
-(** [ocaml_release] is the version of OCaml.
+val travlang_release : travlang_release_info
+(** [travlang_release] is the version of travlang.
     @since 4.14
 *)
 
@@ -386,7 +386,7 @@ val enable_runtime_warnings: bool -> unit
 [@@alert unsynchronized_access
     "The status of runtime warnings is a mutable global state."
 ]
-(** Control whether the OCaml runtime system can emit warnings
+(** Control whether the travlang runtime system can emit warnings
     on stderr.  Currently, the only supported warning is triggered
     when a channel created by [open_*] functions is finalized without
     being closed.  Runtime warnings are disabled by default.

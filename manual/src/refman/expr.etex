@@ -131,7 +131,7 @@ The table below shows the relative precedences and associativity of
 operators and non-closed constructions. The constructions with higher
 precedence come first. For infix and prefix symbols, we write
 ``"*"\ldots'' to mean ``any symbol starting with "*"''.
-% Note that this table is duplicated in stdlib/ocaml_operators.mld,
+% Note that this table is duplicated in stdlib/travlang_operators.mld,
 % these tables should be kept in sync with the one below.
 \ikwd{or\@\texttt{or}}%
 \ikwd{if\@\texttt{if}}%
@@ -298,7 +298,7 @@ parameters, the function type should be known at the application
 point.  This can be ensured by adding a type constraint.  Principality
 of the derivation can be checked in the "-principal" mode.
 
-As a special case, OCaml supports "labels-omitted" full applications:
+As a special case, travlang supports "labels-omitted" full applications:
 if the function has a known arity, all the arguments are unlabeled,
 and their number matches the number of non-optional parameters, then
 labels are ignored and non-optional parameters are matched in their
@@ -554,7 +554,7 @@ a certain class of recursive definitions of non-functional values,
 as explained in section~\ref{s:letrecvalues}.
 
 \subsubsection{sss:expr-let-exception}{Local exceptions}
-(Introduced in OCaml 4.04)
+(Introduced in travlang 4.04)
 
 It is possible to define local exceptions in expressions:
 @ "let" exception constr-decl "in" expr @ .
@@ -579,7 +579,7 @@ let () = assert(gen () = gen ());;
 \end{caml_example}
 
 \subsubsection{sss:expr-explicit-polytype}{Explicit polymorphic type annotations}
-(Introduced in OCaml 3.12)
+(Introduced in travlang 3.12)
 
 Polymorphic type annotations in @"let"@-definitions behave in a way
 similar to polymorphic methods:
@@ -964,7 +964,7 @@ the string denoted by @expr_1@, replacing character number @expr_2@ by
 the value of @expr_3@. The exception "Invalid_argument" is raised if
 the access is out of bounds. The value of the whole expression is @'()'@.
 {\bf Note:} this possibility is offered only for backward
-compatibility with older versions of OCaml and will be removed in a
+compatibility with older versions of travlang and will be removed in a
 future version. New code should use byte sequences and the "Bytes.set"
 function.
 
@@ -1300,7 +1300,7 @@ constrained arguments in type definitions.
 
 \ikwd{assert\@\texttt{assert}}
 
-OCaml supports the @"assert"@ construct to check debugging assertions.
+travlang supports the @"assert"@ construct to check debugging assertions.
 The expression @"assert" expr@ evaluates the expression @expr@ and
 returns @"()"@ if @expr@ evaluates to @"true"@.  If it evaluates to
 @"false"@ the exception

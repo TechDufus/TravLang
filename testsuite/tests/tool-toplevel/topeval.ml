@@ -50,7 +50,7 @@ let List.(_) : float = 42.0
 ;;
 
 (* issue #12257: external or module alias followed by regular value triggers
-   an exception in ocamlnat *)
+   an exception in travlangnat *)
 external foo : int -> int -> int = "%addint"
 module S = String
 let x = 42

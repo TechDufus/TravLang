@@ -1,6 +1,6 @@
 ;**************************************************************************
 ;*                                                                        *
-;*                                 OCaml                                  *
+;*                                 travlang                                  *
 ;*                                                                        *
 ;*                     Thomas Refis, Jane Street Europe                   *
 ;*                                                                        *
@@ -14,14 +14,14 @@
 
 ; mshinwell: Disabled for now -- otherlibs/dynlink/dune needs fixing first.
 
-;(ocamllex lexer)
-;(ocamlyacc parser)
+;(travlanglex lexer)
+;(travlangyacc parser)
 ;
 ;(executable
 ; (name main)
 ; (modes byte)
 ; (flags (:standard -w -9))
 ; (modules_without_implementation parser_aux)
-; (libraries ocamlcommon ocamltoplevel runtime stdlib unix))
+; (libraries travlangcommon travlangtoplevel runtime stdlib unix))
 ;
-;(rule (copy main.exe ocamldebug.byte))
+;(rule (copy main.exe travlangdebug.byte))

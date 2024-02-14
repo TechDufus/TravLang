@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*                    Sebastien Hinderer, INRIA Paris                     */
 /*                                                                        */
@@ -15,16 +15,16 @@
 
 /* Pipeline for the step-by-step-build job on Inria's CI */
 
-/* Build OCaml the legacy way (without using the world.opt target) */
+/* Build travlang the legacy way (without using the world.opt target) */
 
 pipeline {
-  agent { label 'ocaml-linux-64' }
+  agent { label 'travlang-linux-64' }
   options {
     timeout(time: 1, unit: 'HOURS')
   }
   stages {
     stage(
-      'Building the OCaml compiler step by step (without using world.opt)'
+      'Building the travlang compiler step by step (without using world.opt)'
     ) {
       steps {
         sh 'tools/ci/inria/step-by-step-build/script'
@@ -34,7 +34,7 @@ pipeline {
   post {
     regression {
       emailext (
-        to: 'ocaml-ci-notifications@inria.fr',
+        to: 'travlang-ci-notifications@inria.fr',
         subject: 'Job $JOB_NAME $BUILD_STATUS (build #$BUILD_NUMBER)',
         body: 'Changes since the last successful build:\n\n' +
           '${CHANGES, format="%r %a %m"}\n\n' +

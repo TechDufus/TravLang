@@ -1,6 +1,6 @@
 ;**************************************************************************
 ;*                                                                        *
-;*                                 OCaml                                  *
+;*                                 travlang                                  *
 ;*                                                                        *
 ;*                     Thomas Refis, Jane Street Europe                   *
 ;*                                                                        *
@@ -12,22 +12,22 @@
 ;*                                                                        *
 ;**************************************************************************
 
-(ocamllex
+(travlanglex
  (modules tsl_lexer)
  (mode fallback))
 
-(ocamlyacc
+(travlangyacc
  (modules tsl_parser)
  (mode fallback))
 
 ;; FIXME: handle UNIX_OR_WIN32 or something similar
 (library
- (name ocamltest_core_and_plugin)
+ (name travlangtest_core_and_plugin)
  (modes byte)
  (wrapped false)
  (flags (:standard -nostdlib))
- (libraries ocamlcommon stdlib unix)
- (modules (:standard \ options main ocamltest_unix_dummy ocamltest_unix_real))
+ (libraries travlangcommon stdlib unix)
+ (modules (:standard \ options main travlangtest_unix_dummy travlangtest_unix_real))
  (c_flags (-DCAML_INTERNALS -I%{project_root}/runtime)) ; fixme
  (c_names run_unix run_stubs))
 
@@ -41,6 +41,6 @@
  (modes byte)
  (flags (:standard -nostdlib))
  (modules options main)
- (libraries ocamltest_core_and_plugin runtime stdlib))
+ (libraries travlangtest_core_and_plugin runtime stdlib))
 
-(rule (copy main.exe ocamltest.byte))
+(rule (copy main.exe travlangtest.byte))

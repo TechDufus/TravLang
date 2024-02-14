@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*           Xavier Leroy, Collège de France and Inria Paris              */
 /*                                                                        */
@@ -181,7 +181,7 @@ caml_BLAKE2Final(struct BLAKE2_context * s,
   }
 }
 
-/* OCaml wrappers */
+/* travlang wrappers */
 
 #define BLAKE2_context_val(v) (*((struct BLAKE2_context **) Data_custom_val(v)))
 

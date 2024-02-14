@@ -1,7 +1,7 @@
 (* TEST *)
 
-(* Exotic OCaml syntax constructs found in the manual that are not *)
-(* used in the source of the OCaml distribution (even in the tests). *)
+(* Exotic travlang syntax constructs found in the manual that are not *)
+(* used in the source of the travlang distribution (even in the tests). *)
 
 (* Spaces between the parts of the ?label: token in a typexpr.
    (used in bin-prot) *)
@@ -122,7 +122,7 @@ module M2 = struct ;; end;;
 (* Most exotic: not found in the manual (up to 4.00) and not used
    deliberately by anyone, but still implemented by the compiler. *)
 
-(* whitespace inside val!, method!, inherit! [found in ocamlspot] *)
+(* whitespace inside val!, method!, inherit! [found in travlangspot] *)
 object
   val x = 1
   val ! x = 2

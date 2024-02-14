@@ -69,20 +69,20 @@ let set_opaque =
  flags = "-w +A-70";
  compile_only = "true";
  {
-   setup-ocamlc.byte-build-env;
-   ocamlc.byte;
-   check-ocamlc.byte-output;
+   setup-travlangc.byte-build-env;
+   travlangc.byte;
+   check-travlangc.byte-output;
  }{
    no-flambda;
-   setup-ocamlopt.byte-build-env;
-   ocamlopt.byte;
-   check-ocamlopt.byte-output;
+   setup-travlangopt.byte-build-env;
+   travlangopt.byte;
+   check-travlangopt.byte-output;
  }{
    compiler_reference = "${test_source_directory}/w59.flambda.reference";
    flags = "-w +A-70 -dflambda-invariants";
    flambda;
-   setup-ocamlopt.byte-build-env;
-   ocamlopt.byte;
-   check-ocamlopt.byte-output;
+   setup-travlangopt.byte-build-env;
+   travlangopt.byte;
+   check-travlangopt.byte-output;
  }
 *)

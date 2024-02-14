@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -13,7 +13,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* In this module, [@ocaml.warning "-3"] is used in several places
+(* In this module, [@travlang.warning "-3"] is used in several places
    that use deprecated functions to preserve legacy behavior.
    It overrides -w @3 given on the command line. *)
 

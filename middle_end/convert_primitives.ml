@@ -1,11 +1,11 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
-(*                       Pierre Chambart, OCamlPro                        *)
+(*                       Pierre Chambart, travlangPro                        *)
 (*           Mark Shinwell and Leo White, Jane Street Europe              *)
 (*                                                                        *)
-(*   Copyright 2017 OCamlPro SAS                                          *)
+(*   Copyright 2017 travlangPro SAS                                          *)
 (*   Copyright 2017 Jane Street Group LLC                                 *)
 (*                                                                        *)
 (*   All rights reserved.  This file is distributed under the terms of    *)
@@ -14,7 +14,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-[@@@ocaml.warning "+a-4-9-30-40-41-42"]
+[@@@travlang.warning "+a-4-9-30-40-41-42"]
 
 let convert_unsafety is_unsafe : Clambda_primitives.is_safe =
   if is_unsafe then

@@ -4,91 +4,91 @@
 \usepackage{textcomp}
 \usepackage{fullpage} 
 \usepackage{url} 
-\usepackage{ocamldoc}
+\usepackage{travlangdoc}
 \begin{document}
 \tableofcontents
 \section{Module {\tt{Functions}}}
 \label{Functions}\index{Functions@\verb`Functions`}
-\begin{ocamldocdescription}
+\begin{travlangdocdescription}
 
-\end{ocamldocdescription}
-
-
-\ocamldocvspace{0.5cm}
+\end{travlangdocdescription}
 
 
+\travlangdocvspace{0.5cm}
 
-\label{Functions.f1}\begin{ocamldoccode}
+
+
+\label{Functions.f1}\begin{travlangdoccode}
 val f1 : int -> y:int -> int
-\end{ocamldoccode}
+\end{travlangdoccode}
 \index{f1@\verb`f1`}
 
 
 
 
-\label{Functions.f2}\begin{ocamldoccode}
+\label{Functions.f2}\begin{travlangdoccode}
 val f2 : string -> y:int -> int option -> int
-\end{ocamldoccode}
+\end{travlangdoccode}
 \index{f2@\verb`f2`}
-\begin{ocamldocdescription}
+\begin{travlangdocdescription}
 There's no way to refer to the third arg in documentation.
 
 
-\end{ocamldocdescription}
+\end{travlangdocdescription}
 
 
 
 
-\label{Functions.f3}\begin{ocamldoccode}
+\label{Functions.f3}\begin{travlangdoccode}
 val f3 : int -> int -> int -> int
-\end{ocamldoccode}
+\end{travlangdoccode}
 \index{f3@\verb`f3`}
-\begin{ocamldocdescription}
+\begin{travlangdocdescription}
 
-\end{ocamldocdescription}
-
-
+\end{travlangdocdescription}
 
 
-\label{Functions.f4}\begin{ocamldoccode}
+
+
+\label{Functions.f4}\begin{travlangdoccode}
 val f4 : ?x:int -> ?y:int -> ?z:int -> unit -> int
-\end{ocamldoccode}
+\end{travlangdoccode}
 \index{f4@\verb`f4`}
-\begin{ocamldocdescription}
+\begin{travlangdocdescription}
 This output is a bit weird: we should probably refer
  to the third argument as {\tt{z}}, its label, rather than
  {\tt{blah}}, its internally-bound pattern.
 
 
-\end{ocamldocdescription}
+\end{travlangdocdescription}
 
 
 
 
-\begin{ocamldoccode}
-{\tt{class m : }}\end{ocamldoccode}
+\begin{travlangdoccode}
+{\tt{class m : }}\end{travlangdoccode}
 \label{class:Functions.m}\index{m@\verb`m`}
 
-\begin{ocamldocobjectend}
+\begin{travlangdocobjectend}
 
 
-\label{method:Functions.m.no-underscoreargs}\begin{ocamldoccode}
+\label{method:Functions.m.no-underscoreargs}\begin{travlangdoccode}
 method no_args : unit
-\end{ocamldoccode}
+\end{travlangdoccode}
 \index{no-underscoreargs@\verb`no_args`}
-\begin{ocamldocdescription}
+\begin{travlangdocdescription}
 
-\end{ocamldocdescription}
+\end{travlangdocdescription}
 
 
-\label{method:Functions.m.a-underscorefew-underscoreargs}\begin{ocamldoccode}
+\label{method:Functions.m.a-underscorefew-underscoreargs}\begin{travlangdoccode}
 method a_few_args : int -> int -> int -> int
-\end{ocamldoccode}
+\end{travlangdoccode}
 \index{a-underscorefew-underscoreargs@\verb`a_few_args`}
-\begin{ocamldocdescription}
+\begin{travlangdocdescription}
 
-\end{ocamldocdescription}
-\end{ocamldocobjectend}
+\end{travlangdocdescription}
+\end{travlangdocobjectend}
 
 
 

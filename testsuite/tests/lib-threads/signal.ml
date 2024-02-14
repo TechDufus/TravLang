@@ -5,26 +5,26 @@
  libunix; (* excludes mingw32/64 and msvc32/64 *)
  {
    program = "${test_build_directory}/signal.byte";
-   setup-ocamlc.byte-build-env;
+   setup-travlangc.byte-build-env;
    program = "sigint";
    all_modules = "sigint.c";
-   ocamlc.byte;
+   travlangc.byte;
    program = "${test_build_directory}/signal.byte";
    all_modules = "signal.ml";
-   ocamlc.byte;
-   check-ocamlc.byte-output;
+   travlangc.byte;
+   check-travlangc.byte-output;
    run;
    check-program-output;
  }{
    program = "${test_build_directory}/signal.opt";
-   setup-ocamlopt.byte-build-env;
+   setup-travlangopt.byte-build-env;
    program = "sigint";
    all_modules = "sigint.c";
-   ocamlopt.byte;
+   travlangopt.byte;
    program = "${test_build_directory}/signal.opt";
    all_modules = "signal.ml";
-   ocamlopt.byte;
-   check-ocamlopt.byte-output;
+   travlangopt.byte;
+   check-travlangopt.byte-output;
    run;
    check-program-output;
  }

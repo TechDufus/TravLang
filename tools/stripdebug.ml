@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Gallium, INRIA Paris                  *)
 (*                                                                        *)
@@ -61,9 +61,9 @@ let stripdebug infile outfile =
 
 let options = [
   "-remove-header", Arg.Set remove_header,
-     "remove the header that calls ocamlrun automatically";
+     "remove the header that calls travlangrun automatically";
   "-keep-header", Arg.Clear remove_header,
-     "preserve the header that calls ocamlrun automatically (default)";
+     "preserve the header that calls travlangrun automatically (default)";
   "-remove-debug", Arg.Set remove_DBUG,
      "remove all debugging information (default)";
   "-keep-debug", Arg.Clear remove_DBUG,

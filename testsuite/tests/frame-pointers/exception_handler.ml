@@ -5,7 +5,7 @@
  native;
 *)
 
-(* https://github.com/ocaml/ocaml/pull/11031 *)
+(* https://github.com/travlang/travlang/pull/11031 *)
 external fp_backtrace : string -> unit = "fp_backtrace" [@@noalloc]
 
 exception Exn1

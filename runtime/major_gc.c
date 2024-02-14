@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*              Damien Doligez, projet Para, INRIA Rocquencourt           */
 /*                                                                        */
@@ -1467,7 +1467,7 @@ static void stw_cycle_all_domains(caml_domain_state* domain, void* args,
   }
 
   /* If the heap is to be verified, do it before the domains continue
-     running OCaml code. */
+     running travlang code. */
   if (caml_params->verify_heap) {
     caml_verify_heap_from_stw(domain);
     caml_gc_log("Heap verified");

@@ -4,7 +4,7 @@
 
 
 (* Enable all alerts as errors, except foo (soft) and bar (disabled) *)
-[@@@ocaml.alert "@all--foo-bar"];;
+[@@@travlang.alert "@all--foo-bar"];;
 
 module X : sig
   val x: int [@@alert foo "Foo!"]
@@ -134,7 +134,7 @@ Line 5, characters 2-12:
 |}]
 
 (* Turn all alerts into soft mode *)
-[@@@ocaml.alert "--all"];;
+[@@@travlang.alert "--all"];;
 
 module Z3 : sig
   val x: int
@@ -204,7 +204,7 @@ module Z3 : sig val x : int val y : int val z : int val t : int end
 
 
 (* Disable all alerts *)
-[@@@ocaml.alert "-all"];;
+[@@@travlang.alert "-all"];;
 
 module Z4 : sig
   val x: int
@@ -218,7 +218,7 @@ module Z4 : sig val x : int val y : int val z : int val t : int end
 
 
 (* Multiple alert messages of the same kind *)
-[@@@ocaml.alert "+all--all"]
+[@@@travlang.alert "+all--all"]
 module X : sig
   val x: int [@@alert bla "X1"] [@@alert bla "X2"] [@@alert bla "X3"]
   val y: int [@@alert bla "X1"] [@@alert bla]  [@@alert bla "X3"]

@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -15,7 +15,7 @@
 
 (* Translation from closed lambda to C-- *)
 
-[@@@ocaml.warning "-40"]
+[@@@travlang.warning "-40"]
 
 open Misc
 open Asttypes
@@ -721,7 +721,7 @@ and transl_make_array dbg env kind args =
 and transl_ccall env prim args dbg =
   let transl_arg native_repr arg =
     match native_repr with
-    | Same_as_ocaml_repr ->
+    | Same_as_travlang_repr ->
         (XInt, transl env arg)
     | Unboxed_float ->
         (XFloat, transl_unbox_float dbg env arg)
@@ -750,7 +750,7 @@ and transl_ccall env prim args dbg =
   in
   let typ_res, wrap_result =
     match prim.prim_native_repr_res with
-    | Same_as_ocaml_repr -> (typ_val, fun x -> x)
+    | Same_as_travlang_repr -> (typ_val, fun x -> x)
     | Unboxed_float -> (typ_float, box_float dbg)
     | Unboxed_integer bi -> (typ_int, box_int dbg bi)
     | Untagged_immediate -> (typ_int, (fun i -> tag_int i dbg))

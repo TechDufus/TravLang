@@ -1,16 +1,16 @@
 (* TEST
  native-compiler;
- setup-ocamlopt.byte-build-env;
+ setup-travlangopt.byte-build-env;
  flags = "-save-ir-after scheduling";
- ocamlopt_byte_exit_status = "0";
- ocamlopt.byte;
+ travlangopt_byte_exit_status = "0";
+ travlangopt.byte;
  script = "touch empty.ml";
  script;
  flags = "-S check_for_pack.cmir-linear -for-pack foo";
  module = "empty.ml";
- ocamlopt_byte_exit_status = "2";
- ocamlopt.byte;
- check-ocamlopt.byte-output;
+ travlangopt_byte_exit_status = "2";
+ travlangopt.byte;
+ check-travlangopt.byte-output;
 *)
 
 let foo f x =

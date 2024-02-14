@@ -3,7 +3,7 @@
 /* If the above line does not say "SOURCE FILE", then do not edit. It */
 /* means this file is generated from [sass manual.scss] */
 
-/* CSS file for the Ocaml manual */
+/* CSS file for the travlang manual */
 
 /* San Vu Ngoc, 2019-2020 */
 
@@ -78,14 +78,14 @@ b{
 em,i{
     font-style:italic
 }
-.ocaml {
+.travlang {
     background:#f7f5f4;
 }
-.ocaml,pre{
+.travlang,pre{
     margin-top:.8em;
     margin-bottom:1.2em
 }
-.ocaml .pre{
+.travlang .pre{
     white-space:pre
 }
 p,ul{
@@ -184,7 +184,7 @@ h4{
 h2, h3, h4, h5 {
 	font-weight: 500;
 }
-.ocaml,.pre,code,pre,tt{
+.travlang,.pre,code,pre,tt{
     font-family: $font-mono;
     font-weight:400
 }
@@ -192,10 +192,10 @@ h2, h3, h4, h5 {
     overflow-x:auto;
     padding-left:1ex
 }
-.ocaml .pre{
+.travlang .pre{
     overflow-x:initial;
 }
-.caml-example .ocaml{
+.caml-example .travlang{
     overflow-x:auto;
 }
 li code,p code{
@@ -209,9 +209,9 @@ li code,p code{
 }
 p a>code{
     color:#92370a}
-.pre code.ocaml,.pre.code.ocaml,pre code.ocaml{
+.pre code.travlang,.pre.code.travlang,pre code.travlang{
     font-size:.893rem}
-.keyword,.ocamlkeyword{
+.keyword,.travlangkeyword{
     font-family: $font-sans;
     font-weight:500}
 section+section{
@@ -316,7 +316,7 @@ span.syntax-token {
 span.syntax-token {
 	color: rgba(91, 33, 6, 0.87);
 }
-span.ocamlprompt{
+span.travlangprompt{
     color:#888
 }
 span.font-bold .machine{
@@ -356,25 +356,25 @@ td .font-bold {
 	padding: 1px 4px;
 }
 .caml-input{
-    span.ocamlkeyword{
+    span.travlangkeyword{
 	font-weight:500;
 	color:#444
     }
-    span.ocamlhighlight{
+    span.travlanghighlight{
 	font-weight:500;
 	text-decoration:underline
     }
     span.id{
 	color:#523b74
     }
-    span.ocamlstring,.caml-input span.string{
+    span.travlangstring,.caml-input span.string{
 	color:#df5000
     }
-    span.comment, .caml-input span.ocamlcomment{
+    span.comment, .caml-input span.travlangcomment{
 	color:#969896
     }
 }
-.ocaml span.ocamlerror{
+.travlang span.travlangerror{
     font-weight:500
 }
 

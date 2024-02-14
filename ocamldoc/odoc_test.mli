@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Sebastien Hinderer, projet Cambium, INRIA Paris            *)
 (*                                                                        *)
@@ -14,5 +14,5 @@
 (**************************************************************************)
 
 (* This file is only used by the testsuite. Ultimately it should be
-    moved to testsuite/tests/tool-ocamldoc. For the moment we leave it empty.
+    moved to testsuite/tests/tool-travlangdoc. For the moment we leave it empty.
 *)

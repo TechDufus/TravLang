@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*              Damien Doligez, projet Para, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -103,7 +103,7 @@ let mk_function_sections f =
     " Generate each function in a separate section if target supports it"
   else
     let err () =
-      raise (Arg.Bad "OCaml has been configured without support for \
+      raise (Arg.Bad "travlang has been configured without support for \
                       -function-sections")
     in
     "-function-sections", Arg.Unit err, " (option not available)"
@@ -132,12 +132,12 @@ let mk_dtypes f =
 let mk_for_pack_byt f =
   "-for-pack", Arg.String f,
   "<ident>  Generate code that can later be `packed' with\n\
-  \     ocamlc -pack -o <ident>.cmo"
+  \     travlangc -pack -o <ident>.cmo"
 
 let mk_for_pack_opt f =
   "-for-pack", Arg.String f,
   "<ident>  Generate code that can later be `packed' with\n\
-  \     ocamlopt -pack -o <ident>.cmx"
+  \     travlangopt -pack -o <ident>.cmx"
 
 let mk_g_byt f =
   "-g", Arg.Unit f, " Save debugging information"
@@ -504,7 +504,7 @@ let mk_unsafe f =
 
 let mk_unsafe_string =
  let err () =
-   raise (Arg.Bad "-unsafe-string is not available since OCaml 5.0")
+   raise (Arg.Bad "-unsafe-string is not available since travlang 5.0")
  in
  "-unsafe-string", Arg.Unit err, " (option not available)"
 
@@ -574,7 +574,7 @@ let mk_color f =
   \    checks that the TERM environment variable exists and is\n\
   \    not empty or \"dumb\", and that isatty(stderr) holds.\n\
   \  If the option is not specified, these setting can alternatively\n\
-  \  be set through the OCAML_COLOR environment variable."
+  \  be set through the travlang_COLOR environment variable."
 
 let mk_error_style f =
   "-error-style", Arg.Symbol (["contextual"; "short"], f),
@@ -586,7 +586,7 @@ let mk_error_style f =
     \                  snippet corresponding to the location of the error\n\
     \    The default setting is 'contextual'.\n\
     \  If the option is not specified, these setting can alternatively\n\
-    \  be set through the OCAML_ERROR_STYLE environment variable."
+    \  be set through the travlang_ERROR_STYLE environment variable."
 
 let mk_where f =
   "-where", Arg.Unit f, " Print location of standard library and exit"
@@ -731,16 +731,16 @@ let mk_strict_formats f =
   "-strict-formats", Arg.Unit f,
   " Reject invalid formats accepted by legacy implementations (default)\n\
   \     (Warning: Invalid formats may behave differently from\n\
-  \      previous OCaml versions, and will become always-rejected\n\
-  \      in future OCaml versions. You should always use this flag\n\
+  \      previous travlang versions, and will become always-rejected\n\
+  \      in future travlang versions. You should always use this flag\n\
   \      to detect invalid formats so you can fix them.)"
 
 let mk_no_strict_formats f =
   "-no-strict-formats", Arg.Unit f,
   " Accept invalid formats accepted by legacy implementations\n\
   \     (Warning: Invalid formats may behave differently from\n\
-  \      previous OCaml versions, and will become always-rejected\n\
-  \      in future OCaml versions. You should never use this flag\n\
+  \      previous travlang versions, and will become always-rejected\n\
+  \      in future travlang versions. You should never use this flag\n\
   \      and instead fix invalid formats.)"
 
 let mk_args f =
@@ -998,7 +998,7 @@ module type Opttop_options = sig
   val _S : unit -> unit
 end;;
 
-module type Ocamldoc_options = sig
+module type travlangdoc_options = sig
   include Common_options
   val _impl : string -> unit
   val _intf : string -> unit
@@ -1479,7 +1479,7 @@ module Make_opttop_options (F : Opttop_options) = struct
   ]
 end;;
 
-module Make_ocamldoc_options (F : Ocamldoc_options) =
+module Make_travlangdoc_options (F : travlangdoc_options) =
 struct
   let list = [
     mk_absname F._absname;
@@ -1529,7 +1529,7 @@ struct
   ]
 end;;
 
-[@@@ocaml.warning "-40"]
+[@@@travlang.warning "-40"]
 let options_with_command_line_syntax_inner r after_rest =
   let rec loop ~name_opt (spec : Arg.spec) : Arg.spec =
     let option =
@@ -1717,7 +1717,7 @@ module Default = struct
     let _no_unbox_specialised_args = clear unbox_specialised_args
     (* CR-someday mshinwell: should stop e.g. -O2 -classic-inlining
        lgesbert: could be done in main() below, like for -pack and -c, but that
-       would prevent overriding using OCAMLPARAM.
+       would prevent overriding using travlangPARAM.
        mshinwell: We're going to defer this for the moment and add a note in
        the manual that the behaviour is unspecified in cases such as this.
        We should refactor the code so that the user's requirements are
@@ -1806,12 +1806,12 @@ module Default = struct
   module Toplevel = struct
 
     let print_version () =
-      Printf.printf "The OCaml toplevel, version %s\n" Sys.ocaml_version;
+      Printf.printf "The travlang toplevel, version %s\n" Sys.travlang_version;
       raise (Compenv.Exit_with_status 0);
     ;;
 
     let print_version_num () =
-      Printf.printf "%s\n" Sys.ocaml_version;
+      Printf.printf "%s\n" Sys.travlang_version;
       raise (Compenv.Exit_with_status 0);
     ;;
 
@@ -1858,7 +1858,7 @@ module Default = struct
     let _p () =
       Compenv.fatal
         "Profiling with \"gprof\" (option `-p') is only supported up to \
-         OCaml 4.08.0"
+         travlang 4.08.0"
     let _shared () = shared := true; dlcode := true
     let _v () = Compenv.print_version_and_library "native-code compiler"
   end
@@ -1895,8 +1895,8 @@ module Default = struct
   module Main = struct
 
     let vmthread_removed_message = "\
-The -vmthread argument of ocamlc is no longer supported\n\
-since OCaml 4.09.0.  Please switch to system threads, which have the\n\
+The -vmthread argument of travlangc is no longer supported\n\
+since travlang 4.09.0.  Please switch to system threads, which have the\n\
 same API. Lightweight threads with VM-level scheduling are provided by\n\
 third-party libraries such as Lwt, but with a different API."
 

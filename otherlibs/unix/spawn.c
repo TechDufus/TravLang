@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*   Xavier Leroy, projet Cambium, Collège de France and INRIA Paris      */
 /*                                                                        */

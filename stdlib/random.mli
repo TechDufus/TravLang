@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*               Damien Doligez, projet Para, INRIA Rocquencourt          *)
 (*          Xavier Leroy, projet Cambium, College de France and Inria     *)
@@ -226,7 +226,7 @@ module State : sig
       The [string] type is intended here for serialization only, the
       encoding is not human-readable and may not be printable.
 
-      Note that the serialization format may differ across OCaml
+      Note that the serialization format may differ across travlang
       versions.
 
       @since 5.1
@@ -240,7 +240,7 @@ module State : sig
 
       @raise Failure if the input is not in the expected format.
 
-      Note that the serialization format may differ across OCaml
+      Note that the serialization format may differ across travlang
       versions.
 
       Unlike the functions provided by the {!Marshal} module, this

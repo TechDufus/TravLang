@@ -7,13 +7,13 @@
 #include "caml/memory.h"
 #include "caml/callback.h"
 
-value print_and_call_ocaml_h(value unit)
+value print_and_call_travlang_h(value unit)
 {
   (void)unit;
 
-  fprintf(stderr, "Hello from print_and_call_ocaml_h\n");
-  caml_callback(*caml_named_value("ocaml_h"), Val_unit);
-  fprintf(stderr, "Leaving print_and_call_ocaml_h\n");
+  fprintf(stderr, "Hello from print_and_call_travlang_h\n");
+  caml_callback(*caml_named_value("travlang_h"), Val_unit);
+  fprintf(stderr, "Leaving print_and_call_travlang_h\n");
   return Val_unit;
 }
 

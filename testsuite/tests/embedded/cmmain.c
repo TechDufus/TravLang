@@ -1,6 +1,6 @@
 /***********************************************************************/
 /*                                                                     */
-/*                                OCaml                                */
+/*                                travlang                                */
 /*                                                                     */
 /*            Xavier Leroy, projet Cristal, INRIA Rocquencourt         */
 /*                                                                     */
@@ -24,7 +24,7 @@ extern char * format_result(int n);
 
 int main_os(int argc, char_os ** argv)
 {
-  printf("Initializing OCaml code...\n");
+  printf("Initializing travlang code...\n");
 
   /* Initializing the runtime twice, to check that it's possible to
      make nested calls to caml_startup/caml_shutdown. */

@@ -1,9 +1,9 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*           Jerome Vouillon, projet Cristal, INRIA Rocquencourt          *)
-(*           OCaml port by John Malecki and Xavier Leroy                  *)
+(*           travlang port by John Malecki and Xavier Leroy                  *)
 (*                                                                        *)
 (*   Copyright 1996 Institut National de Recherche en Informatique et     *)
 (*     en Automatique.                                                    *)
@@ -110,7 +110,7 @@ let execute_file_if_any () =
   let buffer = Buffer.create 128 in
   begin
     try
-      let base = ".ocamldebug" in
+      let base = ".travlangdebug" in
       let file =
         if Sys.file_exists base then
           base
@@ -157,11 +157,11 @@ let set_checkpoints n =
 let set_directory dir =
   Sys.chdir dir
 let print_version () =
-  printf "The OCaml debugger, version %s@." Sys.ocaml_version;
+  printf "The travlang debugger, version %s@." Sys.travlang_version;
   exit 0
 
 let print_version_num () =
-  printf "%s@." Sys.ocaml_version;
+  printf "%s@." Sys.travlang_version;
   exit 0
 
 let speclist = [
@@ -214,7 +214,7 @@ let main () =
       Arg.parse speclist anonymous "";
       Arg.usage speclist
         "No program name specified\n\
-         Usage: ocamldebug [options] <program> [arguments]\n\
+         Usage: travlangdebug [options] <program> [arguments]\n\
          Options are:";
       exit 2
     with Found_program_name ->
@@ -223,7 +223,7 @@ let main () =
       done
     end;
     if !Parameters.version
-    then printf "\tOCaml Debugger version %s@.@." Config.version;
+    then printf "\ttravlang Debugger version %s@.@." Config.version;
     Load_path.init ~auto_include:Compmisc.auto_include
       ~visible:!default_load_path ~hidden:[];
     Clflags.recursive_types := true;    (* Allow recursive types. *)

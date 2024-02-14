@@ -8,8 +8,8 @@ more information.
 
 Programs that use runtime_events must be linked as follows:
 \begin{alltt}
-        ocamlc -I +runtime_events \var{other options} unix.cma runtime_events.cma \var{other files}
-        ocamlopt -I +runtime_events \var{other options} unix.cmxa runtime_events.cmxa \var{other files}
+        travlangc -I +runtime_events \var{other options} unix.cma runtime_events.cma \var{other files}
+        travlangopt -I +runtime_events \var{other options} unix.cmxa runtime_events.cmxa \var{other files}
 \end{alltt}
 Compilation units that use the runtime_events library must also be compiled with
 the "-I +runtime_events" option (see chapter~\ref{c:camlc}).

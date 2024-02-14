@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Pierre Weis, projet Cristal, INRIA Rocquencourt            *)
 (*                                                                        *)
@@ -722,7 +722,7 @@ let scan_exponent_part width ib =
 
 
 (* Scan the integer part of a floating point number, (not using the
-   OCaml lexical convention since the integer part can be empty):
+   travlang lexical convention since the integer part can be empty):
    an optional sign, followed by a possibly empty sequence of decimal
    digits (e.g. -.1). *)
 let scan_integer_part width ib =
@@ -1028,7 +1028,7 @@ let scan_backslash_char width ib =
     bad_input_escape c
 
 
-(* Scan a character (an OCaml token). *)
+(* Scan a character (an travlang token). *)
 let scan_caml_char width ib =
 
   let rec find_start width =
@@ -1051,7 +1051,7 @@ let scan_caml_char width ib =
   find_start width
 
 
-(* Scan a delimited string (an OCaml token). *)
+(* Scan a delimited string (an travlang token). *)
 let scan_caml_string width ib =
 
   let rec find_start width =
@@ -1084,7 +1084,7 @@ let scan_caml_string width ib =
   find_start width
 
 
-(* Scan a boolean (an OCaml token). *)
+(* Scan a boolean (an travlang token). *)
 let scan_bool ib =
   let c = Scanning.checked_peek_char ib in
   let m =

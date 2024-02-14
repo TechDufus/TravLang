@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*   Xavier Leroy and Pascal Cuoq, projet Cristal, INRIA Rocquencourt     *)
 (*                                                                        *)

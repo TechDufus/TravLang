@@ -1,13 +1,13 @@
 (* TEST
  readonly_files = "a.ml b.ml c.ml";
- setup-ocamlc.byte-build-env;
+ setup-travlangc.byte-build-env;
  module = "a.ml";
- ocamlc.byte;
+ travlangc.byte;
  module = "b.ml";
- ocamlc.byte;
+ travlangc.byte;
  script = "rm a.cmi";
  script;
  module = "c.ml";
- ocamlc.byte;
- check-ocamlc.byte-output;
+ travlangc.byte;
+ check-travlangc.byte-output;
 *)

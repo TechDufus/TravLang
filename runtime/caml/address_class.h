@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*              Damien Doligez, projet Para, INRIA Rocquencourt           */
 /*                                                                        */
@@ -29,7 +29,7 @@
    - a tagged integer (Is_long)
    - a pointer to the minor heap
    - a pointer to a well-formed block outside the minor heap. It may be in the
-     major heap, or static data allocated by the OCaml code or the OCaml
+     major heap, or static data allocated by the travlang code or the travlang
      runtime, or a foreign pointer.
 
    To create a well-formed block outside the heap that the GC will not scan,
@@ -55,7 +55,7 @@ CAMLextern uintnat caml_minor_heaps_end;
 
 #define Is_block_and_young(val) (Is_block(val) && Is_young(val))
 
-/* These definitions are retained for backwards compatibility with OCaml 4 */
+/* These definitions are retained for backwards compatibility with travlang 4 */
 #define Is_in_heap_or_young(a) 1
 #define Is_in_value_area(a) 1
 

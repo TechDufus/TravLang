@@ -4,27 +4,27 @@
  readonly_files = "a.ml b.ml loader.ml";
  shared-libraries;
  {
-   setup-ocamlc.byte-build-env;
+   setup-travlangc.byte-build-env;
    {
      flags = "-for-pack Packed";
      module = "a.ml";
-     ocamlc.byte;
+     travlangc.byte;
    }{
      flags = "-for-pack Packed";
      module = "b.ml";
-     ocamlc.byte;
+     travlangc.byte;
    }{
      program = "packed.cmo";
      flags = "-pack";
      all_modules = "a.cmo b.cmo";
-     ocamlc.byte;
+     travlangc.byte;
    }{
      program = "${test_build_directory}/loader.byte";
      flags = "-linkall";
-     include ocamlcommon;
+     include travlangcommon;
      libraries += "dynlink";
      all_modules = "loader.ml";
-     ocamlc.byte;
+     travlangc.byte;
      arguments = "packed.cmo";
      exit_status = "0";
      run;
@@ -33,32 +33,32 @@
    }
  }{
    native-dynlink;
-   setup-ocamlopt.byte-build-env;
+   setup-travlangopt.byte-build-env;
    {
      flags = "-for-pack Packed";
      module = "a.ml";
-     ocamlopt.byte;
+     travlangopt.byte;
    }{
      flags = "-for-pack Packed";
      module = "b.ml";
-     ocamlopt.byte;
+     travlangopt.byte;
    }{
      program = "packed.cmx";
      flags = "-pack";
      all_modules = "a.cmx b.cmx";
-     ocamlopt.byte;
+     travlangopt.byte;
    }{
      program = "plugin.cmxs";
      flags = "-shared";
      all_modules = "packed.cmx";
-     ocamlopt.byte;
+     travlangopt.byte;
    }{
      program = "${test_build_directory}/loader.exe";
      flags = "-linkall";
-     include ocamlcommon;
+     include travlangcommon;
      libraries += "dynlink";
      all_modules = "loader.ml";
-     ocamlopt.byte;
+     travlangopt.byte;
      arguments = "plugin.cmxs";
      exit_status = "0";
      run;

@@ -1,17 +1,17 @@
 (* TEST
  readonly_files = "myppx.ml";
- include ocamlcommon;
- setup-ocamlc.byte-build-env;
+ include travlangcommon;
+ setup-travlangc.byte-build-env;
  program = "${test_build_directory}/myppx.exe";
  all_modules = "myppx.ml";
- ocamlc.byte;
+ travlangc.byte;
  module = "test.ml";
  flags = "-thread -I ${test_build_directory} -open List -rectypes -principal -alias-deps -unboxed-types -ppx ${program}";
- ocamlc.byte;
+ travlangc.byte;
  module = "test.ml";
  flags = "-g -no-alias-deps -no-unboxed-types -ppx ${program}";
- ocamlc.byte;
- check-ocamlc.byte-output;
+ travlangc.byte;
+ check-travlangc.byte-output;
 *)
 
 (* empty *)

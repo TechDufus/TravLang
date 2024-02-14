@@ -5,7 +5,7 @@
 (* Check the unboxing *)
 
 (* For concrete types *)
-type t1 = A of string [@@ocaml.unboxed];;
+type t1 = A of string [@@travlang.unboxed];;
 [%%expect{|
 type t1 = A of string [@@unboxed]
 |}];;
@@ -18,7 +18,7 @@ Obj.repr x == Obj.repr (match x with A s -> s)
 |}];;
 
 (* For records *)
-type t2 = { f : string } [@@ocaml.unboxed];;
+type t2 = { f : string } [@@travlang.unboxed];;
 [%%expect{|
 type t2 = { f : string; } [@@unboxed]
 |}];;
@@ -31,7 +31,7 @@ Obj.repr x == Obj.repr x.f
 |}];;
 
 (* For inline records *)
-type t3 = B of { g : string } [@@ocaml.unboxed];;
+type t3 = B of { g : string } [@@travlang.unboxed];;
 [%%expect{|
 type t3 = B of { g : string; } [@@unboxed]
 |}];;
@@ -44,55 +44,55 @@ Obj.repr x == Obj.repr (match x with B {g} -> g)
 |}];;
 
 (* Check unboxable types *)
-type t4 = C [@@ocaml.unboxed];;  (* no argument *)
+type t4 = C [@@travlang.unboxed];;  (* no argument *)
 [%%expect{|
 Line 1, characters 0-29:
-1 | type t4 = C [@@ocaml.unboxed];;  (* no argument *)
+1 | type t4 = C [@@travlang.unboxed];;  (* no argument *)
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Error: This type cannot be unboxed because its constructor has no argument.
 |}];;
-type t5 = D of int * string [@@ocaml.unboxed];; (* more than one argument *)
+type t5 = D of int * string [@@travlang.unboxed];; (* more than one argument *)
 [%%expect{|
 Line 1, characters 0-45:
-1 | type t5 = D of int * string [@@ocaml.unboxed];; (* more than one argument *)
+1 | type t5 = D of int * string [@@travlang.unboxed];; (* more than one argument *)
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Error: This type cannot be unboxed because
        its constructor has more than one argument.
 |}];;
-type t5 = E | F [@@ocaml.unboxed];;          (* more than one constructor *)
+type t5 = E | F [@@travlang.unboxed];;          (* more than one constructor *)
 [%%expect{|
 Line 1, characters 0-33:
-1 | type t5 = E | F [@@ocaml.unboxed];;          (* more than one constructor *)
+1 | type t5 = E | F [@@travlang.unboxed];;          (* more than one constructor *)
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Error: This type cannot be unboxed because it has more than one constructor.
 |}];;
-type t6 = G of int | H [@@ocaml.unboxed];;
+type t6 = G of int | H [@@travlang.unboxed];;
 [%%expect{|
 Line 1, characters 0-40:
-1 | type t6 = G of int | H [@@ocaml.unboxed];;
+1 | type t6 = G of int | H [@@travlang.unboxed];;
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Error: This type cannot be unboxed because it has more than one constructor.
 |}];;
-type t7 = I of string | J of bool [@@ocaml.unboxed];;
+type t7 = I of string | J of bool [@@travlang.unboxed];;
 
-type t8 = { h : bool; i : int } [@@ocaml.unboxed];;  (* more than one field *)
+type t8 = { h : bool; i : int } [@@travlang.unboxed];;  (* more than one field *)
 [%%expect{|
 Line 1, characters 0-51:
-1 | type t7 = I of string | J of bool [@@ocaml.unboxed];;
+1 | type t7 = I of string | J of bool [@@travlang.unboxed];;
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Error: This type cannot be unboxed because it has more than one constructor.
 |}];;
-type t9 = K of { j : string; l : int } [@@ocaml.unboxed];;
+type t9 = K of { j : string; l : int } [@@travlang.unboxed];;
 [%%expect{|
 Line 1, characters 0-56:
-1 | type t9 = K of { j : string; l : int } [@@ocaml.unboxed];;
+1 | type t9 = K of { j : string; l : int } [@@travlang.unboxed];;
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Error: This type cannot be unboxed because
        its constructor has more than one field.
 |}];;
 
 (* let rec must be rejected *)
-type t10 = A of t10 [@@ocaml.unboxed];;
+type t10 = A of t10 [@@travlang.unboxed];;
 [%%expect{|
 type t10 = A of t10 [@@unboxed]
 |}];;
@@ -108,12 +108,12 @@ Error: This kind of expression is not allowed as right-hand side of "let rec"
 module M : sig
   type t = A of string
 end = struct
-  type t = A of string [@@ocaml.unboxed]
+  type t = A of string [@@travlang.unboxed]
 end;;
 [%%expect{|
 Lines 3-5, characters 6-3:
 3 | ......struct
-4 |   type t = A of string [@@ocaml.unboxed]
+4 |   type t = A of string [@@travlang.unboxed]
 5 | end..
 Error: Signature mismatch:
        Modules do not match:
@@ -129,7 +129,7 @@ Error: Signature mismatch:
 |}];;
 
 module N : sig
-  type t = A of string [@@ocaml.unboxed]
+  type t = A of string [@@travlang.unboxed]
 end = struct
   type t = A of string
 end;;
@@ -154,12 +154,12 @@ Error: Signature mismatch:
 module O : sig
   type t = { f : string }
 end = struct
-  type t = { f : string } [@@ocaml.unboxed]
+  type t = { f : string } [@@travlang.unboxed]
 end;;
 [%%expect{|
 Lines 3-5, characters 6-3:
 3 | ......struct
-4 |   type t = { f : string } [@@ocaml.unboxed]
+4 |   type t = { f : string } [@@travlang.unboxed]
 5 | end..
 Error: Signature mismatch:
        Modules do not match:
@@ -175,7 +175,7 @@ Error: Signature mismatch:
 |}];;
 
 module P : sig
-  type t = { f : string } [@@ocaml.unboxed]
+  type t = { f : string } [@@travlang.unboxed]
 end = struct
   type t = { f : string }
 end;;
@@ -200,12 +200,12 @@ Error: Signature mismatch:
 module Q : sig
   type t = A of { f : string }
 end = struct
-  type t = A of { f : string } [@@ocaml.unboxed]
+  type t = A of { f : string } [@@travlang.unboxed]
 end;;
 [%%expect{|
 Lines 3-5, characters 6-3:
 3 | ......struct
-4 |   type t = A of { f : string } [@@ocaml.unboxed]
+4 |   type t = A of { f : string } [@@travlang.unboxed]
 5 | end..
 Error: Signature mismatch:
        Modules do not match:
@@ -221,7 +221,7 @@ Error: Signature mismatch:
 |}];;
 
 module R : sig
-  type t = A of { f : string } [@@ocaml.unboxed]
+  type t = A of { f : string } [@@travlang.unboxed]
 end = struct
   type t = A of { f : string }
 end;;
@@ -245,7 +245,7 @@ Error: Signature mismatch:
 
 
 (* Check interference with representation of float arrays. *)
-type t11 = L of float [@@ocaml.unboxed];;
+type t11 = L of float [@@travlang.unboxed];;
 [%%expect{|
 type t11 = L of float [@@unboxed]
 |}];;
@@ -258,7 +258,7 @@ in assert (f x = L 3.14);;
 
 
 (* Check for a potential infinite loop in the typing algorithm. *)
-type 'a t12 = M of 'a t12 [@@ocaml.unboxed];;
+type 'a t12 = M of 'a t12 [@@travlang.unboxed];;
 [%%expect{|
 type 'a t12 = M of 'a t12 [@@unboxed]
 |}];;
@@ -268,7 +268,7 @@ val f : int t12 array -> int t12 = <fun>
 |}];;
 
 (* Check for another possible loop *)
-type t13 = A : _ t12 -> t13 [@@ocaml.unboxed];;
+type t13 = A : _ t12 -> t13 [@@travlang.unboxed];;
 [%%expect{|
 type t13 = A : 'a t12 -> t13 [@@unboxed]
 |}];;
@@ -276,7 +276,7 @@ type t13 = A : 'a t12 -> t13 [@@unboxed]
 
 (* should work *)
 type t14;;
-type t15 = A of t14 [@@ocaml.unboxed];;
+type t15 = A of t14 [@@travlang.unboxed];;
 [%%expect{|
 type t14
 type t15 = A of t14 [@@unboxed]
@@ -288,13 +288,13 @@ module S : sig
   type t
   type u = { f1 : t; f2 : t }
 end = struct
-  type t = A of float [@@ocaml.unboxed]
+  type t = A of float [@@travlang.unboxed]
   type u = { f1 : t; f2 : t }
 end;;
 [%%expect{|
 Lines 4-7, characters 6-3:
 4 | ......struct
-5 |   type t = A of float [@@ocaml.unboxed]
+5 |   type t = A of float [@@travlang.unboxed]
 6 |   type u = { f1 : t; f2 : t }
 7 | end..
 Error: Signature mismatch:
@@ -310,13 +310,13 @@ Error: Signature mismatch:
        the first declaration uses unboxed float representation.
 |}];;
 
-(* implementing [@@immediate] with [@@ocaml.unboxed]: this works because the
+(* implementing [@@immediate] with [@@travlang.unboxed]: this works because the
    representation of [t] is [int]
  *)
 module T : sig
   type t [@@immediate]
 end = struct
-  type t = A of int [@@ocaml.unboxed]
+  type t = A of int [@@travlang.unboxed]
 end;;
 [%%expect{|
 module T : sig type t [@@immediate] end
@@ -367,7 +367,7 @@ and t1 = T1 : (bool, int) t -> t1 [@@unboxed]
 type ('a, 'kind) tree =
   | Root : { mutable value : 'a; mutable rank : int } -> ('a, [ `root ]) tree
   | Inner : { mutable parent : 'a node } -> ('a, [ `inner ]) tree
-and 'a node = Node : ('a, _) tree -> 'a node [@@ocaml.unboxed]
+and 'a node = Node : ('a, _) tree -> 'a node [@@travlang.unboxed]
 [%%expect{|
 type ('a, 'kind) tree =
     Root : { mutable value : 'a; mutable rank : int;

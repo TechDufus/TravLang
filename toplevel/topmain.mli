@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -13,6 +13,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* Start the [ocaml] toplevel loop, and return the exit code *)
+(* Start the [travlang] toplevel loop, and return the exit code *)
 
 val main: unit -> int

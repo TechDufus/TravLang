@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*                   Fabrice Le Fessant, INRIA Saclay                     *)
 (*                                                                        *)
@@ -103,8 +103,8 @@ let report_error ppf = function
         (Style.as_inline_code Location.print_filename) filename
   | Wrong_version_interface (filename, older_newer) ->
       fprintf ppf
-        "%a@ is not a compiled interface for this version of OCaml.@.\
-         It seems to be for %s version of OCaml."
+        "%a@ is not a compiled interface for this version of travlang.@.\
+         It seems to be for %s version of travlang."
         (Style.as_inline_code  Location.print_filename) filename older_newer
   | Corrupted_interface filename ->
       fprintf ppf "Corrupted compiled interface@ %a"

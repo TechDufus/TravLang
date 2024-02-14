@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*                   Projet Cristal, INRIA Rocquencourt                   *)
 (*                                                                        *)
@@ -145,7 +145,7 @@ let escape_string s =
 let print_out_string ppf s =
   let not_escaped =
     (* let the user dynamically choose if strings should be escaped: *)
-    match Sys.getenv_opt "OCAMLTOP_UTF_8" with
+    match Sys.getenv_opt "travlangTOP_UTF_8" with
     | None -> true
     | Some x ->
         match bool_of_string_opt x with

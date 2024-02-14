@@ -1,14 +1,14 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*      Xavier Leroy and Damien Doligez, projet Cambium, INRIA Paris      *)
-(*               Sadiq Jaffer, OCaml Labs Consultancy Ltd                 *)
+(*               Sadiq Jaffer, travlang Labs Consultancy Ltd                 *)
 (*          Stephen Dolan and Mark Shinwell, Jane Street Europe           *)
 (*                                                                        *)
 (*   Copyright 2021 Institut National de Recherche en Informatique et     *)
 (*     en Automatique.                                                    *)
-(*   Copyright 2021 OCaml Labs Consultancy Ltd                            *)
+(*   Copyright 2021 travlang Labs Consultancy Ltd                            *)
 (*   Copyright 2021 Jane Street Group LLC                                 *)
 (*                                                                        *)
 (*   All rights reserved.  This file is distributed under the terms of    *)
@@ -113,7 +113,7 @@ let polled_loops_analysis funbody =
    We optimise by making a partial ordering over Mach functions: in
    definition order within a compilation unit, and dependency
    order between compilation units. This order is acyclic, as
-   OCaml does not allow circular dependencies between modules.
+   travlang does not allow circular dependencies between modules.
    It's also finite, so if there's an infinite sequence of
    function calls then something has to make a forward reference.
 

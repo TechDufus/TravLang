@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*                          Sadiq Jaffer, Opsian                          */
 /*                                                                        */
@@ -53,10 +53,10 @@
 This file contains the implementation for runtime_events's producer. The
 consumer can be found in runtime_events_consumer.
 
-Runtime_events is a transport for tracing and counter events from the OCaml
+Runtime_events is a transport for tracing and counter events from the travlang
 runtime. When enabled the caml_ev_* probes emit events that get written to
 per-domain memory-mapped ring buffers. Consumers can be written that use the
-OCaml or C apis to consume these events asynchronously. This can be done both
+travlang or C apis to consume these events asynchronously. This can be done both
 inside or outside the process.
 
 The ring buffer is structured as a flight recorder, overwriting old data when
@@ -67,7 +67,7 @@ producer and discard events when that happens.
 
 The producer code is contained here . By default a <pid>.events file is
 created in the current directory (overridable by setting
-OCAML_RUNTIME_EVENTS_DIR). This file contains a ring buffer for each possible
+travlang_RUNTIME_EVENTS_DIR). This file contains a ring buffer for each possible
 domain (Max_domains). It is laid out in a structure that enables sparsity.
 On-disk (or in-memory) footprint is proportional to the max number of concurrent
 domains the process has ever run.
@@ -101,11 +101,11 @@ static HANDLE ring_file_handle;
 static HANDLE ring_handle;
 #endif
 
-/* This comes from OCAMLRUNPARAMs and is initialised in
+/* This comes from travlangRUNPARAMs and is initialised in
    caml_runtime_events_init */
 static int ring_size_words;
 
-/* This is set if the OCAML_RUNTIME_EVENTS_PRESERVE environment
+/* This is set if the travlang_RUNTIME_EVENTS_PRESERVE environment
   variable is present and determines whether the ring buffer is
   cleaned up on program exit or not. It may be preserved to allow
   tooling to analyse very short running programs where there would
@@ -135,7 +135,7 @@ void caml_runtime_events_init(void) {
   caml_plat_mutex_init(&user_events_lock);
   caml_register_generational_global_root(&user_events);
 
-  runtime_events_path = caml_secure_getenv(T("OCAML_RUNTIME_EVENTS_DIR"));
+  runtime_events_path = caml_secure_getenv(T("travlang_RUNTIME_EVENTS_DIR"));
 
   if (runtime_events_path) {
     /* caml_secure_getenv's return shouldn't be cached */
@@ -145,9 +145,9 @@ void caml_runtime_events_init(void) {
   ring_size_words = 1 << caml_params->runtime_events_log_wsize;
 
   preserve_ring =
-            caml_secure_getenv(T("OCAML_RUNTIME_EVENTS_PRESERVE")) ? 1 : 0;
+            caml_secure_getenv(T("travlang_RUNTIME_EVENTS_PRESERVE")) ? 1 : 0;
 
-  if (caml_secure_getenv(T("OCAML_RUNTIME_EVENTS_START"))) {
+  if (caml_secure_getenv(T("travlang_RUNTIME_EVENTS_START"))) {
     runtime_events_create_from_stw_single();
     /* stw_single: mutators and domains have not started yet. */
   }
@@ -452,7 +452,7 @@ CAMLexport int caml_runtime_events_are_active(void) {
   return (ring_is_active ());
 }
 
-/* Make the three functions above callable from OCaml */
+/* Make the three functions above callable from travlang */
 
 CAMLprim value caml_ml_runtime_events_start(value vunit) {
   caml_runtime_events_start(); return Val_unit;

@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -13,11 +13,11 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(** Registering OCaml values with the C runtime.
+(** Registering travlang values with the C runtime.
 
-   This module allows OCaml values to be registered with the C runtime
+   This module allows travlang values to be registered with the C runtime
    under a symbolic name, so that C code can later call back registered
-   OCaml functions, or raise registered OCaml exceptions.
+   travlang functions, or raise registered travlang exceptions.
 *)
 
 val register : string -> 'a -> unit

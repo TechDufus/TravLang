@@ -1,8 +1,8 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
-/*                 David Allsopp, OCaml Labs, Cambridge.                  */
+/*                 David Allsopp, travlang Labs, Cambridge.                  */
 /*                                                                        */
 /*   Copyright 2017 MetaStack Solutions Ltd.                              */
 /*                                                                        */

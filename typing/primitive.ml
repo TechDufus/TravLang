@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -21,7 +21,7 @@ open Parsetree
 type boxed_integer = Pnativeint | Pint32 | Pint64
 
 type native_repr =
-  | Same_as_ocaml_repr
+  | Same_as_travlang_repr
   | Unboxed_float
   | Unboxed_integer of boxed_integer
   | Untagged_immediate
@@ -41,21 +41,21 @@ type error =
 
 exception Error of Location.t * error
 
-let is_ocaml_repr = function
-  | Same_as_ocaml_repr -> true
+let is_travlang_repr = function
+  | Same_as_travlang_repr -> true
   | Unboxed_float
   | Unboxed_integer _
   | Untagged_immediate -> false
 
 let is_unboxed = function
-  | Same_as_ocaml_repr
+  | Same_as_travlang_repr
   | Untagged_immediate -> false
   | Unboxed_float
   | Unboxed_integer _ -> true
 
 let is_untagged = function
   | Untagged_immediate -> true
-  | Same_as_ocaml_repr
+  | Same_as_travlang_repr
   | Unboxed_float
   | Unboxed_integer _ -> false
 
@@ -70,8 +70,8 @@ let simple ~name ~arity ~alloc =
    prim_arity = arity;
    prim_alloc = alloc;
    prim_native_name = "";
-   prim_native_repr_args = make_native_repr_args arity Same_as_ocaml_repr;
-   prim_native_repr_res = Same_as_ocaml_repr}
+   prim_native_repr_args = make_native_repr_args arity Same_as_travlang_repr;
+   prim_native_repr_res = Same_as_travlang_repr}
 
 let make ~name ~alloc ~native_name ~native_repr_args ~native_repr_res =
   {prim_name = name;
@@ -98,8 +98,8 @@ let parse_declaration valdecl ~native_repr_args ~native_repr_res =
     Attr_helper.has_no_payload_attribute "noalloc" valdecl.pval_attributes
   in
   if old_style_float &&
-     not (List.for_all is_ocaml_repr native_repr_args &&
-          is_ocaml_repr native_repr_res) then
+     not (List.for_all is_travlang_repr native_repr_args &&
+          is_travlang_repr native_repr_res) then
     raise (Error (valdecl.pval_loc,
                   Old_style_float_with_native_repr_attribute));
   if old_style_noalloc && noalloc_attribute then
@@ -116,8 +116,8 @@ let parse_declaration valdecl ~native_repr_args ~native_repr_res =
     Location.deprecated valdecl.pval_loc
       "[@@noalloc] should be used instead of \"noalloc\"";
   if native_name = "" &&
-     not (List.for_all is_ocaml_repr native_repr_args &&
-          is_ocaml_repr native_repr_res) then
+     not (List.for_all is_travlang_repr native_repr_args &&
+          is_travlang_repr native_repr_res) then
     raise (Error (valdecl.pval_loc,
                   No_native_primitive_with_repr_attribute));
   let noalloc = old_style_noalloc || noalloc_attribute in
@@ -177,7 +177,7 @@ let print p osig_val_decl =
       attrs
   in
   let attr_of_native_repr = function
-    | Same_as_ocaml_repr -> None
+    | Same_as_travlang_repr -> None
     | Unboxed_float
     | Unboxed_integer _ -> if all_unboxed then None else Some oattr_unboxed
     | Untagged_immediate -> if all_untagged then None else Some oattr_untagged
@@ -210,18 +210,18 @@ let equal_boxed_integer bi1 bi2 =
 
 let equal_native_repr nr1 nr2 =
   match nr1, nr2 with
-  | Same_as_ocaml_repr, Same_as_ocaml_repr -> true
-  | Same_as_ocaml_repr,
+  | Same_as_travlang_repr, Same_as_travlang_repr -> true
+  | Same_as_travlang_repr,
     (Unboxed_float | Unboxed_integer _ | Untagged_immediate) -> false
   | Unboxed_float, Unboxed_float -> true
   | Unboxed_float,
-    (Same_as_ocaml_repr | Unboxed_integer _ | Untagged_immediate) -> false
+    (Same_as_travlang_repr | Unboxed_integer _ | Untagged_immediate) -> false
   | Unboxed_integer bi1, Unboxed_integer bi2 -> equal_boxed_integer bi1 bi2
   | Unboxed_integer _,
-    (Same_as_ocaml_repr | Unboxed_float | Untagged_immediate) -> false
+    (Same_as_travlang_repr | Unboxed_float | Untagged_immediate) -> false
   | Untagged_immediate, Untagged_immediate -> true
   | Untagged_immediate,
-    (Same_as_ocaml_repr | Unboxed_float | Unboxed_integer _) -> false
+    (Same_as_travlang_repr | Unboxed_float | Unboxed_integer _) -> false
 
 let native_name_is_external p =
   let nat_name = native_name p in

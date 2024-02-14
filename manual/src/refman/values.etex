@@ -2,7 +2,7 @@
 %HEVEA\cutname{values.html}
 
 This section describes the kinds of values that are manipulated by
-OCaml programs.
+travlang programs.
 
 \subsection{ss:values:base}{Base values}
 

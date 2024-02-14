@@ -1,6 +1,6 @@
 (* TEST
  flambda;
- ocamlopt_flags = "-O3 -afl-instrument";
+ travlangopt_flags = "-O3 -afl-instrument";
  native;
 *)
 

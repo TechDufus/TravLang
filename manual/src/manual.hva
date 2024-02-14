@@ -1,4 +1,4 @@
 \input{anchored_book.hva}
-\input{ifocamldoc}
+\input{iftravlangdoc}
 \input{macros.hva}
 \newif\ifouthtml\outhtmltrue

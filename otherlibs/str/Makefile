@@ -1,6 +1,6 @@
 #**************************************************************************
 #*                                                                        *
-#*                                 OCaml                                  *
+#*                                 travlang                                  *
 #*                                                                        *
 #*            Xavier Leroy, projet Cristal, INRIA Rocquencourt            *
 #*                                                                        *
@@ -26,6 +26,6 @@ str.cmx: str.cmi
 
 .PHONY: depend
 depend:
-	$(OCAMLRUN) $(ROOTDIR)/boot/ocamlc -depend -slash *.mli *.ml > .depend
+	$(travlangRUN) $(ROOTDIR)/boot/travlangc -depend -slash *.mli *.ml > .depend
 
 include .depend

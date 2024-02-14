@@ -76,11 +76,11 @@ module Convert : sig
 (*                                                                            *)
 (******************************************************************************)
 
-(* An ocamlyacc-style, or Menhir-style, parser requires access to
+(* An travlangyacc-style, or Menhir-style, parser requires access to
    the lexer, which must be parameterized with a lexing buffer, and
    to the lexing buffer itself, where it reads position information. *)
 
-(* This traditional API is convenient when used with ocamllex, but
+(* This traditional API is convenient when used with travlanglex, but
    inelegant when used with other lexer generators. *)
 
 type ('token, 'semantic_value) traditional =
@@ -96,7 +96,7 @@ type ('token, 'semantic_value) revised =
 
 (* --------------------------------------------------------------------------- *)
 
-(* Converting a traditional parser, produced by ocamlyacc or Menhir,
+(* Converting a traditional parser, produced by travlangyacc or Menhir,
    into a revised parser. *)
 
 (* A token of the revised lexer is essentially a triple of a token
@@ -988,7 +988,7 @@ end
 module type INCREMENTAL_ENGINE_START = sig
 
   (* [start] is an entry point. It requires a start state and a start position
-     and begins the parsing process. If the lexer is based on an OCaml lexing
+     and begins the parsing process. If the lexer is based on an travlang lexing
      buffer, the start position should be [lexbuf.lex_curr_p]. [start] produces
      a checkpoint, which usually will be an [InputNeeded] checkpoint. (It could
      be [Accepted] if this starting state accepts only the empty word. It could
@@ -1322,11 +1322,11 @@ module PackedIntArray : sig
    use. The string [s] is just an array of bits, which is read in 8-bit
    chunks. *)
 
-(* The ocaml programming language treats string literals and array literals
+(* The travlang programming language treats string literals and array literals
    in slightly different ways: the former are statically allocated, while
    the latter are dynamically allocated. (This is rather arbitrary.) In the
    context of Menhir's table-based back-end, where compact, immutable
-   integer arrays are needed, ocaml strings are preferable to ocaml arrays. *)
+   integer arrays are needed, travlang strings are preferable to travlang arrays. *)
 
 type t =
   int * string

@@ -3,8 +3,8 @@ ROOTDIR = ../../..
 include $(ROOTDIR)/Makefile.common
 include $(ROOTDIR)/Makefile.best_binaries
 
-OCAMLC ?= $(BEST_OCAMLC) $(STDLIBFLAGS)
-OCAMLOPT ?= $(BEST_OCAMLOPT) $(STDLIBFLAGS)
+travlangC ?= $(BEST_travlangC) $(STDLIBFLAGS)
+travlangOPT ?= $(BEST_travlangOPT) $(STDLIBFLAGS)
 
 PGM=forbidden.exe publish.exe
 MOREPGM=
@@ -27,24 +27,24 @@ clean::
 	/bin/rm -f $(MOREPGM) $(MOREBYT) $(BYT) $(PGM) *.cmo *.cmi *.cmx *.o *~ *.s
 
 %.cmx: %.ml
-	$(OCAMLOPT) -c $<
+	$(travlangOPT) -c $<
 
 %.cmo: %.ml
-	$(OCAMLC) -c $<
+	$(travlangC) -c $<
 
 %.cmi: %.mli
-	$(OCAMLC) -c $<
+	$(travlangC) -c $<
 
 %.s: %.ml
-	$(OCAMLOPT) -S -c $<
+	$(travlangOPT) -S -c $<
 
 %.exe: %.cmx $(OBJ)
-	$(OCAMLOPT) -o $@ $(OBJ) $<
+	$(travlangOPT) -o $@ $(OBJ) $<
 
 %.byt: $(BBJ) %.cmo
-	$(OCAMLC) -o $@ $^
+	$(travlangC) -o $@ $^
 
 depend:
-	$(OCAMLDEP_CMD) $(SRC) $(MLI) > .depend
+	$(travlangDEP_CMD) $(SRC) $(MLI) > .depend
 
 -include .depend

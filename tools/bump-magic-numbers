@@ -1,7 +1,7 @@
 #!/bin/sh
 #**************************************************************************
 #*                                                                        *
-#*                                 OCaml                                  *
+#*                                 travlang                                  *
 #*                                                                        *
 #*                   Sebastien Hinderer, Tarides, Paris                   *
 #*                                                                        *
@@ -14,18 +14,18 @@
 #*                                                                        *
 #**************************************************************************
 
-# Bump magic numbers of the OCaml compiler
+# Bump magic numbers of the travlang compiler
 # The script takes only one argument, the version part of the magic numbers
 # This version is a 3-digits string, e.g. 034
 # The script makes sure all the necessary files are updated and fails
 # if a file that it needs to update does not exist, leaving the repository
 # in a partially updated (likely inconsistent) state.
 
-# Also, the script updates both build-aux/ocaml_version.m4 (whose update
+# Also, the script updates both build-aux/travlang_version.m4 (whose update
 # is intended to be committed) and a few other *generated* files which are
 # ignored by git but which need to be updated here so that the script
 # can be used as part of the bootstrap procedure.
-# So the update of build-aux/ocaml_version.m4 (as well as the one this
+# So the update of build-aux/travlang_version.m4 (as well as the one this
 # implies to configure) are not strictly speaking needed for the
 # on-going bootstrap, but rather for future builds. The update of
 # generated files, in contrast, *is* required by the on-going bootstrap.
@@ -51,11 +51,11 @@ sed -e s/'...|magic}'/"$new_num|magic}"/ \
   utils/config.common.ml > utils/config.common.ml.tmp
 mv utils/config.common.ml.tmp utils/config.common.ml
 
-# Bump magic numbers in build-aux/ocaml_version.m4
+# Bump magic numbers in build-aux/travlang_version.m4
 
 sed -e s/'m4_define(\[MAGIC_NUMBER__VERSION\], \[...\])'/"m4_define([MAGIC_NUMBER__VERSION], [$new_num])"/ \
-  build-aux/ocaml_version.m4 > build-aux/ocaml_version.m4.tmp
-mv build-aux/ocaml_version.m4.tmp build-aux/ocaml_version.m4
+  build-aux/travlang_version.m4 > build-aux/travlang_version.m4.tmp
+mv build-aux/travlang_version.m4.tmp build-aux/travlang_version.m4
 
 # Regenerate the configure script
 

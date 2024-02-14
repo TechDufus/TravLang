@@ -47,11 +47,11 @@ let () =
   O.f N.x
 
 (* TEST
- setup-ocamlc.byte-build-env;
+ setup-travlangc.byte-build-env;
  {
-   ocamlc_byte_exit_status = "2";
-   ocamlc.byte;
+   travlangc_byte_exit_status = "2";
+   travlangc.byte;
  }{
-   check-ocamlc.byte-output;
+   check-travlangc.byte-output;
  }
 *)

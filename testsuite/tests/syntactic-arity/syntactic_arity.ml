@@ -60,7 +60,7 @@ match binding1 (module M1) () with
 | _ -> assert false;;
 
 let binding2 ?opt:((module M) = (module M1 : S)) M.E = ()
-[@@ocaml.warning "-8"];;
+[@@travlang.warning "-8"];;
 
 binding2 M1.E;;
 binding2 ~opt:(module M2) M2.E;;

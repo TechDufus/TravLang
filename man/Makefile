@@ -1,6 +1,6 @@
 #**************************************************************************
 #*                                                                        *
-#*                                 OCaml                                  *
+#*                                 travlang                                  *
 #*                                                                        *
 #*            Xavier Leroy, projet Cristal, INRIA Rocquencourt            *
 #*                                                                        *
@@ -17,8 +17,8 @@ ROOTDIR = ..
 include $(ROOTDIR)/Makefile.common
 
 MANPAGES = $(addsuffix .1,\
-  ocaml ocamlc ocamlc.opt ocamlcp ocamldebug ocamldep ocamldoc ocamllex \
-  ocamlmktop ocamlopt ocamlopt.opt ocamloptp ocamlprof ocamlrun ocamlyacc)
+  travlang travlangc travlangc.opt travlangcp travlangdebug travlangdep travlangdoc travlanglex \
+  travlangmktop travlangopt travlangopt.opt travlangoptp travlangprof travlangrun travlangyacc)
 
 .PHONY: install
 install:

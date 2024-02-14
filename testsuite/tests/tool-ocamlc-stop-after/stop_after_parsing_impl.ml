@@ -12,9 +12,9 @@ while_translating_from_old_s
 let _ = (1 + "true") + x
 
 (* TEST
- setup-ocamlc.byte-build-env;
+ setup-travlangc.byte-build-env;
  flags = "-stop-after parsing -dparsetree";
- ocamlc_byte_exit_status = "0";
- ocamlc.byte;
- check-ocamlc.byte-output;
+ travlangc_byte_exit_status = "0";
+ travlangc.byte;
+ check-travlangc.byte-output;
 *)

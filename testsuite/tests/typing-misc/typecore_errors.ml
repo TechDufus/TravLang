@@ -447,18 +447,18 @@ Error: The record field "y" belongs to the type "s"
 
 (** Error extension node *)
 
-let x = [%ocaml.error "Expression error"]
+let x = [%travlang.error "Expression error"]
 [%%expect {|
 Line 3, characters 10-21:
-3 | let x = [%ocaml.error "Expression error"]
+3 | let x = [%travlang.error "Expression error"]
               ^^^^^^^^^^^
 Error: Expression error
 |}]
 
-let f [%ocaml.error "Pattern error"] = ()
+let f [%travlang.error "Pattern error"] = ()
 [%%expect {|
 Line 1, characters 8-19:
-1 | let f [%ocaml.error "Pattern error"] = ()
+1 | let f [%travlang.error "Pattern error"] = ()
             ^^^^^^^^^^^
 Error: Pattern error
 |}]

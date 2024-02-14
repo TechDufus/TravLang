@@ -5,14 +5,14 @@
  set csharp_cmd = "${csc} ${csc_flags} /out:main.exe main.cs";
  shared-libraries;
  {
-   setup-ocamlc.byte-build-env;
+   setup-travlangc.byte-build-env;
    module = "plugin.ml";
-   ocamlc.byte;
+   travlangc.byte;
    module = "";
    flags = "-output-obj";
    program = "main.dll";
    all_modules = "dynlink.cma main.ml entry.c";
-   ocamlc.byte;
+   travlangc.byte;
    script = "${csharp_cmd}";
    script;
    program = "./main.exe";
@@ -21,16 +21,16 @@
    check-program-output;
  }{
    compiler_directory_suffix = "-dll";
-   setup-ocamlc.byte-build-env;
+   setup-travlangc.byte-build-env;
    module = "plugin.ml";
-   ocamlc.byte;
+   travlangc.byte;
    module = "";
    flags = "-output-obj";
    program = "main_obj.${objext}";
    all_modules = "dynlink.cma entry.c main.ml";
-   ocamlc.byte;
+   travlangc.byte;
    script = "${mkdll} -maindll -o main.dll main_obj.${objext} entry.${objext} \
-     ${ocamlsrcdir}/runtime/libcamlrun.${libext} ${bytecc_libs}";
+     ${travlangsrcdir}/runtime/libcamlrun.${libext} ${bytecc_libs}";
    script;
    script = "${csharp_cmd}";
    script;
@@ -39,15 +39,15 @@
    reference = "${test_source_directory}/main.bytecode.reference";
    check-program-output;
  }{
-   setup-ocamlopt.byte-build-env;
+   setup-travlangopt.byte-build-env;
    program = "plugin.cmxs";
    flags = "-shared";
    all_modules = "plugin.ml";
-   ocamlopt.byte;
+   travlangopt.byte;
    flags = "-output-obj";
    program = "main.dll";
    all_modules = "dynlink.cmxa entry.c main.ml";
-   ocamlopt.byte;
+   travlangopt.byte;
    script = "${csharp_cmd}";
    script;
    program = "./main.exe";
@@ -56,17 +56,17 @@
    check-program-output;
  }{
    compiler_directory_suffix = "-dll";
-   setup-ocamlopt.byte-build-env;
+   setup-travlangopt.byte-build-env;
    program = "plugin.cmxs";
    flags = "-shared";
    all_modules = "plugin.ml";
-   ocamlopt.byte;
+   travlangopt.byte;
    flags = "-output-obj";
    program = "main_obj.${objext}";
    all_modules = "dynlink.cmxa entry.c main.ml";
-   ocamlopt.byte;
+   travlangopt.byte;
    script = "${mkdll} -maindll -o main.dll main_obj.${objext} entry.${objext} \
-     ${ocamlsrcdir}/runtime/libasmrun.${libext} ${nativecc_libs}";
+     ${travlangsrcdir}/runtime/libasmrun.${libext} ${nativecc_libs}";
    script;
    script = "${csharp_cmd}";
    script;

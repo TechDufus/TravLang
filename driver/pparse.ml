@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*         Daniel de Rauglaudre, projet Cristal, INRIA Rocquencourt       *)
 (*                                                                        *)
@@ -24,7 +24,7 @@ exception Error of error
 (* Optionally preprocess a source file *)
 
 let call_external_preprocessor sourcefile pp =
-      let tmpfile = Filename.temp_file "ocamlpp" "" in
+      let tmpfile = Filename.temp_file "travlangpp" "" in
       let comm = Printf.sprintf "%s %s > %s"
                                 pp (Filename.quote sourcefile) tmpfile
       in
@@ -155,7 +155,7 @@ let open_and_check_magic inputfile ast_magic =
       else false
     with
       Outdated_version ->
-        Misc.fatal_error "OCaml and preprocessor have incompatible versions"
+        Misc.fatal_error "travlang and preprocessor have incompatible versions"
     | _ -> false
   in
   (ic, is_ast_file)

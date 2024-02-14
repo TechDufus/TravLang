@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*   Xavier Leroy, projet Gallium, INRIA Rocquencourt                     *)
 (*   Gabriel Scherer, projet Parsifal, INRIA Saclay                       *)

@@ -1,59 +1,59 @@
 (* TEST
  modules = "lib.ml";
  {
-   setup-ocamlc.byte-build-env;
+   setup-travlangc.byte-build-env;
    all_modules = "main.ml";
    compile_only = "true";
-   ocamlc.byte;
+   travlangc.byte;
    all_modules = "lib.ml";
-   ocamlc.byte;
+   travlangc.byte;
    {
      all_modules = "lib.cmo main.cmo";
      compile_only = "false";
-     ocamlc_byte_exit_status = "2";
-     ocamlc.byte;
+     travlangc_byte_exit_status = "2";
+     travlangc.byte;
    }{
      all_modules = "lib.cmo main.cmo";
      compile_only = "false";
-     ocamlc_byte_exit_status = "2";
+     travlangc_byte_exit_status = "2";
      flags = "-a";
-     ocamlc.byte;
+     travlangc.byte;
   }{
      all_modules = "lib.cmo";
      compile_only = "false";
-     ocamlc_byte_exit_status = "2";
-     ocamlc.byte;
-     check-ocamlc.byte-output;
+     travlangc_byte_exit_status = "2";
+     travlangc.byte;
+     check-travlangc.byte-output;
   }
 }{
-   setup-ocamlopt.byte-build-env;
+   setup-travlangopt.byte-build-env;
    all_modules = "main.ml";
    compile_only = "true";
-   ocamlopt.byte;
+   travlangopt.byte;
    all_modules = "lib.ml";
-   ocamlopt.byte;
+   travlangopt.byte;
    {
      all_modules = "lib.cmx main.cmx";
      compile_only = "false";
-     ocamlopt_byte_exit_status = "2";
-     ocamlopt.byte;
+     travlangopt_byte_exit_status = "2";
+     travlangopt.byte;
    }{
      all_modules = "lib.cmx main.cmx";
      compile_only = "false";
-     ocamlopt_byte_exit_status = "2";
+     travlangopt_byte_exit_status = "2";
      flags = "-a";
-     ocamlopt.byte;
+     travlangopt.byte;
   }{
      all_modules = "lib.cmx";
      compile_only = "false";
-     ocamlopt_byte_exit_status = "2";
-     ocamlopt.byte;
-     check-ocamlopt.byte-output;
+     travlangopt_byte_exit_status = "2";
+     travlangopt.byte;
+     check-travlangopt.byte-output;
   }
 }
 *)
 
-(* Make sure ocamlc and ocamlopt print badly ordered dependencies only once.
-   See issue #12074. We test with ocamlc.byte only. *)
+(* Make sure travlangc and travlangopt print badly ordered dependencies only once.
+   See issue #12074. We test with travlangc.byte only. *)
 
 let value = ()

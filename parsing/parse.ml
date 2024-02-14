@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -75,7 +75,7 @@ let wrap (parser : 'a parser) lexbuf : 'a =
    mode, and does not request the next token, so the current token remains
    [error].
 
-   In OCaml's grammar, the [error] token always appears at the end of a
+   In travlang's grammar, the [error] token always appears at the end of a
    production, and this production always raises an exception. In such
    a situation, the strategy described above means that:
 

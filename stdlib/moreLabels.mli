@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*                Jacques Garrigue, Kyoto University RIMS                 *)
 (*                                                                        *)
@@ -52,7 +52,7 @@ module Hashtbl : sig
 
      The polymorphic {!t} hash table is useful in simpler cases or
      in interactive environments. It uses the polymorphic {!hash} function
-     defined in the OCaml runtime (at the time of writing, it's SipHash),
+     defined in the travlang runtime (at the time of writing, it's SipHash),
      as well as the polymorphic equality [(=)].
 
      See {{!examples} the examples section}.
@@ -113,7 +113,7 @@ module Hashtbl : sig
      If no [~random] parameter is given, hash tables are created
      in non-random mode by default.  This default can be changed
      either programmatically by calling {!randomize} or by
-     setting the [R] flag in the [OCAMLRUNPARAM] environment variable.
+     setting the [R] flag in the [travlangRUNPARAM] environment variable.
 
      @before 4.00 the [~random] parameter was not present and all
      hash tables were created in non-randomized mode. *)
@@ -185,7 +185,7 @@ module Hashtbl : sig
      If the hash table was created in non-randomized mode, the order
      in which the bindings are enumerated is reproducible between
      successive runs of the program, and even between minor versions
-     of OCaml.  For randomized hash tables, the order of enumeration
+     of travlang.  For randomized hash tables, the order of enumeration
      is entirely random.
 
      The behavior is not specified if the hash table is modified
@@ -219,7 +219,7 @@ module Hashtbl : sig
      If the hash table was created in non-randomized mode, the order
      in which the bindings are enumerated is reproducible between
      successive runs of the program, and even between minor versions
-     of OCaml.  For randomized hash tables, the order of enumeration
+     of travlang.  For randomized hash tables, the order of enumeration
      is entirely random.
 
      The behavior is not specified if the hash table is modified
@@ -237,7 +237,7 @@ module Hashtbl : sig
       randomized mode by default: {!create} returns randomized
       hash tables, unless the [~random:false] optional parameter is given.
       The same effect can be achieved by setting the [R] parameter in
-      the [OCAMLRUNPARAM] environment variable.
+      the [travlangRUNPARAM] environment variable.
 
       It is recommended that applications or Web frameworks that need to
       protect themselves against the denial-of-service attack described

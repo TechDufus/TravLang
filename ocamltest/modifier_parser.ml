@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Sebastien Hinderer, projet Gallium, INRIA Paris            *)
 (*                                                                        *)
@@ -15,7 +15,7 @@
 
 (* Parsing of modifier (response) files created by hooks and scripts *)
 
-open Ocamltest_stdlib
+open travlangtest_stdlib
 
 let modifier_of_string str =
   let lexbuf = Lexing.from_string str in

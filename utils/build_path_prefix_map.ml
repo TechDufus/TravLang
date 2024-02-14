@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*            Gabriel Scherer, projet Parsifal, INRIA Saclay              *)
 (*                                                                        *)

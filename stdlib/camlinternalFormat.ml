@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*                          Benoit Vaugon, ENSTA                          *)
 (*                                                                        *)
@@ -225,7 +225,7 @@ let default_float_precision fconv =
      necessary".  For the other FP formats, we take the absolute value
      of the precision, hence 6 digits by default. *)
   | Float_F -> 12
-  (* Default precision for OCaml float printing (%F). *)
+  (* Default precision for travlang float printing (%F). *)
 
 (******************************************************************************)
                                (* Externals *)
@@ -309,7 +309,7 @@ let char_of_counter counter = match counter with
 
 (***)
 
-(* Print a char_set in a buffer with the OCaml format lexical convention. *)
+(* Print a char_set in a buffer with the travlang format lexical convention. *)
 let bprint_char_set buf char_set =
   let rec print_start set =
     let is_alone c =
@@ -1367,7 +1367,7 @@ let fix_int_precision prec str =
   | _ ->
     str
 
-(* Escape a string according to the OCaml lexing convention. *)
+(* Escape a string according to the travlang lexing convention. *)
 let string_to_caml_string str =
   let str = String.escaped str in
   let l = String.length str in
@@ -1457,7 +1457,7 @@ let convert_int64 iconv n =
   transform_int_alt iconv (format_int64 (format_of_iconvL iconv) n)
 
 (* Convert a float to string. *)
-(* Fix special case of "OCaml float format". *)
+(* Fix special case of "travlang float format". *)
 let convert_float fconv prec x =
   let hex () =
     let sign =
@@ -1488,7 +1488,7 @@ let convert_float fconv prec x =
   | Float_f | Float_e | Float_E | Float_g | Float_G ->
     format_float (format_of_fconv fconv prec) x
 
-(* Convert a char to a string according to the OCaml lexical convention. *)
+(* Convert a char to a string according to the travlang lexical convention. *)
 let format_caml_char c =
   let str = Char.escaped c in
   let l = String.length str in
@@ -2244,7 +2244,7 @@ let fmt_ebb_of_string ?legacy_behavior str =
          a semantics there.
 
          That said, the idea (supported by this tweak) that width and
-         precision literals are "integer literals" in the OCaml sense is
+         precision literals are "integer literals" in the travlang sense is
          still blatantly wrong, as 123_456 or 0xFF are rejected. *)
       parse_literal (minus || symb = '-') (str_ind + 1)
     | '*' ->

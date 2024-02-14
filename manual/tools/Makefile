@@ -2,24 +2,24 @@ ROOTDIR = ../..
 include $(ROOTDIR)/Makefile.common
 include $(ROOTDIR)/Makefile.best_binaries
 
-OCAMLC ?= $(BEST_OCAMLC) $(STDLIBFLAGS)
+travlangC ?= $(BEST_travlangC) $(STDLIBFLAGS)
 
 all: texquote2 transf
 
 
 transf: transf.cmo transfmain.cmo
-	$(OCAMLC) $(COMPFLAGS) -o $@ -g $^
+	$(travlangC) $(COMPFLAGS) -o $@ -g $^
 
 transfmain.cmo: transf.cmo
 
 texquote2: texquote2.ml
-	$(OCAMLC) $(COMPFLAGS) -o $@ $<
+	$(travlangC) $(COMPFLAGS) -o $@ $<
 
 %.cmo: %.ml
-	$(OCAMLC) $(COMPFLAGS) -c $<
+	$(travlangC) $(COMPFLAGS) -c $<
 
 %.cmi: %.mli
-	$(OCAMLC) $(COMPFLAGS) -c $<
+	$(travlangC) $(COMPFLAGS) -c $<
 
 .PHONY: clean
 clean:

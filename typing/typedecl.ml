@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*  Xavier Leroy and Jerome Vouillon, projet Cristal, INRIA Rocquencourt  *)
 (*                                                                        *)
@@ -681,9 +681,9 @@ let check_abbrev env sdecl (id, decl) =
   check_coherence env sdecl.ptype_loc (Path.Pident id) decl
 
 
-(* Note: Well-foundedness for OCaml types
+(* Note: Well-foundedness for travlang types
 
-   We want to guarantee that all cycles within OCaml types are
+   We want to guarantee that all cycles within travlang types are
    "guarded".
 
    More precisely, we consider a reachability relation
@@ -741,7 +741,7 @@ let check_abbrev env sdecl (id, decl) =
 
 (* Note: Forms of ill-foundedness
 
-   Several OCaml language constructs could introduce ill-founded
+   Several travlang language constructs could introduce ill-founded
    types, and there are several distinct checks that forbid different
    sources of ill-foundedness.
 
@@ -1573,7 +1573,7 @@ let make_native_repr env core_type ty ~global_repr =
   error_if_has_deep_native_repr_attributes core_type;
   match get_native_repr_attribute core_type.ptyp_attributes ~global_repr with
   | Native_repr_attr_absent ->
-    Same_as_ocaml_repr
+    Same_as_travlang_repr
   | Native_repr_attr_present kind ->
     begin match native_repr_of_type env kind ty with
     | None ->
@@ -2238,7 +2238,7 @@ let report_error ppf = function
                    depending on the instantiation of %a.@ \
                    You should annotate it with %a.@]"
         pp_evar evar
-        Style.inline_code "[@@ocaml.boxed]"
+        Style.inline_code "[@@travlang.boxed]"
   | Boxed_and_unboxed ->
       fprintf ppf "@[A type cannot be boxed and unboxed at the same time.@]"
   | Nonrec_gadt ->

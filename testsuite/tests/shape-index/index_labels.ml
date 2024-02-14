@@ -3,14 +3,14 @@
 flags = "-bin-annot -bin-annot-occurrences";
 compile_only = "true";
 readonly_files = "index_labels.ml";
-setup-ocamlc.byte-build-env;
+setup-travlangc.byte-build-env;
 all_modules = "index_labels.ml";
-ocamlc.byte;
-check-ocamlc.byte-output;
+travlangc.byte;
+check-travlangc.byte-output;
 
 program = "-quiet -index -decls index_labels.cmt";
 output = "out_objinfo";
-ocamlobjinfo;
+travlangobjinfo;
 
 check-program-output;
 *)

@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -2324,7 +2324,7 @@ and type_one_application ~ctx:(apply_loc,sfunct,md_f,args)
             (* this call to warning_scope allows e.g.
                [ F (struct end [@warning "-73"]) ]
                not to warn; useful when generating code that must
-               work over multiple versions of OCaml *)
+               work over multiple versions of travlang *)
             Builtin_attributes.warning_scope arg.arg.mod_attributes @@ fun () ->
             Location.prerr_warning arg.arg.mod_loc
               Warnings.Generative_application_expects_unit

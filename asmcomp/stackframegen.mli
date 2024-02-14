@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cambium, INRIA Paris                  *)
 (*                                                                        *)
@@ -18,7 +18,7 @@
 
 type analysis_result = {
   contains_nontail_calls: bool;
-    (** Whether the function contains non-tail calls to OCaml functions.
+    (** Whether the function contains non-tail calls to travlang functions.
         Calls to C functions don't count.
     *)
   frame_required: bool;
@@ -26,7 +26,7 @@ type analysis_result = {
         one of the following reasons:
         - some local variables are stack-allocated
         - the function needs to save its return address on the stack, e.g.:
-           -- it contains a non-tail call to an OCaml function
+           -- it contains a non-tail call to an travlang function
            -- it calls a C function
            -- it contains an allocation or a poll point
            -- it performs an array bound check (on some ports)

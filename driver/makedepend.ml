@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -61,7 +61,7 @@ let fix_slash s =
     String.map (function '\\' -> '/' | c -> c) s
   end
 
-(* Since we reinitialize load_path after reading OCAMLCOMP,
+(* Since we reinitialize load_path after reading travlangCOMP,
   we must use a cache instead of calling Sys.readdir too often. *)
 let dirs = ref String.Map.empty
 let readdir dir =
@@ -242,7 +242,7 @@ let report_err exn =
   Error_occurred.set ();
   print_exception exn
 
-let tool_name = "ocamldep"
+let tool_name = "travlangdep"
 
 let rec lexical_approximation lexbuf =
   (* Approximation when a file can't be parsed.
@@ -554,11 +554,11 @@ let process_dep_args dep_args = List.iter process_dep_arg dep_args
 (* Entry point *)
 
 let print_version () =
-  Format.printf "ocamldep, version %s@." Sys.ocaml_version;
+  Format.printf "travlangdep, version %s@." Sys.travlang_version;
   exit 0
 
 let print_version_num () =
-  Format.printf "%s@." Sys.ocaml_version;
+  Format.printf "%s@." Sys.travlang_version;
   exit 0
 
 
@@ -568,7 +568,7 @@ let run_main argv =
   Clflags.classic := false;
   try
     Compenv.readenv stderr Before_args;
-    Clflags.reset_arguments (); (* reset arguments from ocamlc/ocamlopt *)
+    Clflags.reset_arguments (); (* reset arguments from travlangc/travlangopt *)
     Clflags.add_arguments __LOC__ [
       "-absname", Arg.Set Clflags.absname,
         " Show absolute filenames in error messages";

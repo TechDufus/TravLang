@@ -1,15 +1,15 @@
 (* TEST
  readonly_files = "largeFile.ml";
- setup-ocaml-build-env;
+ setup-travlang-build-env;
  compile_only = "true";
  all_modules = "largeFile.ml";
- ocamlc.byte;
+ travlangc.byte;
  script = "mkdir -p inc";
  script;
  script = "mv largeFile.cmi largeFile.cmo inc/";
  script;
- ocaml;
- check-ocaml-output;
+ travlang;
+ check-travlang-output;
 *)
 #directory "inc";;
 #load "largeFile.cmo";;

@@ -57,21 +57,21 @@ let () = drop s.cell
 (* TEST
  flags = "-c -nostdlib -nopervasives -dlambda -dno-unique-ids";
  {
-   setup-ocamlc.byte-build-env;
-   ocamlc.byte;
-   compiler_reference = "${test_source_directory}/anonymous.ocamlc.reference";
-   check-ocamlc.byte-output;
+   setup-travlangc.byte-build-env;
+   travlangc.byte;
+   compiler_reference = "${test_source_directory}/anonymous.travlangc.reference";
+   check-travlangc.byte-output;
  }{
-   setup-ocamlopt.byte-build-env;
-   ocamlopt.byte;
+   setup-travlangopt.byte-build-env;
+   travlangopt.byte;
    {
      no-flambda;
-     compiler_reference = "${test_source_directory}/anonymous.ocamlopt.reference";
-     check-ocamlopt.byte-output;
+     compiler_reference = "${test_source_directory}/anonymous.travlangopt.reference";
+     check-travlangopt.byte-output;
    }{
      flambda;
-     compiler_reference = "${test_source_directory}/anonymous.ocamlopt.flambda.reference";
-     check-ocamlc.byte-output;
+     compiler_reference = "${test_source_directory}/anonymous.travlangopt.flambda.reference";
+     check-travlangc.byte-output;
    }
  }
 *)

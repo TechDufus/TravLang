@@ -31,7 +31,7 @@ release:
 
 # The pregen-etex target generates the latex files from the .etex
 # files to ensure that this phase of the manual build process, which
-# may execute OCaml fragments and expect certain outputs, is correct
+# may execute travlang fragments and expect certain outputs, is correct
 pregen-etex: tools
 	$(MAKE) -C src etex-files
 

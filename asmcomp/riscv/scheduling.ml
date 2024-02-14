@@ -1,7 +1,7 @@
 # 2 "asmcomp/riscv/scheduling.ml"
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*                Nicolas Ojeda Bar <n.oje.bar@gmail.com>                 *)
 (*                                                                        *)

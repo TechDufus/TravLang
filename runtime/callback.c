@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           */
 /*                                                                        */
@@ -15,7 +15,7 @@
 
 #define CAML_INTERNALS
 
-/* Callbacks from C to OCaml */
+/* Callbacks from C to travlang */
 
 #include <string.h>
 #include "caml/alloc.h"
@@ -34,7 +34,7 @@
    registered as GC roots when the function call actually happens.
 
    This mirrors the reachability/lifetime guarantees provided by
-   function calls in OCaml code, where the arguments can be collected
+   function calls in travlang code, where the arguments can be collected
    as soon as they are not used anymore within the function body.
 
    The closure and its arguments may still have to be registered as
@@ -317,7 +317,7 @@ CAMLexport value caml_callbackN (value closure, int narg, value args[])
   return caml_raise_if_exception(caml_callbackN_exn(closure, narg, args));
 }
 
-/* Naming of OCaml values */
+/* Naming of travlang values */
 
 struct named_value {
   value val;

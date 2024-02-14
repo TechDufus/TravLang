@@ -3,7 +3,7 @@ two ways: constraints on type parameters may change depending on the
 value constructor, and some type variables may be existentially
 quantified. They are described in chapter \ref{c:gadts-tutorial}.
 
-(Introduced in OCaml 4.00)
+(Introduced in travlang 4.00)
 
 \begin{syntax}
 constr-decl:
@@ -15,7 +15,7 @@ type-param:
         | [variance] '_'
 \end{syntax}
 
-Refutation cases. (Introduced in OCaml 4.03)
+Refutation cases. (Introduced in travlang 4.03)
 
 \begin{syntax}
 matching-case:
@@ -23,7 +23,7 @@ matching-case:
    | pattern '->' '.'
 \end{syntax}
 
-Explicit naming of existentials. (Introduced in OCaml 4.13.0)
+Explicit naming of existentials. (Introduced in travlang 4.13.0)
 
 \begin{syntax}
 pattern:

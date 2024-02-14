@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*                      Nicolas Ojeda Bar, LexiFi                         *)
 (*                                                                        *)
@@ -16,7 +16,7 @@
 (* A generic Parsetree mapping class *)
 
 (*
-[@@@ocaml.warning "+9"]
+[@@@travlang.warning "+9"]
   (* Ensure that record patterns don't miss any field. *)
 *)
 
@@ -559,7 +559,7 @@ module CE = struct
 end
 
 (* Now, a generic AST mapper, to be extended to cover all kinds and
-   cases of the OCaml grammar.  The default behavior of the mapper is
+   cases of the travlang grammar.  The default behavior of the mapper is
    the identity. *)
 
 let default_iterator =

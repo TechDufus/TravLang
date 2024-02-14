@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*  Contributed by Stephane Glondu <steph@glondu.net>                     */
 /*                                                                        */

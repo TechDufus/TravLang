@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -19,18 +19,18 @@ open Clflags
 module Options = Main_args.Make_bytecomp_options (Main_args.Default.Main)
 
 let main argv ppf =
-  let program = "ocamlc" in
+  let program = "travlangc" in
   Clflags.add_arguments __LOC__ Options.list;
   Clflags.add_arguments __LOC__
     ["-depend", Arg.Unit Makedepend.main_from_option,
-     "<options> Compute dependencies (use 'ocamlc -depend -help' for details)"];
+     "<options> Compute dependencies (use 'travlangc -depend -help' for details)"];
   let exception Continue in
   match
     Compenv.readenv ppf Before_args;
     Compenv.parse_arguments (ref argv) Compenv.anonymous program;
     Compmisc.read_clflags_from_env ();
     if !Clflags.plugin then
-      Compenv.fatal "-plugin is only supported up to OCaml 4.08.0";
+      Compenv.fatal "-plugin is only supported up to travlang 4.08.0";
     begin try
       Compenv.process_deferred_actions
         (ppf,
@@ -72,14 +72,14 @@ let main argv ppf =
       Compmisc.init_path ();
 
       Bytelibrarian.create_archive
-        (Compenv.get_objfiles ~with_ocamlparam:false)
+        (Compenv.get_objfiles ~with_travlangparam:false)
         (Compenv.extract_output !output_name);
       Warnings.check_fatal ();
     end
     else if !make_package then begin
       Compmisc.init_path ();
       let extracted_output = Compenv.extract_output !output_name in
-      let revd = Compenv.get_objfiles ~with_ocamlparam:false in
+      let revd = Compenv.get_objfiles ~with_travlangparam:false in
       Compmisc.with_ppf_dump ~file_prefix:extracted_output (fun ppf_dump ->
         Bytepackager.package_files ~ppf_dump (Compmisc.initial_env ())
           revd (extracted_output));
@@ -103,7 +103,7 @@ let main argv ppf =
           Compenv.default_output !output_name
       in
       Compmisc.init_path ();
-      Bytelink.link (Compenv.get_objfiles ~with_ocamlparam:true) target;
+      Bytelink.link (Compenv.get_objfiles ~with_travlangparam:true) target;
       Warnings.check_fatal ();
     end;
   with

@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -79,7 +79,7 @@ end)
 let main () =
   let ppf = Format.err_formatter in
   Clflags.native_code := true;
-  let program = "ocamlnat" in
+  let program = "travlangnat" in
   let display_deprecated_script_alert =
     Array.length !argv >= 2 && Topcommon.is_command_like_name !argv.(1)
   in

@@ -1,6 +1,6 @@
 #**************************************************************************
 #*                                                                        *
-#*                                 OCaml                                  *
+#*                                 travlang                                  *
 #*                                                                        *
 #*            Xavier Leroy, projet Cristal, INRIA Rocquencourt            *
 #*                                                                        *
@@ -26,10 +26,10 @@ OC_CFLAGS += $(SHAREDLIB_CFLAGS)
 
 LIBS = $(STDLIBFLAGS) -I $(ROOTDIR)/otherlibs/unix
 
-CAMLC=$(BEST_OCAMLC) $(LIBS)
-CAMLOPT=$(BEST_OCAMLOPT) $(LIBS)
+CAMLC=$(BEST_travlangC) $(LIBS)
+CAMLOPT=$(BEST_travlangOPT) $(LIBS)
 
-MKLIB=$(OCAMLRUN) $(ROOTDIR)/tools/ocamlmklib$(EXE)
+MKLIB=$(travlangRUN) $(ROOTDIR)/tools/travlangmklib$(EXE)
 COMPFLAGS=-w +33..39 -warn-error +A -g -bin-annot
 ifeq "$(FLAMBDA)" "true"
 OPTCOMPFLAGS += -O3
@@ -59,22 +59,22 @@ all: lib$(LIBNAME).$(A) $(LIBNAME).cma $(CMIFILES)
 allopt: lib$(LIBNAME)nat.$(A) $(LIBNAME).cmxa $(CMIFILES)
 
 lib$(LIBNAME).$(A): $(BYTECODE_C_OBJS)
-	$(V_OCAMLMKLIB)$(MKLIB) -o $(LIBNAME) $(BYTECODE_C_OBJS)
+	$(V_travlangMKLIB)$(MKLIB) -o $(LIBNAME) $(BYTECODE_C_OBJS)
 
 lib$(LIBNAME)nat.$(A): OC_CFLAGS += $(OC_NATIVE_CFLAGS)
 
 lib$(LIBNAME)nat.$(A): $(NATIVECODE_C_OBJS)
-	$(V_OCAMLMKLIB)$(MKLIB) -o $(LIBNAME)nat $^
+	$(V_travlangMKLIB)$(MKLIB) -o $(LIBNAME)nat $^
 
 $(LIBNAME).cma: $(THREADS_BCOBJS)
 ifeq "$(UNIX_OR_WIN32)" "unix"
-	$(V_OCAMLMKLIB)$(MKLIB) -o $(LIBNAME) -ocamlc '$(CAMLC)' -cclib -lunixbyt -linkall $^
+	$(V_travlangMKLIB)$(MKLIB) -o $(LIBNAME) -travlangc '$(CAMLC)' -cclib -lunixbyt -linkall $^
 # TODO: Figure out why -cclib -lunix is used here.
 # It may be because of the threadsUnix module which is deprecated.
 # It may hence be good to figure out whether this module shouldn't be
 # removed, and then -cclib -lunix arguments.
 else # Windows
-	$(V_OCAMLMKLIB)$(MKLIB) -o $(LIBNAME) -ocamlc "$(CAMLC)" -linkall $^
+	$(V_travlangMKLIB)$(MKLIB) -o $(LIBNAME) -travlangc "$(CAMLC)" -linkall $^
 endif
 
 # See remark above: force static linking of libthreadsnat.a
@@ -137,13 +137,13 @@ installopt:
 	  "$(INSTALL_THREADSLIBDIR)"
 
 %.cmi: %.mli
-	$(V_OCAMLC)$(CAMLC) -c $(COMPFLAGS) $<
+	$(V_travlangC)$(CAMLC) -c $(COMPFLAGS) $<
 
 %.cmo: %.ml
-	$(V_OCAMLC)$(CAMLC) -c $(COMPFLAGS) $<
+	$(V_travlangC)$(CAMLC) -c $(COMPFLAGS) $<
 
 %.cmx: %.ml
-	$(V_OCAMLOPT)$(CAMLOPT) -c $(COMPFLAGS) $(OPTCOMPFLAGS) $<
+	$(V_travlangOPT)$(CAMLOPT) -c $(COMPFLAGS) $(OPTCOMPFLAGS) $<
 
 DEP_FILES := st_stubs.b.$(D)
 ifeq "$(NATIVE_COMPILER)" "true"
@@ -165,6 +165,6 @@ $(foreach object_type, b n, $(eval $(call GEN_RULE,$(object_type))))
 
 .PHONY: depend
 depend:
-	$(V_GEN)$(OCAMLRUN) $(ROOTDIR)/boot/ocamlc -depend -slash *.mli *.ml > .depend
+	$(V_GEN)$(travlangRUN) $(ROOTDIR)/boot/travlangc -depend -slash *.mli *.ml > .depend
 
 include .depend

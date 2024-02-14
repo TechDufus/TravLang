@@ -77,7 +77,7 @@ mutable instance variable.
 
 \subsubsection*{sss:clty-open}{Local opens}
 
-Local opens are supported in class types since OCaml 4.06.
+Local opens are supported in class types since travlang 4.06.
 
 \subsubsection*{sss:clty-inheritance}{Inheritance}
 
@@ -264,7 +264,7 @@ Otherwise, it will be evaluated when the object constructor is called.
 
 \subsubsection*{sss:class-opens}{Local opens}
 
-Local opens are supported in class expressions since OCaml 4.06.
+Local opens are supported in class expressions since travlang 4.06.
 
 \subsubsection*{sss:class-body}{Class body}
 \begin{syntax}
@@ -285,7 +285,7 @@ type.  Self can only be used in method and initializers.
 Self type cannot be a closed object type, so that the class remains
 extensible.
 
-Since OCaml 4.01, it is an error if the same method or instance
+Since travlang 4.01, it is an error if the same method or instance
 variable name is defined several times in the same class body.
 
 \subsubsection*{sss:class-inheritance}{Inheritance}
@@ -407,7 +407,7 @@ polymorphic, the type must be explicitly polymorphic.
 
 \subsubsection*{sss:class-explicit-overriding}{Explicit overriding}
 
-Since Ocaml 3.12, the keywords @"inherit!"@, @"val!"@ and @"method!"@
+Since travlang 3.12, the keywords @"inherit!"@, @"val!"@ and @"method!"@
 have the same semantics as @"inherit"@, @"val"@ and @"method"@, but
 they additionally require the definition they introduce to be
 overriding. Namely, @"method!"@ requires @method-name@ to be already

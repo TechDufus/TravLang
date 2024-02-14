@@ -1,6 +1,6 @@
 (Introduced in 5.0)
 
-\textit{Note: Effect handlers in OCaml 5.0 should be considered experimental.
+\textit{Note: Effect handlers in travlang 5.0 should be considered experimental.
 Effect handlers are exposed in the standard library's \stdmoduleref{Effect}
 module as a thin wrapper around their implementation in the runtime. They are
 not supported as a language feature with new syntax. You can rely on them to
@@ -89,17 +89,17 @@ in~\ref{s:effects-shallow}.
 
 \subsubsection{s:effects-limitations}{Limitations}
 
-OCaml's effects are \emph{synchronous}: It is not possible to perform
+travlang's effects are \emph{synchronous}: It is not possible to perform
 an effect asynchronously from a signal handler, a finaliser, a memprof
 callback, or a GC alarm, and catch it from the main part of the code.
 Instead, this would result in an "Effect.Unhandled"
 exception (\ref{s:effects-unhandled}).
 
 Similarly, effects are incompatible with the use of callbacks from C
-to OCaml (section~\ref{s:c-callback}). It is not possible for an
+to travlang (section~\ref{s:c-callback}). It is not possible for an
 effect to cross a call to "caml_callback", this would instead result
 in an "Effect.Unhandled" exception. In particular, care must be taken
-when mixing libraries that use callbacks from C to OCaml and libraries
+when mixing libraries that use callbacks from C to travlang and libraries
 that use effects.
 
 \subsection{s:effects-concurrency}{Concurrency}
@@ -212,7 +212,7 @@ of "comp1" and "comp2", alone, do not assign any meaning to the "Xchg" effect.
 Let us extend the previous example for an arbitrary number of tasks. Many
 languages such as GHC Haskell and Go provide user-level threads as a primitive
 feature implemented in the runtime system. With effect handlers, user-level
-threads and their schedulers can be implemented in OCaml itself. Typically,
+threads and their schedulers can be implemented in travlang itself. Typically,
 user-level threading systems provide a "fork" primitive to spawn off a new
 concurrent task and a "yield" primitive to yield control to some other task.
 Correspondingly, we shall declare two effects as follows:
@@ -469,7 +469,7 @@ next();;
 We can use the same "invert" function on any "iter" function. For example,
 
 \begin{caml_example}{verbatim}
-let s = invert ~iter:(Fun.flip String.iter "OCaml")
+let s = invert ~iter:(Fun.flip String.iter "travlang")
 let next = Seq.to_dispenser s;;
 next();;
 next();;
@@ -568,7 +568,7 @@ baz ()
 It is useful to know a little bit about the implementation of effect handlers
 to appreciate the design choices and their performance characteristics. Effect
 handlers are implemented with the help of runtime-managed, dynamically growing
-segments of stack called \textit{fibers}. The program stack in OCaml is a
+segments of stack called \textit{fibers}. The program stack in travlang is a
 linked list of such fibers.
 
 A new fiber is allocated for evaluating the computation enclosed by an effect
@@ -613,7 +613,7 @@ fast.
 
 \subsubsection{s:effects-unhandled}{Unhandled effects}
 
-Unlike languages such as Eff and Koka, effect handlers in OCaml do not provide
+Unlike languages such as Eff and Koka, effect handlers in travlang do not provide
 \textit{effect safety}; the compiler does not statically ensure that all the
 effects performed by the program are handled. If effects do not have a matching
 handler, then an "Effect.Unhandled" exception is raised at the point of the
@@ -628,7 +628,7 @@ try bar () with Effect.Unhandled F -> "Saw Effect.Unhandled exception"
 \subsubsection{s:effects-linearity}{Linear continuations}
 
 As discussed earlier~\ref{s:effects-discontinue}, the delimited continuations
-in OCaml must be used linearly -- \emph{\textbf{every captured continuation
+in travlang must be used linearly -- \emph{\textbf{every captured continuation
 must be resumed either with a "continue" or "discontinue" exactly once}}.
 Attempting to use a continuation more than once raises a
 "Continuation_already_resumed" exception. For example:
@@ -642,15 +642,15 @@ try_with perform (Xchg 0)
     | _ -> None }
 \end{caml_example}
 
-The primary motivation for adding effect handlers to OCaml is to enable
+The primary motivation for adding effect handlers to travlang is to enable
 concurrent programming. One-shot continuations are sufficient for almost all
 concurrent programming needs. They are also much cheaper to implement
 compared to multi-shot continuations since they do not require stack frames to
-be copied. Moreover, OCaml programs may also manipulate linear resources such
+be copied. Moreover, travlang programs may also manipulate linear resources such
 as sockets and file descriptors. The linearity discipline is easily broken if
 the continuations are allowed to resume more than once. It would be quite hard
 to debug such linearity violations on resources due to the lack of static
-checks for linearity and the non-local nature of control flow. Hence, OCaml
+checks for linearity and the non-local nature of control flow. Hence, travlang
 does not support multi-shot continuations.
 
 While the ``at most once resumption'' property of continuations is ensured with
@@ -687,7 +687,7 @@ also includes the handler. This means that, when the continuation is resumed,
 the effect handler is automatically re-installed, and will handle the effect(s)
 that the computation may perform in the future.
 
-OCaml also provides \textit{shallow} handlers. Compared to deep handlers, a
+travlang also provides \textit{shallow} handlers. Compared to deep handlers, a
 shallow handler handles only the first effect performed by the computation. The
 continuation captured in a shallow handler does not include the handler. This
 means that, when the continuation is resumed, the handler is no longer present.

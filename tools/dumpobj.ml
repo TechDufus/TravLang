@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -561,14 +561,14 @@ let arg_fun filename =
   let ic = open_in_bin filename in
   if not !first_file then print_newline ();
   first_file := false;
-  if !print_banners then printf "## start of ocaml dump of %S\n%!" filename;
+  if !print_banners then printf "## start of travlang dump of %S\n%!" filename;
   begin try
           objfile := false; dump_exe ic
     with Bytesections.Bad_magic_number ->
       objfile := true; seek_in ic 0; dump_obj ic
   end;
   close_in ic;
-  if !print_banners then printf "## end of ocaml dump of %S\n%!" filename
+  if !print_banners then printf "## end of travlang dump of %S\n%!" filename
 
 let main () =
   Arg.parse_expand arg_list arg_fun arg_usage;

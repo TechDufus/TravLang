@@ -1,6 +1,6 @@
 #**************************************************************************
 #*                                                                        *
-#*                                 OCaml                                  *
+#*                                 travlang                                  *
 #*                                                                        *
 #*            Xavier Leroy, projet Cristal, INRIA Rocquencourt            *
 #*                     Mark Shinwell, Jane Street Europe                  *
@@ -24,8 +24,8 @@ ROOTDIR = ../..
 include $(ROOTDIR)/Makefile.common
 include $(ROOTDIR)/Makefile.best_binaries
 
-OCAMLC=$(BEST_OCAMLC) $(STDLIBFLAGS) -g
-OCAMLOPT=$(BEST_OCAMLOPT) $(STDLIBFLAGS) -g
+travlangC=$(BEST_travlangC) $(STDLIBFLAGS) -g
+travlangOPT=$(BEST_travlangOPT) $(STDLIBFLAGS) -g
 
 # COMPFLAGS should be in sync with the toplevel Makefile's COMPFLAGS.
 COMPFLAGS=-strict-sequence -principal -absname \
@@ -198,15 +198,15 @@ COMPILERLIBS_CMO=$(COMPILERLIBS_COPIED_SOURCES:.ml=.cmo)
 COMPILERLIBS_CMX=$(MINI_COMPILERLIBS_COPIED_SOURCES:.ml=.cmx)
 
 $(LOCAL_SRC)/%.cmi: $(LOCAL_SRC)/%.mli
-	$(V_OCAMLC)$(OCAMLC) -c -for-pack Dynlink_compilerlibs $(COMPFLAGS) \
+	$(V_travlangC)$(travlangC) -c -for-pack Dynlink_compilerlibs $(COMPFLAGS) \
           -I $(LOCAL_SRC) -o $@ $(LOCAL_SRC)/$*.mli
 
 $(LOCAL_SRC)/%.cmo: $(LOCAL_SRC)/%.ml
-	$(V_OCAMLC)$(OCAMLC) -c -for-pack Dynlink_compilerlibs $(COMPFLAGS) \
+	$(V_travlangC)$(travlangC) -c -for-pack Dynlink_compilerlibs $(COMPFLAGS) \
           -I $(LOCAL_SRC) -o $@ $(LOCAL_SRC)/$*.ml
 
 $(LOCAL_SRC)/%.cmx: $(LOCAL_SRC)/%.ml
-	$(V_OCAMLOPT)$(OCAMLOPT) -c -for-pack Dynlink_compilerlibs $(COMPFLAGS) \
+	$(V_travlangOPT)$(travlangOPT) -c -for-pack Dynlink_compilerlibs $(COMPFLAGS) \
           $(OPTCOMPFLAGS) -I $(LOCAL_SRC) -o $@ $(LOCAL_SRC)/$*.ml
 
 # Rules for building the [Dynlink_compilerlibs] bytecode and native packs
@@ -219,10 +219,10 @@ $(LOCAL_SRC)/%.cmx: $(LOCAL_SRC)/%.ml
 byt%/dynlink_compilerlibs.cmo byt%/dynlink_compilerlibs.cmi: $(COMPILERLIBS_CMO)
 	@$(if $(filter-out e,$*),\
         $(error Should only build byte/dynlink_compilerlibs.cmo!))
-	$(V_OCAMLC)$(OCAMLC) $(COMPFLAGS) -pack -o byte/dynlink_compilerlibs.cmo $^
+	$(V_travlangC)$(travlangC) $(COMPFLAGS) -pack -o byte/dynlink_compilerlibs.cmo $^
 
 native/dynlink_compilerlibs.cmx: $(COMPILERLIBS_CMX)
-	$(V_OCAMLOPT)$(OCAMLOPT) $(COMPFLAGS) $(OPTCOMPFLAGS) -pack -o $@ $(COMPILERLIBS_CMX)
+	$(V_travlangOPT)$(travlangOPT) $(COMPFLAGS) $(OPTCOMPFLAGS) -pack -o $@ $(COMPILERLIBS_CMX)
 
 %/dynlink.cmi: dynlink.cmi dynlink.mli
 	cp $^ $*/
@@ -239,13 +239,13 @@ all: dynlink.cma
 allopt: dynlink.cmxa
 
 dynlink.cma: $(OBJS)
-	$(V_LINKC)$(OCAMLC) $(COMPFLAGS) -ccopt "$(NATDYNLINKOPTS)" -a -I byte -o $@ $^
+	$(V_LINKC)$(travlangC) $(COMPFLAGS) -ccopt "$(NATDYNLINKOPTS)" -a -I byte -o $@ $^
 
 dynlink.cmxa: $(NATOBJS)
-	$(V_LINKOPT)$(OCAMLOPT) $(COMPFLAGS) -ccopt "$(NATDYNLINKOPTS)" -a -I native \
+	$(V_LINKOPT)$(travlangOPT) $(COMPFLAGS) -ccopt "$(NATDYNLINKOPTS)" -a -I native \
 	            -o $@ $^
 # As for all other .cmxa files, ensure that the .cmx files are in the same
-# directory. If this were omitted, ocamldoc in particular will fail to build
+# directory. If this were omitted, travlangdoc in particular will fail to build
 # with a -opaque warning. Note that installopt refers to $(NATOBJS) so doesn't
 # require this file to exist, hence its inclusion in the recipe for dynlink.cmxa
 # rather than as a dependency elsewhere.
@@ -253,7 +253,7 @@ dynlink.cmxa: $(NATOBJS)
 
 # Since there is no .mli for [Dynlink_platform_intf], we need to be
 # careful that compilation of the .cmx file does not write the .cmi file again,
-# which would cause rebuilding of ocamlopt.  The easiest way to do this seems
+# which would cause rebuilding of travlangopt.  The easiest way to do this seems
 # to be to copy the .ml file, which is a valid .mli, to the .mli.
 dynlink_platform_intf.mli: dynlink_platform_intf.ml
 	cp $< $@
@@ -261,7 +261,7 @@ dynlink_platform_intf.mli: dynlink_platform_intf.ml
 INSTALL_LIBDIR_DYNLINK = $(INSTALL_LIBDIR)/dynlink
 
 install:
-# If installing over a previous OCaml version, ensure dynlink is removed from
+# If installing over a previous travlang version, ensure dynlink is removed from
 # the previous installation.
 	rm -f "$(INSTALL_LIBDIR)"/dynlink.cm* "$(INSTALL_LIBDIR)/dynlink.mli" \
         "$(INSTALL_LIBDIR)/dynlink.$(A)" \
@@ -311,19 +311,19 @@ DEPEND_DUMMY_FILES=\
 
 depend: beforedepend
 	$(V_GEN)touch $(DEPEND_DUMMY_FILES) && \
-	$(OCAMLRUN) $(ROOTDIR)/boot/ocamlc -depend -slash \
+	$(travlangRUN) $(ROOTDIR)/boot/travlangc -depend -slash \
 	  -I byte -bytecode *.mli *.ml byte/dynlink.ml > .depend && \
-	$(OCAMLRUN) $(ROOTDIR)/boot/ocamlc -depend -slash \
+	$(travlangRUN) $(ROOTDIR)/boot/travlangc -depend -slash \
 	  -I native -native *.ml native/dynlink.ml >> .depend && \
 	rm -f $(DEPEND_DUMMY_FILES)
 
 include .depend
 
 %.cmi: %.mli
-	$(V_OCAMLC)$(OCAMLC) -c $(COMPFLAGS) $<
+	$(V_travlangC)$(travlangC) -c $(COMPFLAGS) $<
 
 %.cmo: %.ml
-	$(V_OCAMLC)$(OCAMLC) -c $(COMPFLAGS) $<
+	$(V_travlangC)$(travlangC) -c $(COMPFLAGS) $<
 
 %.cmx: %.ml
-	$(V_OCAMLOPT)$(OCAMLOPT) -c $(COMPFLAGS) $(OPTCOMPFLAGS) $<
+	$(V_travlangOPT)$(travlangOPT) -c $(COMPFLAGS) $(OPTCOMPFLAGS) $<

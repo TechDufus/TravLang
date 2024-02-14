@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Maxence Guesdon, projet Cristal, INRIA Rocquencourt        *)
 (*                                                                        *)
@@ -16,7 +16,7 @@
 (** The messages of the application. *)
 
 let ok = "Ok"
-let software = "OCamldoc"
+let software = "travlangdoc"
 let config_version = Config.version
 let magic = config_version^""
 
@@ -38,9 +38,9 @@ let display_custom_generators_dir = "Display custom generators standard director
 let add_load_dir = "<dir> Add the given directory to the search path for custom\n"^
   "\t\tgenerators"
 let load_file = "<file.cm[o|a|xs]> Load file defining a new documentation generator"
-let werr = " Treat ocamldoc warnings as errors"
+let werr = " Treat travlangdoc warnings as errors"
 let show_missed_crossref = " Show missed cross-reference opportunities"
-let hide_warnings = " do not print ocamldoc warnings"
+let hide_warnings = " do not print travlangdoc warnings"
 let target_dir = "<dir> Generate files in directory <dir>, rather than in current\n"^
   "\t\tdirectory (for man and HTML generators)"
 let dump = "<file> Dump collected information into <file>"
@@ -61,7 +61,7 @@ let generate_dot = " Generate dot code of top modules dependencies"
 
 let option_not_in_native_code op = "Option "^op^" not available in native code version."
 
-let default_out_file = "ocamldoc.out"
+let default_out_file = "travlangdoc.out"
 let out_file =
   "<file> Set the output file name, used by texi, latex and dot generators\n"^
   "\t\t(default is "^default_out_file^")\n"^
@@ -100,7 +100,7 @@ let man_suffix = "<suffix> Use <suffix> for man page files "^
 
 let option_title = "<title> Use <title> as title for the generated documentation"
 let option_intro =
-  "<file> Use content of <file> as ocamldoc text to use as introduction\n"^
+  "<file> Use content of <file> as travlangdoc text to use as introduction\n"^
   "\t\t"^(html_latex_texi_only)
 let with_parameter_list = " Display the complete list of parameters for functions and\n"^
   "\t\tmethods "^html_only
@@ -257,8 +257,8 @@ let error_location file l c =
   Printf.sprintf "File \"%s\", line %d, character %d:\n" file l c
 
 let bad_magic_number =
-  "Bad magic number for this ocamldoc dump!\n"^
-  "This dump was not created by this version of OCamldoc."
+  "Bad magic number for this travlangdoc dump!\n"^
+  "This dump was not created by this version of travlangdoc."
 
 let not_a_module_name s = s^" is not a valid module name"
 let load_file_error f e = "Error while loading file "^f^":\n"^e
@@ -277,7 +277,7 @@ let file_not_found_in_paths paths name =
     (String.concat "\n" paths)
 
 let tag_not_handled tag = "Tag @"^tag^" not handled by this generator"
-let should_escape_at_sign = "The character @ has a special meaning in ocamldoc comments, for commands such as @raise or @since. \
+let should_escape_at_sign = "The character @ has a special meaning in travlangdoc comments, for commands such as @raise or @since. \
 If you want to write a single @, you must escape it as \\@."
 let bad_tree = "Incorrect tree structure."
 let not_a_valid_tag s = s^" is not a valid tag."

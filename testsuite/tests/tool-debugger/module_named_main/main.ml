@@ -31,12 +31,12 @@ debug ();
 
 (* TEST
  flags += " -g ";
- ocamldebug_script = "${test_source_directory}/input_script";
+ travlangdebug_script = "${test_source_directory}/input_script";
  debugger;
  shared-libraries;
- setup-ocamlc.byte-build-env;
- ocamlc.byte;
- check-ocamlc.byte-output;
- ocamldebug;
+ setup-travlangc.byte-build-env;
+ travlangc.byte;
+ check-travlangc.byte-output;
+ travlangdebug;
  check-program-output;
 *)

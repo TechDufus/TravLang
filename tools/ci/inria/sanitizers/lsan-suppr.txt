@@ -1,2 +1,2 @@
-# ocamlyacc doesn't clean memory on exit
-leak:ocamlyacc
+# travlangyacc doesn't clean memory on exit
+leak:travlangyacc

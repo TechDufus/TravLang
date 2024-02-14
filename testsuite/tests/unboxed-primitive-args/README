@@ -1,5 +1,5 @@
-This directory contains tests to check that OCaml values are correctly
-passed between OCaml and C when a primitive takes some or all of its
+This directory contains tests to check that travlang values are correctly
+passed between travlang and C when a primitive takes some or all of its
 arguments unboxed/untagged and/or return its result unboxed/untagged.
 
 To test one primitive we do:
@@ -7,7 +7,7 @@ To test one primitive we do:
 - call the C external using arguments read from buffer A
 - the C function write all the arguments it receive into buffer B
 - the C function read the result from buffer A and returns it
-- on the OCaml side we write the received result into buffer B
+- on the travlang side we write the received result into buffer B
 - the test is successful if A and B have the same contents
 
 Between each call, we call a function with 128 value arguments set to
@@ -17,7 +17,7 @@ succeed. We don't pass more floats as it doesn't build on arm32.
 
 We construct the set of primitives to test as follow:
 - all combination of unboxed int32/int64/float arguments for functions
-  taking up to 6 arguments (with more than 6 ocamlopt takes a really
+  taking up to 6 arguments (with more than 6 travlangopt takes a really
   long time to compile the test files)
 - a bunch of manual tests for the rest and specific patterns.
   The list is [Gen_test.manual_tests]

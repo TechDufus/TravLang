@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*                 Stephen Dolan, University of Cambridge                 *)
 (*             Gabriel Scherer, projet Partout, INRIA Paris-Saclay        *)

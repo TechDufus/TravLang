@@ -2,7 +2,7 @@
 #3 "sys.ml.in"
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -126,26 +126,26 @@ external runtime_warnings_enabled: unit -> bool =
 
 (* The version string is found in file ../VERSION *)
 
-let ocaml_version = "@VERSION@"
+let travlang_version = "@VERSION@"
 
-let development_version = @OCAML_DEVELOPMENT_VERSION@
+let development_version = @travlang_DEVELOPMENT_VERSION@
 
 type extra_prefix = Plus | Tilde
 
 type extra_info = extra_prefix * string
 
-type ocaml_release_info = {
+type travlang_release_info = {
   major : int;
   minor : int;
   patchlevel : int;
   extra : extra_info option
 }
 
-let ocaml_release = {
-  major = @OCAML_VERSION_MAJOR@;
-  minor = @OCAML_VERSION_MINOR@;
-  patchlevel = @OCAML_VERSION_PATCHLEVEL@;
-  extra = @OCAML_RELEASE_EXTRA@
+let travlang_release = {
+  major = @travlang_VERSION_MAJOR@;
+  minor = @travlang_VERSION_MINOR@;
+  patchlevel = @travlang_VERSION_PATCHLEVEL@;
+  extra = @travlang_RELEASE_EXTRA@
 }
 
 (* Optimization *)

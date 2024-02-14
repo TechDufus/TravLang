@@ -12,7 +12,7 @@ API).
 
 There are two different scripts, `process_manual.ml` and
 `process_api.ml`.  The first one deals with all the chapters of the
-manual, while the latter deals with the api generated with `ocamldoc`.
+manual, while the latter deals with the api generated with `travlangdoc`.
 They both use a common module `common.ml`.
 
 ## How to build

@@ -1,8 +1,8 @@
 (* TEST
- setup-ocamlc.byte-build-env;
+ setup-travlangc.byte-build-env;
  flags = "-dlambda -dno-unique-ids";
- ocamlc.byte;
- check-ocamlc.byte-output;
+ travlangc.byte;
+ check-travlangc.byte-output;
 *)
 
 type 'a custom_rec = { x : unit; mutable y : 'a }

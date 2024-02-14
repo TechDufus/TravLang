@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -31,14 +31,14 @@ let pr ctx = fprintf ctx.oc
 let output_auto_defs ctx =
   if ctx.has_refill then begin
     pr ctx "\n";
-    pr ctx "let rec __ocaml_lex_refill_buf lexbuf _buf _len _curr _last \
+    pr ctx "let rec __travlang_lex_refill_buf lexbuf _buf _len _curr _last \
                                            _last_action state k =\n";
     pr ctx "  if lexbuf.Lexing.lex_eof_reached then\n";
     pr ctx "    state lexbuf _last_action _buf _len _curr _last k 256\n";
     pr ctx "  else begin\n";
     pr ctx "    lexbuf.Lexing.lex_curr_pos <- _curr;\n";
     pr ctx "    lexbuf.Lexing.lex_last_pos <- _last;\n";
-    pr ctx "    __ocaml_lex_refill\n";
+    pr ctx "    __travlang_lex_refill\n";
     pr ctx "      (fun lexbuf ->\n";
     pr ctx "        let _curr = lexbuf.Lexing.lex_curr_pos in\n";
     pr ctx "        let _last = lexbuf.Lexing.lex_last_pos in\n";
@@ -49,7 +49,7 @@ let output_auto_defs ctx =
                             _last k\n";
     pr ctx "            (Char.code (Bytes.unsafe_get _buf _curr))\n";
     pr ctx "        else\n";
-    pr ctx "          __ocaml_lex_refill_buf lexbuf _buf _len _curr _last \
+    pr ctx "          __travlang_lex_refill_buf lexbuf _buf _len _curr _last \
                                              _last_action\n";
     pr ctx "            state k\n";
     pr ctx "      )\n";
@@ -58,7 +58,7 @@ let output_auto_defs ctx =
     pr ctx "\n";
   end else begin
     pr ctx "\n";
-    pr ctx "let rec __ocaml_lex_refill_buf lexbuf _buf _len _curr _last =\n";
+    pr ctx "let rec __travlang_lex_refill_buf lexbuf _buf _len _curr _last =\n";
     pr ctx "  if lexbuf.Lexing.lex_eof_reached then\n";
     pr ctx "    256, _buf, _len, _curr, _last\n";
     pr ctx "  else begin\n";
@@ -73,7 +73,7 @@ let output_auto_defs ctx =
     pr ctx "      Char.code (Bytes.unsafe_get _buf _curr), _buf, _len, \
                             (_curr + 1), _last\n";
     pr ctx "    else\n";
-    pr ctx "      __ocaml_lex_refill_buf lexbuf _buf _len _curr _last\n";
+    pr ctx "      __travlang_lex_refill_buf lexbuf _buf _len _curr _last\n";
     pr ctx "  end\n";
     pr ctx "\n";
   end
@@ -224,7 +224,7 @@ let output_trans_body pref ctx = function
         output_moves ctx pref move;
         pr ctx "%sin\n\
                 %sif _curr >= _len then\n\
-                %s  __ocaml_lex_refill_buf lexbuf _buf _len _curr _last \
+                %s  __travlang_lex_refill_buf lexbuf _buf _len _curr _last \
                                                   _last_action state k\n\
                 %selse\n\
                 %s  state lexbuf _last_action _buf _len (_curr + 1) _last k\n\
@@ -234,7 +234,7 @@ let output_trans_body pref ctx = function
       else begin
         pr ctx "%slet next_char, _buf, _len, _curr, _last =\n\
                 %s  if _curr >= _len then\n\
-                %s    __ocaml_lex_refill_buf lexbuf _buf _len _curr _last\n\
+                %s    __travlang_lex_refill_buf lexbuf _buf _len _curr _last\n\
                 %s  else\n\
                 %s    Char.code (Bytes.unsafe_get _buf _curr),\n\
                 %s    _buf, _len, (_curr + 1), _last\n\
@@ -252,7 +252,7 @@ let output_automata ctx auto inline =
   for i = 0 to n-1 do
     if not inline.(i) then begin
       pr ctx
-        "%s __ocaml_lex_state%d lexbuf _last_action _buf _len _curr _last %s=\n"
+        "%s __travlang_lex_state%d lexbuf _last_action _buf _len _curr _last %s=\n"
         (if !first then "let rec" else "\nand")
         i
         (if ctx.has_refill then "k " else "");
@@ -288,7 +288,7 @@ let output_rules ic ctx pref tr e =
          pref;
   pr ctx "%s  end\n" pref;
   pr ctx "%send;\n" pref;
-  pr ctx "%smatch __ocaml_lex_result with\n" pref;
+  pr ctx "%smatch __travlang_lex_result with\n" pref;
   List.iter
     (fun (num, env, loc) ->
       pr ctx "%s| %d ->\n" pref num;
@@ -303,13 +303,13 @@ let output_entry ic ctx tr e =
   pr ctx "%s %alexbuf =\n" e.auto_name output_args e.auto_args;
 
   if ctx.has_refill then begin
-    pr ctx "  let k lexbuf __ocaml_lex_result =\n";
+    pr ctx "  let k lexbuf __travlang_lex_result =\n";
     output_rules ic ctx "    " tr e;
     pr ctx "  in\n";
     output_init ctx "  " e init_moves;
     ctx.goto_state ctx "  " init_num
   end else begin
-    pr ctx "  let __ocaml_lex_result =\n";
+    pr ctx "  let __travlang_lex_result =\n";
     output_init ctx "    " e init_moves;
     ctx.goto_state ctx "    " init_num;
     pr ctx "  in\n";
@@ -349,7 +349,7 @@ let goto_state inline transitions ctx pref n =
   if inline.(n) then
     output_trans_body pref ctx transitions.(n)
   else
-    pr ctx "%s__ocaml_lex_state%d lexbuf %s _buf _len _curr _last%s\n"
+    pr ctx "%s__travlang_lex_state%d lexbuf %s _buf _len _curr _last%s\n"
       pref n
       (last_action ctx)
       (if ctx.has_refill then " k" else "")

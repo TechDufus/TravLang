@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*  Xavier Leroy and Jerome Vouillon, projet Cristal, INRIA Rocquencourt  *)
 (*                                                                        *)
@@ -4186,7 +4186,7 @@ and eqtype_kind k1 k2 =
   | (Fpublic, Fpublic)   -> ()
   | _                    -> raise_unexplained_for Unify
                             (* It's probably not possible to hit this case with
-                               real OCaml code *)
+                               real travlang code *)
 
 and eqtype_row rename type_pairs subst env row1 row2 =
   (* Try expansion, needed when called from Includecore.type_manifest *)

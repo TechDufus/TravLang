@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                     Mark Shinwell, Jane Street Europe                  *)
@@ -17,7 +17,7 @@
 
 (** Mutable state used by [Cmmgen]. *)
 
-[@@@ocaml.warning "+a-4-30-40-41-42"]
+[@@@travlang.warning "+a-4-30-40-41-42"]
 
 type is_global = Global | Local
 

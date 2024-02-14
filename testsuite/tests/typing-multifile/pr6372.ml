@@ -1,9 +1,9 @@
 (* TEST
  readonly_files = "d.mli e.ml";
- setup-ocamlc.byte-build-env;
+ setup-travlangc.byte-build-env;
  module = "d.mli";
- ocamlc.byte;
+ travlangc.byte;
  module = "e.ml";
- ocamlc.byte;
- check-ocamlc.byte-output;
+ travlangc.byte;
+ check-travlangc.byte-output;
 *)

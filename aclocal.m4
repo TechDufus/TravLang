@@ -1,6 +1,6 @@
 #**************************************************************************
 #*                                                                        *
-#*                                 OCaml                                  *
+#*                                 travlang                                  *
 #*                                                                        *
 #*            Sebastien Hinderer, projet Gallium, INRIA Paris             *
 #*                                                                        *
@@ -14,8 +14,8 @@
 #**************************************************************************
 
 # This file is processed by autoconf.
-# It contains macro definitions specific to the OCaml package.
-# Every macro defined here should have its name prefixed with OCAML_.
+# It contains macro definitions specific to the travlang package.
+# Every macro defined here should have its name prefixed with travlang_.
 
 # libtool macros
 
@@ -32,14 +32,14 @@ m4_include([build-aux/ax_check_compile_flag.m4])
 m4_include([build-aux/ax_func_which_gethostbyname_r.m4])
 m4_include([build-aux/ax_pthread.m4])
 
-# OCaml version
-m4_include([build-aux/ocaml_version.m4])
+# travlang version
+m4_include([build-aux/travlang_version.m4])
 
 # The following macro figures out which C compiler is used.
 # It does so by checking for compiler-specific predefined macros.
 # A list of such macros can be found at
 # https://sourceforge.net/p/predef/wiki/Compilers/
-AC_DEFUN([OCAML_CC_VENDOR], [
+AC_DEFUN([travlang_CC_VENDOR], [
   AC_REQUIRE([AC_PROG_CC])
   AC_REQUIRE([AC_PROG_CPP])
   AC_MSG_CHECKING([C compiler vendor])
@@ -72,14 +72,14 @@ sunc __SUNPRO_C __SUNPRO_C
 unknown
 #endif]
     )],
-    [AC_CACHE_VAL([ocaml_cv_cc_vendor],
-      [ocaml_cv_cc_vendor=`sed -e '/^#/d' conftest.i | tr -s '[:space:]' '-' \
+    [AC_CACHE_VAL([travlang_cv_cc_vendor],
+      [travlang_cv_cc_vendor=`sed -e '/^#/d' conftest.i | tr -s '[:space:]' '-' \
                              | sed -e 's/^-//' -e 's/-$//'`])],
     [AC_MSG_FAILURE([unexpected preprocessor failure])])
-  AC_MSG_RESULT([$ocaml_cv_cc_vendor])
+  AC_MSG_RESULT([$travlang_cv_cc_vendor])
 ])
 
-AC_DEFUN([OCAML_SIGNAL_HANDLERS_SEMANTICS], [
+AC_DEFUN([travlang_SIGNAL_HANDLERS_SEMANTICS], [
   AC_MSG_NOTICE([checking semantics of signal handlers])
   AC_CHECK_FUNC([sigaction], [has_sigaction=true], [has_sigaction=false])
   AC_CHECK_FUNC([sigprocmask], [has_sigprocmask=true], [has_sigprocmask=false])
@@ -91,7 +91,7 @@ AC_DEFUN([OCAML_SIGNAL_HANDLERS_SEMANTICS], [
   )
 ])
 
-AC_DEFUN([OCAML_CC_HAS_FNO_TREE_VRP], [
+AC_DEFUN([travlang_CC_HAS_FNO_TREE_VRP], [
   AC_MSG_CHECKING([whether the C compiler supports -fno-tree-vrp])
   saved_CFLAGS="$CFLAGS"
   CFLAGS="-Werror -fno-tree-vrp $CFLAGS"
@@ -104,7 +104,7 @@ AC_DEFUN([OCAML_CC_HAS_FNO_TREE_VRP], [
   CFLAGS="$saved_CFLAGS"
 ])
 
-AC_DEFUN([OCAML_CC_SUPPORTS_ALIGNED], [
+AC_DEFUN([travlang_CC_SUPPORTS_ALIGNED], [
   AC_MSG_CHECKING([whether the C compiler supports __attribute__((aligned(n)))])
   AC_COMPILE_IFELSE(
     [AC_LANG_SOURCE([typedef struct {__attribute__((aligned(8))) int t;} t;])],
@@ -112,7 +112,7 @@ AC_DEFUN([OCAML_CC_SUPPORTS_ALIGNED], [
     AC_MSG_RESULT([yes])],
     [AC_MSG_RESULT([no])])])
 
-AC_DEFUN([OCAML_CC_SUPPORTS_TREE_VECTORIZE], [
+AC_DEFUN([travlang_CC_SUPPORTS_TREE_VECTORIZE], [
   AC_MSG_CHECKING(
  [whether the C compiler supports __attribute__((optimize("tree-vectorize")))])
   saved_CFLAGS="$CFLAGS"
@@ -128,7 +128,7 @@ AC_DEFUN([OCAML_CC_SUPPORTS_TREE_VECTORIZE], [
   CFLAGS="$saved_CFLAGS"
 ])
 
-AC_DEFUN([OCAML_CC_HAS_DEBUG_PREFIX_MAP], [
+AC_DEFUN([travlang_CC_HAS_DEBUG_PREFIX_MAP], [
   AC_MSG_CHECKING([whether the C compiler supports -fdebug-prefix-map])
   saved_CFLAGS="$CFLAGS"
   CFLAGS="-fdebug-prefix-map=old=new $CFLAGS"
@@ -141,7 +141,7 @@ AC_DEFUN([OCAML_CC_HAS_DEBUG_PREFIX_MAP], [
   CFLAGS="$saved_CFLAGS"
 ])
 
-AC_DEFUN([OCAML_CL_HAS_VOLATILE_METADATA], [
+AC_DEFUN([travlang_CL_HAS_VOLATILE_METADATA], [
   AC_MSG_CHECKING([whether the C compiler supports -d2VolatileMetadata-])
   saved_CFLAGS="$CFLAGS"
   CFLAGS="-d2VolatileMetadata- $CFLAGS"
@@ -155,7 +155,7 @@ AC_DEFUN([OCAML_CL_HAS_VOLATILE_METADATA], [
 ])
 
 # Save C compiler related variables
-AC_DEFUN([OCAML_CC_SAVE_VARIABLES], [
+AC_DEFUN([travlang_CC_SAVE_VARIABLES], [
   saved_CC="$CC"
   saved_CFLAGS="$CFLAGS"
   saved_CPPFLAGS="$CPPFLAGS"
@@ -169,7 +169,7 @@ AC_DEFUN([OCAML_CC_SAVE_VARIABLES], [
 ])
 
 # Restore the C compiler related variables
-AC_DEFUN([OCAML_CC_RESTORE_VARIABLES], [
+AC_DEFUN([travlang_CC_RESTORE_VARIABLES], [
   # Restore the content of confdefs.h
   mv confdefs.h.bak confdefs.h
   ac_compile="$saved_ac_compile"
@@ -180,10 +180,10 @@ AC_DEFUN([OCAML_CC_RESTORE_VARIABLES], [
   LIBS="$saved_LIBS"
 ])
 
-AC_DEFUN([OCAML_AS_HAS_DEBUG_PREFIX_MAP], [
+AC_DEFUN([travlang_AS_HAS_DEBUG_PREFIX_MAP], [
   AC_MSG_CHECKING([whether the assembler supports --debug-prefix-map])
 
-  OCAML_CC_SAVE_VARIABLES
+  travlang_CC_SAVE_VARIABLES
 
   # Modify C-compiler variables to use the assembler
   CC="$AS"
@@ -203,15 +203,15 @@ camlPervasives__loop_1128:
     [ashas_debug_prefix_map=false
     AC_MSG_RESULT([no])])
 
-  OCAML_CC_RESTORE_VARIABLES
+  travlang_CC_RESTORE_VARIABLES
 ])
 
-AC_DEFUN([OCAML_AS_HAS_CFI_DIRECTIVES], [
+AC_DEFUN([travlang_AS_HAS_CFI_DIRECTIVES], [
   AC_MSG_CHECKING([whether the assembler supports CFI directives])
 
   AS_IF([test x"$enable_cfi" = "xno"],
     [AC_MSG_RESULT([disabled])],
-    [OCAML_CC_SAVE_VARIABLES
+    [travlang_CC_SAVE_VARIABLES
 
     # Modify C-compiler variables to use the assembler
     CC="$ASPP"
@@ -248,7 +248,7 @@ camlPervasives__loop_1128:
         [as_ok=true],
         [as_ok=false])])
 
-    OCAML_CC_RESTORE_VARIABLES
+    travlang_CC_RESTORE_VARIABLES
 
     AS_IF([$aspp_ok && $as_ok],
       [asm_cfi_supported=true
@@ -261,7 +261,7 @@ camlPervasives__loop_1128:
         AC_MSG_RESULT([no])])])
   ])])
 
-AC_DEFUN([OCAML_MMAP_SUPPORTS_MAP_STACK], [
+AC_DEFUN([travlang_MMAP_SUPPORTS_MAP_STACK], [
   AC_MSG_CHECKING([whether mmap supports MAP_STACK])
   AC_RUN_IFELSE(
     [AC_LANG_SOURCE([[
@@ -285,7 +285,7 @@ int main (int argc, char *argv[]){
     [AC_MSG_RESULT([no assumed])])
 ])
 
-AC_DEFUN([OCAML_MMAP_SUPPORTS_HUGE_PAGES], [
+AC_DEFUN([travlang_MMAP_SUPPORTS_HUGE_PAGES], [
   AC_MSG_CHECKING([whether mmap supports huge pages])
   AC_RUN_IFELSE(
     [AC_LANG_SOURCE([[
@@ -333,7 +333,7 @@ int main (int argc, char *argv[]){
     [AC_MSG_RESULT([no assumed])])
 ])
 
-AC_DEFUN([OCAML_CHECK_LIBUNWIND], [
+AC_DEFUN([travlang_CHECK_LIBUNWIND], [
   SAVED_CPPFLAGS="$CPPFLAGS"
   SAVED_LDFLAGS="$LDFLAGS"
   CPPFLAGS="$CPPFLAGS $libunwind_cppflags"
@@ -346,8 +346,8 @@ AC_DEFUN([OCAML_CHECK_LIBUNWIND], [
   CPPFLAGS="$SAVED_CPPFLAGS"
 ])
 
-AC_DEFUN([OCAML_TEST_FLEXLINK], [
-  OCAML_CC_SAVE_VARIABLES
+AC_DEFUN([travlang_TEST_FLEXLINK], [
+  travlang_CC_SAVE_VARIABLES
 
   AC_MSG_CHECKING([whether $1 works])
 
@@ -373,11 +373,11 @@ AC_DEFUN([OCAML_TEST_FLEXLINK], [
     [AC_MSG_RESULT([unexpected compile error])
     AC_MSG_ERROR([error calling the C compiler])])
 
-  OCAML_CC_RESTORE_VARIABLES
+  travlang_CC_RESTORE_VARIABLES
 ])
 
-AC_DEFUN([OCAML_TEST_FLEXDLL_H], [
-  OCAML_CC_SAVE_VARIABLES
+AC_DEFUN([travlang_TEST_FLEXDLL_H], [
+  travlang_CC_SAVE_VARIABLES
 
   AS_IF([test -n "$1"],[CPPFLAGS="-I $1 $CPPFLAGS"])
   have_flexdll_h=no
@@ -386,11 +386,11 @@ AC_DEFUN([OCAML_TEST_FLEXDLL_H], [
     [AS_IF([test -n "$1"],
       [AC_MSG_ERROR([$1/flexdll.h appears unusable])])])
 
-  OCAML_CC_RESTORE_VARIABLES
+  travlang_CC_RESTORE_VARIABLES
 ])
 
-AC_DEFUN([OCAML_TEST_FLEXLINK_WHERE], [
-  OCAML_CC_SAVE_VARIABLES
+AC_DEFUN([travlang_TEST_FLEXLINK_WHERE], [
+  travlang_CC_SAVE_VARIABLES
 
   AC_MSG_CHECKING([if "$1 -where" includes flexdll.h])
   flexlink_where="$($1 -where | tr -d '\r')"
@@ -408,10 +408,10 @@ EOF
     AC_MSG_RESULT([yes])],
     [AC_MSG_RESULT([no])])
 
-  OCAML_CC_RESTORE_VARIABLES
+  travlang_CC_RESTORE_VARIABLES
 ])
 
-AC_DEFUN([OCAML_HOST_IS_EXECUTABLE], [
+AC_DEFUN([travlang_HOST_IS_EXECUTABLE], [
   AC_MSG_CHECKING([whether host executables can be run in the build])
   old_cross_compiling="$cross_compiling"
   cross_compiling='no'
@@ -429,16 +429,16 @@ AC_DEFUN([OCAML_HOST_IS_EXECUTABLE], [
 
 # This is AC_RUN_IFELSE but taking $host_runnable into account (i.e. if the
 # program can be run, then it is run)
-AC_DEFUN([OCAML_RUN_IFELSE], [
+AC_DEFUN([travlang_RUN_IFELSE], [
   old_cross_compiling="$cross_compiling"
   AS_IF([test "x$host_runnable" = 'xtrue'], [cross_compiling='no'])
   AC_RUN_IFELSE([$1],[$2],[$3],[$4])
   cross_compiling="$old_cross_compiling"
 ])
 
-AC_DEFUN([OCAML_C99_CHECK_ROUND], [
+AC_DEFUN([travlang_C99_CHECK_ROUND], [
   AC_MSG_CHECKING([whether round works])
-  OCAML_RUN_IFELSE(
+  travlang_RUN_IFELSE(
     [AC_LANG_SOURCE([[
 #include <math.h>
 int main (void) {
@@ -466,9 +466,9 @@ int main (void) {
       AC_DEFINE([HAS_WORKING_ROUND])])])
 ])
 
-AC_DEFUN([OCAML_C99_CHECK_FMA], [
+AC_DEFUN([travlang_C99_CHECK_FMA], [
   AC_MSG_CHECKING([whether fma works])
-  OCAML_RUN_IFELSE(
+  travlang_RUN_IFELSE(
     [AC_LANG_SOURCE([[
 #include <math.h>
 int main (void) {
@@ -505,8 +505,8 @@ int main (void) {
       [no,*], [hard_error=true],
       [yes,*], [hard_error=false],
       [*,x86_64-w64-mingw32*|*,x86_64-*-cygwin*], [hard_error=false],
-      [AS_CASE([$ocaml_cv_cc_vendor],
-        [msvc-*], [AS_IF([test "${ocaml_cv_cc_vendor#msvc-}" -lt 1920 ],
+      [AS_CASE([$travlang_cv_cc_vendor],
+        [msvc-*], [AS_IF([test "${travlang_cv_cc_vendor#msvc-}" -lt 1920 ],
           [hard_error=false],
           [hard_error=true])],
         [hard_error=true])])
@@ -523,10 +523,10 @@ int main (void) {
       AC_DEFINE([HAS_WORKING_FMA])])])
 ])
 
-# Computes a suitable id to insert in quoted strings to ensure that all OCaml
+# Computes a suitable id to insert in quoted strings to ensure that all travlang
 # quoted strings generated by configure cannot be "escaped". The ID takes the
 # form {o*|string|o*}.
-AC_DEFUN([OCAML_QUOTED_STRING_ID], [
+AC_DEFUN([travlang_QUOTED_STRING_ID], [
   # Go through ac_subst_vars and put all the values to be substituted in
   # $all_values.
   QS=''
@@ -547,7 +547,7 @@ AC_DEFUN([OCAML_QUOTED_STRING_ID], [
   done
 ])
 
-AC_DEFUN([OCAML_CC_SUPPORTS_ATOMIC], [
+AC_DEFUN([travlang_CC_SUPPORTS_ATOMIC], [
   AC_MSG_CHECKING([whether the C compiler supports _Atomic types])
   saved_LIBS="$LIBS"
   LIBS="$LIBS $1"

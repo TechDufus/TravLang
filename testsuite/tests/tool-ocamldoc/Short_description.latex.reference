@@ -4,11 +4,11 @@
 \usepackage{textcomp}
 \usepackage{fullpage} 
 \usepackage{url} 
-\usepackage{ocamldoc}
+\usepackage{travlangdoc}
 \begin{document}
 \tableofcontents
 \section{Short\_description : (* TEST
- ocamldoc with latex;
+ travlangdoc with latex;
 *)}
 \label{Short-underscoredescription}\index{Short-underscoredescription@\verb`Short_description`}
 

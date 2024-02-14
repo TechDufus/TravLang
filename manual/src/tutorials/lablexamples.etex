@@ -31,7 +31,7 @@ let f ~x:x1 ~y:y1 = x1 - y1;;
 f ~x:3 ~y:2;;
 \end{caml_example}
 
-Labels obey the same rules as other identifiers in OCaml, that is you
+Labels obey the same rules as other identifiers in travlang, that is you
 cannot use a reserved keyword (like "in" or "to") as a label.
 
 Formal parameters and arguments are matched according to their
@@ -200,7 +200,7 @@ good labeling is one which
 \item when possible, allows useful partial applications.
 \end{itemize}
 
-We explain here the rules we applied when labeling OCaml
+We explain here the rules we applied when labeling travlang
 libraries.
 
 To speak in an ``object-oriented'' way, one can consider that each
@@ -262,7 +262,7 @@ make the program harder to maintain.
 
 In the ideal, the right function name with right labels should be
 enough to understand the function's meaning. Since one can get this
-information with OCamlBrowser or the "ocaml" toplevel, the documentation
+information with travlangBrowser or the "travlang" toplevel, the documentation
 is only used when a more detailed specification is needed.
 
 \begin{caml_eval}

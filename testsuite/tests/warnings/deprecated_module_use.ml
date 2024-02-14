@@ -24,14 +24,14 @@ let _ = x
 
 (* TEST
  modules = "deprecated_module.mli deprecated_module.ml";
- setup-ocamlc.byte-build-env;
+ setup-travlangc.byte-build-env;
  flags = "-w -a";
  module = "deprecated_module.mli";
- ocamlc.byte;
+ travlangc.byte;
  module = "deprecated_module.ml";
- ocamlc.byte;
+ travlangc.byte;
  flags = "-w +A-70";
  module = "deprecated_module_use.ml";
- ocamlc.byte;
- check-ocamlc.byte-output;
+ travlangc.byte;
+ check-travlangc.byte-output;
 *)

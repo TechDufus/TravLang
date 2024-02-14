@@ -3,28 +3,28 @@
  hasunix;
  {
    program = "${test_build_directory}/wait_nohang.byte";
-   setup-ocamlc.byte-build-env;
+   setup-travlangc.byte-build-env;
    program = "${test_build_directory}/reflector.exe";
    all_modules = "reflector.ml";
-   ocamlc.byte;
+   travlangc.byte;
    include unix;
    program = "${test_build_directory}/wait_nohang.byte";
    all_modules = "wait_nohang.ml";
-   ocamlc.byte;
-   check-ocamlc.byte-output;
+   travlangc.byte;
+   check-travlangc.byte-output;
    run;
    check-program-output;
  }{
    program = "${test_build_directory}/wait_nohang.opt";
-   setup-ocamlopt.byte-build-env;
+   setup-travlangopt.byte-build-env;
    program = "${test_build_directory}/reflector.exe";
    all_modules = "reflector.ml";
-   ocamlopt.byte;
+   travlangopt.byte;
    include unix;
    program = "${test_build_directory}/wait_nohang.opt";
    all_modules = "wait_nohang.ml";
-   ocamlopt.byte;
-   check-ocamlopt.byte-output;
+   travlangopt.byte;
+   check-travlangopt.byte-output;
    run;
    check-program-output;
  }

@@ -5,7 +5,7 @@ open StdLabels
 type boxed_integer = Pnativeint | Pint32 | Pint64
 
 type native_repr =
-  | Same_as_ocaml_repr
+  | Same_as_travlang_repr
   | Unboxed_float
   | Unboxed_integer of boxed_integer
   | Untagged_int
@@ -16,7 +16,7 @@ let test_all_combination_up_to_n_args = 6
 (* Generate primitives using all combination of these argument
    representations. No need to test all combination of other
    representations: regarding the calling convention
-   [Same_as_ocaml_repr], [Untagged_int] and
+   [Same_as_travlang_repr], [Untagged_int] and
    [Unboxed_integer Pnativeint] are all the same, and are the
    same as [Unboxed_integer Pint<word-size>].
 
@@ -30,7 +30,7 @@ let test_all_args_combination_of =
   ]
 
 let code_of_repr = function
-  | Same_as_ocaml_repr         -> "v" (* for "value" *)
+  | Same_as_travlang_repr         -> "v" (* for "value" *)
   | Unboxed_float              -> "f"
   | Unboxed_integer Pint32     -> "l"
   | Unboxed_integer Pint64     -> "L"
@@ -38,7 +38,7 @@ let code_of_repr = function
   | Untagged_int               -> "i"
 
 let repr_of_code = function
-  | 'v' -> Same_as_ocaml_repr
+  | 'v' -> Same_as_travlang_repr
   | 'f' -> Unboxed_float
   | 'l' -> Unboxed_integer Pint32
   | 'L' -> Unboxed_integer Pint64
@@ -66,18 +66,18 @@ let manual_tests =
   ; "v_fLfLfLfLfLfLfLfLfLfLfLfLfLfLfLfLfLfL"
   ]
 
-let ocaml_type_of_repr = function
+let travlang_type_of_repr = function
   (* Doesn't really matters what we choose for this case *)
-  | Same_as_ocaml_repr         -> "int"
+  | Same_as_travlang_repr         -> "int"
   | Unboxed_float              -> "(float [@unboxed])"
   | Unboxed_integer Pint32     -> "(int32 [@unboxed])"
   | Unboxed_integer Pint64     -> "(int64 [@unboxed])"
   | Unboxed_integer Pnativeint -> "(nativeint [@unboxed])"
   | Untagged_int               -> "(int [@untagged])"
 
-let ocaml_type_gadt_of_repr = function
+let travlang_type_gadt_of_repr = function
   (* Doesn't really matters what we choose for this case *)
-  | Same_as_ocaml_repr         -> "Int"
+  | Same_as_travlang_repr         -> "Int"
   | Unboxed_float              -> "Float"
   | Unboxed_integer Pint32     -> "Int32"
   | Unboxed_integer Pint64     -> "Int64"
@@ -85,7 +85,7 @@ let ocaml_type_gadt_of_repr = function
   | Untagged_int               -> "Int"
 
 let c_type_of_repr = function
-  | Same_as_ocaml_repr         -> "value"
+  | Same_as_travlang_repr         -> "value"
   | Unboxed_float              -> "double"
   | Unboxed_integer Pint32     -> "int32_t"
   | Unboxed_integer Pint64     -> "int64_t"
@@ -116,16 +116,16 @@ let function_name_of_proto proto =
   Printf.sprintf "test_%s_%s" (code_of_repr proto.return)
     (String.concat ~sep:"" (List.map proto.params ~f:code_of_repr))
 
-let ocaml_type_gadt_of_proto proto =
+let travlang_type_gadt_of_proto proto =
   Printf.sprintf "%s ** Ret %s"
     (String.concat ~sep:" ** "
-       (List.map proto.params ~f:ocaml_type_gadt_of_repr))
-    (ocaml_type_gadt_of_repr proto.return)
+       (List.map proto.params ~f:travlang_type_gadt_of_repr))
+    (travlang_type_gadt_of_repr proto.return)
 
-let ocaml_type_of_proto proto =
+let travlang_type_of_proto proto =
   String.concat ~sep:" -> "
-    (List.map proto.params ~f:ocaml_type_of_repr
-     @ [ocaml_type_of_repr proto.return])
+    (List.map proto.params ~f:travlang_type_of_repr
+     @ [travlang_type_of_repr proto.return])
 
 let c_args_of_proto proto =
   String.concat ~sep:", "
@@ -142,7 +142,7 @@ let iter_protos ~f =
         let to_gen = to_gen - 1 in
         if to_gen = 0 then
           f { params = List.rev params
-            ; return = Same_as_ocaml_repr
+            ; return = Same_as_travlang_repr
             }
         else
           loop params to_gen)
@@ -166,7 +166,7 @@ let generate_ml () =
   iter_protos ~f:(fun proto ->
     let name = function_name_of_proto proto in
     pr "external %s : %s = \"\" %S [@@noalloc]"
-      name (ocaml_type_of_proto proto) name;
+      name (travlang_type_of_proto proto) name;
   );
   pr "";
   pr "let tests = []";
@@ -176,12 +176,12 @@ let generate_ml () =
     if arity <= 6 then
       pr "let tests = T%d (%S, %s, %s, %s) :: tests"
         arity name name
-        (List.map proto.params ~f:ocaml_type_gadt_of_repr
+        (List.map proto.params ~f:travlang_type_gadt_of_repr
          |> String.concat ~sep:", ")
-        (ocaml_type_gadt_of_repr proto.return)
+        (travlang_type_gadt_of_repr proto.return)
     else
       pr "let tests = T (%S, %s, %s) :: tests"
-        name name (ocaml_type_gadt_of_proto proto));
+        name name (travlang_type_gadt_of_proto proto));
   pr "";
   pr "let () = run_tests (List.rev tests)"
 
@@ -200,7 +200,7 @@ let generate_stubs () =
       List.iteri proto.params ~f:(fun i p ->
         pr "  %(%d%d%);"
           (match p with
-           | Same_as_ocaml_repr         -> "set_intnat(%d, Long_val(x%d))"
+           | Same_as_travlang_repr         -> "set_intnat(%d, Long_val(x%d))"
            | Unboxed_float              -> "set_double(%d, x%d)"
            | Unboxed_integer Pint32     -> "set_int32(%d, x%d)"
            | Unboxed_integer Pint64     -> "set_int64(%d, x%d)"
@@ -209,7 +209,7 @@ let generate_stubs () =
           i i);
       pr "  return %(%d%);"
         (match proto.return with
-         | Same_as_ocaml_repr         -> "Val_long(get_intnat(%d))"
+         | Same_as_travlang_repr         -> "Val_long(get_intnat(%d))"
          | Unboxed_float              -> "get_double(%d)"
          | Unboxed_integer Pint32     -> "get_int32(%d)"
          | Unboxed_integer Pint64     -> "get_int64(%d)"
@@ -224,5 +224,5 @@ let () =
   | [|_; "ml"|] -> generate_ml ()
   | [|_; "c" |] -> generate_stubs ()
   | _ ->
-    prerr_endline "Usage: ocaml gen_test.ml {ml|c}";
+    prerr_endline "Usage: travlang gen_test.ml {ml|c}";
     exit 2

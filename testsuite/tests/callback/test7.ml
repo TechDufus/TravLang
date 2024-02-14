@@ -2,8 +2,8 @@
  modules = "test7_.c";
 *)
 
-(* Tests nested calls from C (main C) to OCaml (main OCaml) to C (caml_to_c) to
- * OCaml (c_to_caml) to C (printf functions). Effect E is performed in the
+(* Tests nested calls from C (main C) to travlang (main travlang) to C (caml_to_c) to
+ * travlang (c_to_caml) to C (printf functions). Effect E is performed in the
  * callback, which does not have a handler. *)
 
 open Effect

@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -590,8 +590,8 @@ and transl_structure ~scopes loc fields cc rootpath final_env = function
             fatal_error "Translmod.transl_structure"
       in
       (* This debugging event provides information regarding the structure
-         items. It is ignored by the OCaml debugger but is used by
-         Js_of_ocaml to preserve variable names. *)
+         items. It is ignored by the travlang debugger but is used by
+         Js_of_travlang to preserve variable names. *)
       (if !Clflags.debug && not !Clflags.native_code then
          Levent(body,
                 {lev_loc = loc;

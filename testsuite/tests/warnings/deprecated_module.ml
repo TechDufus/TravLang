@@ -11,7 +11,7 @@ module M = struct
 
   let x = 10
 end
-[@@ocaml.deprecated]
+[@@travlang.deprecated]
 
 let _ = M.x
 include M

@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           */
 /*                                                                        */
@@ -50,7 +50,7 @@ extern int32_t caml_seek_section(int fd, struct exec_trailer *trail,
 
 enum caml_byte_program_mode
   {
-   STANDARD /* normal bytecode program requiring "ocamlrun" */,
+   STANDARD /* normal bytecode program requiring "travlangrun" */,
    COMPLETE_EXE /* embedding the vm, i.e. compiled with --output-complete-exe */
   };
 

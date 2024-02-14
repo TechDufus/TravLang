@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -37,18 +37,18 @@ let backend = (module Backend : Backend_intf.S)
 module Options = Main_args.Make_optcomp_options (Main_args.Default.Optmain)
 let main argv ppf =
   native_code := true;
-  let program = "ocamlopt" in
+  let program = "travlangopt" in
   match
     Compenv.readenv ppf Before_args;
     Clflags.add_arguments __LOC__ (Arch.command_line_options @ Options.list);
     Clflags.add_arguments __LOC__
       ["-depend", Arg.Unit Makedepend.main_from_option,
        "<options> Compute dependencies \
-        (use 'ocamlopt -depend -help' for details)"];
+        (use 'travlangopt -depend -help' for details)"];
     Compenv.parse_arguments (ref argv) Compenv.anonymous program;
     Compmisc.read_clflags_from_env ();
     if !Clflags.plugin then
-      Compenv.fatal "-plugin is only supported up to OCaml 4.08.0";
+      Compenv.fatal "-plugin is only supported up to travlang 4.08.0";
     begin try
       Compenv.process_deferred_actions
         (ppf,
@@ -87,7 +87,7 @@ let main argv ppf =
       Compmisc.init_path ();
       let target = Compenv.extract_output !output_name in
       Asmlibrarian.create_archive
-        (Compenv.get_objfiles ~with_ocamlparam:false) target;
+        (Compenv.get_objfiles ~with_travlangparam:false) target;
       Warnings.check_fatal ();
     end
     else if !make_package then begin
@@ -95,7 +95,7 @@ let main argv ppf =
       let target = Compenv.extract_output !output_name in
       Compmisc.with_ppf_dump ~file_prefix:target (fun ppf_dump ->
         Asmpackager.package_files ~ppf_dump (Compmisc.initial_env ())
-          (Compenv.get_objfiles ~with_ocamlparam:false) target ~backend);
+          (Compenv.get_objfiles ~with_travlangparam:false) target ~backend);
       Warnings.check_fatal ();
     end
     else if !shared then begin
@@ -103,7 +103,7 @@ let main argv ppf =
       let target = Compenv.extract_output !output_name in
       Compmisc.with_ppf_dump ~file_prefix:target (fun ppf_dump ->
         Asmlink.link_shared ~ppf_dump
-          (Compenv.get_objfiles ~with_ocamlparam:false) target);
+          (Compenv.get_objfiles ~with_travlangparam:false) target);
       Warnings.check_fatal ();
     end
     else if not !Compenv.stop_early &&
@@ -125,7 +125,7 @@ let main argv ppf =
       in
       Compmisc.init_path ();
       Compmisc.with_ppf_dump ~file_prefix:target (fun ppf_dump ->
-          let objs = Compenv.get_objfiles ~with_ocamlparam:true in
+          let objs = Compenv.get_objfiles ~with_travlangparam:true in
           Asmlink.link ~ppf_dump objs target);
       Warnings.check_fatal ();
     end;

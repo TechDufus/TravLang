@@ -11,7 +11,7 @@
 
 (* this test checks that the domain lock is properly reinitialized
    in the child process after fork.
-   See: https://github.com/ocaml-multicore/ocaml-multicore/issues/471 *)
+   See: https://github.com/travlang-multicore/travlang-multicore/issues/471 *)
 
 let () =
   let fd = Unix.dup Unix.stdout in

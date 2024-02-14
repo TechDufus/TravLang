@@ -1,19 +1,19 @@
-# What does an OCaml version mean?
+# What does an travlang version mean?
 
-OCaml releases follow a linux-like scheme for their version string. The
-OCaml version string consists in three numbers, optionally followed by
+travlang releases follow a linux-like scheme for their version string. The
+travlang version string consists in three numbers, optionally followed by
 either a prerelease or development tag
 (`%i.%i.%i[~alpha%i|~beta%i|~rc%i|+%s]`). For example, 4.14.1,
-5.1.0~alpha2 and 5.3.0+dev0-2023-12-22 are valid OCaml versions.
+5.1.0~alpha2 and 5.3.0+dev0-2023-12-22 are valid travlang versions.
 
-- The first version number (4 in 4.14.1) is the major version of OCaml.
-  This version number is updated when major new features are added to the OCaml
-  language. For instance, OCaml 5 added shared memory parallelism and effect
-  handlers and OCaml 4 introduced GADTs (Generalised Abstract Data Types).
+- The first version number (4 in 4.14.1) is the major version of travlang.
+  This version number is updated when major new features are added to the travlang
+  language. For instance, travlang 5 added shared memory parallelism and effect
+  handlers and travlang 4 introduced GADTs (Generalised Abstract Data Types).
 
-- The second version number (14 in 4.14.1) is the minor version of OCaml.
-  This number is increased for every new release of OCaml. In particular, a new
-  minor version of OCaml can contain breaking changes. However, we strive to
+- The second version number (14 in 4.14.1) is the minor version of travlang.
+  This number is increased for every new release of travlang. In particular, a new
+  minor version of travlang can contain breaking changes. However, we strive to
   maintain backward compatibility as much as possible.
 
 - The last number (1 in 4.14.1) is the bugfix number.
@@ -34,13 +34,13 @@ either a prerelease or development tag
 
 # When are new versions released?
 
-Since OCaml 4.03, we are using a time-based release schedule:
-a new minor version of OCaml is released every six months.
+Since travlang 4.03, we are using a time-based release schedule:
+a new minor version of travlang is released every six months.
 
-For instance, at the date of writing, the next planned releases of OCaml are:
+For instance, at the date of writing, the next planned releases of travlang are:
 
-- OCaml 5.2: around April 2024
-- OCaml 5.3: around October 2024
+- travlang 5.2: around April 2024
+- travlang 5.3: around October 2024
 
 The timing is approximate, as we often delay a release to ensure quality when
 unforeseen issues come up. In consequence, releases are often late, typically by
@@ -58,7 +58,7 @@ the standard name in the SVN era, and it remains more descriptive than 'main'.)
 
 Three months before a new release, that is, at the half of the time window
 between two releases, we create a separate branch for the next version of
-OCaml. The intention (there are always exceptions) is that the release should
+travlang. The intention (there are always exceptions) is that the release should
 correspond to the state of 'trunk' at the time this branch was created, but we
 wait three more months for quality analysis, to get feedback and integrate
 bugfixes.
@@ -80,7 +80,7 @@ December 2023, for a 5.2 release planned around April 2024.
 Once a new version branch has been created, and the feature set has been
 stabilised, we start publishing prerelease versions of this branch.
 
-For instance, after branching OCaml 5.2, we start publishing alpha versions: for
+For instance, after branching travlang 5.2, we start publishing alpha versions: for
 instance `5.2.0~alpha1`, then `5.2.0~alpha2`.
 
 Once core development tools have been ported to work on those alpha versions, we
@@ -139,8 +139,8 @@ possible. We make this easy by doing our best to avoid any regression there.
 
 # Exceptional LTS versions
 
-Switching from OCaml 4 to OCaml 5 required a full rewrite of the OCaml runtime.
-This has negatively affected the stability of the releases of OCaml 5 in term of
+Switching from travlang 4 to travlang 5 required a full rewrite of the travlang runtime.
+This has negatively affected the stability of the releases of travlang 5 in term of
 
 - supported architectures
 - supported OS
@@ -148,16 +148,16 @@ This has negatively affected the stability of the releases of OCaml 5 in term of
 - number of runtime bugs
 
 To keep a stable version easily available, we are exceptionally maintaining
-OCaml 4.14 as a long term support version of OCaml. New bugfix versions of OCaml
-4.14 will be released in the future until OCaml 5 is considered mature enough.
+travlang 4.14 as a long term support version of travlang. New bugfix versions of travlang
+4.14 will be released in the future until travlang 5 is considered mature enough.
 
-User feedback is welcome on which fixes from OCaml 5 should be also included in
+User feedback is welcome on which fixes from travlang 5 should be also included in
 4.14.
 
-Once OCaml 5 is stabilized, this extended support of OCaml 4.14  will stop.
-Currently, we expect to support OCaml 4.14 until OCaml 5.4 (around April 2025).
+Once travlang 5 is stabilized, this extended support of travlang 4.14  will stop.
+Currently, we expect to support travlang 4.14 until travlang 5.4 (around April 2025).
 
 
-# How are new versions of OCaml released?
+# How are new versions of travlang released?
 
-The release process is documented in [the release howto](https://github.com/ocaml/ocaml/release-info/howto.md)
+The release process is documented in [the release howto](https://github.com/travlang/travlang/release-info/howto.md)

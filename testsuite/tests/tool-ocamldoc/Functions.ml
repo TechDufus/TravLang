@@ -1,6 +1,6 @@
 (* TEST
-   ocamldoc with html;
-   ocamldoc with latex;
+   travlangdoc with html;
+   travlangdoc with latex;
 *)
 
 (* The output of this test demonstrates that the documentation

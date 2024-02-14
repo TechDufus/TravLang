@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -13,7 +13,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* Registering OCaml values with the C runtime for later callbacks *)
+(* Registering travlang values with the C runtime for later callbacks *)
 
 external register_named_value : string -> Obj.t -> unit
                               = "caml_register_named_value"

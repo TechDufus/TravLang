@@ -17,14 +17,14 @@ let[@poll error] rec c x l =
 
 (* TEST
  {
-   setup-ocamlopt.byte-build-env;
-   ocamlopt_byte_exit_status = "2";
-   ocamlopt.byte;
-   check-ocamlopt.byte-output;
+   setup-travlangopt.byte-build-env;
+   travlangopt_byte_exit_status = "2";
+   travlangopt.byte;
+   check-travlangopt.byte-output;
  }{
-   setup-ocamlopt.opt-build-env;
-   ocamlopt_opt_exit_status = "2";
-   ocamlopt.opt;
-   check-ocamlopt.opt-output;
+   setup-travlangopt.opt-build-env;
+   travlangopt_opt_exit_status = "2";
+   travlangopt.opt;
+   check-travlangopt.opt-output;
  }
 *)

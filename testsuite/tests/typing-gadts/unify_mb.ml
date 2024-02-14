@@ -6,7 +6,7 @@
 (* Conor McBride, JFP 13(6) *)
 (* http://strictlypositive.org/publications.html *)
 
-(* This is a translation of the code part to ocaml *)
+(* This is a translation of the code part to travlang *)
 (* Of course, we do not prove other properties, not even termination *)
 
 (* 2.2 Inductive Families *)

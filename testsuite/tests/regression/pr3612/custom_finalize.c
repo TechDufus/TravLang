@@ -1,8 +1,8 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                OCaml                                   */
+/*                                travlang                                   */
 /*                                                                        */
-/*                        Pierre Chambart, OCamlPro                       */
+/*                        Pierre Chambart, travlangPro                       */
 /*                                                                        */
 /*   Copyright 2014 Institut National de Recherche en Informatique et     */
 /*     en Automatique.                                                    */

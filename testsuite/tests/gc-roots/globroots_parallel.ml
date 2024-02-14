@@ -6,7 +6,7 @@
 open Globroots
 
 let test_size =
-  try int_of_string (Sys.getenv "OCAML_TEST_SIZE")
+  try int_of_string (Sys.getenv "travlang_TEST_SIZE")
   with Not_found | Failure _ -> 0
 
 let num_domains =

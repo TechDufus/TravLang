@@ -1,7 +1,7 @@
 # 2 "asmcomp/s390x/arch.mli"
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*            Xavier Leroy, projet Gallium, INRIA Rocquencourt            *)
 (*                          Bill O'Farrell, IBM                           *)

@@ -18,7 +18,7 @@ let () =
 
 (* TEST
  flags = "-g";
- ocamlrunparam += ",b=1";
- ocamlopt_flags = "-inline 0";
+ travlangrunparam += ",b=1";
+ travlangopt_flags = "-inline 0";
  exit_status = "2";
 *)

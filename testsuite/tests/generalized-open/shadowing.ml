@@ -1,10 +1,10 @@
 (* TEST
- setup-ocamlc.byte-build-env;
+ setup-travlangc.byte-build-env;
  {
-   ocamlc_byte_exit_status = "0";
-   ocamlc.byte;
+   travlangc_byte_exit_status = "0";
+   travlangc.byte;
  }{
-   check-ocamlc.byte-output;
+   check-travlangc.byte-output;
  }
 *)
 

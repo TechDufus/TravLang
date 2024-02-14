@@ -1,13 +1,13 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*      KC Sivaramakrishnan, Indian Institute of Technology, Madras       */
-/*                   Tom Kelly, OCaml Labs Consultancy                    */
+/*                   Tom Kelly, travlang Labs Consultancy                    */
 /*                 Stephen Dolan, University of Cambridge                 */
 /*                                                                        */
 /*   Copyright 2019 Indian Institute of Technology, Madras                */
-/*   Copyright 2021 OCaml Labs Consultancy Ltd                            */
+/*   Copyright 2021 travlang Labs Consultancy Ltd                            */
 /*   Copyright 2019 University of Cambridge                               */
 /*                                                                        */
 /*   All rights reserved.  This file is distributed under the terms of    */
@@ -29,10 +29,10 @@
  * "frame table", consisting of these frame descriptors
  * concatenated. Each frame descriptor includes:
  *
- * - frame_return_to_C(): Whether the return is to C from OCaml, in
+ * - frame_return_to_C(): Whether the return is to C from travlang, in
  *   which case there is no actual stack frame, GC roots, allocation
  *   sizes, or debug info.  See caml_system.frametable in the various
- *   architecture-specific OCaml/C interfaces.
+ *   architecture-specific travlang/C interfaces.
  *
  * - frame_size(): The stack frame size, in bytes. All stack frames
  *   are word-aligned so we also store information in the bottom two

@@ -21,5 +21,5 @@ let _ =
 
 (* TEST
  flags = "-g";
- ocamlrunparam += ",b=1";
+ travlangrunparam += ",b=1";
 *)

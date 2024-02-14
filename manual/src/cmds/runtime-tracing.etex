@@ -3,7 +3,7 @@
 %HEVEA\cutname{runtime-tracing.html}
 
 This chapter describes the runtime events tracing system which enables
-continuous extraction of performance information from the OCaml runtime with
+continuous extraction of performance information from the travlang runtime with
 very low overhead. The system and interfaces are low-level and tightly coupled
 to the runtime implementation, it is intended for end-users to rely on tooling
 to consume and visualise data of interest.
@@ -16,7 +16,7 @@ Data emitted includes:
 \end{itemize}
 
 Additional events can be declared and consumed, providing higher-level
-monitoring capabilities to OCaml libraries. They are referred to as {\em
+monitoring capabilities to travlang libraries. They are referred to as {\em
 custom events}.
 
 \section{s:runtime-tracing-overview}{Overview}
@@ -26,7 +26,7 @@ There are three main classes of events emitted by the runtime events system:
 \begin{description}
 \item[Spans] Events spanning over a duration in time. For example, the runtime
 events tracing system emits a span event that starts when a minor
-collection begins in the OCaml garbage collector and ends when
+collection begins in the travlang garbage collector and ends when
 the collection is completed. Spans can contain other spans, e.g other span
 events may be emitted that begin after a minor collection has
 begun and end before it does.
@@ -40,11 +40,11 @@ counter event.
 
 The runtime events tracing system is designed to be used in different contexts:
 \begin{description}
-\item[Self monitoring] OCaml programs and libraries can install their own callbacks
+\item[Self monitoring] travlang programs and libraries can install their own callbacks
 to listen for runtime events and react to them programmatically, for example,
 to export events to disk or over the network.
 \item[External monitoring] An external process can consume the runtime events
-of an OCaml program whose runtime tracing system has been enabled by setting
+of an travlang program whose runtime tracing system has been enabled by setting
 the corresponding environment variable.
 \end{description}
 
@@ -61,10 +61,10 @@ transports these events.
 
 \subsection{s:runtime-tracing-event-sources}{Event sources}
 Event sources are event-emitting points. There are a number of such sources in
-the OCaml runtime system. These are further split into two sets: 1) event
+the travlang runtime system. These are further split into two sets: 1) event
 sources that are always available and 2) event sources that are only available
 in the instrumented runtime. Event sources in the instrumented runtime are
-primarily of interest to developers of the OCaml runtime and garbage collector
+primarily of interest to developers of the travlang runtime and garbage collector
 and, at present, only consist of major heap allocation size counter events.
 
 The full set of events emitted by event sources and their documentation can be
@@ -96,13 +96,13 @@ running domain and, on domain termination, ring buffers may be re-used for newly
 spawned domains. Ring buffers are only allocated (including for the main
 domain) when runtime events are enabled. The ring buffers themselves are stored
 in a memory-mapped file with the processes identifier as the name and the
-extension ".events", this enables them to be read from outside the main OCaml
+extension ".events", this enables them to be read from outside the main travlang
 process. See \moduleref{libref}{Runtime_events}{\texttt{Runtime_events}} for
 more information.
 
 \subsubsection{s:runtime-tracing-apis}{Consumption APIs}
 
-The runtime event tracing system provides both OCaml and C APIs which are
+The runtime event tracing system provides both travlang and C APIs which are
 cursor-based and polling-driven. The high-level process for consuming events
 is as follows:
 
@@ -118,7 +118,7 @@ is as follows:
 
 \section{s:runtime-tracing-usage}{Usage}
 
-\subsection{s:runtime-tracing-ocaml-apis}{With OCaml APIs}
+\subsection{s:runtime-tracing-travlang-apis}{With travlang APIs}
 
 We start with a simple example that prints the name, begin and end times
 of events emitted by the runtime event tracing system:
@@ -158,7 +158,7 @@ The next step is to compile and link the program with the runtime_events
 library. This can be done as follows:
 
 \begin{verbatim}
-       ocamlopt -I +runtime_events -I +unix unix.cmxa runtime_events.cmxa
+       travlangopt -I +runtime_events -I +unix unix.cmxa runtime_events.cmxa
             example.ml -o example
 \end{verbatim}
 
@@ -203,14 +203,14 @@ listening to runtime events and monitors itself.
 
 For external monitoring, a program does not need to be aware of the existence of runtime
 events. Runtime events can be controlled via the environment variable
-"OCAML_RUNTIME_EVENTS_START" which, when set, will cause the runtime
+"travlang_RUNTIME_EVENTS_START" which, when set, will cause the runtime
 tracing system to be started at program initialization.
 
 We could remove "Runtime_events.start ();" from the previous example and,
 instead, call the program as below to produce the same result:
 
 \begin{verbatim}
-OCAML_RUNTIME_EVENTS_START=1 ./example
+travlang_RUNTIME_EVENTS_START=1 ./example
 \end{verbatim}
 
 \subsubsection{s:runtime-tracing-environment-variables}{Environment variables}
@@ -219,29 +219,29 @@ Environment variables can be used to control different aspects of the runtime
 event tracing system. The following environment variables are available:
 
 \begin{itemize}
-  \item OCAML_RUNTIME_EVENTS_START if set will cause the runtime events system
-  to be started as part of the OCaml runtime initialization.
-  \item OCAML_RUNTIME_EVENTS_DIR sets the directory where the ".events"
+  \item travlang_RUNTIME_EVENTS_START if set will cause the runtime events system
+  to be started as part of the travlang runtime initialization.
+  \item travlang_RUNTIME_EVENTS_DIR sets the directory where the ".events"
   files containing the runtime event tracing system's ring buffers will be located.
   If not present the program's working directory will be used.
-  \item OCAML_RUNTIME_EVENTS_PRESERVE if set will make the OCaml runtime
-  preserve the runtime events ring buffer files past the termination of the OCaml program.
+  \item travlang_RUNTIME_EVENTS_PRESERVE if set will make the travlang runtime
+  preserve the runtime events ring buffer files past the termination of the travlang program.
   This can be useful for monitoring very short running programs.
-  If not set, the ".events" files of the OCaml program will be deleted
+  If not set, the ".events" files of the travlang program will be deleted
   at program termination.
 \end{itemize}
 
-The size of the runtime events ring buffers can be configured via OCAMLRUNPARAM,
-see section \ref{s:ocamlrun-options} for more information.
+The size of the runtime events ring buffers can be configured via travlangRUNPARAM,
+see section \ref{s:travlangrun-options} for more information.
 
 \subsubsection{s:runtime-tracing-instrumented-runtime}{Building with the instrumented runtime}
 
 Some events are only emitted by the instrumented runtime. To receive them, the
-OCaml program needs to be compiled and linked against the instrumented runtime.
+travlang program needs to be compiled and linked against the instrumented runtime.
 For our example program from earlier, this is achieved as follows:
 
 \begin{verbatim}
-ocamlopt -runtime-variant i -I +runtime_events -I +unix unix.cmxa runtime_events.cmxa example.ml -o example
+travlangopt -runtime-variant i -I +runtime_events -I +unix unix.cmxa runtime_events.cmxa example.ml -o example
 \end{verbatim}
 
 And for dune:
@@ -263,16 +263,16 @@ performance data from runtime events for logging and monitoring purposes.
 In this section we cover several utilities in the \texttt{runtime_events_tools}
 package which provide simple ways of extracting and summarising data from runtime
 events. The trace utility in particular produces similar data to the previous
-'eventlog' instrumentation system available in OCaml 4.12 to 4.14.
+'eventlog' instrumentation system available in travlang 4.12 to 4.14.
 
-First, install \texttt{runtime_events_tools} in an OCaml 5.0+ opam switch:
+First, install \texttt{runtime_events_tools} in an travlang 5.0+ opam switch:
 
 \begin{verbatim}
 opam install runtime_events_tools
 \end{verbatim}
 
 This should install the olly tool in your path. You can now generate
-runtime traces for programs compiled with OCaml 5.0+ using the trace subcommand:
+runtime traces for programs compiled with travlang 5.0+ using the trace subcommand:
 
 \begin{verbatim}
 olly trace trace.json 'your_program.exe .. args ..'
@@ -360,7 +360,7 @@ they need to:
 \item indicate a callback which should receive all events of the custom
   type using \texttt{Runtime_events.Callbacks.add_user_event} to register it
   inside a \texttt{Runtime_events.Callbacks.t} object to be used when polling
-  (see section~\ref{s:runtime-tracing-ocaml-apis} above).
+  (see section~\ref{s:runtime-tracing-travlang-apis} above).
 \item \emph{(Optional, if there are distinct events registered with the same
   custom type:)} In that callback, pattern-match on the event tag in order to
   discriminate between different event tags of the same custom type.

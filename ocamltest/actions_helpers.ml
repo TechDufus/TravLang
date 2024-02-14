@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Sebastien Hinderer, projet Gallium, INRIA Paris            *)
 (*                                                                        *)
@@ -15,7 +15,7 @@
 
 (* Helper functions when writing actions *)
 
-open Ocamltest_stdlib
+open travlangtest_stdlib
 
 let skip_with_reason reason =
   let code _log env =
@@ -250,11 +250,11 @@ let run_program =
     (Some Builtin_variables.arguments)
 
 let run_script log env =
-  let response_file = Filename.temp_file "ocamltest-" ".response" in
+  let response_file = Filename.temp_file "travlangtest-" ".response" in
   Printf.fprintf log "Script should write its response to %s\n%!"
     response_file;
   let scriptenv = Environments.add
-    Builtin_variables.ocamltest_response response_file env in
+    Builtin_variables.travlangtest_response response_file env in
   let (result, newenv) = run
     "Running script"
     true
@@ -292,11 +292,11 @@ let run_script log env =
 
 let run_hook hook_name log input_env =
   Printf.fprintf log "Entering run_hook for hook %s\n%!" hook_name;
-  let response_file = Filename.temp_file "ocamltest-" ".response" in
+  let response_file = Filename.temp_file "travlangtest-" ".response" in
   Printf.fprintf log "Hook should write its response to %s\n%!"
     response_file;
   let hookenv = Environments.add
-    Builtin_variables.ocamltest_response response_file input_env in
+    Builtin_variables.travlangtest_response response_file input_env in
   let systemenv =
     Environments.to_system_env hookenv in
   let timeout =

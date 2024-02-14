@@ -4,19 +4,19 @@
  readonly_files = "config.ml b.ml";
  shared-libraries;
  {
-   setup-ocamlc.byte-build-env;
+   setup-travlangc.byte-build-env;
    {
      program = "plugin.cma";
      flags = "-a";
      all_modules = "config.ml b.ml";
-     ocamlc.byte;
+     travlangc.byte;
    }{
      program = "${test_build_directory}/loader.byte";
      flags = "-linkall";
-     include ocamlcommon;
+     include travlangcommon;
      libraries += "dynlink";
      all_modules = "loader.ml";
-     ocamlc.byte;
+     travlangc.byte;
      arguments = "plugin.cma";
      exit_status = "2";
      run;
@@ -25,19 +25,19 @@
    }
  }{
    native-dynlink;
-   setup-ocamlopt.byte-build-env;
+   setup-travlangopt.byte-build-env;
    {
      program = "plugin.cmxs";
      flags = "-shared";
      all_modules = "config.ml b.ml";
-     ocamlopt.byte;
+     travlangopt.byte;
    }{
      program = "${test_build_directory}/loader.exe";
      flags = "-linkall";
-     include ocamlcommon;
+     include travlangcommon;
      libraries += "dynlink";
      all_modules = "loader.ml";
-     ocamlopt.byte;
+     travlangopt.byte;
      arguments = "plugin.cmxs";
      exit_status = "2";
      run;

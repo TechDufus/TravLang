@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           */
 /*                                                                        */
@@ -20,19 +20,19 @@
 
 #ifdef CAML_INTERNALS
 
-/* Macros to access OCaml stacks */
+/* Macros to access travlang stacks */
 
-/* An OCaml stack is composed of one or several "chunks", each chunk
-   being a sequence of frames (activation records) for ocamlopt-generated
+/* An travlang stack is composed of one or several "chunks", each chunk
+   being a sequence of frames (activation records) for travlangopt-generated
    functions.
 
-   A chunk terminates when the OCaml code calls into C code
+   A chunk terminates when the travlang code calls into C code
    (explicitly or to perform garbage collection or signal polling).
 
    A chunk starts when the program starts, or a fiber is created,
-   or a callback is performed from C to OCaml.
+   or a callback is performed from C to travlang.
 
-   If [sp] points to the bottom of an OCaml stack,
+   If [sp] points to the bottom of an travlang stack,
    [First_frame(sp)] is the first stack frame of the first chunk of this stack.
 
    If [sp] points to the special frame for [caml_start_program] or

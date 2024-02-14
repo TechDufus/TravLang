@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           */
 /*                                                                        */
@@ -13,7 +13,7 @@
 /*                                                                        */
 /**************************************************************************/
 
-/* Callbacks from C to OCaml */
+/* Callbacks from C to travlang */
 
 #ifndef CAML_CALLBACK_H
 #define CAML_CALLBACK_H

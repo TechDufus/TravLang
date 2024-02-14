@@ -1,6 +1,6 @@
 (* TEST
  modules = "stubs.c";
- reason = "port the new Ephemeron C-api to multicore : https://github.com/ocaml/ocaml/pull/676";
+ reason = "port the new Ephemeron C-api to multicore : https://github.com/travlang/travlang/pull/676";
  skip;
 *)
 

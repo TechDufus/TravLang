@@ -14,7 +14,7 @@ There are many kind of tests already, so the easiest way to start is
 to extend or copy an existing test.
 
 Note: in april 2023, the test scripting language has changed: the
-org-mode-based syntax was replaced by at C-like syntax. ocamltest
+org-mode-based syntax was replaced by at C-like syntax. travlangtest
 includes options to translate from the old to the new syntax:
 `-translate`, `-compact`, `-keep-lines`, `-keep-chars`. Look at
 `tools/translate-all-tests` for an example using them. These options
@@ -23,7 +23,7 @@ will be removed after a transitional period.
 == Sorts of tests
 
 A test is specified in a `.ml` file containing a `TEST` block which is
-processed by our `ocamltest` testing tool, and contains a description
+processed by our `travlangtest` testing tool, and contains a description
 of the testing to be performed.
 
 There are two common sorts of tests:
@@ -112,10 +112,10 @@ then this will run all the tests in those three directories.
   Keeps temporary output files from a test run. This is handy to validate the
   content of temporary output files, run a produced executable by hand, etc.
 
-`OCAMLTESTDIR=/tmp/foo`::
+`travlangTESTDIR=/tmp/foo`::
   Changes the output directory to the specified one. This should be combined
   with `KEEP_TEST_DIR_ON_SUCCESS=1` to inspect the test output. By default
-  `OCAMLTESTDIR` is `_ocamltest`.
+  `travlangTESTDIR` is `_travlangtest`.
 
 == Dimensioning the tests
 
@@ -124,17 +124,17 @@ By default, tests should run well on small virtual machines (2 cores,
 less than 10 seconds, to run on such a machine.
 
 Some machines used for continuous integration are more capable than
-that.  They use the `OCAML_TEST_SIZE` environment variable to report
+that.  They use the `travlang_TEST_SIZE` environment variable to report
 the available resources:
 
 |====
-| `OCAML_TEST_SIZE`  |  Resources          | Word size
+| `travlang_TEST_SIZE`  |  Resources          | Word size
 
 | `1` or unset       | 2 cores, 2 Gb RAM   | 32 or 64 bits
 | `2`                | 4 cores, 4 Gb RAM   | 64 bits
 | `3`                | 8 cores, 8 Gb RAM   | 64 bits
 |=====
 
-Tests, then, can check the `OCAML_TEST_SIZE` environment variable and
+Tests, then, can check the `travlang_TEST_SIZE` environment variable and
 increase the number of cores or the amount of memory used.  The
 default should always be 2 cores and 2 Gb RAM.

@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Sebastien Hinderer, projet Gallium, INRIA Paris            *)
 (*                                                                        *)
@@ -15,7 +15,7 @@
 
 (* Definition of environments, used to pass parameters to tests and actions *)
 
-open Ocamltest_stdlib
+open travlangtest_stdlib
 
 module VariableMap = Map.Make (Variables)
 

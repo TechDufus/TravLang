@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*          Manuel Serrano and Xavier Leroy, INRIA Rocquencourt           */
 /*                                                                        */
@@ -109,7 +109,7 @@ CAMLprim value caml_unix_map_file(value vfd, value vkind, value vlayout,
   startpos = File_offset_val(vstart);
   num_dims = Wosize_val(vdim);
   major_dim = flags & CAML_BA_FORTRAN_LAYOUT ? num_dims - 1 : 0;
-  /* Extract dimensions from OCaml array */
+  /* Extract dimensions from travlang array */
   num_dims = Wosize_val(vdim);
   if (num_dims < 1 || num_dims > CAML_BA_MAX_NUM_DIMS)
     caml_invalid_argument("Unix.map_file: bad number of dimensions");
@@ -169,7 +169,7 @@ CAMLprim value caml_unix_map_file(value vfd, value vkind, value vlayout,
   caml_leave_blocking_section();
   if (addr == (void *) MAP_FAILED) caml_uerror("map_file", Nothing);
   addr = (void *) ((uintnat) addr + delta);
-  /* Build and return the OCaml bigarray */
+  /* Build and return the travlang bigarray */
   return caml_unix_mapped_alloc(flags, num_dims, addr, dim);
 }
 

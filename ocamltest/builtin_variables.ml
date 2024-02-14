@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Sebastien Hinderer, projet Gallium, INRIA Paris            *)
 (*                                                                        *)
@@ -45,19 +45,19 @@ let readonly_files = Variables.make ("readonly_files",
 let make = Variables.make ("MAKE",
   "Command used to invoke make")
 
-let ocamltest_response = Variables.make ("ocamltest_response",
+let travlangtest_response = Variables.make ("travlangtest_response",
   "File used by hooks to send back information.")
 
-let ocamltest_log = Variables.make ("ocamltest_log",
+let travlangtest_log = Variables.make ("travlangtest_log",
   "Path to log file for the current test")
 
 let output = Variables.make ("output",
   "Where the output of executing the program is saved")
 
 let program = Variables.make ("program",
-  "Name of program produced by ocamlc.byte and ocamlopt.byte")
+  "Name of program produced by travlangc.byte and travlangopt.byte")
 let program2 = Variables.make ("program2",
-  "Name of program produced by ocamlc.opt and ocamlopt.opt")
+  "Name of program produced by travlangc.opt and travlangopt.opt")
 
 let promote = Variables.make ("promote",
   "Set to \"true\" to overwrite reference files with the test output")
@@ -124,8 +124,8 @@ let _ = List.iter Variables.register_variable
     file;
     readonly_files;
     make;
-    ocamltest_response;
-    ocamltest_log;
+    travlangtest_response;
+    travlangtest_log;
     output;
     program; program2;
     reason;

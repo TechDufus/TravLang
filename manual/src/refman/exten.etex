@@ -2,7 +2,7 @@
 %HEVEA\cutname{extn.html}
 
 This chapter describes language extensions and convenience features
-that are implemented in OCaml, but not described in chapter \ref{c:refman}.
+that are implemented in travlang, but not described in chapter \ref{c:refman}.
 
 
 %HEVEA\cutdef{section}

@@ -1,12 +1,12 @@
 (* TEST
- include ocamlcommon;
+ include travlangcommon;
  include unix;
- arguments = "${ocamlsrcdir}";
+ arguments = "${travlangsrcdir}";
  hasunix;
  native;
 *)
 
-(* This test checks all ml files in the ocaml repository that are accepted
+(* This test checks all ml files in the travlang repository that are accepted
    by the parser satisfy [Ast_invariants].
 
    We don't check the invariants on the output of the parser, so this test

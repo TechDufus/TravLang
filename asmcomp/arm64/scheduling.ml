@@ -1,7 +1,7 @@
 # 2 "asmcomp/arm64/scheduling.ml"
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Gallium, INRIA Rocquencourt           *)
 (*                                                                        *)

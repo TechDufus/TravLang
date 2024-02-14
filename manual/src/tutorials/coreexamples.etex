@@ -1,7 +1,7 @@
 \chapter{The core language} \label{c:core-xamples}
 %HEVEA\cutname{coreexamples.html}
 
-This part of the manual is a tutorial introduction to the OCaml language. A
+This part of the manual is a tutorial introduction to the travlang language. A
 good familiarity with programming in a conventional languages (say, C or Java)
 is assumed, but no prior exposure to functional languages is required. The
 present chapter introduces the core language. Chapter~\ref{c:moduleexamples}
@@ -13,13 +13,13 @@ chapter~\ref{c:advexamples} gives some advanced examples.
 
 \section{s:basics}{Basics}
 
-For this overview of OCaml, we use the interactive system, which is started by
-running "ocaml" from the Unix shell or Windows command prompt. This tutorial is
+For this overview of travlang, we use the interactive system, which is started by
+running "travlang" from the Unix shell or Windows command prompt. This tutorial is
 presented as the transcript of a session with the interactive system: lines
 starting with "#" represent user input; the system responses are printed below,
 without a leading "#".
 
-Under the interactive system, the user types OCaml phrases terminated
+Under the interactive system, the user types travlang phrases terminated
 by ";;" in response to the "#" prompt, and the system compiles them
 on the fly, executes them, and prints the outcome of evaluation.
 Phrases are either simple expressions, or "let" definitions of
@@ -30,7 +30,7 @@ let pi = 4.0 *. atan 1.0;;
 let square x = x *. x;;
 square (sin pi) +. square (cos pi);;
 \end{caml_example}
-The OCaml system computes both the value and the type for
+The travlang system computes both the value and the type for
 each phrase. Even function parameters need no explicit type declaration:
 the system infers their types from their usage in the
 function. Notice also that integers and floating-point numbers are
@@ -49,7 +49,7 @@ fib 10;;
 
 \section{s:datatypes}{Data types}
 
-In addition to integers and floating-point numbers, OCaml offers the
+In addition to integers and floating-point numbers, travlang offers the
 usual basic data types:
 \begin{itemize}%
 \item booleans
@@ -83,13 +83,13 @@ semicolon-separated elements, or built from the empty list "[]"
 let l = ["is"; "a"; "tale"; "told"; "etc."];;
 "Life" :: l;;
 \end{caml_example}
-As with all other OCaml data structures, lists do not need to be
+As with all other travlang data structures, lists do not need to be
 explicitly allocated and deallocated from memory: all memory
-management is entirely automatic in OCaml. Similarly, there is no
-explicit handling of pointers: the OCaml compiler silently introduces
+management is entirely automatic in travlang. Similarly, there is no
+explicit handling of pointers: the travlang compiler silently introduces
 pointers where necessary.
 
-As with most OCaml data structures, inspecting and destructuring lists
+As with most travlang data structures, inspecting and destructuring lists
 is performed by pattern-matching. List patterns have exactly the same
 form as list expressions, with identifiers representing unspecified
 parts of the list. As an example, here is insertion sort on a list:
@@ -110,7 +110,7 @@ The type inferred for "sort", "'a list -> 'a list", means that "sort"
 can actually apply to lists of any type, and returns a list of the
 same type. The type "'a" is a {\em type variable}, and stands for any
 given type. The reason why "sort" can apply to lists of any type is
-that the comparisons ("=", "<=", etc.) are {\em polymorphic} in OCaml:
+that the comparisons ("=", "<=", etc.) are {\em polymorphic} in travlang:
 they operate between any two values of the same type. This makes
 "sort" itself polymorphic over all list types.
 \begin{caml_example}{toplevel}
@@ -120,20 +120,20 @@ sort [3.14; 2.718];;
 
 The "sort" function above does not modify its input list: it builds
 and returns a new list containing the same elements as the input list,
-in ascending order. There is actually no way in OCaml to modify
+in ascending order. There is actually no way in travlang to modify
 a list in-place once it is built: we say that lists are  {\em immutable}
-data structures. Most OCaml data structures are immutable, but a few
+data structures. Most travlang data structures are immutable, but a few
 (most notably arrays) are {\em mutable}, meaning that they can be
 modified in-place at any time.
 
-The OCaml notation for the type of a function with multiple arguments is \\
+The travlang notation for the type of a function with multiple arguments is \\
 "arg1_type -> arg2_type -> ... -> return_type".  For example,
 the type inferred for "insert", "'a -> 'a list -> 'a list", means that "insert"
 takes two arguments, an element of any type "'a" and a list with elements of
 the same type "'a" and returns a list of the same type.
 \section{s:functions-as-values}{Functions as values}
 
-OCaml is a  functional language: functions in the full mathematical
+travlang is a  functional language: functions in the full mathematical
 sense are supported and can be passed around freely just as any other
 piece of data. For instance, here is a "deriv" function that takes any
 float function as argument and returns an approximation of its
@@ -152,7 +152,7 @@ let cos2 = compose square cos;;
 Functions that take other functions as arguments are called
 ``functionals'', or ``higher-order functions''. Functionals are
 especially useful to provide iterators or similar generic operations
-over a data structure. For instance, the standard OCaml library
+over a data structure. For instance, the standard travlang library
 provides a "List.map" functional that applies a given function to each
 element of a list, and returns the list of the results:
 \begin{caml_example}{toplevel}
@@ -312,10 +312,10 @@ type first_variant = A | B | C
 type last_variant  = A;;
 \end{caml_example*}
 
-The answer is that when confronted with multiple options, OCaml tries to
+The answer is that when confronted with multiple options, travlang tries to
 use locally available information to disambiguate between the various fields
 and constructors. First, if the type of the record or variant is known,
-OCaml can pick unambiguously the corresponding field or constructor.
+travlang can pick unambiguously the corresponding field or constructor.
 For instance:
 
 \begin{caml_example}{toplevel}
@@ -331,51 +331,51 @@ let f (First r) = r, r.x;;
 \end{caml_example}
 
 In the first example, "(r:first_record)" is an explicit annotation
-telling OCaml that the type of "r" is "first_record". With this
-annotation, Ocaml knows that "r.x" refers to the "x" field of the first
+telling travlang that the type of "r" is "first_record". With this
+annotation, travlang knows that "r.x" refers to the "x" field of the first
 record type. Similarly, the type annotation in the second example makes
-it clear to OCaml that the constructors "A", "B" and "C" come from the
-first variant type. Contrarily, in the last example, OCaml has inferred
+it clear to travlang that the constructors "A", "B" and "C" come from the
+first variant type. Contrarily, in the last example, travlang has inferred
 by itself that the type of "r" can only be "first_record" and there are
 no needs for explicit type annotations.
 
 Those explicit type annotations can in fact be used anywhere.
 Most of the time they are unnecessary, but they are useful to guide
 disambiguation, to debug unexpected type errors, or combined with some
-of the more advanced features of OCaml described in later chapters.
+of the more advanced features of travlang described in later chapters.
 
-Secondly, for records, OCaml can also deduce the right record type by
+Secondly, for records, travlang can also deduce the right record type by
 looking at the whole set of fields used in a expression or pattern:
 \begin{caml_example}{toplevel}
 let project_and_rotate {x; y; _} = { x= - y; y = x; z = 0} ;;
 \end{caml_example}
 Since the fields "x" and "y" can only appear simultaneously in the first
-record type, OCaml infers that the type of "project_and_rotate" is
+record type, travlang infers that the type of "project_and_rotate" is
 "first_record -> first_record".
 
 In last resort, if there is not enough information to disambiguate between
-different fields or constructors, Ocaml picks the last defined type
+different fields or constructors, travlang picks the last defined type
 amongst all locally valid choices:
 
 \begin{caml_example}{toplevel}
 let look_at_xz {x; z} = x;;
 \end{caml_example}
 
-Here, OCaml has inferred that the possible choices for the type of
+Here, travlang has inferred that the possible choices for the type of
 "{x;z}" are "first_record" and "middle_record", since the type
-"last_record" has no field "z". Ocaml then picks the type "middle_record"
+"last_record" has no field "z". travlang then picks the type "middle_record"
 as the last defined type between the two possibilities.
 
-Beware that this last resort disambiguation is local: once Ocaml has
+Beware that this last resort disambiguation is local: once travlang has
 chosen a disambiguation, it sticks to this choice, even if it leads to
 an ulterior type error:
 
 \begin{caml_example}{toplevel}[error]
 let look_at_x_then_y r =
-  let x = r.x in (* Ocaml deduces [r: last_record] *)
+  let x = r.x in (* travlang deduces [r: last_record] *)
   x + r.y;;
 let is_a_or_b x = match x with
-  | A -> true (* OCaml infers [x: last_variant] *)
+  | A -> true (* travlang infers [x: last_variant] *)
   | B -> true;;
 \end{caml_example}
 
@@ -388,7 +388,7 @@ more robust than relying on the last defined type disambiguation.
 \section{s:imperative-features}{Imperative features}
 
 Though all examples so far were written in purely applicative style,
-OCaml is also equipped with full imperative features. This includes the
+travlang is also equipped with full imperative features. This includes the
 usual "while" and "for" loops, as well as mutable data structures such
 as arrays. Arrays are either created by listing semicolon-separated element
 values between "[|" and "|]" brackets, or allocated and initialized with the
@@ -416,7 +416,7 @@ translate mypoint 1.0 2.0;;
 mypoint;;
 \end{caml_example}
 
-OCaml has no built-in notion of variable -- identifiers whose current
+travlang has no built-in notion of variable -- identifiers whose current
 value can be changed by assignment. (The "let" binding is not an
 assignment, it introduces a new identifier with a new scope.)
 However, the standard library provides references, which are mutable
@@ -471,7 +471,7 @@ g r;;
 
 \section{s:exceptions}{Exceptions}
 
-OCaml provides exceptions for signalling and handling exceptional
+travlang provides exceptions for signalling and handling exceptional
 conditions. Exceptions can also be used as a general-purpose non-local
 control structure, although this should not be overused since it can
 make the code harder to understand. Exceptions are declared with the
@@ -580,7 +580,7 @@ entire class of misbehaving functions.
 
 \section{s:lazy-expr}{Lazy expressions}
 
-OCaml allows us to defer some computation until later when we need the result of
+travlang allows us to defer some computation until later when we need the result of
  that computation. 
 
 We use "lazy (expr)" to delay the evaluation of some expression "expr". For 
@@ -654,7 +654,7 @@ if it is wildcard, always forces the evaluation of the deferred computation.
 \section{s:symb-expr}{Symbolic processing of expressions}
 
 We finish this introduction with a more complete example
-representative of the use of OCaml for symbolic processing: formal
+representative of the use of travlang for symbolic processing: formal
 manipulations of arithmetic expressions containing variables. The
 following variant type describes the expressions we shall manipulate:
 \begin{caml_example}{toplevel}
@@ -762,7 +762,7 @@ of apparition in the format string:
 Printf.printf "%i + %i is an integer value, %F * %F is a float, %S\n"
 3 2 4.5 1. "this is a string";;
 \end{caml_example}
-The OCaml type system checks that the type of the arguments and the specifiers are
+The travlang type system checks that the type of the arguments and the specifiers are
 compatible. If you pass it an argument of a type that does not correspond to
 the format specifier, the compiler will display an error message:
 \begin{caml_example}{toplevel}[error]
@@ -835,18 +835,18 @@ let str : _ format =
 Printf.printf str 3 4.5 "string value";;
 \end{caml_example}
 
-\section{s:standalone-programs}{Standalone OCaml programs}
+\section{s:standalone-programs}{Standalone travlang programs}
 
 All examples given so far were executed under the interactive system.
-OCaml code can also be compiled separately and executed
-non-interactively using the batch compilers "ocamlc" and "ocamlopt".
+travlang code can also be compiled separately and executed
+non-interactively using the batch compilers "travlangc" and "travlangopt".
 The source code must be put in a file with extension ".ml". It
 consists of a sequence of phrases, which will be evaluated at runtime
 in their order of appearance in the source file. Unlike in interactive
 mode, types and values are not printed automatically; the program must
 call printing functions explicitly to produce some output.  The ";;" used
 in the interactive examples is not required in
-source files created for use with OCaml compilers, but can be helpful
+source files created for use with travlang compilers, but can be helpful
 to mark the end of a top-level expression unambiguously even when
 there are syntax errors.
 Here is a
@@ -870,16 +870,16 @@ parameters. "Sys.argv.(1)" is thus the first command-line parameter.
 The program above is compiled and executed with the following shell
 commands:
 \begin{verbatim}
-$ ocamlc -o gcd gcd.ml
+$ travlangc -o gcd gcd.ml
 $ ./gcd 6 9
 3
 $ ./gcd 7 11
 1
 \end{verbatim}
 
-More complex standalone OCaml programs are typically composed of
+More complex standalone travlang programs are typically composed of
 multiple source files, and can link with precompiled libraries.
 Chapters~\ref{c:camlc} and~\ref{c:nativecomp} explain how to use the
-batch compilers "ocamlc" and "ocamlopt".  Recompilation of
-multi-file OCaml projects can be automated using third-party
-build systems, such as \href{https://github.com/ocaml/dune}{dune}.
+batch compilers "travlangc" and "travlangopt".  Recompilation of
+multi-file travlang projects can be automated using third-party
+build systems, such as \href{https://github.com/travlang/dune}{dune}.

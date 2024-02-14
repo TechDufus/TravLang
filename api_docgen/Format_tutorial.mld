@@ -268,7 +268,7 @@ where it tries to do its best, which is always "worse than your bad".
 + Do not try to force spacing using explicit spaces in the character strings.
 For each space you want in the output emit a break hint ([print_space ()]),
 unless you explicitly don't want the line to be broken here. For instance,
-imagine you want to pretty print an OCaml definition, more precisely a [let rec
+imagine you want to pretty print an travlang definition, more precisely a [let rec
 ident = expression] value definition. You will probably treat the first three
 spaces as "unbreakable spaces" and write them directly in the string constants
 for keywords, and print ["let rec"] before the identifier, and similarly write

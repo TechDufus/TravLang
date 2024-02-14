@@ -2,12 +2,12 @@
  modules = "stub_test.c";
 *)
 
-external failwith_from_ocaml : string -> 'a = "caml_failwith_value"
+external failwith_from_travlang : string -> 'a = "caml_failwith_value"
 
 external dynamic_invalid_argument : unit -> 'a = "dynamic_invalid_argument"
 
 let () =
-  try failwith_from_ocaml ("fo" ^ "o")
+  try failwith_from_travlang ("fo" ^ "o")
   with Failure foo -> print_endline foo
 
 let () =

@@ -2,7 +2,7 @@
 
 #**************************************************************************
 #*                                                                        *
-#*                                 OCaml                                  *
+#*                                 travlang                                  *
 #*                                                                        *
 #*            Xavier Leroy, projet Cristal, INRIA Rocquencourt            *
 #*                                                                        *
@@ -17,12 +17,12 @@
 
 # The configuration Makefile
 
-## Variables defining the current version of OCaml
-OCAML_DEVELOPMENT_VERSION=@OCAML_DEVELOPMENT_VERSION@
-OCAML_VERSION_MAJOR=@OCAML_VERSION_MAJOR@
-OCAML_VERSION_MINOR=@OCAML_VERSION_MINOR@
-OCAML_VERSION_PATCHLEVEL=@OCAML_VERSION_PATCHLEVEL@
-OCAML_VERSION_EXTRA=@OCAML_VERSION_EXTRA@
+## Variables defining the current version of travlang
+travlang_DEVELOPMENT_VERSION=@travlang_DEVELOPMENT_VERSION@
+travlang_VERSION_MAJOR=@travlang_VERSION_MAJOR@
+travlang_VERSION_MINOR=@travlang_VERSION_MINOR@
+travlang_VERSION_PATCHLEVEL=@travlang_VERSION_PATCHLEVEL@
+travlang_VERSION_EXTRA=@travlang_VERSION_EXTRA@
 
 ## The EMPTY variable, used in other definitions to preserve spaces
 EMPTY=
@@ -137,13 +137,13 @@ MODEL=@model@
 ### Name of operating system family for the native-code compiler.
 SYSTEM=@system@
 
-### Command and flags to use for assembling ocamlopt-generated code
+### Command and flags to use for assembling travlangopt-generated code
 ASM=@AS@
 
 ### Command and flags to use for assembling .S files (often with preprocessing)
 ASPP=@ASPP@
 
-### Set to "true" to install ".byte" executables (ocamlc.byte, etc.)
+### Set to "true" to install ".byte" executables (travlangc.byte, etc.)
 INSTALL_BYTECODE_PROGRAMS=@install_bytecode_programs@
 
 ############# Configuration for the contributed libraries
@@ -161,9 +161,9 @@ INSTALL_SOURCE_ARTIFACTS=@install_source_artifacts@
 
 CFLAGS=@CFLAGS@
 CPPFLAGS=@CPPFLAGS@
-OCAMLC_CFLAGS=@ocamlc_cflags@
+travlangC_CFLAGS=@travlangc_cflags@
 
-OCAMLC_CPPFLAGS=@ocamlc_cppflags@
+travlangC_CPPFLAGS=@travlangc_cppflags@
 ZSTD_LIBS=@zstd_libs@
 BYTECCLIBS=@zstd_libs@ @cclibs@
 EXE=@exeext@
@@ -175,10 +175,10 @@ NATDYNLINK=@natdynlink@
 NATDYNLINKOPTS=@natdynlinkopts@
 SYSLIB=@syslib@
 MKLIB=@mklib@
-# #7678: ocamlopt uses these only to compile .c files, and the behaviour for the
+# #7678: travlangopt uses these only to compile .c files, and the behaviour for the
 #        two drivers should be identical.
-OCAMLOPT_CFLAGS=@ocamlc_cflags@
-OCAMLOPT_CPPFLAGS=@ocamlc_cppflags@
+travlangOPT_CFLAGS=@travlangc_cflags@
+travlangOPT_CPPFLAGS=@travlangc_cppflags@
 NATIVECCLIBS=@cclibs@
 SYSTHREAD_SUPPORT=@systhread_support@
 PACKLD=@PACKLD@$(EMPTY)
@@ -217,18 +217,18 @@ NAKED_POINTERS=false
 
 # Deprecated variables
 
-## Variables deprecated since OCaml 5.2
+## Variables deprecated since travlang 5.2
 
 STDLIB_MANPAGES=@build_libraries_manpages@
-WITH_OCAMLDOC=@with_ocamldoc@
-WITH_OCAMLTEST=@ocamltest@
+WITH_travlangDOC=@with_travlangdoc@
+WITH_travlangTEST=@travlangtest@
 SHEBANGSCRIPTS=@shebangscripts@
 HASHBANGSCRIPTS=$(SHEBANGSCRIPTS)
 
-## Variables deprecated since OCaml 5.0
+## Variables deprecated since travlang 5.0
 
 UNIXLIB=unix
 
-## Variables renamed in OCaml 4.13
+## Variables renamed in travlang 4.13
 
 RUNTIMEI=$(INSTRUMENTED_RUNTIME)

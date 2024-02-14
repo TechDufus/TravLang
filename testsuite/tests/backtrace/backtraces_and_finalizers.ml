@@ -1,6 +1,6 @@
 (* TEST
  flags = "-g -inline 0";
- ocamlrunparam += ",b=1";
+ travlangrunparam += ",b=1";
  native;
 *)
 

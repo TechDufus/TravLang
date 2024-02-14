@@ -1,7 +1,7 @@
 (* TEST
  flags = "-nopervasives";
- setup-ocamlc.byte-build-env;
- ocamlc.byte;
+ setup-travlangc.byte-build-env;
+ travlangc.byte;
  run;
  check-program-output;
 *)

@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*                    Sebastien Hinderer, INRIA Paris                     */
 /*                                                                        */
@@ -18,7 +18,7 @@
 /* Test various other compiler configurations */
 
 pipeline {
-  agent { label 'ocaml-linux-64' }
+  agent { label 'travlang-linux-64' }
   options {
     timeout(time: 45, unit: 'MINUTES')
   }
@@ -32,7 +32,7 @@ pipeline {
   post {
     regression {
       emailext (
-        to: 'ocaml-ci-notifications@inria.fr',
+        to: 'travlang-ci-notifications@inria.fr',
         subject: 'Job $JOB_NAME $BUILD_STATUS (build #$BUILD_NUMBER)',
         body: 'Changes since the last successful build:\n\n' +
           '${CHANGES, format="%r %a %m"}\n\n' +

@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*                          Benoit Vaugon, ENSTA                          *)
 (*                                                                        *)
@@ -13,7 +13,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* No comments, OCaml stdlib internal use only. *)
+(* No comments, travlang stdlib internal use only. *)
 
 open CamlinternalFormatBasics
 

@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -69,8 +69,8 @@ let remove_loc =
   {default_mapper with location = (fun _this _loc -> Location.none)}
 
 let is_not_doc = function
-  | {Parsetree.attr_name = {Location.txt = "ocaml.doc"}; _} -> false
-  | {Parsetree.attr_name = {Location.txt = "ocaml.text"}; _} -> false
+  | {Parsetree.attr_name = {Location.txt = "travlang.doc"}; _} -> false
+  | {Parsetree.attr_name = {Location.txt = "travlang.text"}; _} -> false
   | {Parsetree.attr_name = {Location.txt = "doc"}; _} -> false
   | {Parsetree.attr_name = {Location.txt = "text"}; _} -> false
   | _ -> true

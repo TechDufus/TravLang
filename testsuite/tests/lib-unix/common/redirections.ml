@@ -4,28 +4,28 @@
  hasunix;
  {
    program = "${test_build_directory}/redirections.byte";
-   setup-ocamlc.byte-build-env;
+   setup-travlangc.byte-build-env;
    program = "${test_build_directory}/reflector.exe";
    all_modules = "reflector.ml";
-   ocamlc.byte;
+   travlangc.byte;
    include unix;
    program = "${test_build_directory}/redirections.byte";
    all_modules = "redirections.ml";
-   ocamlc.byte;
-   check-ocamlc.byte-output;
+   travlangc.byte;
+   check-travlangc.byte-output;
    run;
    check-program-output;
  }{
    program = "${test_build_directory}/redirections.opt";
-   setup-ocamlopt.byte-build-env;
+   setup-travlangopt.byte-build-env;
    program = "${test_build_directory}/reflector.exe";
    all_modules = "reflector.ml";
-   ocamlopt.byte;
+   travlangopt.byte;
    include unix;
    program = "${test_build_directory}/redirections.opt";
    all_modules = "redirections.ml";
-   ocamlopt.byte;
-   check-ocamlopt.byte-output;
+   travlangopt.byte;
+   check-travlangopt.byte-output;
    run;
    check-program-output;
  }

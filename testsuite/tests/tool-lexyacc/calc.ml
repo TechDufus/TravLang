@@ -1,7 +1,7 @@
 (* TEST
  modules = "calc_parser.mly calc_lexer.mll";
- ocamllex_flags = " -q ";
- ocamlyacc_flags = " -q ";
+ travlanglex_flags = " -q ";
+ travlangyacc_flags = " -q ";
  readonly_files = "calc_input.txt";
  stdin = "calc_input.txt";
 *)

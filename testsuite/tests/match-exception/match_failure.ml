@@ -13,7 +13,7 @@ let test_match_partial_match =
     | exception Failure _ -> "failure"
     | exception Invalid_argument _ -> "invalid argument"
     | None -> "None"
-    ) [@ocaml.warning "-8"] in
+    ) [@travlang.warning "-8"] in
     assert false
   with
     Match_failure _ ->

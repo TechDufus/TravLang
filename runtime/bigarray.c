@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*          Manuel Serrano and Xavier Leroy, INRIA Rocquencourt           */
 /*                                                                        */
@@ -218,8 +218,8 @@ CAMLexport const struct custom_operations caml_ba_ops = {
 /* [caml_ba_alloc] will allocate a new bigarray object in the heap.
    If [data] is NULL, the memory for the contents is also allocated
    (with [malloc]) by [caml_ba_alloc].
-   [data] cannot point into the OCaml heap.
-   [dim] may point into an object in the OCaml heap.
+   [data] cannot point into the travlang heap.
+   [dim] may point into an object in the travlang heap.
 */
 CAMLexport value
 caml_ba_alloc(int flags, int num_dims, void * data, intnat * dim)
@@ -562,7 +562,7 @@ CAMLexport void caml_ba_serialize(value v,
     caml_ba_serialize_longarray(b->data, num_elts, -0x80000000, 0x7FFFFFFF);
     break;
   }
-  /* Compute required size in OCaml heap.  Assumes struct caml_ba_array
+  /* Compute required size in travlang heap.  Assumes struct caml_ba_array
      is exactly 4 + num_dims words */
   CAMLassert(SIZEOF_BA_ARRAY == 4 * sizeof(value));
   *wsize_32 = (4 + b->num_dims) * 4;
@@ -583,7 +583,7 @@ static void caml_ba_deserialize_longarray(void * dest, intnat num_elts)
 #else
   if (sixty)
     caml_deserialize_error("input_value: cannot read bigarray "
-                      "with 64-bit OCaml ints");
+                      "with 64-bit travlang ints");
   caml_deserialize_block_4(dest, num_elts);
 #endif
 }
@@ -650,7 +650,7 @@ CAMLexport uintnat caml_ba_deserialize(void * dst)
   return SIZEOF_BA_ARRAY + b->num_dims * sizeof(intnat);
 }
 
-/* Allocate a bigarray from OCaml */
+/* Allocate a bigarray from travlang */
 
 CAMLprim value caml_ba_create(value vkind, value vlayout, value vdim)
 {
@@ -1134,7 +1134,7 @@ CAMLprim value caml_ba_slice(value vb, value vind)
   sub_data =
     (char *) b->data +
     offset * caml_ba_element_size[b->flags & CAML_BA_KIND_MASK];
-  /* Allocate an OCaml bigarray to hold the result */
+  /* Allocate an travlang bigarray to hold the result */
   res = caml_ba_alloc(b->flags | CAML_BA_SUBARRAY,
                       b->num_dims - num_inds, sub_data, sub_dims);
   /* Copy the finalization function from the original array (PR#8568) */
@@ -1208,7 +1208,7 @@ CAMLprim value caml_ba_sub(value vb, value vofs, value vlen)
   sub_data =
     (char *) b->data +
     ofs * mul * caml_ba_element_size[b->flags & CAML_BA_KIND_MASK];
-  /* Allocate an OCaml bigarray to hold the result */
+  /* Allocate an travlang bigarray to hold the result */
   res = caml_ba_alloc(b->flags | CAML_BA_SUBARRAY,
                       b->num_dims, sub_data, b->dim);
   /* Copy the finalization function from the original array (PR#8568) */

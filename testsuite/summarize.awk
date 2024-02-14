@@ -1,6 +1,6 @@
 #**************************************************************************
 #*                                                                        *
-#*                                 OCaml                                  *
+#*                                 travlang                                  *
 #*                                                                        *
 #*         Damien Doligez, projet Gallium, INRIA Rocquencourt             *
 #*                                                                        *

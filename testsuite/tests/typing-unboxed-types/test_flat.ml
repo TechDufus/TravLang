@@ -5,28 +5,28 @@
 
 (* should fail *)
 type 'a abs;;
-type t16 = A : 'a abs -> t16 [@@ocaml.unboxed];;
+type t16 = A : 'a abs -> t16 [@@travlang.unboxed];;
 [%%expect{|
 type 'a abs
 Line 2, characters 0-46:
-2 | type t16 = A : 'a abs -> t16 [@@ocaml.unboxed];;
+2 | type t16 = A : 'a abs -> t16 [@@travlang.unboxed];;
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Error: This type cannot be unboxed because
        it might contain both float and non-float values,
        depending on the instantiation of the existential variable "'a".
-       You should annotate it with "[@@ocaml.boxed]".
+       You should annotate it with "[@@travlang.boxed]".
 |}];;
 
 (* should fail (the existential _ still occurs in an abstract type) *)
-type t18 = A : _ list abs -> t18 [@@ocaml.unboxed];;
+type t18 = A : _ list abs -> t18 [@@travlang.unboxed];;
 [%%expect{|
 Line 1, characters 0-50:
-1 | type t18 = A : _ list abs -> t18 [@@ocaml.unboxed];;
+1 | type t18 = A : _ list abs -> t18 [@@travlang.unboxed];;
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Error: This type cannot be unboxed because
        it might contain both float and non-float values,
        depending on the instantiation of an unnamed existential variable.
-       You should annotate it with "[@@ocaml.boxed]".
+       You should annotate it with "[@@travlang.boxed]".
 |}];;
 
 (* regression test for PR#7511 (wrong determination of unboxability for GADTs)
@@ -41,7 +41,7 @@ Line 2, characters 0-34:
 Error: This type cannot be unboxed because
        it might contain both float and non-float values,
        depending on the instantiation of the existential variable "'a".
-       You should annotate it with "[@@ocaml.boxed]".
+       You should annotate it with "[@@travlang.boxed]".
 |}];;
 
 (* regression test for GPR#1133 (follow-up to PR#7511) *)
@@ -55,7 +55,7 @@ Line 2, characters 0-34:
 Error: This type cannot be unboxed because
        it might contain both float and non-float values,
        depending on the instantiation of the existential variable "'a".
-       You should annotate it with "[@@ocaml.boxed]".
+       You should annotate it with "[@@travlang.boxed]".
 |}];;
 
 (* Another test for GPR#1133: abstract types *)
@@ -80,7 +80,7 @@ Line 1, characters 0-45:
 Error: This type cannot be unboxed because
        it might contain both float and non-float values,
        depending on the instantiation of an unnamed existential variable.
-       You should annotate it with "[@@ocaml.boxed]".
+       You should annotate it with "[@@travlang.boxed]".
 |}];;
 
 (* accept *)
@@ -98,7 +98,7 @@ Line 1, characters 0-34:
 Error: This type cannot be unboxed because
        it might contain both float and non-float values,
        depending on the instantiation of the existential variable "'a".
-       You should annotate it with "[@@ocaml.boxed]".
+       You should annotate it with "[@@travlang.boxed]".
 |}];;
 
 (* accept *)
@@ -130,7 +130,7 @@ Line 1, characters 0-45:
 Error: This type cannot be unboxed because
        it might contain both float and non-float values,
        depending on the instantiation of an unnamed existential variable.
-       You should annotate it with "[@@ocaml.boxed]".
+       You should annotate it with "[@@travlang.boxed]".
 |}];;
 
 (* accept *)
@@ -160,7 +160,7 @@ Line 2, characters 0-34:
 Error: This type cannot be unboxed because
        it might contain both float and non-float values,
        depending on the instantiation of the existential variable "'a".
-       You should annotate it with "[@@ocaml.boxed]".
+       You should annotate it with "[@@travlang.boxed]".
 |}];;
 
 (* regression test for GPR#1133 (follow-up to PR#7511) *)
@@ -174,7 +174,7 @@ Line 2, characters 0-34:
 Error: This type cannot be unboxed because
        it might contain both float and non-float values,
        depending on the instantiation of the existential variable "'a".
-       You should annotate it with "[@@ocaml.boxed]".
+       You should annotate it with "[@@travlang.boxed]".
 |}];;
 
 (* Another test for GPR#1133: abstract types *)
@@ -199,7 +199,7 @@ Line 1, characters 0-45:
 Error: This type cannot be unboxed because
        it might contain both float and non-float values,
        depending on the instantiation of an unnamed existential variable.
-       You should annotate it with "[@@ocaml.boxed]".
+       You should annotate it with "[@@travlang.boxed]".
 |}];;
 
 type 'a s = S : (unit -> 'a) M.r -> 'a option s [@@unboxed];;
@@ -216,7 +216,7 @@ Line 1, characters 0-34:
 Error: This type cannot be unboxed because
        it might contain both float and non-float values,
        depending on the instantiation of the existential variable "'a".
-       You should annotate it with "[@@ocaml.boxed]".
+       You should annotate it with "[@@travlang.boxed]".
 |}];;
 
 (* accept *)
@@ -265,7 +265,7 @@ Line 1, characters 0-61:
 Error: This type cannot be unboxed because
        it might contain both float and non-float values,
        depending on the instantiation of the existential variable "'a".
-       You should annotate it with "[@@ocaml.boxed]".
+       You should annotate it with "[@@travlang.boxed]".
 |}];;
 type valid2 = Any : (int, 'a) almost_eq -> valid2 [@@unboxed];;
 [%%expect{|
@@ -281,7 +281,7 @@ Line 1, characters 0-60:
 Error: This type cannot be unboxed because
        it might contain both float and non-float values,
        depending on the instantiation of the existential variable "'a".
-       You should annotate it with "[@@ocaml.boxed]".
+       You should annotate it with "[@@travlang.boxed]".
 |}];;
 
 

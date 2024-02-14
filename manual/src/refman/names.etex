@@ -97,7 +97,7 @@ The capitalization rules  are summarized in the table below.
 {\it Note on polymorphic variant tags:\/} the current implementation accepts
 lowercase variant tags in addition to capitalized variant tags, but we
 suggest you avoid lowercase variant tags for portability and
-compatibility with future OCaml versions.
+compatibility with future travlang versions.
 
 \subsubsection*{sss:refer-named}{Referring to named objects}
 

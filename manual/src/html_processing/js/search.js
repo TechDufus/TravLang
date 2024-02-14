@@ -1,4 +1,4 @@
-// Searching the OCAML API.
+// Searching the travlang API.
 // Copyright 2019-2020 San VU NGOC
 
 // Permission to use, copy, modify, and/or distribute this software
@@ -56,7 +56,7 @@ function loadingIndex (includeDescr) {
 // line is a string array. We check if sub is a substring of one of
 // the elements of the array. The start/end of the string s are marked
 // by "^" and "$", and hence these chars can be used in sub to refine
-// the search. Case sensitive is better for OCaml modules. Searching
+// the search. Case sensitive is better for travlang modules. Searching
 // within line.join() is slightly more efficient that iterating 'line'
 // with .findIndex (my benchmarks show about 15% faster; except if we
 // search for the value at the beginning of line). However it might

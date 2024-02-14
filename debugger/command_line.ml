@@ -1,9 +1,9 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*           Jerome Vouillon, projet Cristal, INRIA Rocquencourt          *)
-(*           OCaml port by John Malecki and Xavier Leroy                  *)
+(*           travlang port by John Malecki and Xavier Leroy                  *)
 (*                                                                        *)
 (*   Copyright 1996 Institut National de Recherche en Informatique et     *)
 (*     en Automatique.                                                    *)
@@ -1175,7 +1175,7 @@ using \"load_printer\"." };
 "mode of loading.\n\
 It can be either:\n\
   direct: the program is directly called by the debugger.\n\
-  runtime: the debugger execute `ocamlrun programname arguments\'.\n\
+  runtime: the debugger execute `travlangrun programname arguments\'.\n\
   manual: the program is not launched by the debugger,\n\
     but manually by the user." };
      { var_name = "processcount";

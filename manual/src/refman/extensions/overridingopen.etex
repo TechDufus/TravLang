@@ -1,4 +1,4 @@
-(Introduced in OCaml 4.01)
+(Introduced in travlang 4.01)
 
 \begin{syntax}
 definition:
@@ -23,10 +23,10 @@ class-expr:
 ;
 \end{syntax}
 
-Since OCaml 4.01, @"open"@ statements shadowing an existing identifier
+Since travlang 4.01, @"open"@ statements shadowing an existing identifier
 (which is later used) trigger the warning 44.  Adding a @"!"@
 character after the @"open"@ keyword indicates that such a shadowing is
 intentional and should not trigger the warning.
 
-This is also available (since OCaml 4.06) for local opens in class
+This is also available (since travlang 4.06) for local opens in class
 expressions and class type expressions.

@@ -1,6 +1,6 @@
 #**************************************************************************
 #*                                                                        *
-#*                                 OCaml                                  *
+#*                                 travlang                                  *
 #*                                                                        *
 #*             Florian Angeletti, projet Cambium, Inria Paris             *
 #*                                                                        *
@@ -41,8 +41,8 @@ define stdlib_prefix
 endef
 
 # define the right conditional for the manual
-build/latex/ifocamldoc.tex: | build/latex
-	$(V_GEN)printf '\\newif\\ifocamldoc\\ocamldocfalse\n' > $@
+build/latex/iftravlangdoc.tex: | build/latex
+	$(V_GEN)printf '\\newif\\iftravlangdoc\\travlangdocfalse\n' > $@
 
 
 # \input{} all modules in the stdlib for the latex api manual
@@ -143,7 +143,7 @@ stdlib_INDEX=\
   $(foreach m,$(stdlib_UNPREFIXED),$(call stdlib_prefix,$m))\
   $(call capitalize, $(otherlibref))
 build/libref.mld:
-	( echo "{0 OCaml standard library}"; \
+	( echo "{0 travlang standard library}"; \
 	  echo "{!modules:$(stdlib_INDEX)}" ) > $@
 
 build/libref/index.html.stamp: $(ALL_HTML) build/libref.mld \

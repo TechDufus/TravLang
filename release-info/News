@@ -1,4 +1,4 @@
-OCaml 4.14.0 (28 March 2022)
+travlang 4.14.0 (28 March 2022)
 ----------------------------
 
 - Integrated support for "go to definitions" in Merlin.
@@ -8,16 +8,16 @@ OCaml 4.14.0 (28 March 2022)
 - Runtime optimisation: GC prefetching. Benchmarks show a speedup of around 20%
   in GC-heavy programs.
 - Improved error messages in particular for module-level error.
-- Deprecated functions and modules in preparation for OCaml 5.
+- Deprecated functions and modules in preparation for travlang 5.
   In particular, the Stream and Genlex modules are now deprecated.
 - Type variables can be explicitly introduced in value and variant constructor
   declarations. For instance,
-```ocaml
+```travlang
     val fold: ('acc -> 'elt -> 'acc) -> 'acc -> 'elt list -> 'acc
     type showable = Show: 'a * ('a -> string) -> showable
 ```
 can now be written as
-```ocaml
+```travlang
     val fold: 'acc 'elt. ('acc -> 'elt -> 'acc) -> 'acc -> 'elt list -> 'acc
     type showable = Show: 'a. 'a * ('a -> string) -> showable
 ```
@@ -25,10 +25,10 @@ can now be written as
   for all architectures.
 - Experimental tail modulo cons (TMC) transformation
 
-OCaml 4.13.0 (24 September 2021)
+travlang 4.13.0 (24 September 2021)
 -------------------------------
 
-- Safe points: a multicore prerequisite that ensures that ocamlopt-generated
+- Safe points: a multicore prerequisite that ensures that travlangopt-generated
   code can always be interrupted.
 - The best-fit GC allocation policy is now default policy
   (and many other GCs improvements.)
@@ -40,12 +40,12 @@ OCaml 4.13.0 (24 September 2021)
 - Many other quality of life improvements
 - Many bug fixes
 
-OCaml 4.12.0 (24 February 2021)
+travlang 4.12.0 (24 February 2021)
 -------------------------------
 
 - Major progress in reducing the difference between the mainline and multicore
   runtime
-- A new configuration option ocaml-option-nnpchecker which emits an alarm when
+- A new configuration option travlang-option-nnpchecker which emits an alarm when
   the garbage collector finds out-of-heap pointers that could cause a crash in
   the multicore runtime
 - Support for macOS/arm64
@@ -54,7 +54,7 @@ OCaml 4.12.0 (24 February 2021)
 - Many bug fixes
 
 
-OCaml 4.11.0  (19 August 2020)
+travlang 4.11.0  (19 August 2020)
 ------------------------------
 
 - Statmemprof: a new statistical memory profiler
@@ -67,11 +67,11 @@ OCaml 4.11.0  (19 August 2020)
 - Many bug fixes.
 
 
-OCaml 4.10.0 (21 February 2020)
+travlang 4.10.0 (21 February 2020)
 -------------------------------
 
 - New best-fit allocator for the major heap
-- Preliminary runtime work for OCaml multicore
+- Preliminary runtime work for travlang multicore
 - Immutable strings are now enforced at configuration time
 - User-defined indexing operators for multidimensional arrays
 - Coming soon: statmemprof, a new statistical memory profiler.
@@ -81,12 +81,12 @@ OCaml 4.10.0 (21 February 2020)
 - Many bug fixes
 
 
-OCaml 4.09.1 (18 March 2020)
+travlang 4.09.1 (18 March 2020)
 ----------------------------
 
 Bug fixes.
 
-OCaml 4.09.0 (18 September 2019)
+travlang 4.09.0 (18 September 2019)
 --------------------------------
 
 - New optimisations, in particular for affine functions in matches,
@@ -103,12 +103,12 @@ OCaml 4.09.0 (18 September 2019)
 - Support for compiler plugins was removed.
 - Many bug fixes.
 
-OCaml 4.08.1 (5 August 2019)
+travlang 4.08.1 (5 August 2019)
 ----------------------------
 
 Bug fixes.
 
-OCaml 4.08.0 (14 June 2019)
+travlang 4.08.0 (14 June 2019)
 ---------------------------
 
 - Binding operators (let*, let+, and*, etc). They can be used to
@@ -132,7 +132,7 @@ OCaml 4.08.0 (14 June 2019)
 - Improved AFL instrumentation for objects and lazy values.
 
 
-OCaml 4.07.1 (4 October 2018)
+travlang 4.07.1 (4 October 2018)
 -----------------------------
 
 This release consists mostly of bug fixes. The most salient bugs were
@@ -152,7 +152,7 @@ This release consists mostly of bug fixes. The most salient bugs were
 See the detailed list of fixes at (Changes#4.07.1).
 
 
-OCaml 4.07.0 (10 July 2018):
+travlang 4.07.0 (10 July 2018):
 ----------------------------
 
 Some highlights of this release are:
@@ -163,7 +163,7 @@ Some highlights of this release are:
     1. the `List` module (for example) is now named `Stdlib__list`
     2. a new Stdlib module contains a series of aliases
     such as `module List = Stdlib__list`
-    3. the `Stdlib` module is implicitly opened when type-checking OCaml
+    3. the `Stdlib` module is implicitly opened when type-checking travlang
     programs (as `Pervasives` previously was), so that `Stdlib.List` can be
     accessed as just `List`, as before.
 
@@ -203,9 +203,9 @@ Some highlights of this release are:
     (GPR#1741, GPR#1757, GPR#1767 by Charles Chamberlain and steinuil)
 
     The new version of the manual can be consulted at
-    <http://caml.inria.fr/pub/docs/manual-ocaml-4.07/>; see the
+    <http://caml.inria.fr/pub/docs/manual-travlang-4.07/>; see the
     previous version for comparison at
-    <http://caml.inria.fr/pub/docs/manual-ocaml-4.06/>.
+    <http://caml.inria.fr/pub/docs/manual-travlang-4.06/>.
 
 -   Since 4.01, it is possible to select a variant constructor or
     record field from a sub-module that is not opened in the current
@@ -221,7 +221,7 @@ Some highlights of this release are:
 See also the detailed list of changes: (Changes#4.07.0).
 
 
-OCaml 4.06.1 (16 Feb 2018):
+travlang 4.06.1 (16 Feb 2018):
 ---------------------------
 
 This release consists mostly of bug fixes. The most salient bugs were
@@ -238,13 +238,13 @@ This release consists mostly of bug fixes. The most salient bugs were
 See the detailed list of fixes at (Changes#4.06.1).
 
 
-OCaml 4.06.0 (3 Nov 2017):
+travlang 4.06.0 (3 Nov 2017):
 --------------------------
 
 -   Strings (type `string`) are now immutable by default. In-place
     modification must use the type `bytes` of byte sequences, which is
     distinct from `string`.  This corresponds to the `-safe-string`
-    compile-time option, which was introduced in OCaml 4.02 in 2014, and
+    compile-time option, which was introduced in travlang 4.02 in 2014, and
     which is now the default.
     (GPR#1252, by Damien Doligez)
 
@@ -271,7 +271,7 @@ OCaml 4.06.0 (3 Nov 2017):
     GPR#1446, GPR#1448, by ygrek and Nicolás Ojeda Bär)
 
 -   An alternate register allocator based on linear scan can be selected
-    with `ocamlopt -linscan`.  It reduces compilation time compared with
+    with `travlangopt -linscan`.  It reduces compilation time compared with
     the default register allocator.
     (GPR#375, Marcell Fischbach and Benedikt Meurer)
 
@@ -282,7 +282,7 @@ OCaml 4.06.0 (3 Nov 2017):
 See the detailed list of changes: (Changes#4.06.0).
 
 
-OCaml 4.05.0 (13 Jul 2017):
+travlang 4.05.0 (13 Jul 2017):
 ---------------------------
 
 Some highlights include:

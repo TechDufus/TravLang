@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -188,7 +188,7 @@ let build_initial_env add_type add_extension empty_env =
         ext_private = Asttypes.Public;
         ext_loc = Location.none;
         ext_attributes = [Ast_helper.Attr.mk
-                            (Location.mknoloc "ocaml.warn_on_literal_pattern")
+                            (Location.mknoloc "travlang.warn_on_literal_pattern")
                             (Parsetree.PStr [])];
         ext_uid = Uid.of_predef_id id;
       }

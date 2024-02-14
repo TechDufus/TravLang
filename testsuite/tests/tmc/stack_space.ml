@@ -1,12 +1,12 @@
 (* TEST
- setup-ocamlc.byte-build-env;
+ setup-travlangc.byte-build-env;
  module = "stack_space.ml";
- ocamlc.byte;
+ travlangc.byte;
  program = "./test.byte.exe";
  all_modules = "stack_space.cmo";
  module = "";
- ocamlc.byte;
- ocamlrunparam += ",l=300";
+ travlangc.byte;
+ travlangrunparam += ",l=300";
  run;
 *)
 

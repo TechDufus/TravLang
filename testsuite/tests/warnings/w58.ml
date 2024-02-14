@@ -2,19 +2,19 @@
  flags = "-w +A-70";
  readonly_files = "module_without_cmx.mli";
  {
-   setup-ocamlc.byte-build-env;
+   setup-travlangc.byte-build-env;
    module = "module_without_cmx.mli";
-   ocamlc.byte;
+   travlangc.byte;
    module = "w58.ml";
-   ocamlc.byte;
-   check-ocamlc.byte-output;
+   travlangc.byte;
+   check-travlangc.byte-output;
  }{
-   setup-ocamlopt.byte-build-env;
+   setup-travlangopt.byte-build-env;
    module = "module_without_cmx.mli";
-   ocamlopt.byte;
+   travlangopt.byte;
    module = "w58.ml";
-   ocamlopt.byte;
-   check-ocamlopt.byte-output;
+   travlangopt.byte;
+   check-travlangopt.byte-output;
  }
 *)
 

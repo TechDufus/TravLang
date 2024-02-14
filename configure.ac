@@ -1,6 +1,6 @@
 #**************************************************************************
 #*                                                                        *
-#*                                 OCaml                                  *
+#*                                 travlang                                  *
 #*                                                                        *
 #*            Sebastien Hinderer, projet Gallium, INRIA Paris             *
 #*                                                                        *
@@ -17,13 +17,13 @@
 
 # Require Autoconf 2.71 for repeatability in CI
 AC_PREREQ([2.71])
-AC_INIT([OCaml],
-        [OCAML__VERSION],
+AC_INIT([travlang],
+        [travlang__VERSION],
         [caml-list@inria.fr],
-        [ocaml],
-        [http://www.ocaml.org])
+        [travlang],
+        [http://www.travlang.org])
 
-AC_MSG_NOTICE([Configuring OCaml version AC_PACKAGE_VERSION])
+AC_MSG_NOTICE([Configuring travlang version AC_PACKAGE_VERSION])
 
 # Configuration variables
 
@@ -48,14 +48,14 @@ common_cflags=""
 common_cppflags=""
 internal_cflags=""
 internal_cppflags=""
-ocamlc_cflags=""
-ocamlc_cppflags=""
+travlangc_cflags=""
+travlangc_cppflags=""
 oc_ldflags=""
 oc_dll_ldflags=""
 oc_exe_ldflags=""
 
 tsan=false
-# Passed to the linker by ocamlopt when tsan is enabled
+# Passed to the linker by travlangopt when tsan is enabled
 oc_tsan_cflags="-fsanitize=thread"
 oc_tsan_cppflags="-DWITH_THREAD_SANITIZER"
 tsan_distinguish_volatile_cflags=""
@@ -79,8 +79,8 @@ lib_unix=false
 optional_libraries=''
 optional_bytecode_tools=''
 optional_native_tools=''
-ocamltest_libunix=None
-ocamltest_unix_impl="dummy"
+travlangtest_libunix=None
+travlangtest_unix_impl="dummy"
 unix_library=""
 unix_directory=""
 
@@ -98,13 +98,13 @@ AC_SUBST([CONFIGURE_ARGS])
 AC_SUBST([native_compiler])
 AC_SUBST([default_build_target])
 AC_SUBST([VERSION], [AC_PACKAGE_VERSION])
-AC_SUBST([OCAML_DEVELOPMENT_VERSION], [OCAML__DEVELOPMENT_VERSION])
-AC_SUBST([OCAML_RELEASE_EXTRA], [OCAML__RELEASE_EXTRA])
-AC_SUBST([OCAML_VERSION_MAJOR], [OCAML__VERSION_MAJOR])
-AC_SUBST([OCAML_VERSION_MINOR], [OCAML__VERSION_MINOR])
-AC_SUBST([OCAML_VERSION_PATCHLEVEL], [OCAML__VERSION_PATCHLEVEL])
-AC_SUBST([OCAML_VERSION_EXTRA], [OCAML__VERSION_EXTRA])
-AC_SUBST([OCAML_VERSION_SHORT], [OCAML__VERSION_SHORT])
+AC_SUBST([travlang_DEVELOPMENT_VERSION], [travlang__DEVELOPMENT_VERSION])
+AC_SUBST([travlang_RELEASE_EXTRA], [travlang__RELEASE_EXTRA])
+AC_SUBST([travlang_VERSION_MAJOR], [travlang__VERSION_MAJOR])
+AC_SUBST([travlang_VERSION_MINOR], [travlang__VERSION_MINOR])
+AC_SUBST([travlang_VERSION_PATCHLEVEL], [travlang__VERSION_PATCHLEVEL])
+AC_SUBST([travlang_VERSION_EXTRA], [travlang__VERSION_EXTRA])
+AC_SUBST([travlang_VERSION_SHORT], [travlang__VERSION_SHORT])
 AC_DEFINE([MAGIC_NUMBER_PREFIX], ["][MAGIC_NUMBER__PREFIX]["])
 AC_DEFINE([MAGIC_NUMBER_VERSION], ["][MAGIC_NUMBER__VERSION]["])
 AC_SUBST([MAGIC_NUMBER_LENGTH], [MAGIC_NUMBER__LENGTH])
@@ -143,10 +143,10 @@ AC_SUBST([system])
 AC_SUBST([native_cflags])
 AC_SUBST([native_cppflags])
 AC_SUBST([systhread_support])
-AC_SUBST([ocamlsrcdir])
+AC_SUBST([travlangsrcdir])
 AC_SUBST([unix_or_win32])
 AC_SUBST([ln])
-AC_SUBST([ocamlyacc_wstr_module])
+AC_SUBST([travlangyacc_wstr_module])
 AC_SUBST([outputexe])
 AC_SUBST([outputobj])
 AC_SUBST([syslib])
@@ -168,8 +168,8 @@ AC_SUBST([oc_dll_ldflags])
 AC_SUBST([cclibs])
 AC_SUBST([native_ldflags])
 AC_SUBST([zstd_libs])
-AC_SUBST([ocamlc_cflags])
-AC_SUBST([ocamlc_cppflags])
+AC_SUBST([travlangc_cflags])
+AC_SUBST([travlangc_cppflags])
 AC_SUBST([flexdll_source_dir])
 AC_SUBST([bootstrapping_flexdll])
 AC_SUBST([flexdll_dir])
@@ -195,25 +195,25 @@ AC_SUBST([lib_unix])
 AC_SUBST([optional_libraries])
 AC_SUBST([optional_bytecode_tools])
 AC_SUBST([optional_native_tools])
-AC_SUBST([ocamltest_CPP])
-AC_SUBST([ocamltest_libunix])
+AC_SUBST([travlangtest_CPP])
+AC_SUBST([travlangtest_libunix])
 AC_SUBST([unix_library])
 AC_SUBST([unix_directory])
 AC_SUBST([cc_has_debug_prefix_map])
 AC_SUBST([as_has_debug_prefix_map])
 AC_SUBST([with_debugger]) # TODO: rename this variable
-AC_SUBST([build_ocamldebug])
-AC_SUBST([build_ocamltex])
-AC_SUBST([build_ocamldoc])
-AC_SUBST([ocamldoc_target])
-AC_SUBST([ocamldoc_opt_target])
-AC_SUBST([with_ocamldoc])
+AC_SUBST([build_travlangdebug])
+AC_SUBST([build_travlangtex])
+AC_SUBST([build_travlangdoc])
+AC_SUBST([travlangdoc_target])
+AC_SUBST([travlangdoc_opt_target])
+AC_SUBST([with_travlangdoc])
 AC_SUBST([documentation_tool])
 AC_SUBST([documentation_tool_cmd])
-AC_SUBST([build_ocamltest])
-AC_SUBST([ocamltest])
-AC_SUBST([ocamltest_target])
-AC_SUBST([ocamltest_opt_target])
+AC_SUBST([build_travlangtest])
+AC_SUBST([travlangtest])
+AC_SUBST([travlangtest_target])
+AC_SUBST([travlangtest_opt_target])
 AC_SUBST([ASPP])
 AC_SUBST([endianness])
 AC_SUBST([AS])
@@ -227,7 +227,7 @@ AC_SUBST([mkmaindll_exp])
 AC_SUBST([mksharedlibrpath])
 AC_SUBST([install_bytecode_programs])
 AC_SUBST([install_source_artifacts])
-AC_SUBST([install_ocamlnat])
+AC_SUBST([install_travlangnat])
 AC_SUBST([reserved_header_bits])
 AC_SUBST([frame_pointers])
 AC_SUBST([flambda])
@@ -244,8 +244,8 @@ AC_SUBST([mkexe_ldflags_exp])
 AC_SUBST([PACKLD])
 AC_SUBST([build_libraries_manpages])
 AC_SUBST([compute_deps])
-AC_SUBST([ocaml_bindir])
-AC_SUBST([ocaml_libdir])
+AC_SUBST([travlang_bindir])
+AC_SUBST([travlang_libdir])
 AC_SUBST([QS])
 AC_SUBST([ar_supports_response_files])
 AC_SUBST([target_bindir])
@@ -257,7 +257,7 @@ AC_CONFIG_FILES([Makefile.config])
 AC_CONFIG_FILES([stdlib/sys.ml])
 AC_CONFIG_FILES([manual/src/version.tex])
 AC_CONFIG_FILES([manual/src/html_processing/src/common.ml])
-AC_CONFIG_FILES([ocamltest/ocamltest_config.ml])
+AC_CONFIG_FILES([travlangtest/travlangtest_config.ml])
 AC_CONFIG_FILES([utils/config.common.ml])
 AC_CONFIG_FILES([utils/config.generated.ml])
 AC_CONFIG_HEADERS([runtime/caml/exec.h])
@@ -269,18 +269,18 @@ AC_CONFIG_FILES([otherlibs/dynlink/META])
 AC_CONFIG_FILES([otherlibs/runtime_events/META])
 AC_CONFIG_FILES([stdlib/META])
 
-# Definitions related to the version of OCaml
-AC_DEFINE([OCAML_VERSION_MAJOR], [OCAML__VERSION_MAJOR])
-AC_DEFINE([OCAML_VERSION_MINOR], [OCAML__VERSION_MINOR])
-AC_DEFINE([OCAML_VERSION_PATCHLEVEL], [OCAML__VERSION_PATCHLEVEL])
-m4_if([OCAML__VERSION_EXTRA],[], [],
-  [AC_DEFINE([OCAML_VERSION_ADDITIONAL], ["][OCAML__VERSION_EXTRA]["])
-  AC_DEFINE([OCAML_VERSION_EXTRA], ["][OCAML__VERSION_EXTRA]["])])
-AC_DEFINE([OCAML_VERSION], [OCAML__VERSION_NUMBER])
-AC_DEFINE([OCAML_VERSION_STRING], ["][OCAML__VERSION]["])
+# Definitions related to the version of travlang
+AC_DEFINE([travlang_VERSION_MAJOR], [travlang__VERSION_MAJOR])
+AC_DEFINE([travlang_VERSION_MINOR], [travlang__VERSION_MINOR])
+AC_DEFINE([travlang_VERSION_PATCHLEVEL], [travlang__VERSION_PATCHLEVEL])
+m4_if([travlang__VERSION_EXTRA],[], [],
+  [AC_DEFINE([travlang_VERSION_ADDITIONAL], ["][travlang__VERSION_EXTRA]["])
+  AC_DEFINE([travlang_VERSION_EXTRA], ["][travlang__VERSION_EXTRA]["])])
+AC_DEFINE([travlang_VERSION], [travlang__VERSION_NUMBER])
+AC_DEFINE([travlang_VERSION_STRING], ["][travlang__VERSION]["])
 
 # Works out how many "o"s are needed in quoted strings
-AC_CONFIG_COMMANDS_PRE(OCAML_QUOTED_STRING_ID)
+AC_CONFIG_COMMANDS_PRE(travlang_QUOTED_STRING_ID)
 
 # Checks for system types
 
@@ -290,7 +290,7 @@ AC_CANONICAL_TARGET
 
 # Ensure that AC_CONFIG_LINKS will either create symlinks which are compatible
 # with native Windows (i.e. NTFS symlinks, not WSL or Cygwin-emulated ones) or
-# use its fallback mechanisms. Native Windows versions of ocamlc/ocamlopt cannot
+# use its fallback mechanisms. Native Windows versions of travlangc/travlangopt cannot
 # interpret either WSL or Cygwin-emulated symlinks.
 AS_CASE([$host],
   [*-pc-windows|*-w64-mingw32*],
@@ -345,16 +345,16 @@ AC_ARG_ENABLE([debug-runtime],
   [AS_HELP_STRING([--disable-debug-runtime],
     [do not build runtime with debugging support])])
 
-AC_ARG_ENABLE([ocamldebug],
-  [AS_HELP_STRING([--enable-ocamldebug],
-    [build ocamldebug @<:@default=auto@:>@])],
+AC_ARG_ENABLE([travlangdebug],
+  [AS_HELP_STRING([--enable-travlangdebug],
+    [build travlangdebug @<:@default=auto@:>@])],
   [],
-  [enable_ocamldebug=auto])
+  [enable_travlangdebug=auto])
 
 AC_ARG_ENABLE([debugger],
   [AS_HELP_STRING([--enable-debugger],
-    [alias for --enable-ocamldebug])],
-  [enable_ocamldebug=$enableval],
+    [alias for --enable-travlangdebug])],
+  [enable_travlangdebug=$enableval],
   [])
 
 AC_ARG_ENABLE([dependency-generation],
@@ -375,7 +375,7 @@ AC_ARG_ENABLE([instrumented-runtime],
 AC_ARG_ENABLE([vmthreads], [],
   [AS_IF([test "x$enableval" != 'xno'],
     [AC_MSG_ERROR(m4_normalize([The vmthreads library is no longer available.
-      It was deleted in OCaml 4.09.]))])],
+      It was deleted in travlang 4.09.]))])],
   [])
 
 AC_ARG_ENABLE([systhreads],
@@ -400,8 +400,8 @@ AC_ARG_VAR([LIBUNWIND_LDFLAGS],
 AC_ARG_ENABLE([graph-lib], [],
   [AS_IF([test "x$enableval" != 'xno'],
     [AC_MSG_ERROR(m4_normalize([The graphics library is no longer distributed
-      with OCaml since version 4.09. It is now distributed as a separate
-      "graphics" package: https://github.com/ocaml/graphics]))])],
+      with travlang since version 4.09. It is now distributed as a separate
+      "graphics" package: https://github.com/travlang/graphics]))])],
   [])
 
 AC_ARG_ENABLE([str-lib],
@@ -414,24 +414,24 @@ AC_ARG_ENABLE([unix-lib],
 
 AC_ARG_ENABLE([bigarray-lib], [],
   [AS_IF([test "x$enableval" != 'xno'],
-    [AC_MSG_ERROR(m4_normalize([The bigarray-lib option was deleted in OCaml
+    [AC_MSG_ERROR(m4_normalize([The bigarray-lib option was deleted in travlang
       5.0, as the Bigarray module is now part of the standard library.]))])],
   [])
 
-AC_ARG_ENABLE([ocamldoc],
-  [AS_HELP_STRING([--disable-ocamldoc],
-    [do not build the ocamldoc documentation system])],
+AC_ARG_ENABLE([travlangdoc],
+  [AS_HELP_STRING([--disable-travlangdoc],
+    [do not build the travlangdoc documentation system])],
   [],
-  [enable_ocamldoc='auto'])
+  [enable_travlangdoc='auto'])
 
 AC_ARG_WITH([odoc],
   [AS_HELP_STRING([--with-odoc],
     [build documentation with odoc])])
 
 
-AC_ARG_ENABLE([ocamltest],
-  [AS_HELP_STRING([--disable-ocamltest],
-    [do not build ocamltest])])
+AC_ARG_ENABLE([travlangtest],
+  [AS_HELP_STRING([--disable-travlangtest],
+    [do not build travlangtest])])
 
 AC_ARG_ENABLE([native-toplevel],
   [AS_HELP_STRING([--enable-native-toplevel],
@@ -443,17 +443,17 @@ AC_ARG_ENABLE([frame-pointers],
 
 AC_ARG_ENABLE([naked-pointers], [],
   [AS_IF([test "x$enableval" != 'xno'],
-    [AC_MSG_ERROR([Naked pointers were prohibited in OCaml 5.0.])])],
+    [AC_MSG_ERROR([Naked pointers were prohibited in travlang 5.0.])])],
   [])
 
 AC_ARG_ENABLE([naked-pointers-checker], [],
   [AS_IF([test "x$enableval" != 'xno'],
-    [AC_MSG_ERROR([The naked pointers checker was removed in OCaml 5.0.])])],
+    [AC_MSG_ERROR([The naked pointers checker was removed in travlang 5.0.])])],
   [])
 
 AC_ARG_ENABLE([spacetime], [],
   [AS_IF([test "x$enableval" != 'xno'],
-    [AC_MSG_ERROR([spacetime profiling was deleted in OCaml 4.12.])])],
+    [AC_MSG_ERROR([spacetime profiling was deleted in travlang 4.12.])])],
   [])
 
 AC_ARG_ENABLE([cfi],
@@ -525,12 +525,12 @@ AC_ARG_VAR([WINDOWS_UNICODE_MODE],
 
 AC_ARG_ENABLE([force-safe-string], [],
   [AS_IF([test "x$enableval" = 'xno'],
-    [AC_MSG_ERROR([Support for mutable strings was removed in OCaml 5.0.])])],
+    [AC_MSG_ERROR([Support for mutable strings was removed in travlang 5.0.])])],
   [])
 
 AC_ARG_VAR([DEFAULT_STRING], [])
 AS_IF([test x"$DEFAULT_STRING" = "xunsafe"],
-  [AC_MSG_ERROR([Support for mutable strings was removed in OCaml 5.0.])])
+  [AC_MSG_ERROR([Support for mutable strings was removed in travlang 5.0.])])
 
 AC_ARG_ENABLE([flat-float-array],
   [AS_HELP_STRING([--disable-flat-float-array],
@@ -560,31 +560,31 @@ AC_ARG_WITH([zstd],
     [disable compression of compilation artefacts])])
 
 AS_IF([test x"$enable_unix_lib" = "xno"],
-  [AS_IF([test x"$enable_ocamldebug" = "xyes"],
-    [AC_MSG_ERROR([ocamldebug requires the unix library])],
-    [enable_ocamldebug="no"])])
+  [AS_IF([test x"$enable_travlangdebug" = "xyes"],
+    [AC_MSG_ERROR([travlangdebug requires the unix library])],
+    [enable_travlangdebug="no"])])
 
 AS_IF([test x"$enable_unix_lib" = "xno" || test x"$enable_str_lib" = "xno"],
-  [AS_IF([test x"$enable_ocamldoc" = "xyes"],
-    [AC_MSG_ERROR([ocamldoc requires the unix and str libraries])],
-    [enable_ocamldoc="no"
-     build_ocamltex=false])],
-  [build_ocamltex=true])
+  [AS_IF([test x"$enable_travlangdoc" = "xyes"],
+    [AC_MSG_ERROR([travlangdoc requires the unix and str libraries])],
+    [enable_travlangdoc="no"
+     build_travlangtex=false])],
+  [build_travlangtex=true])
 
-AS_IF([test x"$enable_ocamldoc" = "xno"],
+AS_IF([test x"$enable_travlangdoc" = "xno"],
   [AS_IF([test x"$enable_stdlib_manpages" = "xyes"],
-    [AC_MSG_ERROR([--enable-stdlib-manpages requires ocamldoc])])
-  ocamldoc_target=""
-  ocamldoc_opt_target=""
-  with_ocamldoc=""
+    [AC_MSG_ERROR([--enable-stdlib-manpages requires travlangdoc])])
+  travlangdoc_target=""
+  travlangdoc_opt_target=""
+  with_travlangdoc=""
   enable_stdlib_manpages=no
-  build_ocamldoc=false],
-  [ocamldoc_target=ocamldoc
-  ocamldoc_opt_target=ocamldoc.opt
-  with_ocamldoc=ocamldoc
-  build_ocamldoc=true
-  optional_libraries="$optional_libraries ocamldoc/odoc_info"
-  AC_CONFIG_FILES([ocamldoc/META])])
+  build_travlangdoc=false],
+  [travlangdoc_target=travlangdoc
+  travlangdoc_opt_target=travlangdoc.opt
+  with_travlangdoc=travlangdoc
+  build_travlangdoc=true
+  optional_libraries="$optional_libraries travlangdoc/odoc_info"
+  AC_CONFIG_FILES([travlangdoc/META])])
 
 # Initialization of libtool
 # Allow the MSVC linker to be found even if ld isn't installed.
@@ -646,11 +646,11 @@ AS_CASE([$host],
   ])
 
 ## Find vendor of the C compiler
-OCAML_CC_VENDOR
+travlang_CC_VENDOR
 
 ## In cross-compilation mode, can we run executables produced?
 # At the moment, it's required, but the fact is used in C99 function detection
-OCAML_HOST_IS_EXECUTABLE
+travlang_HOST_IS_EXECUTABLE
 
 # Determine how to call the C preprocessor directly.
 # Most of the time, calling the C preprocessor through the C compiler is
@@ -663,18 +663,18 @@ OCAML_HOST_IS_EXECUTABLE
 # We thus figure out how to invoke the C preprocessor directly but
 # let the CPP variable untouched, except for the MSVC port where we set it
 # manually to make sure the backward compatibility is preserved
-AS_CASE([$ocaml_cv_cc_vendor],
+AS_CASE([$travlang_cv_cc_vendor],
   [xlc-*],
     [CPP="$CC -E -qnoppline" # suppress incompatible XLC line directives
-    ocamltest_CPP="$CPP"],
+    travlangtest_CPP="$CPP"],
   [sunc-*],
     [CPP="$CC -E -Qn" # suppress generation of Sun PRO ident string
-    ocamltest_CPP="$CPP"],
+    travlangtest_CPP="$CPP"],
   [msvc-*],
     [CPP="$CC -nologo -EP"
-    ocamltest_CPP="$CPP 2> nul"],
+    travlangtest_CPP="$CPP 2> nul"],
   [CPP="$CC -E -P"
-  ocamltest_CPP="$CPP"])
+  travlangtest_CPP="$CPP"])
 
 # Absolute path to the toplevel source directory
 
@@ -688,8 +688,8 @@ AS_CASE([$ocaml_cv_cc_vendor],
 # See https://lists.gnu.org/archive/html/autoconf/2019-07/msg00002.html
 # for the detailed explanation.
 
-ocamlsrcdir=$(unset CDPATH; cd -- "$srcdir" && printf %sX "$PWD") || fail
-ocamlsrcdir=${ocamlsrcdir%X}
+travlangsrcdir=$(unset CDPATH; cd -- "$srcdir" && printf %sX "$PWD") || fail
+travlangsrcdir=${travlangsrcdir%X}
 
 # Whether ar supports @FILE arguments
 
@@ -703,13 +703,13 @@ AS_CASE([$host],
   [*-*-mingw32*|*-pc-windows],
     [unix_or_win32="win32"
     ln='cp -pf'
-    ocamltest_libunix="Some false"
-    ocamlsrcdir="$(LC_ALL=C.UTF-8 cygpath -w -- "$ocamlsrcdir")"
-    ocamlyacc_wstr_module="yacc/wstr"],
+    travlangtest_libunix="Some false"
+    travlangsrcdir="$(LC_ALL=C.UTF-8 cygpath -w -- "$travlangsrcdir")"
+    travlangyacc_wstr_module="yacc/wstr"],
   [unix_or_win32="unix"
   ln='ln -sf'
-  ocamltest_libunix="Some true"
-  ocamlyacc_wstr_module=""])
+  travlangtest_libunix="Some true"
+  travlangyacc_wstr_module=""])
 
 AS_CASE([$host],
   [*-*-cygwin*|*-*-mingw32*|*-pc-windows],
@@ -727,10 +727,10 @@ AS_IF([test x"$enable_unix_lib" != "xno"],
   AC_CONFIG_LINKS([
     otherlibs/unix/unix.ml:otherlibs/unix/unix_${unix_or_win32}.ml
   ])
-  ocamltest_unix_impl="real"
+  travlangtest_unix_impl="real"
   unix_directory="otherlibs/unix"
   unix_library="${unix_directory}/unix"],
-  [ocamltest_libunix="None"])
+  [travlangtest_libunix="None"])
 
 AS_IF([test x"$enable_str_lib" != "xno"],
   [otherlibraries="$otherlibraries str"
@@ -750,7 +750,7 @@ AS_IF([test "x$interpval" = "xyes"],
     [*-cygwin],
       [# Cygwin supports shebangs, which we use for the compiler itself, but
       # partially for legacy, and partially so that executables can be easily
-      # run from outside Cygwin, the executables ocamlc and ocamlopt produce do
+      # run from outside Cygwin, the executables travlangc and travlangopt produce do
       # not use shebang scripts
       shebangscripts=true
       launch_method='sh'
@@ -766,7 +766,7 @@ AS_IF([test "x$interpval" = "xyes"],
 # in config.status, rather than by the .in mechanism, since the latter cannot
 # reliably process binary files.
 AC_CONFIG_COMMANDS([shebang],
-  [printf '%s\n%s\000\n' "$launch_method" "$ocaml_bindir" \
+  [printf '%s\n%s\000\n' "$launch_method" "$travlang_bindir" \
     > stdlib/runtime.info
   printf '%s\n%s\000\n' "$target_launch_method" "$target_bindir" \
     > stdlib/target_runtime.info],
@@ -777,7 +777,7 @@ dnl nefarious single quotes which may appear in any of the strings.
   [launch_method='$(echo "$launch_method" | sed -e "s/'/'\"'\"'/g")'
   target_launch_method=\
 '$(echo "$target_launch_method" | sed -e "s/'/'\"'\"'/g")'
-  ocaml_bindir='$(echo "$ocaml_bindir" | sed -e "s/'/'\"'\"'/g")'
+  travlang_bindir='$(echo "$travlang_bindir" | sed -e "s/'/'\"'\"'/g")'
   target_bindir='$(echo "$target_bindir" | sed -e "s/'/'\"'\"'/g")'])
 
 # Are we building a cross-compiler
@@ -797,7 +797,7 @@ AS_IF(
 
 ## Determine which flags to use for the C compiler
 
-AS_CASE([$ocaml_cv_cc_vendor],
+AS_CASE([$travlang_cv_cc_vendor],
   [xlc-*],
     [outputobj='-o '
     warn_error_flag=''
@@ -818,18 +818,18 @@ AX_CHECK_COMPILE_FLAG([-Wold-style-declaration],
   [cc_warnings="$cc_warnings -Wold-style-declaration"], [],
   [$warn_error_flag])
 
-AS_CASE([$enable_warn_error,OCAML__DEVELOPMENT_VERSION],
+AS_CASE([$enable_warn_error,travlang__DEVELOPMENT_VERSION],
   [yes,*|,true],
     [cc_warnings="$cc_warnings $warn_error_flag"])
 
 # We select high optimization levels, provided we can turn off:
-# - strict type-based aliasing analysis (too risky for the OCaml runtime)
+# - strict type-based aliasing analysis (too risky for the travlang runtime)
 # - strict no-overflow conditions on signed integer arithmetic
-#   (the OCaml runtime assumes Java-style behavior of signed integer arith.)
+#   (the travlang runtime assumes Java-style behavior of signed integer arith.)
 # Concerning optimization level, -O3 is somewhat risky, so take -O2.
 # Concerning language version, recent enough versions of GCC and Clang
 # default to gnu11 (C11 + GNU extensions) or gnu17, which is fine.
-AS_CASE([$ocaml_cv_cc_vendor],
+AS_CASE([$travlang_cv_cc_vendor],
   [clang-*],
     [common_cflags="-O2 -fno-strict-aliasing -fwrapv";
     internal_cflags="$cc_warnings -fno-common"],
@@ -855,7 +855,7 @@ AS_CASE([$ocaml_cv_cc_vendor],
     [common_cflags="-nologo -O2 -Gy- -MD $cc_warnings"
     common_cppflags="-D_CRT_SECURE_NO_DEPRECATE"
     internal_cppflags='-DUNICODE -D_UNICODE'
-    OCAML_CL_HAS_VOLATILE_METADATA
+    travlang_CL_HAS_VOLATILE_METADATA
     AS_IF([test "x$cl_has_volatile_metadata" = "xtrue"],
           [internal_cflags='-d2VolatileMetadata-'])
     internal_cppflags="$internal_cppflags -DWINDOWS_UNICODE="
@@ -967,7 +967,7 @@ AS_IF([test x"$supports_shared_libraries" != 'xfalse'], [
   AC_CHECK_PROG([flexlink],[flexlink],[flexlink])
 
   AS_IF([test -n "$flexlink" && test -z "$flexdll_source_dir"],[
-    OCAML_TEST_FLEXLINK([$flexlink], [$flexdll_chain],
+    travlang_TEST_FLEXLINK([$flexlink], [$flexdll_chain],
                         [$internal_cppflags], [$host])
 
     AS_CASE([$host],
@@ -978,10 +978,10 @@ AS_IF([test x"$supports_shared_libraries" != 'xfalse'], [
             Win32 process]))])])
   ])
 
-  OCAML_TEST_FLEXDLL_H([$flexdll_source_dir])
+  travlang_TEST_FLEXDLL_H([$flexdll_source_dir])
 
   AS_IF([test -n "$flexlink" && test x"$have_flexdll_h" = 'xno'],
-    [OCAML_TEST_FLEXLINK_WHERE([$flexlink])
+    [travlang_TEST_FLEXLINK_WHERE([$flexlink])
     AS_IF([test "x$have_flexdll_h" = 'xyes'],
       [internal_cppflags="$internal_cppflags -I \"$flexlink_where\""])
   ])
@@ -1003,7 +1003,7 @@ AS_CASE([$flexdll_source_dir,$supports_shared_libraries,$flexlink,$host],
 
 mkexe_cmd_exp="$CC"
 
-AS_CASE([$ocaml_cv_cc_vendor,$host],
+AS_CASE([$travlang_cv_cc_vendor,$host],
   [*,x86_64-*-darwin*],
     [oc_ldflags='-Wl,-no_compact_unwind';
     AC_DEFINE([HAS_ARCH_CODE32], [1])],
@@ -1151,12 +1151,12 @@ AS_IF([! $arch64],
 # Atomics library
 
 AS_IF([! $arch64],
-  [AS_CASE([$ocaml_cv_cc_vendor],
+  [AS_CASE([$travlang_cv_cc_vendor],
     [gcc-*], [cclibs="$cclibs -latomic"])])
 
 # Support for C11 atomic types
 
-OCAML_CC_SUPPORTS_ATOMIC([$cclibs])
+travlang_CC_SUPPORTS_ATOMIC([$cclibs])
 AS_IF([! $cc_supports_atomic],
   [AC_MSG_FAILURE([C11 atomic support is required, use another C compiler])])
 
@@ -1194,7 +1194,7 @@ AS_IF([test x"$enable_shared" != "xno"],
       mkmaindll_exp="flexlink -maindll ${mkdll_flags}"
       mkmaindll="flexlink -maindll ${mkdll_flags}"],
     [powerpc-ibm-aix*],
-      [AS_CASE([$ocaml_cv_cc_vendor],
+      [AS_CASE([$travlang_cv_cc_vendor],
         [xlc*],
           [mkdll_flags='-qmkshrobj -G'
           supports_shared_libraries=true])],
@@ -1207,12 +1207,12 @@ AS_IF([test x"$enable_shared" != "xno"],
     [[*-*-linux*|*-*-freebsd[3-9]*|*-*-freebsd[1-9][0-9]*\
     |*-*-openbsd*|*-*-netbsd*|*-*-dragonfly*|*-*-gnu*|*-*-haiku*]],
       [sharedlib_cflags="-fPIC"
-       AS_CASE([$ocaml_cv_cc_vendor,$host],
+       AS_CASE([$travlang_cv_cc_vendor,$host],
          [gcc-*,powerpc-*-linux*],
            [mkdll_flags='-shared -mbss-plt'],
          [[*,i[3456]86-*]],
            # Disable DT_TEXTREL warnings on Linux and BSD i386
-           # See https://github.com/ocaml/ocaml/issues/9800
+           # See https://github.com/travlang/travlang/issues/9800
            [mkdll_flags='-shared -Wl,-z,notext'],
          [mkdll_flags='-shared'])
        AS_CASE([$host],
@@ -1232,7 +1232,7 @@ AS_IF([test -z "$mkmaindll"],
   [mkmaindll_exp="$mkdll_exp"
   mkmaindll="$mkdll"])
 
-# Make sure code sections in OCaml-generated executables are readable
+# Make sure code sections in travlang-generated executables are readable
 # (required for marshaling of function closures)
 
 AS_CASE([$host],
@@ -1291,20 +1291,20 @@ AS_CASE([$enable_native_toplevel,$natdynlink],
     [AC_MSG_ERROR(m4_normalize([
       The native toplevel requires native dynlink support]))],
   [yes,*],
-    [install_ocamlnat=true],
-  [install_ocamlnat=false])
+    [install_travlangnat=true],
+  [install_travlangnat=false])
 
 # Try to work around the Skylake/Kaby Lake processor bug.
-AS_CASE(["$ocaml_cv_cc_vendor,$host"],
+AS_CASE(["$travlang_cv_cc_vendor,$host"],
   [*gcc*,x86_64-*|*gcc*,i686-*],
-    [OCAML_CC_HAS_FNO_TREE_VRP
+    [travlang_CC_HAS_FNO_TREE_VRP
     AS_IF([$cc_has_fno_tree_vrp],
       [internal_cflags="$internal_cflags -fno-tree-vrp"])])
 
-OCAML_CC_SUPPORTS_ALIGNED
+travlang_CC_SUPPORTS_ALIGNED
 
 ## Check whether __attribute__((optimize("tree-vectorize")))) is supported
-OCAML_CC_SUPPORTS_TREE_VECTORIZE
+travlang_CC_SUPPORTS_TREE_VECTORIZE
 
 # Configure the native-code compiler
 
@@ -1451,11 +1451,11 @@ AS_IF([$natdynlink],
   [natdynlink_archive="dynlink.cmxa"],
   [natdynlink_archive=""])
 
-AC_DEFINE_UNQUOTED([OCAML_OS_TYPE], ["$ostype"])
+AC_DEFINE_UNQUOTED([travlang_OS_TYPE], ["$ostype"])
 
 AC_CHECK_TOOL([DIRECT_LD],[ld])
 AS_IF([test -z "$PARTIALLD"],
-  [AS_CASE(["$host,$ocaml_cv_cc_vendor"],
+  [AS_CASE(["$host,$travlang_cv_cc_vendor"],
     [x86_64-*-darwin*,gcc-*], [PACKLD_FLAGS=' -arch x86_64'],
     [powerpc64le*-*-linux*,gcc-*], [PACKLD_FLAGS=' -m elf64lppc'],
     [powerpc*-*-linux*,gcc-*],
@@ -1467,7 +1467,7 @@ AS_IF([test -z "$PARTIALLD"],
   # output filename. Don't assume that all C compilers understand GNU -ofoo
   # form, so ensure that the definition includes a space at the end (which is
   # achieved using the $(EMPTY) expansion trick in Makefile.config.in).
-  AS_CASE(["$ocaml_cv_cc_vendor"],
+  AS_CASE(["$travlang_cv_cc_vendor"],
     [msvc-*],
       # For the Microsoft C compiler there must be no space at the end of the
       # string.
@@ -1475,11 +1475,11 @@ AS_IF([test -z "$PARTIALLD"],
     [PACKLD="$DIRECT_LD -r$PACKLD_FLAGS -o "])],
   [PACKLD="$PARTIALLD -o "])
 
-# Disable PIE at link time when ocamlopt does not produce position-independent
+# Disable PIE at link time when travlangopt does not produce position-independent
 # code and the system produces PIE executables by default and demands PIC
 # object files to do so.
 # This issue does not affect amd64 (x86_64), aarch64 (arm64)
-# and s390x (Z systems), since ocamlopt produces PIC object files by default.
+# and s390x (Z systems), since travlangopt produces PIC object files by default.
 # Currently the problem is known for Alpine Linux on other platforms
 # (issue #7562), and probably affects all Linux distributions that use
 # the musl standard library and dynamic loader.
@@ -1488,7 +1488,7 @@ AS_IF([test -z "$PARTIALLD"],
 
 AS_CASE([$arch],
   [amd64|arm64|s390x|none],
-    # ocamlopt generates PIC code or doesn't generate code at all
+    # travlangopt generates PIC code or doesn't generate code at all
     [],
   [AS_CASE([$host],
     # expected to match "*-linux-musl" as well as "*-linux-musleabi*"
@@ -1511,19 +1511,19 @@ AS_IF([test -n "$target_alias"],
     as_cpu="$build_cpu"])])
 
 # Finding the assembler
-# The OCaml build system distinguishes two different assemblers:
-# 1. AS, used to assemble the code generated by the ocamlopt native compiler
+# The travlang build system distinguishes two different assemblers:
+# 1. AS, used to assemble the code generated by the travlangopt native compiler
 # 2. ASPP, to assemble other assembly files that may require preprocessing
 # In general, "$CC -c" is used as a default value for both AS and ASPP.
 # On a few platforms (Windows) both values are overridden.
 # On other platforms, (Linux with GCC) the assembler AS is called directly
-# to avoiding forking a C compiler process for each compilation by ocamlopt.
+# to avoiding forking a C compiler process for each compilation by travlangopt.
 # Both AS and ASPP can be overridden by the user.
 
 default_as="$CC -c"
 default_aspp="$CC -c"
 
-AS_CASE([$as_target,$ocaml_cv_cc_vendor],
+AS_CASE([$as_target,$travlang_cv_cc_vendor],
   [*-*-linux*,gcc-*],
     [AS_CASE([$as_cpu],
       [x86_64|arm*|aarch64*|i[[3-6]]86|riscv*],
@@ -1559,7 +1559,7 @@ AS_CASE([$rlwrap,$system],
 # Checks for library functions
 
 ## Check the semantics of signal handlers
-OCAML_SIGNAL_HANDLERS_SEMANTICS
+travlang_SIGNAL_HANDLERS_SEMANTICS
 
 ## Check for C99 float ops
 
@@ -1570,14 +1570,14 @@ AC_CHECK_FUNCS(m4_normalize([expm1 log1p hypot fma exp2 log2 cbrt acosh asinh
 AS_IF([$has_c99_float_ops],
   [AC_DEFINE([HAS_C99_FLOAT_OPS])
   # Check whether round works (known bug in mingw-w64)
-  OCAML_C99_CHECK_ROUND
+  travlang_C99_CHECK_ROUND
   # Check whether fma works (regressed in mingw-w64 8.0.0; present, but broken,
   # in VS2013-2017 and present but unimplemented in Cygwin64)
-  OCAML_C99_CHECK_FMA],
+  travlang_C99_CHECK_FMA],
   [AS_IF([test x"$enable_imprecise_c99_float_ops" != "xyes" ],
-    [AS_CASE([$enable_imprecise_c99_float_ops,$ocaml_cv_cc_vendor],
+    [AS_CASE([$enable_imprecise_c99_float_ops,$travlang_cv_cc_vendor],
       [no,*], [hard_error=true],
-      [,msvc-*], [AS_IF([test "${ocaml_cv_cc_vendor#msvc-}" -lt 1800 ],
+      [,msvc-*], [AS_IF([test "${travlang_cv_cc_vendor#msvc-}" -lt 1800 ],
         [hard_error=false],
         [hard_error=true])],
       [hard_error=true])
@@ -1707,50 +1707,50 @@ AS_IF([test "x$enable_tsan" = "xyes" ],
     [amd64],
       [AS_CASE(["$system"],
         [freebsd|linux|macosx],
-        [AS_CASE(["$ocaml_cv_cc_vendor"],
+        [AS_CASE(["$travlang_cv_cc_vendor"],
           [gcc-*|clang-*], [tsan=true],
           [AC_MSG_ERROR(m4_normalize([thread sanitizer not supported with
-            vendor=$ocaml_cv_cc_vendor"]))]
+            vendor=$travlang_cv_cc_vendor"]))]
          )],
         [AC_MSG_ERROR([thread sanitizer not supported on system $system])]
        )],
     [arm64],
       [AS_CASE(["$system"],
         [linux|macosx],
-        [AS_CASE(["$ocaml_cv_cc_vendor"],
+        [AS_CASE(["$travlang_cv_cc_vendor"],
           [gcc-*|clang-*], [tsan=true],
           [AC_MSG_ERROR(m4_normalize([thread sanitizer not supported with
-            vendor=$ocaml_cv_cc_vendor"]))]
+            vendor=$travlang_cv_cc_vendor"]))]
          )],
         [AC_MSG_ERROR([thread sanitizer not supported on system $system])]
        )],
     [power],
       [AS_CASE(["$system"],
         [linux],
-        [AS_CASE(["$ocaml_cv_cc_vendor"],
+        [AS_CASE(["$travlang_cv_cc_vendor"],
           [gcc-*|clang-*], [tsan=true],
           [AC_MSG_ERROR(m4_normalize([thread sanitizer not supported with
-            vendor=$ocaml_cv_cc_vendor"]))]
+            vendor=$travlang_cv_cc_vendor"]))]
          )],
         [AC_MSG_ERROR([thread sanitizer not supported on system $system])]
        )],
     [riscv],
       [AS_CASE(["$system"],
         [linux],
-        [AS_CASE(["$ocaml_cv_cc_vendor"],
+        [AS_CASE(["$travlang_cv_cc_vendor"],
           [gcc-*|clang-*], [tsan=true],
           [AC_MSG_ERROR(m4_normalize([thread sanitizer not supported with
-            vendor=$ocaml_cv_cc_vendor"]))]
+            vendor=$travlang_cv_cc_vendor"]))]
          )],
         [AC_MSG_ERROR([thread sanitizer not supported on system $system])]
        )],
     [s390x],
       [AS_CASE(["$system"],
         [linux],
-        [AS_CASE(["$ocaml_cv_cc_vendor"],
+        [AS_CASE(["$travlang_cv_cc_vendor"],
           [gcc-*|clang-*], [tsan=true],
           [AC_MSG_ERROR(m4_normalize([thread sanitizer not supported with
-            vendor=$ocaml_cv_cc_vendor"]))]
+            vendor=$travlang_cv_cc_vendor"]))]
          )],
         [AC_MSG_ERROR([thread sanitizer not supported on system $system])]
        )],
@@ -1759,7 +1759,7 @@ AS_IF([test "x$enable_tsan" = "xyes" ],
   [tsan=false])
 
 AS_IF([$tsan],
-  [AC_MSG_NOTICE([using thread sanitizer with vendor=$ocaml_cv_cc_vendor])
+  [AC_MSG_NOTICE([using thread sanitizer with vendor=$travlang_cv_cc_vendor])
 
   # Check for libtsan library files (necessary on some Linux distributions)
   SAVED_LDFLAGS="$LDFLAGS"
@@ -1771,11 +1771,11 @@ AS_IF([$tsan],
                    Try installing it on your system.])])
   LDFLAGS="$SAVED_LDFLAGS"
 
-  AS_CASE([$ocaml_cv_cc_vendor],
+  AS_CASE([$travlang_cv_cc_vendor],
     [gcc-[[0123456789]]-*|gcc-10-*|clang-*],
       [],
     [oc_tsan_cflags="$oc_tsan_cflags -Wno-tsan"])
-  AS_CASE([$ocaml_cv_cc_vendor],
+  AS_CASE([$travlang_cv_cc_vendor],
     [gcc*],
       [tsan_distinguish_volatile_cflags="--param=tsan-distinguish-volatile=1"],
     [clang*],
@@ -1788,7 +1788,7 @@ AS_IF([$tsan],
   oc_tsan_cflags="$oc_tsan_cflags $tsan_distinguish_volatile_cflags"
   common_cppflags="$common_cppflags $oc_tsan_cppflags"
   native_cflags="$native_cflags $oc_tsan_cflags"
-  ocamlc_cflags="$ocamlc_cflags $oc_tsan_cflags"
+  travlangc_cflags="$travlangc_cflags $oc_tsan_cflags"
   tsan_native_runtime_c_sources="tsan"],
   [AC_MSG_NOTICE([not using thread sanitizer])
   tsan_native_runtime_c_sources=""]
@@ -1828,7 +1828,7 @@ AS_IF([$tsan],
   native_cppflags="$native_cppflags $libunwind_cppflags"
   native_ldflags="$native_ldflags -fsanitize=thread $libunwind_ldflags"
 
-  OCAML_CHECK_LIBUNWIND
+  travlang_CHECK_LIBUNWIND
 
   AS_IF([! $libunwind_available],
     [AC_MSG_ERROR([libunwind is necessary for TSan but cannot be found])])
@@ -2102,12 +2102,12 @@ AC_CHECK_HEADER([sys/mman.h],
 AC_CHECK_FUNC([pwrite], [AC_DEFINE([HAS_PWRITE])])
 
 ## -fdebug-prefix-map support by the C compiler
-AS_CASE([$ocaml_cv_cc_vendor,$host],
+AS_CASE([$travlang_cv_cc_vendor,$host],
   [*,*-*-mingw32*], [cc_has_debug_prefix_map=false],
   [*,*-pc-windows], [cc_has_debug_prefix_map=false],
   [xlc*,powerpc-ibm-aix*], [cc_has_debug_prefix_map=false],
   [sunc*,sparc-sun-*], [cc_has_debug_prefix_map=false],
-  [OCAML_CC_HAS_DEBUG_PREFIX_MAP])
+  [travlang_CC_HAS_DEBUG_PREFIX_MAP])
 
 ## Does stat support nanosecond precision
 
@@ -2154,7 +2154,7 @@ AX_FUNC_WHICH_GETHOSTBYNAME_R
 AS_CASE([$ac_cv_func_which_gethostbyname_r],
   [six], [AC_DEFINE([HAS_GETHOSTBYNAME_R],[6])],
   [five], [AC_DEFINE([HAS_GETHOSTBYNAME_R],[5])],
-  [three], [AC_MSG_WARN([OCaml does not support this variant])])
+  [three], [AC_MSG_WARN([travlang does not support this variant])])
 
 # Number of arguments of gethostbyaddr_r
 
@@ -2246,19 +2246,19 @@ AS_IF([test x"$zstd_status" = "xok"],
 
 ## Determine whether the debugger should/can be built
 
-AS_CASE([$enable_ocamldebug],
+AS_CASE([$enable_travlangdebug],
   [no],
     [with_debugger=""
-    build_ocamldebug=false
-    AC_MSG_NOTICE([ocamldebug disabled])],
+    build_travlangdebug=false
+    AC_MSG_NOTICE([travlangdebug disabled])],
   [AS_IF([$sockets],
-    [with_debugger="ocamldebug"
-    build_ocamldebug=true
-    optional_bytecode_tools="$optional_bytecode_tools debugger/ocamldebug"
-    AC_MSG_NOTICE([ocamldebug supported])],
+    [with_debugger="travlangdebug"
+    build_travlangdebug=true
+    optional_bytecode_tools="$optional_bytecode_tools debugger/travlangdebug"
+    AC_MSG_NOTICE([travlangdebug supported])],
     [with_debugger=""
-    build_ocamldebug=false
-    AC_MSG_NOTICE([ocamldebug not supported])])
+    build_travlangdebug=false
+    AC_MSG_NOTICE([travlangdebug not supported])])
   ])
 
 ## Should the runtime with debugging support be built
@@ -2335,13 +2335,13 @@ asm_cfi_supported=false
 AS_IF([$native_compiler],
   [AS_CASE([$host],
     [*-*-mingw32*|*-pc-windows], [],
-    [OCAML_AS_HAS_DEBUG_PREFIX_MAP
-    OCAML_AS_HAS_CFI_DIRECTIVES])])
+    [travlang_AS_HAS_DEBUG_PREFIX_MAP
+    travlang_AS_HAS_CFI_DIRECTIVES])])
 
 ## Frame pointers
 
 AS_IF([test x"$enable_frame_pointers" = "xyes"],
-  [AS_CASE(["$host,$ocaml_cv_cc_vendor"],
+  [AS_CASE(["$host,$travlang_cv_cc_vendor"],
     [x86_64-*-linux*,gcc-*|x86_64-*-linux*,clang-*],
       [common_cflags="$common_cflags -g  -fno-omit-frame-pointer"
       frame_pointers=true
@@ -2353,7 +2353,7 @@ AS_IF([test x"$enable_frame_pointers" = "xyes"],
   frame_pointers=false])
 
 ## Check for mmap support for huge pages and contiguous heap
-OCAML_MMAP_SUPPORTS_HUGE_PAGES
+travlang_MMAP_SUPPORTS_HUGE_PAGES
 
 AC_DEFINE_UNQUOTED([HEADER_RESERVED_BITS], [$reserved_header_bits])
 
@@ -2373,31 +2373,31 @@ AC_ARG_WITH([odoc],
   [AS_HELP_STRING([--with-odoc])],
   [AS_CASE([$withval],
     [yes],[documentation_tool='odoc'],
-    [no],[documentation_tool='ocamldoc'],
+    [no],[documentation_tool='travlangdoc'],
     [documentation_tool_cmd="$withval"
     documentation_tool='odoc'])],
-  [documentation_tool='ocamldoc'])
+  [documentation_tool='travlangdoc'])
 AS_IF([test "x$documentation_tool_cmd" = 'x']
  [documentation_tool_cmd="$documentation_tool"])
 
 
 
-AS_CASE([$enable_ocamltest,OCAML__DEVELOPMENT_VERSION],
+AS_CASE([$enable_travlangtest,travlang__DEVELOPMENT_VERSION],
   [yes,*|,true],
-    [build_ocamltest=true
-    ocamltest_target=ocamltest
-    ocamltest_opt_target=ocamltest.opt
-    ocamltest='ocamltest'
+    [build_travlangtest=true
+    travlangtest_target=travlangtest
+    travlangtest_opt_target=travlangtest.opt
+    travlangtest='travlangtest'
     testsuite_tools='testsuite/tools/codegen testsuite/tools/expect'
     optional_bytecode_tools="$optional_bytecode_tools $testsuite_tools"],
-  [build_ocamltest=false
-  ocamltest=''])
+  [build_travlangtest=false
+  travlangtest=''])
 
-AS_IF([$build_ocamltest],
+AS_IF([$build_travlangtest],
   [optional_libraries="$optional_libraries testsuite/lib/testing"
-  ocamltest_unix_mod="ocamltest/ocamltest_unix_${ocamltest_unix_impl}.ml"
+  travlangtest_unix_mod="travlangtest/travlangtest_unix_${travlangtest_unix_impl}.ml"
   AC_CONFIG_LINKS([
-    ocamltest/ocamltest_unix.ml:${ocamltest_unix_mod}
+    travlangtest/travlangtest_unix.ml:${travlangtest_unix_mod}
   ])
   AC_CHECK_PROGS([DIFF], [patdiff diff], [none])
   DIFF_FLAGS=""
@@ -2405,7 +2405,7 @@ AS_IF([$build_ocamltest],
   AS_CASE([$DIFF],
     [diff], [flags="--strip-trailing-cr -u"],
     [none],
-      [AC_MSG_ERROR([ocamltest requires a diff tool])])
+      [AC_MSG_ERROR([travlangtest requires a diff tool])])
   for flag in ${flags}; do
     AC_MSG_CHECKING([whether $DIFF supports $flag]);
     AS_IF([$DIFF $DIFF_FLAGS $flag $0 $0 > /dev/null 2>&1],
@@ -2437,7 +2437,7 @@ AS_IF([test x"$enable_flat_float_array" = "xno"],
   [AC_DEFINE([FLAT_FLOAT_ARRAY])
   flat_float_array=true])
 
-OCAML_MMAP_SUPPORTS_MAP_STACK
+travlang_MMAP_SUPPORTS_MAP_STACK
 AS_IF([test x"$enable_mmap_map_stack" = "xyes"],
   [AS_IF([test x"$has_mmap_map_stack" = "xtrue"],
     [AS_CASE([$target],
@@ -2465,7 +2465,7 @@ AS_IF([test x"$enable_function_sections" = "xno"],
         [*-cygwin*|*-mingw*|*-windows|*-apple-darwin*],
           [function_sections=false;
            AC_MSG_NOTICE([No support for function sections on $target.])],
-        [AS_CASE([$ocaml_cv_cc_vendor],
+        [AS_CASE([$travlang_cv_cc_vendor],
           [gcc-[0123]-*|gcc-4-[01234567]],
             [function_sections=false;
             AC_MSG_NOTICE([Function sections are not
@@ -2481,7 +2481,7 @@ AS_IF([test x"$enable_function_sections" = "xno"],
             AC_DEFINE([FUNCTION_SECTIONS])],
           [function_sections=false;
           AC_MSG_NOTICE([Function sections are not supported by
-          $ocaml_cv_cc_vendor.])])])],
+          $travlang_cv_cc_vendor.])])])],
     [function_sections=false]);
   AS_IF([test x"$function_sections" = "xfalse"],
     [AS_IF([test x"$enable_function_sections" = "xyes"],
@@ -2495,14 +2495,14 @@ AS_IF([test x"$with_afl" = "xyes"],
 
 # Enable debugging support
 # TODO: add a --disable-debug-info configure option that disables debugging
-# info for both C and OCaml
+# info for both C and travlang
 AS_IF([test "$ccomptype" != "msvc"],
   [internal_cflags="-g $internal_cflags"])
 
 oc_cflags="$common_cflags $internal_cflags"
 oc_cppflags="$common_cppflags $internal_cppflags"
-ocamlc_cflags="$ocamlc_cflags $common_cflags $sharedlib_cflags $CFLAGS"
-ocamlc_cppflags="$common_cppflags $CPPFLAGS"
+travlangc_cflags="$travlangc_cflags $common_cflags $sharedlib_cflags $CFLAGS"
+travlangc_cppflags="$common_cppflags $CPPFLAGS"
 
 AS_CASE([$host],
   [*-*-mingw32*],
@@ -2518,7 +2518,7 @@ AS_IF([$tsan],
   [cclibs="$cclibs -fsanitize=thread"])
 
 AS_IF([test x"$libdir" = x'${exec_prefix}/lib'],
-  [libdir="$libdir"/ocaml])
+  [libdir="$libdir"/travlang])
 
 AS_IF([test x"$mandir" = x'${datarootdir}/man'],
   [mandir='${prefix}/man'])
@@ -2536,10 +2536,10 @@ AS_CASE([$host],
 # Define default prefix correctly for the different Windows ports
 AS_IF([test x"$prefix" = "xNONE"],
   [AS_CASE([$host],
-    [i686-w64-mingw32*], [prefix='C:/ocamlmgw'],
-    [x86_64-w64-mingw32*], [prefix='C:/ocamlmgw64'],
-    [i686-pc-windows], [prefix='C:/ocamlms'],
-    [x86_64-pc-windows], [prefix='C:/ocamlms64'])],
+    [i686-w64-mingw32*], [prefix='C:/travlangmgw'],
+    [x86_64-w64-mingw32*], [prefix='C:/travlangmgw64'],
+    [i686-pc-windows], [prefix='C:/travlangms'],
+    [x86_64-pc-windows], [prefix='C:/travlangms64'])],
   [AS_IF([test x"$unix_or_win32" = "xwin32" \
           && test "$host_vendor-$host_os" != "$build_vendor-$build_os" ],
     [AS_CASE([$build],
@@ -2568,16 +2568,16 @@ AS_CASE([$host],
 unset ac_cv_header_flexdll_h
 
 # Evaluate install directories
-# (this is needed for the OCaml configuration module)
+# (this is needed for the travlang configuration module)
 AC_CONFIG_COMMANDS_PRE([
   saved_exec_prefix="$exec_prefix"
   saved_prefix="$prefix"
   AS_IF([test "x$prefix" = "xNONE"],[prefix="$ac_default_prefix"])
   AS_IF([test "x$exec_prefix" = "xNONE"],[exec_prefix="$prefix"])
   eval "exec_prefix=\"$exec_prefix\""
-  eval "ocaml_bindir=\"$bindir\""
-  eval "ocaml_libdir=\"$libdir\""
-  AS_IF([test x"$target_bindir" = 'x'],[target_bindir="$ocaml_bindir"])
+  eval "travlang_bindir=\"$bindir\""
+  eval "travlang_libdir=\"$libdir\""
+  AS_IF([test x"$target_bindir" = 'x'],[target_bindir="$travlang_bindir"])
   AS_IF([test x"$target_launch_method" = 'x'],
     [target_launch_method="$launch_method"])
   prefix="$saved_prefix"

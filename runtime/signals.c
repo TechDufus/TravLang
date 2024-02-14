@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*          Xavier Leroy and Damien Doligez, INRIA Rocquencourt           */
 /*                                                                        */
@@ -122,8 +122,8 @@ CAMLexport void caml_record_signal(int signal_number)
      This is a strategy that makes as little assumptions as possible
      about signal-safety, threads, and domains.
 
-     * In mixed C/OCaml applications there is no guarantee that the
-       POSIX signal handler runs in an OCaml thread, so Caml_state might
+     * In mixed C/travlang applications there is no guarantee that the
+       POSIX signal handler runs in an travlang thread, so Caml_state might
        be unavailable.
 
      * While C11 mandates that atomic thread-local variables are
@@ -133,7 +133,7 @@ CAMLexport void caml_record_signal(int signal_number)
        be a theoretical concern only.
 
      * The thread executing a POSIX signal handler is not necessarily
-       the most ready to execute the corresponding OCaml signal handler.
+       the most ready to execute the corresponding travlang signal handler.
        Examples:
        - Ctrl-C in the toplevel when domain 0 is stuck inside [Domain.join].
        - a thread that has just spawned, before the appropriate mask is set.
@@ -145,13 +145,13 @@ CAMLexport void caml_record_signal(int signal_number)
 
 static void caml_enter_blocking_section_default(void)
 {
-  caml_bt_exit_ocaml();
+  caml_bt_exit_travlang();
   caml_release_domain_lock();
 }
 
 static void caml_leave_blocking_section_default(void)
 {
-  caml_bt_enter_ocaml();
+  caml_bt_enter_travlang();
   caml_acquire_domain_lock();
 }
 
@@ -169,7 +169,7 @@ CAMLexport void caml_enter_blocking_section(void)
     /* Process all pending signals now */
     if (check_pending_actions(domain)) {
       /* First reset young_limit, and set action_pending in case there
-         are further async callbacks pending beyond OCaml signal
+         are further async callbacks pending beyond travlang signal
          handlers. */
       caml_handle_gc_interrupt();
       caml_raise_if_exception(caml_process_pending_signals_exn());
@@ -278,9 +278,9 @@ void caml_request_minor_gc (void)
 
    - Those that we execute immediately in all circumstances (STW
      interrupts, requested minor or major GC, forced systhread yield);
-     they must never call OCaml code.
+     they must never call travlang code.
 
-   - Those that run OCaml code and may raise OCaml exceptions
+   - Those that run travlang code and may raise travlang exceptions
      (asynchronous callbacks, finalisers, memprof callbacks); those
      can be delayed, and do not run during allocations from C.
 
@@ -288,18 +288,18 @@ void caml_request_minor_gc (void)
    [young_limit] to a high value, thereby making the next allocation
    fail. When this happens, all non-delayable actions are performed
    immediately. Then, the delayable actions are either all processed
-   immediately, if the context is ready to run OCaml code concurrently
+   immediately, if the context is ready to run travlang code concurrently
    and receive an asynchronous exception (in the case of an allocation
-   from OCaml), or [Caml_state->action_pending] is set in order to
+   from travlang), or [Caml_state->action_pending] is set in order to
    record that an action of the delayable kind might be pending (in
    the case of an allocation from C, typically).
 
    [Caml_state->action_pending] remains set until the program calls
    [caml_process_pending_actions], [caml_leave_blocking_section], or
-   it returns to OCaml. When returning to OCaml, we set again
+   it returns to travlang. When returning to travlang, we set again
    [Caml_state->young_limit] to a high value if
    [Caml_state->action_pending] is set, to execute asynchronous
-   actions as soon as possible when back in OCaml code.
+   actions as soon as possible when back in travlang code.
 
    [Caml_state->action_pending] is then reset _at the beginning_ of
    processing all actions. Hence, when a delayable action is pending,
@@ -335,13 +335,13 @@ CAMLexport int caml_check_pending_actions(void)
 
 value caml_do_pending_actions_exn(void)
 {
-  /* 1. Non-delayable actions that do not run OCaml code. */
+  /* 1. Non-delayable actions that do not run travlang code. */
 
   /* Do any pending STW interrupt, minor collection or major slice */
   caml_handle_gc_interrupt();
   /* [young_limit] has now been reset. */
 
-  /* 2. Delayable actions that may raise OCaml exceptions.
+  /* 2. Delayable actions that may raise travlang exceptions.
 
      We can now clear the action_pending flag since we are going to
      execute all actions. */

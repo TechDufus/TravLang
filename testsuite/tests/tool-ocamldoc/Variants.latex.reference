@@ -4,7 +4,7 @@
 \usepackage{textcomp}
 \usepackage{fullpage} 
 \usepackage{url} 
-\usepackage{ocamldoc}
+\usepackage{travlangdoc}
 \begin{document}
 \tableofcontents
 \section{Module {\tt{Variants}} : This test is here to check the latex code generated for variants}
@@ -13,202 +13,202 @@
 
 
 
-\ocamldocvspace{0.5cm}
+\travlangdocvspace{0.5cm}
 
 
 
-\label{TYPVariants.s}\begin{ocamldoccode}
+\label{TYPVariants.s}\begin{travlangdoccode}
 type s =
   | A
   | B
-\end{ocamldoccode}
-\begin{ocamldoccomment}
+\end{travlangdoccode}
+\begin{travlangdoccomment}
 only B is documented here
 
 
-\end{ocamldoccomment}
-\begin{ocamldoccode}
+\end{travlangdoccomment}
+\begin{travlangdoccode}
   | C
-\end{ocamldoccode}
+\end{travlangdoccode}
 \index{s@\verb`s`}
 
 
 
 
-\label{TYPVariants.t}\begin{ocamldoccode}
+\label{TYPVariants.t}\begin{travlangdoccode}
 type t =
   | A
-\end{ocamldoccode}
-\begin{ocamldoccomment}
+\end{travlangdoccode}
+\begin{travlangdoccomment}
 doc for A.
-        \begin{ocamldoccode}
+        \begin{travlangdoccode}
 0
-\end{ocamldoccode}
+\end{travlangdoccode}
 
         With three paragraphs.
-        \begin{ocamldoccode}
+        \begin{travlangdoccode}
 1
-\end{ocamldoccode}
+\end{travlangdoccode}
 
         To check styling
 
 
-\end{ocamldoccomment}
-\begin{ocamldoccode}
+\end{travlangdoccomment}
+\begin{travlangdoccode}
   | B
-\end{ocamldoccode}
-\begin{ocamldoccomment}
+\end{travlangdoccode}
+\begin{travlangdoccomment}
 doc for B
 
 
-\end{ocamldoccomment}
+\end{travlangdoccomment}
 \index{t@\verb`t`}
 
 
 
 
-\label{TYPVariants.u}\begin{ocamldoccode}
+\label{TYPVariants.u}\begin{travlangdoccode}
 type u =
   | A
-\end{ocamldoccode}
-\begin{ocamldoccomment}
+\end{travlangdoccode}
+\begin{travlangdoccomment}
 doc for A
 
 
-\end{ocamldoccomment}
-\begin{ocamldoccode}
+\end{travlangdoccomment}
+\begin{travlangdoccode}
   | B of unit
-\end{ocamldoccode}
-\begin{ocamldoccomment}
+\end{travlangdoccode}
+\begin{travlangdoccomment}
 doc for B
 
 
-\end{ocamldoccomment}
+\end{travlangdoccomment}
 \index{u@\verb`u`}
-\begin{ocamldocdescription}
+\begin{travlangdocdescription}
 Some documentation for u
 
 
-\end{ocamldocdescription}
+\end{travlangdocdescription}
 
 
 
 
-\label{TYPVariants.w}\begin{ocamldoccode}
+\label{TYPVariants.w}\begin{travlangdoccode}
 type w =
   | A of {\char123}  x : int ;
 {\char125}
-\end{ocamldoccode}
-\begin{ocamldoccomment}
+\end{travlangdoccode}
+\begin{travlangdoccomment}
 doc for A
 
 
-\end{ocamldoccomment}
-\begin{ocamldoccode}
+\end{travlangdoccomment}
+\begin{travlangdoccode}
   | B of {\char123}  y : int ;
 {\char125}
-\end{ocamldoccode}
-\begin{ocamldoccomment}
+\end{travlangdoccode}
+\begin{travlangdoccomment}
 doc for B
 
 
-\end{ocamldoccomment}
+\end{travlangdoccomment}
 \index{w@\verb`w`}
-\begin{ocamldocdescription}
+\begin{travlangdocdescription}
 With records
 
 
-\end{ocamldocdescription}
+\end{travlangdocdescription}
 
 
 
 
-\label{TYPVariants.z}\begin{ocamldoccode}
+\label{TYPVariants.z}\begin{travlangdoccode}
 type z =
   | A of int
-\end{ocamldoccode}
-\begin{ocamldoccomment}
+\end{travlangdoccode}
+\begin{travlangdoccomment}
 doc for A
 
 
-\end{ocamldoccomment}
-\begin{ocamldoccode}
+\end{travlangdoccomment}
+\begin{travlangdoccode}
   | B of int
-\end{ocamldoccode}
-\begin{ocamldoccomment}
+\end{travlangdoccode}
+\begin{travlangdoccomment}
 doc for B
 
 
-\end{ocamldoccomment}
+\end{travlangdoccomment}
 \index{z@\verb`z`}
-\begin{ocamldocdescription}
+\begin{travlangdocdescription}
 With args
 
 
-\end{ocamldocdescription}
+\end{travlangdocdescription}
 
 
 
 
-\label{TYPVariants.a}\begin{ocamldoccode}
+\label{TYPVariants.a}\begin{travlangdoccode}
 type a =
   | A : a
-\end{ocamldoccode}
-\begin{ocamldoccomment}
+\end{travlangdoccode}
+\begin{travlangdoccomment}
 doc for A
 
 
-\end{ocamldoccomment}
+\end{travlangdoccomment}
 \index{a@\verb`a`}
-\begin{ocamldocdescription}
+\begin{travlangdocdescription}
 Gadt notation
 
 
-\end{ocamldocdescription}
+\end{travlangdocdescription}
 
 
 
 
-\label{TYPVariants.b}\begin{ocamldoccode}
+\label{TYPVariants.b}\begin{travlangdoccode}
 type b =
   | B
-\end{ocamldoccode}
-\begin{ocamldoccomment}
+\end{travlangdoccode}
+\begin{travlangdoccomment}
 doc for B
 
 
-\end{ocamldoccomment}
+\end{travlangdoccomment}
 \index{b@\verb`b`}
-\begin{ocamldocdescription}
+\begin{travlangdocdescription}
 Lonely constructor
 
 
-\end{ocamldocdescription}
+\end{travlangdocdescription}
 
 
 
 
-\label{TYPVariants.no-underscoredocumentation}\begin{ocamldoccode}
+\label{TYPVariants.no-underscoredocumentation}\begin{travlangdoccode}
 type no_documentation =
   | A
   | B
   | C
-\end{ocamldoccode}
+\end{travlangdoccode}
 \index{no-underscoredocumentation@\verb`no_documentation`}
 
 
 
 
-\label{TYPVariants.e}\begin{ocamldoccode}
+\label{TYPVariants.e}\begin{travlangdoccode}
 type e =
   |
-\end{ocamldoccode}
+\end{travlangdoccode}
 \index{e@\verb`e`}
-\begin{ocamldocdescription}
+\begin{travlangdocdescription}
 Empty variant
 
 
-\end{ocamldocdescription}
+\end{travlangdocdescription}
 
 
 \end{document}

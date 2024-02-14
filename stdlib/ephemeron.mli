@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Damien Doligez, projet Para, INRIA Rocquencourt            *)
 (*                                                                        *)
@@ -24,13 +24,13 @@
     associations would keep the arguments and the result in memory.
 
     Ephemerons can also be used for "adding" a field to an arbitrary
-    boxed OCaml value: you can attach some information to a value
+    boxed travlang value: you can attach some information to a value
     created by an external library without memory leaks.
 
     Ephemerons hold some keys and one or no data. They are all boxed
-    OCaml values. The keys of an ephemeron have the same behavior
+    travlang values. The keys of an ephemeron have the same behavior
     as weak pointers according to the garbage collector. In fact
-    OCaml weak pointers are implemented as ephemerons without data.
+    travlang weak pointers are implemented as ephemerons without data.
 
     The keys and data of an ephemeron are said to be full if they
     point to a value, or empty if the value has never been set, has

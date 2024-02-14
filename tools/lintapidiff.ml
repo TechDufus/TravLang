@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*                              Edwin Török                               *)
 (*                                                                        *)
@@ -31,7 +31,7 @@ type diff_error =
   | File_not_found
   | Other_error
 
-(* oldest Ocaml version that we show missing @since errors for *)
+(* oldest travlang version that we show missing @since errors for *)
 let oldest = "4.00.0"
 
 (* do not check @since annotations for these *)
@@ -90,15 +90,15 @@ module Doc = struct
     | _ -> None
 
   let is_deprecated attrs =
-    find_attr ["ocaml.deprecated"; "deprecated"] attrs <> None ||
-    match get_doc ["ocaml.text"] attrs with (* for toplevel module annotation *)
+    find_attr ["travlang.deprecated"; "deprecated"] attrs <> None ||
+    match get_doc ["travlang.text"] attrs with (* for toplevel module annotation *)
     | None -> false
     | Some text ->
         try Misc.search_substring "@deprecated" text 0 >= 0
         with Not_found -> false
 
   let get parent_info loc attrs =
-    let doc = get_doc ["ocaml.doc"; "ocaml.text"] attrs in
+    let doc = get_doc ["travlang.doc"; "travlang.text"] attrs in
     {
       since = (match doc with
           | Some doc ->
@@ -176,7 +176,7 @@ module Ast = struct
     (* module doc *)
     let inherits = List.fold_left (fun inherits -> function
         | {psig_desc=Psig_attribute a;_}
-          when (Doc.get_doc ["ocaml.doc";"ocaml.text"][a] <> None) ->
+          when (Doc.get_doc ["travlang.doc";"travlang.text"][a] <> None) ->
             f inherits (Location.none) [a]
         | _ -> inherits
       ) inherits items in

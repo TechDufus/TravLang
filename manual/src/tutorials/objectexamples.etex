@@ -1,4 +1,4 @@
-\chapter{Objects in OCaml}
+\chapter{Objects in travlang}
 \label{c:objectexamples}
 %HEVEA\cutname{objectexamples.html}
 {\it (Chapter written by Jérôme Vouillon, Didier Rémy and Jacques Garrigue)}
@@ -6,14 +6,14 @@
 \bigskip
 
 \noindent This chapter gives an overview of the object-oriented features of
-OCaml.
+travlang.
 
-Note that the relationship between object, class and type in OCaml is
+Note that the relationship between object, class and type in travlang is
 different than in mainstream object-oriented languages such as Java and
 C++, so you shouldn't assume that similar keywords mean the same thing.
-Object-oriented features are used much less frequently in OCaml than
-in those languages.  OCaml has alternatives that are often more appropriate,
-such as modules and functors.  Indeed, many OCaml programs do not use objects
+Object-oriented features are used much less frequently in travlang than
+in those languages.  travlang has alternatives that are often more appropriate,
+such as modules and functors.  Indeed, many travlang programs do not use objects
 at all.
 
 \section{s:classes-and-objects}{Classes and objects}
@@ -313,7 +313,7 @@ p#bump;;
 Note that this is not the same thing as private and protected methods
 in Java or C++, which can be called from other objects of the same
 class. This is a direct consequence of the independence between types
-and classes in OCaml: two unrelated classes may produce
+and classes in travlang: two unrelated classes may produce
 objects of the same type, and there is no way at the type level to
 ensure that an object comes from a specific class. However a possible
 encoding of friend methods is given in section~\ref{s:friends}.
@@ -740,7 +740,7 @@ seen as a colored point.
 Indeed, narrowing coercions without runtime checks would be unsafe.
 Runtime type checks might raise exceptions, and they would require
 the presence of type information at runtime, which is not the case in
-the OCaml system.
+the travlang system.
 For these reasons, there is no such operation available in the language.
 
 Be aware that subtyping and inheritance are not related.  Inheritance is a
@@ -1096,7 +1096,7 @@ approximation of decimal numbers, they are unsuitable for use in most
 monetary calculations as they may introduce errors.}  We will extend
 "money" below with more operations. We have to use a type constraint on
 the class parameter "x" because the primitive "<=" is a polymorphic
-function in OCaml.  The "inherit" clause ensures that the type of
+function in travlang.  The "inherit" clause ensures that the type of
 objects of this class is an instance of "#comparable".
 \begin{caml_example}{toplevel}
 class money (x : float) =
@@ -1227,6 +1227,6 @@ representation abstract outside the module.
 
 
 % LocalWords:  typecheck monomorphic uncaptured Subtyping subtyping leq repr Oo
-% LocalWords:  val sig bool Euro struct OCaml Vouillon Didier int ref incr init
+% LocalWords:  val sig bool Euro struct travlang Vouillon Didier int ref incr init
 % LocalWords:  succ mytype rec
 

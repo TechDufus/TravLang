@@ -1,6 +1,6 @@
-These are informal notes on how to do an OCaml release.
+These are informal notes on how to do an travlang release.
 
-Following these steps requires commit right in the OCaml repository,
+Following these steps requires commit right in the travlang repository,
 as well as SSH access to the inria.fr file servers hosting the
 distribution archives and manual.
 
@@ -16,7 +16,7 @@ release".
 
 Send a mail on caml-devel to warn Gabriel (to make a pass on Changes;
 see the "Changes curation" appendix for more details) and the
-OCamlLabs folks (for OPAM testing).
+travlangLabs folks (for OPAM testing).
 
 ## 0: release environment setup
 
@@ -42,17 +42,17 @@ export BRANCH=\$MAJOR.\$MINOR
 export VERSION=\$MAJOR.\$MINOR.\$BUGFIX\$PLUSEXT
 export TAGVERSION=\`echo \$VERSION | sed s/\~/-/g\`
 
-export REPO=https://github.com/ocaml/ocaml
+export REPO=https://github.com/travlang/travlang
 
 # these values are specific to caml.inria's host setup
 # they are defined in the release manager's .bashrc file
-export ARCHIVE_HOST="$OCAML_RELEASE_ARCHIVE_HOST"
-export ARCHIVE_PATH="$OCAML_RELEASE_ARCHIVE_PATH"
-export WEB_HOST="$OCAML_RELEASE_WEB_HOST"
-export WEB_PATH="$OCAML_RELEASE_WEB_PATH"
+export ARCHIVE_HOST="$travlang_RELEASE_ARCHIVE_HOST"
+export ARCHIVE_PATH="$travlang_RELEASE_ARCHIVE_PATH"
+export WEB_HOST="$travlang_RELEASE_WEB_HOST"
+export WEB_PATH="$travlang_RELEASE_WEB_PATH"
 
-export DIST="\$ARCHIVE_PATH/ocaml/ocaml-\$MAJOR.\$MINOR"
-export INSTDIR="/tmp/ocaml-\$VERSION"
+export DIST="\$ARCHIVE_PATH/travlang/travlang-\$MAJOR.\$MINOR"
+export INSTDIR="/tmp/travlang-\$VERSION"
 
 
 EOF
@@ -131,7 +131,7 @@ git commit -a -m "last commit before tagging $VERSION"
 
 # update VERSION with the new release; for example,
 #   4.07.0+dev9-2018-06-26 => 4.07.0+rc2
-# Update ocaml-variants.opam with new version.
+# Update travlang-variants.opam with new version.
 # Update \year in manual/src/macros.hva
 make -B configure
 # For a production release
@@ -144,9 +144,9 @@ git tag -m "release $VERSION" $TAGVERSION
 #   4.08.0 => 4.08.1+dev0
 # for testing candidates, use N+dev(D+2) instead; for example,
 #   4.07.0+rc2 => 4.07.0+dev10-2018-06-26
-# Revert ocaml-variants.opam to its "trunk" version.
+# Revert travlang-variants.opam to its "trunk" version.
 make -B configure
-git commit -m "increment version number after tagging $VERSION" VERSION configure ocaml-variants.opam
+git commit -m "increment version number after tagging $VERSION" VERSION configure travlang-variants.opam
 git push
 git push --tags
 ```
@@ -159,14 +159,14 @@ This needs to be more tested, tread with care.
 # increment it into N+dev(D+1); for example,
 #   4.07.0+dev0-2018-06-19 => 4.07.0+dev1-2018-06-26
 # Rename the "Working version" header in Changes
-# to "OCaml $BRANCH"
+# to "travlang $BRANCH"
 make -B configure
 git commit -a -m "last commit before branching $BRANCH"
 git branch $BRANCH
 
 # update VERSION with the new future branch,
 #   4.07.0+dev1-2018-06-26 => 4.08.0+dev0-2018-06-30
-# Update ocaml-variants.opam with new version.
+# Update travlang-variants.opam with new version.
 make -B configure
 # Add a "Working version" section" to Changes
 # Add common subsections in Changes, see Changelog.
@@ -185,16 +185,16 @@ git push --set-upstream origin $BRANCH
 Adjust github branch settings:
 
 Go to
-  https://github.com/ocaml/ocaml/settings/branches
+  https://github.com/travlang/travlang/settings/branches
 and add a rule for protecting the new branch
 (copy the rights from the previous version)
 
 ## 5.1: create the release on github (only for a production release)
 
-open https://github.com/ocaml/ocaml/releases
+open https://github.com/travlang/travlang/releases
 # and click "Draft a new release"
 # for a minor release, the description is:
- Bug fixes. See [detailed list of changes](https://github.com/ocaml/ocaml/blob/$MAJOR.$MINOR/Changes).
+ Bug fixes. See [detailed list of changes](https://github.com/travlang/travlang/blob/$MAJOR.$MINOR/Changes).
 
 ## 5.3: Inria CI (for a new release branch)
 
@@ -210,32 +210,32 @@ Remove the oldest badge.
 
 Clone the opam-repository
 ```
-git clone https://github.com/ocaml/opam-repository
+git clone https://github.com/travlang/opam-repository
 ```
 
 Create a branch for the new release
 ```
-git checkout -b OCaml_$VERSION
+git checkout -b travlang_$VERSION
 ```
 
 The following opam packages are needed for all releases:
 
-- `ocaml-base-compiler.$VERSION`
-- `ocaml-variants.$VERSION+options`
+- `travlang-base-compiler.$VERSION`
+- `travlang-variants.$VERSION+options`
 
 For production release, the following packages need to be updated:
 
-- `ocaml-system.$VERSION`
-- `ocaml-src.$VERSION`
-- `ocaml-src.$MAJOR.$MINOR.dev`
-- `ocaml-manual.$VERSION`
-- `ocaml.$NEXTVERSION`
-- `ocaml-variants.$NEXTVERSION+trunk` should be moved to
-   `ocaml-variants.$NEXTNEXTVERSION+trunk`
+- `travlang-system.$VERSION`
+- `travlang-src.$VERSION`
+- `travlang-src.$MAJOR.$MINOR.dev`
+- `travlang-manual.$VERSION`
+- `travlang.$NEXTVERSION`
+- `travlang-variants.$NEXTVERSION+trunk` should be moved to
+   `travlang-variants.$NEXTNEXTVERSION+trunk`
 
-Note that the `ocaml` virtual package needs to be updated to the next version.
+Note that the `travlang` virtual package needs to be updated to the next version.
 
-Similarly, the `ocurrent/ocaml-version` library should be updated.
+Similarly, the `ocurrent/travlang-version` library should be updated.
 
 Do not forget to add/update the checksum field for the tarballs in the
 "url" section of the opam files. Use opam-lint before sending the pull
@@ -246,23 +246,23 @@ main opam-repository by using the local repository:
 
 ```
 opam repo add local /path/to/your/opam-repository
-opam switch create --repo=local,beta=git+https://github.com/ocaml/ocaml-beta-repository.git ocaml-variants.$VERSION
+opam switch create --repo=local,beta=git+https://github.com/travlang/travlang-beta-repository.git travlang-variants.$VERSION
 ```
 The switch should build.
 
-For a production release, you also need to create new opam files for the ocaml-manual and
-ocaml-src packages.
+For a production release, you also need to create new opam files for the travlang-manual and
+travlang-src packages.
 
 ## 6.1 Update OPAM dev packages after branching
 
-Create a new ocaml/ocaml.$NEXT/opam file.
-Copy the opam dev files from ocaml-variants/ocaml-variants.$VERSION+trunk*
-into ocaml-variants/ocaml-variants.$NEXT+trunk+* .
+Create a new travlang/travlang.$NEXT/opam file.
+Copy the opam dev files from travlang-variants/travlang-variants.$VERSION+trunk*
+into travlang-variants/travlang-variants.$NEXT+trunk+* .
 Update the version in those opam files.
 
 Update the synopsis and "src" field in the opam $VERSION packages.
 The "src" field should point to
- src: "https://github.com/ocaml/ocaml/archive/$VERSION.tar.gz"
+ src: "https://github.com/travlang/travlang/archive/$VERSION.tar.gz"
 The synopsis should be "latest $VERSION development(,...)".
 
 
@@ -270,13 +270,13 @@ The synopsis should be "latest $VERSION development(,...)".
 
 ```
 cd $WORKTREE
-TMPDIR=/tmp/ocaml-release
+TMPDIR=/tmp/travlang-release
 git checkout $TAGVERSION
-git checkout-index -a -f --prefix=$TMPDIR/ocaml-$VERSION/
+git checkout-index -a -f --prefix=$TMPDIR/travlang-$VERSION/
 cd $TMPDIR
-$TAR -c --owner 0 --group 0 -f ocaml-$VERSION.tar ocaml-$VERSION
-gzip -9 <ocaml-$VERSION.tar >ocaml-$VERSION.tar.gz
-xz <ocaml-$VERSION.tar >ocaml-$VERSION.tar.xz
+$TAR -c --owner 0 --group 0 -f travlang-$VERSION.tar travlang-$VERSION
+gzip -9 <travlang-$VERSION.tar >travlang-$VERSION.tar.gz
+xz <travlang-$VERSION.tar >travlang-$VERSION.tar.xz
 ```
 
 ## 8: upload the archives and compute checksums
@@ -289,7 +289,7 @@ ssh $ARCHIVE_HOST "mkdir -p $DIST"
 
 Upload the archives:
 ```
-scp ocaml-$VERSION.tar.{xz,gz} $ARCHIVE_HOST:$DIST
+scp travlang-$VERSION.tar.{xz,gz} $ARCHIVE_HOST:$DIST
 ```
 
 To update the checksum files on the remote host, we first upload the
@@ -308,7 +308,7 @@ source /tmp/env-$USER.sh
 cd $DIST
 
 cp MD5SUM MD5SUM.old
-md5sum ocaml-$VERSION.tar.{xz,gz} > new-md5s
+md5sum travlang-$VERSION.tar.{xz,gz} > new-md5s
 # check new-md5s to ensure that they look right, and then
 cat new-md5s >> MD5SUM
 # if everything worked well,
@@ -316,7 +316,7 @@ rm MD5SUM.old new-md5s
 
 # same thing for SHA512
 cp SHA512SUM SHA512SUM.old
-sha512sum ocaml-$VERSION.tar.{xz,gz} > new-sha512s
+sha512sum travlang-$VERSION.tar.{xz,gz} > new-sha512s
 cat new-sha512s >> SHA512SUM
 rm SHA512SUM.old new-sha512s
 
@@ -330,7 +330,7 @@ exit
 
 ```
 ssh $ARCHIVE_HOST "mkdir -p $DIST/notes"
-cd ocaml-$VERSION
+cd travlang-$VERSION
 scp INSTALL.adoc LICENSE README.adoc README.win32.adoc Changes \
    $ARCHIVE_HOST:$DIST/notes/
 ```
@@ -352,14 +352,14 @@ make clean
 make
 rm -rf /tmp/release
 mkdir -p /tmp/release
-RELEASENAME="ocaml-$BRANCH-"
+RELEASENAME="travlang-$BRANCH-"
 make -C manual release RELEASE=/tmp/release/$RELEASENAME
 scp /tmp/release/* $ARCHIVE_HOST:$DIST/
 
 
 # upload manual checksums
-ssh $ARCHIVE_HOST "cd $DIST; md5sum ocaml-$BRANCH-refman* >>MD5SUM"
-ssh $ARCHIVE_HOST "cd $DIST; sha512sum ocaml-$BRANCH-refman* >>SHA512SUM"
+ssh $ARCHIVE_HOST "cd $DIST; md5sum travlang-$BRANCH-refman* >>MD5SUM"
+ssh $ARCHIVE_HOST "cd $DIST; sha512sum travlang-$BRANCH-refman* >>SHA512SUM"
 ```
 
 Releasing the manual online happens on another machine:
@@ -374,29 +374,29 @@ ssh $WEB_HOST
 source /tmp/env-$USER.sh
 
 cd $WEB_PATH/caml/pub/docs
-mkdir -p manual-ocaml-$BRANCH
-cd manual-ocaml-$BRANCH
-rm -fR htmlman ocaml-$BRANCH-refman-html.tar.gz
-wget http://caml.inria.fr/pub/distrib/ocaml-$BRANCH/ocaml-$BRANCH-refman-html.tar.gz
-tar -xzvf ocaml-$BRANCH-refman-html.tar.gz # this extracts into htmlman/
+mkdir -p manual-travlang-$BRANCH
+cd manual-travlang-$BRANCH
+rm -fR htmlman travlang-$BRANCH-refman-html.tar.gz
+wget http://caml.inria.fr/pub/distrib/travlang-$BRANCH/travlang-$BRANCH-refman-html.tar.gz
+tar -xzvf travlang-$BRANCH-refman-html.tar.gz # this extracts into htmlman/
 /bin/cp -r htmlman/* . # move HTML content to docs/manual-caml-$BRANCH
-rm -fR htmlman ocaml-$BRANCH-refman-html.tar.gz
+rm -fR htmlman travlang-$BRANCH-refman-html.tar.gz
 
 cd $WEB_PATH/caml/pub/docs
-rm manual-ocaml
-ln -sf manual-ocaml-$BRANCH manual-ocaml
+rm manual-travlang
+ln -sf manual-travlang-$BRANCH manual-travlang
 ```
 
 
 ## 11: prepare web announce for the release
 
-For production releases, you should get in touch with ocaml.org to
+For production releases, you should get in touch with travlang.org to
 organize the webpage for the new release. See
 
-  <https://github.com/ocaml/ocaml.org/issues/819>
+  <https://github.com/travlang/travlang.org/issues/819>
 
 
-## 13: announce the release on caml-list, caml-announce, and discuss.ocaml.org
+## 13: announce the release on caml-list, caml-announce, and discuss.travlang.org
 
 See the email announce templates in the `templates/` directory.
 

@@ -1,8 +1,8 @@
 (* TEST
- ocaml_script_as_argument = "true";
- ocaml_exit_status = "125";
- setup-ocaml-build-env;
- ocaml;
+ travlang_script_as_argument = "true";
+ travlang_exit_status = "125";
+ setup-travlang-build-env;
+ travlang;
 *)
 
 #use "no";;

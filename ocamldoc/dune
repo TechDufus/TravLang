@@ -1,6 +1,6 @@
 ;**************************************************************************
 ;*                                                                        *
-;*                                 OCaml                                  *
+;*                                 travlang                                  *
 ;*                                                                        *
 ;*                     Thomas Refis, Jane Street Europe                   *
 ;*                                                                        *
@@ -12,14 +12,14 @@
 ;*                                                                        *
 ;**************************************************************************
 
-(ocamllex  odoc_lexer odoc_ocamlhtml odoc_see_lexer odoc_text_lexer)
-(ocamlyacc odoc_parser odoc_text_parser)
+(travlanglex  odoc_lexer odoc_travlanghtml odoc_see_lexer odoc_text_lexer)
+(travlangyacc odoc_parser odoc_text_parser)
 
 (executable
  (name odoc)
  (modes byte)
  (flags (:standard -nostdlib -w -9-32))
- (libraries dynlink ocamlcommon stdlib runtime str unix))
+ (libraries dynlink travlangcommon stdlib runtime str unix))
 
 (rule
- (copy odoc.exe ocamldoc.byte))
+ (copy odoc.exe travlangdoc.byte))

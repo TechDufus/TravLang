@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -38,11 +38,11 @@ val loc_external_arguments: Cmm.exttype list -> Reg.t array array * int
 val loc_external_results: Cmm.machtype -> Reg.t array
 val loc_exn_bucket: Reg.t
 
-(* The maximum number of arguments of an OCaml to OCaml function call for
+(* The maximum number of arguments of an travlang to travlang function call for
    which it is guaranteed there will be no arguments passed on the stack.
    (Above this limit, tail call optimization may be disabled.)
    N.B. The values for this parameter in the backends currently assume
-   that no unboxed floats are passed using the OCaml calling conventions.
+   that no unboxed floats are passed using the travlang calling conventions.
 *)
 val max_arguments_for_tailcalls : int
 

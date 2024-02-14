@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*          Manuel Serrano and Xavier Leroy, INRIA Rocquencourt           */
 /*                                                                        */

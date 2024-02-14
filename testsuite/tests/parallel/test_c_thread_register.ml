@@ -9,7 +9,7 @@
  }
 *)
 
-(* spins a external thread from C and register it to the OCaml runtime *)
+(* spins a external thread from C and register it to the travlang runtime *)
 
 external spawn_thread : (unit -> unit) -> unit = "spawn_thread"
 

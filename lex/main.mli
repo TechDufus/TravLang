@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Sebastien Hinderer, projet Cambium, INRIA Paris            *)
 (*                                                                        *)
@@ -16,4 +16,4 @@
 (* The lexer generator. Command-line parsing. *)
 
 val main : unit -> unit
-(** The entry point for ocamllex *)
+(** The entry point for travlanglex *)

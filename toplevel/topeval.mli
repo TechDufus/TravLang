@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -32,7 +32,7 @@ open Format
 val getvalue : string -> Obj.t
 val setvalue : string -> Obj.t -> unit
 
-(* Label appended after [OCaml version XXX] when starting the toplevel. *)
+(* Label appended after [travlang version XXX] when starting the toplevel. *)
 val implementation_label: string
 
 val execute_phrase : bool -> formatter -> Parsetree.toplevel_phrase -> bool

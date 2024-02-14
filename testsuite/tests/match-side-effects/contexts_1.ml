@@ -34,7 +34,7 @@ let example_1 () =
 
      - reuse the previously read subvalue [Left true], and return [Ok true].
 
-     For many years the OCaml compiler behaved incorrectly here: it
+     For many years the travlang compiler behaved incorrectly here: it
      would read the mutated value [Right 3], but assume from static
      context information that the head constructor is [Left]. and
      dereference its field without checking the constructor

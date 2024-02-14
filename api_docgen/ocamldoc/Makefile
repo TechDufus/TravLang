@@ -1,6 +1,6 @@
 #**************************************************************************
 #*                                                                        *
-#*                                 OCaml                                  *
+#*                                 travlang                                  *
 #*                                                                        *
 #*             Florian Angeletti, projet Cambium, Inria Paris             *
 #*                                                                        *
@@ -36,57 +36,57 @@ libref=$(stdlib_UNPREFIXED) $(otherlibref)
 ALL_MAN= $(ALL_DOC:%=build/man/%.3o)
 ALL_LATEX= $(ALL_DOC:%=build/latex/%.tex)
 
-build/latex/ifocamldoc.tex: | build/latex
-	$(V_GEN)printf '\\newif\\ifocamldoc\\ocamldoctrue\n' > $@
+build/latex/iftravlangdoc.tex: | build/latex
+	$(V_GEN)printf '\\newif\\iftravlangdoc\\travlangdoctrue\n' > $@
 
 $(libref:%=build/libref/%.odoc): build/libref/%.odoc: %.mli | build/libref
-	$(V_OCAMLDOC)$(OCAMLDOC_RUN) -nostdlib -hide Stdlib -lib Stdlib \
+	$(V_travlangDOC)$(travlangDOC_RUN) -nostdlib -hide Stdlib -lib Stdlib \
 	-pp \
-"$(AWK) -v ocamldoc=true -f ../../stdlib/expand_module_aliases.awk" \
+"$(AWK) -v travlangdoc=true -f ../../stdlib/expand_module_aliases.awk" \
 	$(DOC_STDLIB_INCLUDES) -hide-warnings $< -dump  $@
 
 $(compilerlibref:%=build/compilerlibref/%.odoc):\
 build/compilerlibref/%.odoc: %.mli | build/compilerlibref
-	$(V_OCAMLDOC)$(OCAMLDOC_RUN) -nostdlib -hide Stdlib \
+	$(V_travlangDOC)$(travlangDOC_RUN) -nostdlib -hide Stdlib \
 	$(DOC_ALL_INCLUDES) -hide-warnings $< -dump  $@
 
 $(compilerlibref_TEXT:%=build/compilerlibref/%.odoc):\
 build/compilerlibref/%.odoc: build/%.mld | build/compilerlibref
-	$(V_OCAMLDOC)$(OCAMLDOC_RUN)  -hide-warnings $(DOC_ALL_INCLUDES) -text $< -dump  $@
+	$(V_travlangDOC)$(travlangDOC_RUN)  -hide-warnings $(DOC_ALL_INCLUDES) -text $< -dump  $@
 
 $(libref_TEXT:%=build/libref/%.odoc):\
 build/libref/%.odoc: build/%.mld | build/libref
-	$(V_OCAMLDOC)$(OCAMLDOC_RUN) -hide-warnings $(DOC_STDLIB_INCLUDES) -text $< -dump  $@
+	$(V_travlangDOC)$(travlangDOC_RUN) -hide-warnings $(DOC_STDLIB_INCLUDES) -text $< -dump  $@
 
 ALL_COMPILED_DOC=$(ALL_DOC:%=build/%.odoc)
 build/man/Stdlib.3o: $(ALL_COMPILED_DOC) | build/man
-	$(V_OCAMLDOC)$(OCAMLDOC_RUN) -man -d build/man -man-mini \
-	-nostdlib -hide Stdlib -lib Stdlib -t "OCaml library" \
+	$(V_travlangDOC)$(travlangDOC_RUN) -man -d build/man -man-mini \
+	-nostdlib -hide Stdlib -lib Stdlib -t "travlang library" \
 	$(addprefix -load , $(ALL_COMPILED_DOC))
 
 HTML_OPTIONS= -charset="utf8" -colorize-code -nonavbar
 
 build/html/libref/Stdlib.html: $(ALL_LIBREF:%=build/%.odoc) | build/html/libref
-	$(V_OCAMLDOC)$(OCAMLDOC_RUN) -html -d build/html/libref \
+	$(V_travlangDOC)$(travlangDOC_RUN) -html -d build/html/libref \
 	$(HTML_OPTIONS) \
-	-nostdlib -hide Stdlib -lib Stdlib -t "OCaml library" \
+	-nostdlib -hide Stdlib -lib Stdlib -t "travlang library" \
 	$(addprefix -load , $(ALL_LIBREF:%=build/%.odoc))
 
 build/html/compilerlibref/Compiler_libs.html: \
   $(ALL_COMPILERLIBREF:%=build/%.odoc) | build/html/compilerlibref
-	$(V_OCAMLDOC)$(OCAMLDOC_RUN) -html -d build/html/compilerlibref \
-	-nostdlib -hide Stdlib -t "OCaml compiler library" \
+	$(V_travlangDOC)$(travlangDOC_RUN) -html -d build/html/compilerlibref \
+	-nostdlib -hide Stdlib -t "travlang compiler library" \
 	$(HTML_OPTIONS) \
 	-intro build/Compiler_libs.mld \
 	$(addprefix -load , $(ALL_COMPILERLIBREF:%=build/%.odoc))
 
 build/texi/stdlib.texi: $(ALL_COMPILED_DOC) | build/texi
-	$(V_OCAMLDOC)$(OCAMLDOC_RUN) -texi -o $@ \
-	-nostdlib -hide Stdlib -lib Stdlib -t "OCaml library" \
+	$(V_travlangDOC)$(travlangDOC_RUN) -texi -o $@ \
+	-nostdlib -hide Stdlib -lib Stdlib -t "travlang library" \
 	$(addprefix -load , $(ALL_COMPILED_DOC))
 
 build/latex/Stdlib.tex: $(ALL_COMPILED_DOC) | build/latex
-	$(V_OCAMLDOC)$(OCAMLDOC_RUN) -latex -o build/latex/all.tex \
+	$(V_travlangDOC)$(travlangDOC_RUN) -latex -o build/latex/all.tex \
 	-hide Stdlib -lib Stdlib $(DOC_ALL_INCLUDES) \
 	-sepfiles \
 	-latextitle "1,subsection*" \
@@ -95,15 +95,15 @@ build/latex/Stdlib.tex: $(ALL_COMPILED_DOC) | build/latex
 	-latex-module-prefix "" \
 	-latex-module-type-prefix "" \
 	-latex-value-prefix "" \
-	-nostdlib -hide Stdlib -lib Stdlib -t "OCaml library" \
+	-nostdlib -hide Stdlib -lib Stdlib -t "travlang library" \
 	$(addprefix -load , $(ALL_COMPILED_DOC))
 
 build/latex/alldoc.pdf: build/latex/Stdlib.tex build/latex/alldoc.tex \
   | build/latex
 	cd build/latex && \
-          TEXINPUTS=$${TEXINPUTS}:../../ocamldoc pdflatex alldoc
+          TEXINPUTS=$${TEXINPUTS}:../../travlangdoc pdflatex alldoc
 	cd build/latex && \
-	  TEXINPUTS=$${TEXINPUTS}:../../ocamldoc pdflatex alldoc
+	  TEXINPUTS=$${TEXINPUTS}:../../travlangdoc pdflatex alldoc
 
 stdlib_INPUT=$(foreach module,\
 $(filter-out stdlib.mli camlinternal%,$(stdlib_UNPREFIXED)),\

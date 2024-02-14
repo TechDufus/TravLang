@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*         Fabrice Le Fessant, projet Gallium, INRIA Rocquencourt         *)
 (*                                                                        *)

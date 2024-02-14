@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -15,5 +15,5 @@
 
 val main : unit -> unit
 
-(* entry point when called from the -depend option of ocamlc/ocamlopt *)
+(* entry point when called from the -depend option of travlangc/travlangopt *)
 val main_from_option : unit -> unit

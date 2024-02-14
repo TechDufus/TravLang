@@ -1,9 +1,9 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*           Jerome Vouillon, projet Cristal, INRIA Rocquencourt          */
-/*           OCaml port by John Malecki and Xavier Leroy                  */
+/*           travlang port by John Malecki and Xavier Leroy                  */
 /*                                                                        */
 /*   Copyright 1996 Institut National de Recherche en Informatique et     */
 /*     en Automatique.                                                    */

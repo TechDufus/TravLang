@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -47,21 +47,21 @@ val c_has_debug_prefix_map : bool
 val as_has_debug_prefix_map : bool
 (** Whether the assembler supports --debug-prefix-map *)
 
-val ocamlc_cflags : string
-(** The flags ocamlc should pass to the C compiler *)
+val travlangc_cflags : string
+(** The flags travlangc should pass to the C compiler *)
 
-val ocamlc_cppflags : string
-(** The flags ocamlc should pass to the C preprocessor *)
+val travlangc_cppflags : string
+(** The flags travlangc should pass to the C preprocessor *)
 
-val ocamlopt_cflags : string
-  [@@ocaml.deprecated "Use ocamlc_cflags instead."]
-(** @deprecated {!ocamlc_cflags} should be used instead.
-    The flags ocamlopt should pass to the C compiler *)
+val travlangopt_cflags : string
+  [@@travlang.deprecated "Use travlangc_cflags instead."]
+(** @deprecated {!travlangc_cflags} should be used instead.
+    The flags travlangopt should pass to the C compiler *)
 
-val ocamlopt_cppflags : string
-  [@@ocaml.deprecated "Use ocamlc_cppflags instead."]
-(** @deprecated {!ocamlc_cppflags} should be used instead.
-    The flags ocamlopt should pass to the C preprocessor *)
+val travlangopt_cppflags : string
+  [@@travlang.deprecated "Use travlangc_cppflags instead."]
+(** @deprecated {!travlangc_cppflags} should be used instead.
+    The flags travlangopt should pass to the C preprocessor *)
 
 val bytecomp_c_libraries: string
 (** The C libraries to link with custom runtimes *)
@@ -73,8 +73,8 @@ val native_ldflags : string
 (* Flags to pass to the system linker *)
 
 val native_pack_linker: string
-(** The linker to use for packaging (ocamlopt -pack) and for partial
-    links (ocamlopt -output-obj). *)
+(** The linker to use for packaging (travlangopt -pack) and for partial
+    links (travlangopt -output-obj). *)
 
 val mkdll: string
 (** The linker command line to build dynamic libraries. *)
@@ -87,11 +87,11 @@ val mkmaindll: string
 
 val default_rpath: string
 (** Option to add a directory to be searched for libraries at runtime
-    (used by ocamlmklib) *)
+    (used by travlangmklib) *)
 
 val mksharedlibrpath: string
 (** Option to add a directory to be searched for shared libraries at runtime
-    (used by ocamlmklib) *)
+    (used by travlangmklib) *)
 
 val ar: string
 (** Name of the ar command, or "" if not needed  (MSVC) *)
@@ -169,7 +169,7 @@ val system: string
 
 val asm: string
 (** The assembler (and flags) to use for assembling
-    ocamlopt-generated code. *)
+    travlangopt-generated code. *)
 
 val asm_cfi_supported: bool
 (** Whether assembler understands CFI directives *)

@@ -1,6 +1,6 @@
 (* TEST
 
- ocamlopt_flags = "-g -ccopt -fsanitize=thread -ccopt -O1 -ccopt -fno-omit-frame-pointer -ccopt -g";
+ travlangopt_flags = "-g -ccopt -fsanitize=thread -ccopt -O1 -ccopt -fno-omit-frame-pointer -ccopt -g";
  include unix;
  set TSAN_OPTIONS="detect_deadlocks=0";
 
@@ -13,7 +13,7 @@
 exception ExnA
 exception ExnB
 
-external print_and_call_ocaml_h : unit -> unit = "print_and_call_ocaml_h"
+external print_and_call_travlang_h : unit -> unit = "print_and_call_travlang_h"
 
 open Printf
 
@@ -35,12 +35,12 @@ let [@inline never] h () =
   i ();
   printf "Leaving h\n%!"
 
-let _ = Callback.register "ocaml_h" h
+let _ = Callback.register "travlang_h" h
 
 let [@inline never] g () =
   printf "Entering g\n%!";
   printf "Calling C code\n%!";
-  print_and_call_ocaml_h ();
+  print_and_call_travlang_h ();
   printf "Back from C code\n%!";
   printf "Leaving g\n%!"
 

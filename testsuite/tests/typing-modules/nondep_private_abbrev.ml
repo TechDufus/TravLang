@@ -97,7 +97,7 @@ module DirectPrivEtaUnit : sig type t end
 |}]
 
 (*** Test proposed by Jacques in
-     https://github.com/ocaml/ocaml/pull/1826#discussion_r194290729 ***)
+     https://github.com/travlang/travlang/pull/1826#discussion_r194290729 ***)
 
 (* Baseline *)
 

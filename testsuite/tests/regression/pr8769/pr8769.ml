@@ -1,42 +1,42 @@
 (* TEST
  modules = "nocrypto.mli fortuna.ml rng.ml";
  {
-   setup-ocamlc.byte-build-env;
+   setup-travlangc.byte-build-env;
    {
      module = "nocrypto.mli";
-     ocamlc.byte;
+     travlangc.byte;
    }{
      flags = "-for-pack Nocrypto";
      module = "fortuna.ml";
-     ocamlc.byte;
+     travlangc.byte;
    }{
      flags = "-for-pack Nocrypto";
      module = "rng.ml";
-     ocamlc.byte;
+     travlangc.byte;
    }{
      program = "nocrypto.cmo";
      flags = "-pack";
      all_modules = "fortuna.cmo rng.cmo";
-     ocamlc.byte;
+     travlangc.byte;
    }
  }{
-   setup-ocamlopt.byte-build-env;
+   setup-travlangopt.byte-build-env;
    {
      module = "nocrypto.mli";
-     ocamlopt.byte;
+     travlangopt.byte;
    }{
      flags = "-for-pack Nocrypto";
      module = "fortuna.ml";
-     ocamlopt.byte;
+     travlangopt.byte;
    }{
      flags = "-for-pack Nocrypto";
      module = "rng.ml";
-     ocamlopt.byte;
+     travlangopt.byte;
    }{
      program = "nocrypto.cmx";
      flags = "-pack";
      all_modules = "fortuna.cmx rng.cmx";
-     ocamlopt.byte;
+     travlangopt.byte;
    }
  }
 *)

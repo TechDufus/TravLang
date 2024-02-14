@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*                David Allsopp, MetaStack Solutions Ltd.                 */
 /*                                                                        */
@@ -89,7 +89,7 @@ CAMLprim value caml_unix_symlink(value to_dir, value osource, value odest)
   flags =
     (Bool_val(to_dir) ? SYMBOLIC_LINK_FLAG_DIRECTORY : 0) | additional_flags;
 
-  /* Copy source and dest outside the OCaml heap */
+  /* Copy source and dest outside the travlang heap */
   source = caml_stat_strdup_to_utf16(String_val(osource));
   dest = caml_stat_strdup_to_utf16(String_val(odest));
 

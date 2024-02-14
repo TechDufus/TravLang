@@ -1,9 +1,9 @@
 (* TEST
- setup-ocamlc.byte-build-env;
+ setup-travlangc.byte-build-env;
  flags = "-dlambda -stop-after lambda -nopervasives ";
- ocamlc_byte_exit_status = "0";
- ocamlc.byte;
- check-ocamlc.byte-output;
+ travlangc_byte_exit_status = "0";
+ travlangc.byte;
+ check-travlangc.byte-output;
 *)
 
 external p : int -> unit = ""

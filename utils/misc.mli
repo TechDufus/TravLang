@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -676,7 +676,7 @@ module Magic_number : sig
 
   type raw = string
   (** the type of raw magic numbers,
-      such as "Caml1999A027" for the .cma files of OCaml 4.10 *)
+      such as "Caml1999A027" for the .cma files of travlang 4.10 *)
 
   (** {3 Parsing magic numbers} *)
 

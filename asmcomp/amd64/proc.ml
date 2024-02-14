@@ -1,7 +1,7 @@
 # 2 "asmcomp/amd64/proc.ml"
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -50,10 +50,10 @@ let win64 = Arch.win64
   xmm0 - xmm15  100 - 115  *)
 
 (* Conventions:
-     rax - r13: OCaml function arguments
-     rax: OCaml and C function results
-     xmm0 - xmm9: OCaml function arguments
-     xmm0: OCaml and C function results
+     rax - r13: travlang function arguments
+     rax: travlang and C function results
+     xmm0 - xmm9: travlang function arguments
+     xmm0: travlang and C function results
    Under Unix:
      rdi, rsi, rdx, rcx, r8, r9: C function arguments
      xmm0 - xmm7: C function arguments
@@ -70,7 +70,7 @@ let win64 = Arch.win64
        2. C return values;
        3. C callee-saved registers.
      This translates to the set { r10, r11 }.  These registers hence cannot
-     be used for OCaml parameter passing and must also be marked as
+     be used for travlang parameter passing and must also be marked as
      destroyed across [Ialloc] and [Ipoll] (otherwise a call to
      caml_call_gc@PLT might clobber these two registers before the assembly
      stub saves them into the GC regs block).

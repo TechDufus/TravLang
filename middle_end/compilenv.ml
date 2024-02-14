@@ -1,14 +1,14 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Gallium, INRIA Rocquencourt           *)
-(*                       Pierre Chambart, OCamlPro                        *)
+(*                       Pierre Chambart, travlangPro                        *)
 (*           Mark Shinwell and Leo White, Jane Street Europe              *)
 (*                                                                        *)
 (*   Copyright 2010 Institut National de Recherche en Informatique et     *)
 (*     en Automatique                                                     *)
-(*   Copyright 2013--2016 OCamlPro SAS                                    *)
+(*   Copyright 2013--2016 travlangPro SAS                                    *)
 (*   Copyright 2014--2016 Jane Street Group LLC                           *)
 (*                                                                        *)
 (*   All rights reserved.  This file is distributed under the terms of    *)
@@ -19,7 +19,7 @@
 
 (* Compilation environments for compilation units *)
 
-[@@@ocaml.warning "+a-4-9-40-41-42"]
+[@@@travlang.warning "+a-4-9-40-41-42"]
 
 open Config
 open Cmx_format

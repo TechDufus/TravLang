@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           */
 /*                                                                        */
@@ -315,7 +315,7 @@ CAMLprim value caml_unix_tcsetattr(value fd, value when, value arg)
 {
   struct termios params;
   /* struct termios contains additional, OS-specific fields and bits beyond the
-     standard ones that are mapped to the Unix.terminal_io OCaml type. It's
+     standard ones that are mapped to the Unix.terminal_io travlang type. It's
      better not to change these additional fields. Therefore we call tcgettr
      here to set those fields and bits. */
   if (tcgetattr(Int_val(fd), &params) == -1)

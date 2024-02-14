@@ -1,5 +1,5 @@
 (* TEST
- ocamllex_flags = " -q ";
+ travlanglex_flags = " -q ";
 *)
 
 {

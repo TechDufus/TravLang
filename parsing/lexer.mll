@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -417,7 +417,7 @@ rule token = parse
       { TILDE }
   | ".~"
       { error lexbuf
-          (Reserved_sequence (".~", Some "is reserved for use in MetaOCaml")) }
+          (Reserved_sequence (".~", Some "is reserved for use in Metatravlang")) }
   | "~" raw_ident_escape (lowercase identchar * as name) ':'
       { LABEL name }
   | "~" (lowercase identchar * as name) ':'

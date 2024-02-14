@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*          Manuel Serrano and Xavier Leroy, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -17,32 +17,32 @@
 
    This module implements multi-dimensional arrays of integers and
    floating-point numbers, thereafter referred to as 'Bigarrays',
-   to distinguish them from the standard OCaml arrays described in
+   to distinguish them from the standard travlang arrays described in
    {!module:Array}.
 
    The implementation allows efficient sharing of large numerical
-   arrays between OCaml code and C or Fortran numerical libraries.
+   arrays between travlang code and C or Fortran numerical libraries.
 
-   The main differences between 'Bigarrays' and standard OCaml
+   The main differences between 'Bigarrays' and standard travlang
    arrays are as follows:
-   - Bigarrays are not limited in size, unlike OCaml arrays.
+   - Bigarrays are not limited in size, unlike travlang arrays.
      (Normal float arrays are limited to 2,097,151 elements on a 32-bit
      platform, and normal arrays of other types to 4,194,303 elements.)
    - Bigarrays are multi-dimensional.  Any number of dimensions
-     between 0 and 16 is supported.  In contrast, OCaml arrays
+     between 0 and 16 is supported.  In contrast, travlang arrays
      are mono-dimensional and require encoding multi-dimensional
      arrays as arrays of arrays.
    - Bigarrays can only contain integers and floating-point numbers,
-     while OCaml arrays can contain arbitrary OCaml data types.
+     while travlang arrays can contain arbitrary travlang data types.
    - Bigarrays provide more space-efficient storage of
-     integer and floating-point elements than normal OCaml arrays, in
+     integer and floating-point elements than normal travlang arrays, in
      particular because they support 'small' types such as
      single-precision floats and 8 and 16-bit integers, in addition to
-     the standard OCaml types of double-precision floats and 32 and
+     the standard travlang types of double-precision floats and 32 and
      64-bit integers.
    - The memory layout of Bigarrays is entirely compatible with that
      of arrays in C and Fortran, allowing large arrays to be passed
-     back and forth between OCaml code and C / Fortran code with no
+     back and forth between travlang code and C / Fortran code with no
      data copying at all.
    - Bigarrays support interesting high-level operations that normal
      arrays do not provide efficiently, such as extracting sub-arrays
@@ -53,7 +53,7 @@
    source, then refer to array types and operations via short dot
    notation, e.g. [Array1.t] or [Array2.sub].
 
-   Bigarrays support all the OCaml ad-hoc polymorphic operations:
+   Bigarrays support all the travlang ad-hoc polymorphic operations:
    - comparisons ([=], [<>], [<=], etc, as well as {!Stdlib.compare});
    - hashing (module [Hash]);
    - and structured input-output (the functions from the
@@ -78,7 +78,7 @@
    ({!Bigarray.int8_signed_elt} or {!Bigarray.int8_unsigned_elt}),
 - 16-bit integers (signed or unsigned)
    ({!Bigarray.int16_signed_elt} or {!Bigarray.int16_unsigned_elt}),
-- OCaml integers (signed, 31 bits on 32-bit architectures,
+- travlang integers (signed, 31 bits on 32-bit architectures,
    63 bits on 64-bit architectures) ({!Bigarray.int_elt}),
 - 32-bit signed integers ({!Bigarray.int32_elt}),
 - 64-bit signed integers ({!Bigarray.int64_elt}),
@@ -122,20 +122,20 @@ type ('a, 'b) kind =
   | Complex64 : (Complex.t, complex64_elt) kind
   | Char : (char, int8_unsigned_elt) kind
   | Float16 : (float, float16_elt) kind  (**)
-(** To each element kind is associated an OCaml type, which is
-   the type of OCaml values that can be stored in the Bigarray
+(** To each element kind is associated an travlang type, which is
+   the type of travlang values that can be stored in the Bigarray
    or read back from it.  This type is not necessarily the same
    as the type of the array elements proper: for instance,
    a Bigarray whose elements are of kind [float32_elt] contains
    32-bit single precision floats, but reading or writing one of
-   its elements from OCaml uses the OCaml type [float], which is
+   its elements from travlang uses the travlang type [float], which is
    64-bit double precision floats.
 
    The GADT type [('a, 'b) kind] captures this association
-   of an OCaml type ['a] for values read or written in the Bigarray,
+   of an travlang type ['a] for values read or written in the Bigarray,
    and of an element kind ['b] which represents the actual contents
    of the Bigarray. Its constructors list all possible associations
-   of OCaml types with element kinds, and are re-exported below for
+   of travlang types with element kinds, and are re-exported below for
    backward-compatibility reasons.
 
    Using a generalized algebraic datatype (GADT) here allows writing
@@ -200,12 +200,12 @@ val nativeint : (nativeint, nativeint_elt) kind
 val char : (char, int8_unsigned_elt) kind
 (** As shown by the types of the values above,
    Bigarrays of kind [float16_elt], [float32_elt] and [float64_elt] are
-   accessed using the OCaml type [float].  Bigarrays of complex kinds
-   [complex32_elt], [complex64_elt] are accessed with the OCaml type
+   accessed using the travlang type [float].  Bigarrays of complex kinds
+   [complex32_elt], [complex64_elt] are accessed with the travlang type
    {!Complex.t}. Bigarrays of
-   integer kinds are accessed using the smallest OCaml integer
+   integer kinds are accessed using the smallest travlang integer
    type large enough to represent the array elements:
-   [int] for 8- and 16-bit integer Bigarrays, as well as OCaml-integer
+   [int] for 8- and 16-bit integer Bigarrays, as well as travlang-integer
    Bigarrays; [int32] for 32-bit integer Bigarrays; [int64]
    for 64-bit integer Bigarrays; and [nativeint] for
    platform-native integer Bigarrays.  Finally, Bigarrays of
@@ -274,7 +274,7 @@ module Genarray :
 
      The three type parameters to [Genarray.t] identify the array element
      kind and layout, as follows:
-     - the first parameter, ['a], is the OCaml type for accessing array
+     - the first parameter, ['a], is the travlang type for accessing array
        elements ([float], [int], [int32], [int64], [nativeint]);
      - the second parameter, ['b], is the actual kind of array elements
        ([float32_elt], [float64_elt], [int8_signed_elt], [int8_unsigned_elt],
@@ -285,7 +285,7 @@ module Genarray :
      For instance, [(float, float32_elt, fortran_layout) Genarray.t]
      is the type of generic Bigarrays containing 32-bit floats
      in Fortran layout; reads and writes in this array use the
-     OCaml type [float]. *)
+     travlang type [float]. *)
 
   external create: ('a, 'b) kind -> 'c layout -> int array -> ('a, 'b, 'c) t
     = "caml_ba_create"
@@ -519,7 +519,7 @@ module Genarray :
 module Array0 : sig
   type (!'a, !'b, !'c) t
   (** The type of zero-dimensional Bigarrays whose elements have
-     OCaml type ['a], representation kind ['b], and memory layout ['c]. *)
+     travlang type ['a], representation kind ['b], and memory layout ['c]. *)
 
   val create: ('a, 'b) kind -> 'c layout -> ('a, 'b, 'c) t
   (** [Array0.create kind layout] returns a new Bigarray of zero dimension.
@@ -583,7 +583,7 @@ end
 module Array1 : sig
   type (!'a, !'b, !'c) t
   (** The type of one-dimensional Bigarrays whose elements have
-     OCaml type ['a], representation kind ['b], and memory layout ['c]. *)
+     travlang type ['a], representation kind ['b], and memory layout ['c]. *)
 
   val create: ('a, 'b) kind -> 'c layout -> int -> ('a, 'b, 'c) t
   (** [Array1.create kind layout dim] returns a new Bigarray of
@@ -696,7 +696,7 @@ module Array2 :
   sig
   type (!'a, !'b, !'c) t
   (** The type of two-dimensional Bigarrays whose elements have
-     OCaml type ['a], representation kind ['b], and memory layout ['c]. *)
+     travlang type ['a], representation kind ['b], and memory layout ['c]. *)
 
   val create: ('a, 'b) kind ->  'c layout -> int -> int -> ('a, 'b, 'c) t
   (** [Array2.create kind layout dim1 dim2] returns a new Bigarray of
@@ -829,7 +829,7 @@ module Array3 :
   sig
   type (!'a, !'b, !'c) t
   (** The type of three-dimensional Bigarrays whose elements have
-     OCaml type ['a], representation kind ['b], and memory layout ['c]. *)
+     travlang type ['a], representation kind ['b], and memory layout ['c]. *)
 
   val create: ('a, 'b) kind -> 'c layout -> int -> int -> int -> ('a, 'b, 'c) t
   (** [Array3.create kind layout dim1 dim2 dim3] returns a new Bigarray of

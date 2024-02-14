@@ -1,12 +1,12 @@
 (* TEST
- flags = "-I ${ocamlsrcdir}/utils";
+ flags = "-I ${travlangsrcdir}/utils";
  expect;
 *)
 
 (* Strict-sequence can change the behavior of programs *)
 
 (* The two examples below were proposed by Jeremy Yallop in
-   https://github.com/ocaml/ocaml/pull/1971 .
+   https://github.com/travlang/travlang/pull/1971 .
    Note that those tests are here to record this behavior and not to enshrine it.
 *)
 

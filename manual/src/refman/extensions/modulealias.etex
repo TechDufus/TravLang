@@ -1,4 +1,4 @@
-(Introduced in OCaml 4.02)
+(Introduced in travlang 4.02)
 
 \begin{syntax}
 specification:
@@ -62,7 +62,7 @@ place of the @'-pack'@ mechanism. Suppose that you have a library
 @'Mylib'@ composed of modules @'A'@ and @'B'@. Using @'-pack'@, one
 would issue the command line
 \begin{verbatim}
-ocamlc -pack a.cmo b.cmo -o mylib.cmo
+travlangc -pack a.cmo b.cmo -o mylib.cmo
 \end{verbatim}
 and as a result obtain a @'Mylib'@ compilation unit, containing
 physically @'A'@ and @'B'@ as submodules, and with no dependencies on
@@ -82,13 +82,13 @@ module B = Mylib__B
   equivalent to adding the line @'open!' 'Mylib'@ at the top of each
   file).
 \begin{verbatim}
-ocamlc -c -no-alias-deps Mylib.ml
-ocamlc -c -no-alias-deps -open Mylib Mylib__*.mli Mylib__*.ml
+travlangc -c -no-alias-deps Mylib.ml
+travlangc -c -no-alias-deps -open Mylib Mylib__*.mli Mylib__*.ml
 \end{verbatim}
 \item Finally, create a library containing all the compilation units,
   and export all the compiled interfaces.
 \begin{verbatim}
-ocamlc -a Mylib*.cmo -o Mylib.cma
+travlangc -a Mylib*.cmo -o Mylib.cma
 \end{verbatim}
 \end{enumerate}
 This approach lets you access @'A'@ and @'B'@ directly inside the
@@ -106,5 +106,5 @@ following heuristic when printing paths: given a path @'Lib__fooBar'@,
 if @'Lib.FooBar'@ exists and is an alias for @'Lib__fooBar'@, then the
 compiler will always display @'Lib.FooBar'@ instead of
 @'Lib__fooBar'@. This way the long @'Mylib__'@ names stay hidden and
-all the user sees is the nicer dot names. This is how the OCaml
+all the user sees is the nicer dot names. This is how the travlang
 standard library is compiled.

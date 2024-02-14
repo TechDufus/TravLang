@@ -1,6 +1,6 @@
 #**************************************************************************
 #*                                                                        *
-#*                                 OCaml                                  *
+#*                                 travlang                                  *
 #*                                                                        *
 #*                 Damien Doligez, projet Gallium, INRIA                  *
 #*                                                                        *
@@ -32,8 +32,8 @@
 *.out
 *.out.dSYM
 *.swp
-_ocamltest
-_ocamltestd
+_travlangtest
+_travlangtestd
 *.odoc
 .merlin
 _build
@@ -45,20 +45,20 @@ META
 /Makefile.build_config
 /Makefile.config
 /autom4te.cache
-/ocamlc
+/travlangc
 /config.cache
-/ocaml-*.cache
+/travlang-*.cache
 /config.log
 /config.status
 /configure~
 /flexlink.opt
 /libtool
-/ocamlc.opt
+/travlangc.opt
 /expunge
-/ocaml
-/ocamlopt
-/ocamlopt.opt
-/ocamlnat
+/travlang
+/travlangopt
+/travlangopt.opt
+/travlangnat
 /_opam
 
 # specific files and patterns in sub-directories
@@ -73,9 +73,9 @@ META
 /asmcomp/CSE.ml
 /asmcomp/stackframe.ml
 
-/boot/ocamlrun
+/boot/travlangrun
 /boot/runtime-launch-info
-/boot/ocamlc.opt
+/boot/travlangc.opt
 
 /byte/**
 
@@ -86,9 +86,9 @@ META
 /debugger/debugger_parser.ml
 /debugger/debugger_parser.mli
 /debugger/debugger_parser.output
-/debugger/ocamldebug
+/debugger/travlangdebug
 
-/emacs/ocamltags
+/emacs/travlangtags
 /emacs/*.elc
 
 /flexdll-sources
@@ -98,8 +98,8 @@ META
 /lex/parser.ml
 /lex/parser.mli
 /lex/lexer.ml
-/lex/ocamllex
-/lex/ocamllex.opt
+/lex/travlanglex
+/lex/travlanglex.opt
 /lex/parser.output
 /manual/src/allfiles.tex
 /manual/src/biblio.tex
@@ -110,7 +110,7 @@ META
 /manual/src/foreword.htex
 /manual/src/manual.html
 /manual/src/webman
-/manual/src/ifocamldoc.tex
+/manual/src/iftravlangdoc.tex
 /manual/src/cmds/*.tex
 /manual/src/cmds/*.htex
 /manual/src/cmds/warnings.etex
@@ -122,7 +122,7 @@ META
 /manual/src/html_processing/uchar
 /manual/src/html_processing/uutf
 /manual/src/html_processing/lambdasoup
-/manual/src/html_processing/ocaml-re
+/manual/src/html_processing/travlang-re
 /manual/src/html_processing/src/common.ml
 /manual/src/htmlman/*.html
 /manual/src/htmlman/*.haux
@@ -143,11 +143,11 @@ META
 /manual/src/infoman/*.hind
 /manual/src/infoman/*.info*.gz
 /manual/src/infoman/*.info.body*
-/manual/src/infoman/ocaml.hocaml.kwd
+/manual/src/infoman/travlang.htravlang.kwd
 /manual/src/library/*.tex
 /manual/src/library/*.htex
-/manual/src/library/ocamldoc.out
-/manual/src/library/ocamldoc.sty
+/manual/src/library/travlangdoc.out
+/manual/src/library/travlangdoc.sty
 /manual/src/library/compiler_libs.txt
 /manual/src/refman/*.tex
 /manual/src/refman/*.htex
@@ -180,31 +180,31 @@ META
 
 /api_docgen/build
 /api_docgen/odoc/build
-/api_docgen/ocamldoc/build
+/api_docgen/travlangdoc/build
 
-/ocamldoc/ocamldoc
-/ocamldoc/ocamldoc.opt
-/ocamldoc/odoc
-/ocamldoc/odoc_crc.ml
-/ocamldoc/odoc_lexer.ml
-/ocamldoc/odoc_ocamlhtml.ml
-/ocamldoc/odoc_parser.ml
-/ocamldoc/odoc_parser.mli
-/ocamldoc/odoc_see_lexer.ml
-/ocamldoc/odoc_text_lexer.ml
-/ocamldoc/odoc_text_parser.ml
-/ocamldoc/odoc_text_parser.mli
-/ocamldoc/*.output
+/travlangdoc/travlangdoc
+/travlangdoc/travlangdoc.opt
+/travlangdoc/odoc
+/travlangdoc/odoc_crc.ml
+/travlangdoc/odoc_lexer.ml
+/travlangdoc/odoc_travlanghtml.ml
+/travlangdoc/odoc_parser.ml
+/travlangdoc/odoc_parser.mli
+/travlangdoc/odoc_see_lexer.ml
+/travlangdoc/odoc_text_lexer.ml
+/travlangdoc/odoc_text_parser.ml
+/travlangdoc/odoc_text_parser.mli
+/travlangdoc/*.output
 
-/ocamltest/ocamltest
-/ocamltest/ocamltest.opt
-/ocamltest/ocamltest_config.ml
-/ocamltest/ocamltest_unix.ml
-/ocamltest/tsl_lexer.ml
-/ocamltest/tsl_parser.ml
-/ocamltest/tsl_parser.mli
-/ocamltest/tsl_parser.output
-/ocamltest/ocamltest.html
+/travlangtest/travlangtest
+/travlangtest/travlangtest.opt
+/travlangtest/travlangtest_config.ml
+/travlangtest/travlangtest_unix.ml
+/travlangtest/tsl_lexer.ml
+/travlangtest/tsl_parser.ml
+/travlangtest/tsl_parser.mli
+/travlangtest/tsl_parser.output
+/travlangtest/travlangtest.html
 
 /opt/**
 
@@ -241,9 +241,9 @@ META
 /runtime/caml/exec.h
 /runtime/caml/opnames.h
 /runtime/caml/version.h
-/runtime/ocamlrun
-/runtime/ocamlrund
-/runtime/ocamlruni
+/runtime/travlangrun
+/runtime/travlangrund
+/runtime/travlangruni
 /runtime/ld.conf
 /runtime/.gdb_history
 /runtime/build_config.h
@@ -275,37 +275,37 @@ META
 /testsuite/tools/parsecmm.mli
 /testsuite/tools/parsecmm.output
 
-/tools/ocamldep
-/tools/ocamldep.opt
-/tools/ocamlprof
-/tools/ocamlprof.opt
+/tools/travlangdep
+/tools/travlangdep.opt
+/tools/travlangprof
+/tools/travlangprof.opt
 /tools/opnames.ml
 /tools/dumpobj
 /tools/dumpobj.opt
-/tools/ocamlobjinfo
-/tools/ocamlobjinfo.opt
+/tools/travlangobjinfo
+/tools/travlangobjinfo.opt
 /tools/cvt_emit
 /tools/cvt_emit.opt
 /tools/cvt_emit.ml
-/tools/ocamlcp
-/tools/ocamlcp.opt
-/tools/ocamloptp
-/tools/ocamloptp.opt
-/tools/ocamlmktop
-/tools/ocamlmktop.opt
+/tools/travlangcp
+/tools/travlangcp.opt
+/tools/travlangoptp
+/tools/travlangoptp.opt
+/tools/travlangmktop
+/tools/travlangmktop.opt
 /tools/primreq
 /tools/primreq.opt
-/tools/ocamlmklib
-/tools/ocamlmklib.opt
-/tools/ocamlcmt
-/tools/ocamlcmt.opt
+/tools/travlangmklib
+/tools/travlangmklib.opt
+/tools/travlangcmt
+/tools/travlangcmt.opt
 /tools/cmpbyt
 /tools/cmpbyt.opt
 /tools/stripdebug
 /tools/stripdebug.opt
 /tools/make_opcodes
 /tools/make_opcodes.ml
-/tools/ocamltex
+/tools/travlangtex
 /tools/eventlog_metadata
 /tools/lintapidiff.opt
 
@@ -326,6 +326,6 @@ META
 /utils/domainstate.ml
 /utils/domainstate.mli
 
-/yacc/ocamlyacc
+/yacc/travlangyacc
 /yacc/version.h
 /yacc/.gdb_history

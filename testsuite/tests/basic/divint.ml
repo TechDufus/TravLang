@@ -2,7 +2,7 @@
 
 open Printf
 
-(* Test integer division and modulus, esp. ocamlopt's optimization
+(* Test integer division and modulus, esp. travlangopt's optimization
    when the divisor is a constant. *)
 
 let error = ref false

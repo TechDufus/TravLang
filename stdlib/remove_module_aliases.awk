@@ -1,6 +1,6 @@
 #**************************************************************************
 #*                                                                        *
-#*                                 OCaml                                  *
+#*                                 travlang                                  *
 #*                                                                        *
 #*                 Jeremie Dimino, Jane Street Europe                     *
 #*                                                                        *
@@ -13,7 +13,7 @@
 #**************************************************************************
 
 # This script remove the module aliases from stdlib.ml and stdlib.mli
-# so that ocamldep doesn't register dependencies from stdlib to all
+# so that travlangdep doesn't register dependencies from stdlib to all
 # other modules
 BEGIN { in_aliases=0 }
 NR == 1 { printf ("# 1 \"%s\"\n", FILENAME) }

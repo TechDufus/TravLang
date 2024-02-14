@@ -1,6 +1,6 @@
 #**************************************************************************
 #*                                                                        *
-#*                                 OCaml                                  *
+#*                                 travlang                                  *
 #*                                                                        *
 #*            Xavier Leroy, projet Cristal, INRIA Rocquencourt            *
 #*                                                                        *
@@ -16,11 +16,11 @@
 # The main Makefile
 
 ROOTDIR = .
-# NOTE: it is important that the OCAMLDEP and OCAMLLEX variables
+# NOTE: it is important that the travlangDEP and travlangLEX variables
 # are defined *before* Makefile.common gets included, so that
 # their local definitions here take precedence over their
 # general shared definitions in Makefile.common.
-OCAMLLEX ?= $(BOOT_OCAMLLEX)
+travlangLEX ?= $(BOOT_travlangLEX)
 include Makefile.common
 include Makefile.best_binaries
 
@@ -29,8 +29,8 @@ defaultentry: $(DEFAULT_BUILD_TARGET)
 
 include stdlib/StdlibModules
 
-CAMLC = $(BOOT_OCAMLC) $(BOOT_STDLIBFLAGS) -use-prims runtime/primitives
-CAMLOPT=$(OCAMLRUN) ./ocamlopt$(EXE) $(STDLIBFLAGS) -I otherlibs/dynlink
+CAMLC = $(BOOT_travlangC) $(BOOT_STDLIBFLAGS) -use-prims runtime/primitives
+CAMLOPT=$(travlangRUN) ./travlangopt$(EXE) $(STDLIBFLAGS) -I otherlibs/dynlink
 ARCHES=amd64 arm64 power s390x riscv
 VPATH = utils parsing typing bytecomp file_formats lambda middle_end \
   middle_end/closure middle_end/flambda middle_end/flambda/base_types \
@@ -39,12 +39,12 @@ VPATH = utils parsing typing bytecomp file_formats lambda middle_end \
 INCLUDES = $(addprefix -I ,$(VPATH))
 
 ifeq "$(strip $(NATDYNLINKOPTS))" ""
-OCAML_NATDYNLINKOPTS=
+travlang_NATDYNLINKOPTS=
 else
-OCAML_NATDYNLINKOPTS = -ccopt "$(NATDYNLINKOPTS)"
+travlang_NATDYNLINKOPTS = -ccopt "$(NATDYNLINKOPTS)"
 endif
 
-OC_OCAMLDEPDIRS = $(VPATH)
+OC_travlangDEPDIRS = $(VPATH)
 
 # This list is passed to expunge, which accepts both uncapitalized and
 # capitalized module names.
@@ -194,13 +194,13 @@ comp_SOURCES = \
   driver/makedepend.mli driver/makedepend.ml \
   driver/compile_common.mli driver/compile_common.ml
 # All file format descriptions (including cmx{,s}) are in the
-# ocamlcommon library so that ocamlobjinfo can depend on them.
+# travlangcommon library so that travlangobjinfo can depend on them.
 
-ocamlcommon_SOURCES = \
+travlangcommon_SOURCES = \
   $(utils_SOURCES) $(parsing_SOURCES) $(typing_SOURCES) \
   $(lambda_SOURCES) $(comp_SOURCES)
 
-ocamlbytecomp_SOURCES = \
+travlangbytecomp_SOURCES = \
   bytecomp/instruct.mli bytecomp/instruct.ml \
   bytecomp/bytegen.mli bytecomp/bytegen.ml \
   bytecomp/printinstr.mli bytecomp/printinstr.ml \
@@ -325,7 +325,7 @@ $(addprefix middle_end/flambda/, \
   flambda_middle_end.mli flambda_middle_end.ml \
   simplify_boxed_integer_ops_intf.mli)
 
-ocamlmiddleend_SOURCES = \
+travlangmiddleend_SOURCES = \
 $(addprefix middle_end/, \
   internal_variable_names.mli internal_variable_names.ml \
   linkage_name.mli linkage_name.ml \
@@ -371,9 +371,9 @@ $(addprefix middle_end/, \
   $(middle_end_closure_SOURCES) \
   $(middle_end_flambda_SOURCES)
 
-ocamloptcomp_SOURCES = $(ocamlmiddleend_SOURCES) $(asmcomp_SOURCES)
+travlangoptcomp_SOURCES = $(travlangmiddleend_SOURCES) $(asmcomp_SOURCES)
 
-ocamltoplevel_SOURCES = $(addprefix toplevel/, \
+travlangtoplevel_SOURCES = $(addprefix toplevel/, \
   genprintval.mli genprintval.ml \
   topcommon.mli topcommon.ml \
   native/tophooks.mli native/tophooks.ml \
@@ -414,57 +414,57 @@ utils/config_%.mli: utils/config.mli
 
 beforedepend:: utils/config_main.mli utils/config_boot.mli
 
-$(addprefix compilerlibs/ocamlcommon., cma cmxa): \
+$(addprefix compilerlibs/travlangcommon., cma cmxa): \
   OC_COMMON_LINKFLAGS += -linkall
 
 COMPRESSED_MARSHALING_FLAGS=-cclib -lcomprmarsh \
            $(patsubst %, -ccopt %, $(filter-out -l%,$(ZSTD_LIBS))) \
            $(patsubst %, -cclib %, $(filter -l%,$(ZSTD_LIBS))) \
 
-compilerlibs/ocamlcommon.cmxa: \
+compilerlibs/travlangcommon.cmxa: \
   OC_NATIVE_LINKFLAGS += $(COMPRESSED_MARSHALING_FLAGS)
 
-compilerlibs/ocamlcommon.cmxa: stdlib/libcomprmarsh.$(A)
+compilerlibs/travlangcommon.cmxa: stdlib/libcomprmarsh.$(A)
 
 partialclean::
-	rm -f compilerlibs/ocamlcommon.cma
+	rm -f compilerlibs/travlangcommon.cma
 
 partialclean::
-	rm -f compilerlibs/ocamlcommon.cmxa \
-	      compilerlibs/ocamlcommon.a compilerlibs/ocamlcommon.lib
-
-
-partialclean::
-	rm -f compilerlibs/ocamlbytecomp.cma
-
-partialclean::
-	rm -f compilerlibs/ocamlbytecomp.cmxa \
-	      compilerlibs/ocamlbytecomp.a compilerlibs/ocamlbytecomp.lib
+	rm -f compilerlibs/travlangcommon.cmxa \
+	      compilerlibs/travlangcommon.a compilerlibs/travlangcommon.lib
 
 
 partialclean::
-	rm -f compilerlibs/ocamlmiddleend.cma \
-	      compilerlibs/ocamlmiddleend.cmxa \
-	      compilerlibs/ocamlmiddleend.a \
-	      compilerlibs/ocamlmiddleend.lib
+	rm -f compilerlibs/travlangbytecomp.cma
+
+partialclean::
+	rm -f compilerlibs/travlangbytecomp.cmxa \
+	      compilerlibs/travlangbytecomp.a compilerlibs/travlangbytecomp.lib
 
 
 partialclean::
-	rm -f compilerlibs/ocamloptcomp.cma
+	rm -f compilerlibs/travlangmiddleend.cma \
+	      compilerlibs/travlangmiddleend.cmxa \
+	      compilerlibs/travlangmiddleend.a \
+	      compilerlibs/travlangmiddleend.lib
+
 
 partialclean::
-	rm -f compilerlibs/ocamloptcomp.cmxa \
-	      compilerlibs/ocamloptcomp.a compilerlibs/ocamloptcomp.lib
+	rm -f compilerlibs/travlangoptcomp.cma
 
-
-compilerlibs/ocamltoplevel.cma: VPATH += toplevel/byte
 partialclean::
-	rm -f compilerlibs/ocamltoplevel.cma
+	rm -f compilerlibs/travlangoptcomp.cmxa \
+	      compilerlibs/travlangoptcomp.a compilerlibs/travlangoptcomp.lib
 
-compilerlibs/ocamltoplevel.cmxa: VPATH += toplevel/native
+
+compilerlibs/travlangtoplevel.cma: VPATH += toplevel/byte
 partialclean::
-	rm -f compilerlibs/ocamltoplevel.cmxa \
-	  compilerlibs/ocamltoplevel.a compilerlibs/ocamltoplevel.lib
+	rm -f compilerlibs/travlangtoplevel.cma
+
+compilerlibs/travlangtoplevel.cmxa: VPATH += toplevel/native
+partialclean::
+	rm -f compilerlibs/travlangtoplevel.cmxa \
+	  compilerlibs/travlangtoplevel.a compilerlibs/travlangtoplevel.lib
 
 # The configuration file
 
@@ -487,7 +487,7 @@ utils/domainstate.ml: utils/domainstate.ml.c runtime/caml/domain_state.tbl
 utils/domainstate.mli: utils/domainstate.mli.c runtime/caml/domain_state.tbl
 	$(V_GEN)$(CPP) -I runtime/caml $< > $@
 
-configure: tools/autogen configure.ac aclocal.m4 build-aux/ocaml_version.m4
+configure: tools/autogen configure.ac aclocal.m4 build-aux/travlang_version.m4
 	$<
 
 .PHONY: partialclean
@@ -502,26 +502,26 @@ beforedepend:: \
   utils/config.ml utils/config_boot.ml utils/config_main.ml \
   utils/domainstate.ml utils/domainstate.mli
 
-ocamllex_PROGRAMS = $(addprefix lex/,ocamllex ocamllex.opt)
+travlanglex_PROGRAMS = $(addprefix lex/,travlanglex travlanglex.opt)
 
-ocamlyacc_PROGRAM = yacc/ocamlyacc
+travlangyacc_PROGRAM = yacc/travlangyacc
 
 # Tools to be compiled to native and bytecode, then installed
-TOOLS_TO_INSTALL_NAT = ocamldep ocamlobjinfo
+TOOLS_TO_INSTALL_NAT = travlangdep travlangobjinfo
 
 # Tools to be compiled to bytecode only, then installed
 TOOLS_TO_INSTALL_BYT = \
-  ocamlcmt ocamlprof ocamlcp ocamlmklib ocamlmktop
+  travlangcmt travlangprof travlangcp travlangmklib travlangmktop
 
 ifeq "$(NATIVE_COMPILER)" "true"
-TOOLS_TO_INSTALL_BYT += ocamloptp
+TOOLS_TO_INSTALL_BYT += travlangoptp
 endif
 
-# Clean should remove tools/ocamloptp etc. unconditionally because
+# Clean should remove tools/travlangoptp etc. unconditionally because
 # the configuration is not available during clean so we don't
 # know whether they have been configured / built or not
 clean::
-	rm -f $(addprefix tools/ocamlopt,p p.opt p.exe p.opt.exe)
+	rm -f $(addprefix tools/travlangopt,p p.opt p.exe p.opt.exe)
 
 TOOLS_NAT = $(TOOLS_TO_INSTALL_NAT)
 TOOLS_BYT = $(TOOLS_TO_INSTALL_BYT) dumpobj primreq stripdebug cmpbyt
@@ -533,84 +533,84 @@ TOOLS_MODULES = tools/profiling
 
 # C programs
 
-C_PROGRAMS = $(ocamlyacc_PROGRAM)
+C_PROGRAMS = $(travlangyacc_PROGRAM)
 
 $(foreach PROGRAM, $(C_PROGRAMS),\
   $(eval $(call PROGRAM_SYNONYM,$(PROGRAM))))
 
-# OCaml programs that are compiled in both bytecode and native code
+# travlang programs that are compiled in both bytecode and native code
 
-OCAML_PROGRAMS = ocamlc ocamlopt lex/ocamllex $(TOOLS_NAT_PROGRAMS) \
-  ocamldoc/ocamldoc ocamltest/ocamltest
+travlang_PROGRAMS = travlangc travlangopt lex/travlanglex $(TOOLS_NAT_PROGRAMS) \
+  travlangdoc/travlangdoc travlangtest/travlangtest
 
-$(foreach PROGRAM, $(OCAML_PROGRAMS),\
-  $(eval $(call OCAML_PROGRAM,$(PROGRAM))))
+$(foreach PROGRAM, $(travlang_PROGRAMS),\
+  $(eval $(call travlang_PROGRAM,$(PROGRAM))))
 
-# OCaml programs that are compiled only in bytecode
-# Note: the bytecode toplevel, ocaml, is a bytecode program but at the
+# travlang programs that are compiled only in bytecode
+# Note: the bytecode toplevel, travlang, is a bytecode program but at the
 # moment it's a special one, because it needs to be expunged, so we
 # cannot declare it as we do for other bytecode-only programs.
 # We have to use dedicated rules to build it
 
-OCAML_BYTECODE_PROGRAMS = expunge \
+travlang_BYTECODE_PROGRAMS = expunge \
   $(TOOLS_BYT_PROGRAMS) \
-  $(addprefix tools/, cvt_emit make_opcodes ocamltex) \
+  $(addprefix tools/, cvt_emit make_opcodes travlangtex) \
   $(OPTIONAL_BYTECODE_TOOLS)
 
-$(foreach PROGRAM, $(OCAML_BYTECODE_PROGRAMS),\
-  $(eval $(call OCAML_BYTECODE_PROGRAM,$(PROGRAM))))
+$(foreach PROGRAM, $(travlang_BYTECODE_PROGRAMS),\
+  $(eval $(call travlang_BYTECODE_PROGRAM,$(PROGRAM))))
 
-# OCaml programs that are compiled only in native code
+# travlang programs that are compiled only in native code
 
-OCAML_NATIVE_PROGRAMS = \
-  ocamlnat tools/lintapidiff.opt $(OPTIONAL_NATIVE_TOOLS)
+travlang_NATIVE_PROGRAMS = \
+  travlangnat tools/lintapidiff.opt $(OPTIONAL_NATIVE_TOOLS)
 
-$(foreach PROGRAM, $(OCAML_NATIVE_PROGRAMS),\
-  $(eval $(call OCAML_NATIVE_PROGRAM,$(PROGRAM))))
+$(foreach PROGRAM, $(travlang_NATIVE_PROGRAMS),\
+  $(eval $(call travlang_NATIVE_PROGRAM,$(PROGRAM))))
 
-# OCaml libraries that are compiled in both bytecode and native code
+# travlang libraries that are compiled in both bytecode and native code
 
 # List of compilerlibs
 
 COMPILERLIBS = $(addprefix compilerlibs/, \
-  ocamlbytecomp \
-  ocamlcommon \
-  ocamlmiddleend \
-  ocamloptcomp \
-  ocamltoplevel)
+  travlangbytecomp \
+  travlangcommon \
+  travlangmiddleend \
+  travlangoptcomp \
+  travlangtoplevel)
 
-# Since the compiler libraries are necessarily compiled with boot/ocamlc,
+# Since the compiler libraries are necessarily compiled with boot/travlangc,
 # make sure they *always are*, even when rebuilding a program compiled
-# with ./ocamlc (e.g. ocamltex)
+# with ./travlangc (e.g. travlangtex)
 
 $(COMPILERLIBS:=.cma): \
-  CAMLC = $(BOOT_OCAMLC) $(BOOT_STDLIBFLAGS) -use-prims runtime/primitives
+  CAMLC = $(BOOT_travlangC) $(BOOT_STDLIBFLAGS) -use-prims runtime/primitives
 
 # The following dependency ensures that the two versions of the
 # configuration module (the one for the bootstrap compiler and the
 # one for the compiler to be installed) are compiled. This is to make
 # sure these two versions remain in sync with each other
 
-compilerlibs/ocamlcommon.cma: $(ALL_CONFIG_CMO)
+compilerlibs/travlangcommon.cma: $(ALL_CONFIG_CMO)
 
-OCAML_LIBRARIES = $(COMPILERLIBS) $(OPTIONAL_LIBRARIES)
+travlang_LIBRARIES = $(COMPILERLIBS) $(OPTIONAL_LIBRARIES)
 
-$(foreach LIBRARY, $(OCAML_LIBRARIES),\
-  $(eval $(call OCAML_LIBRARY,$(LIBRARY))))
+$(foreach LIBRARY, $(travlang_LIBRARIES),\
+  $(eval $(call travlang_LIBRARY,$(LIBRARY))))
 
-# OCaml libraries that are compiled only in bytecode
+# travlang libraries that are compiled only in bytecode
 
-OCAML_BYTECODE_LIBRARIES =
+travlang_BYTECODE_LIBRARIES =
 
-$(foreach LIBRARY, $(OCAML_BYTECODE_LIBRARIES),\
-  $(eval $(call OCAML_BYTECODE_LIBRARY,$(LIBRARY))))
+$(foreach LIBRARY, $(travlang_BYTECODE_LIBRARIES),\
+  $(eval $(call travlang_BYTECODE_LIBRARY,$(LIBRARY))))
 
-# OCaml libraries that are compiled only in native code
+# travlang libraries that are compiled only in native code
 
-OCAML_NATIVE_LIBRARIES =
+travlang_NATIVE_LIBRARIES =
 
-$(foreach LIBRARY, $(OCAML_NATIVE_LIBRARIES),\
-  $(eval $(call OCAML_NATIVE_LIBRARY,$(LIBRARY))))
+$(foreach LIBRARY, $(travlang_NATIVE_LIBRARIES),\
+  $(eval $(call travlang_NATIVE_LIBRARY,$(LIBRARY))))
 
 USE_RUNTIME_PRIMS = -use-prims ../runtime/primitives
 USE_STDLIB = -nostdlib -I ../stdlib
@@ -619,7 +619,7 @@ FLEXDLL_OBJECTS = \
   flexdll_$(FLEXDLL_CHAIN).$(O) flexdll_initer_$(FLEXDLL_CHAIN).$(O)
 FLEXLINK_BUILD_ENV = \
   MSVCC_ROOT= \
-  MSVC_DETECT=0 OCAML_CONFIG_FILE=../Makefile.config \
+  MSVC_DETECT=0 travlang_CONFIG_FILE=../Makefile.config \
   CHAINS=$(FLEXDLL_CHAIN) ROOTDIR=..
 FLEXDLL_SOURCES = \
   $(addprefix $(FLEXDLL_SOURCE_DIR)/, flexdll.c flexdll_initer.c flexdll.h) \
@@ -631,8 +631,8 @@ $(BYTE_BINDIR) $(OPT_BINDIR):
 flexlink.byte$(EXE): $(FLEXDLL_SOURCES)
 	rm -f $(FLEXDLL_SOURCE_DIR)/flexlink.exe
 	$(MAKE) -C $(FLEXDLL_SOURCE_DIR) $(FLEXLINK_BUILD_ENV) \
-	  OCAMLRUN='$$(ROOTDIR)/boot/ocamlrun$(EXE)' NATDYNLINK=false \
-	  OCAMLOPT='$(value BOOT_OCAMLC) $(USE_RUNTIME_PRIMS) $(USE_STDLIB)' \
+	  travlangRUN='$$(ROOTDIR)/boot/travlangrun$(EXE)' NATDYNLINK=false \
+	  travlangOPT='$(value BOOT_travlangC) $(USE_RUNTIME_PRIMS) $(USE_STDLIB)' \
 	  flexlink.exe support
 	cp $(FLEXDLL_SOURCE_DIR)/flexlink.exe $@
 
@@ -640,10 +640,10 @@ partialclean::
 	rm -f flexlink.byte flexlink.byte.exe
 
 $(BYTE_BINDIR)/flexlink$(EXE): \
-    boot/ocamlrun$(EXE) flexlink.byte$(EXE) | $(BYTE_BINDIR)
+    boot/travlangrun$(EXE) flexlink.byte$(EXE) | $(BYTE_BINDIR)
 	rm -f $@
 # Start with a copy to ensure that the result is always executable
-	cp boot/ocamlrun$(EXE) $@
+	cp boot/travlangrun$(EXE) $@
 	cat flexlink.byte$(EXE) >> $@
 	cp $(addprefix $(FLEXDLL_SOURCE_DIR)/, $(FLEXDLL_OBJECTS)) $(BYTE_BINDIR)
 
@@ -651,26 +651,26 @@ partialclean::
 	rm -f $(BYTE_BINDIR)/flexlink $(BYTE_BINDIR)/flexlink.exe
 
 ifeq "$(BOOTSTRAPPING_FLEXDLL)" "true"
-# The recipe for runtime/ocamlruns$(EXE) also produces runtime/primitives
-boot/ocamlrun$(EXE): runtime/ocamlruns$(EXE)
+# The recipe for runtime/travlangruns$(EXE) also produces runtime/primitives
+boot/travlangrun$(EXE): runtime/travlangruns$(EXE)
 
-$(foreach runtime, ocamlrun ocamlrund ocamlruni, \
+$(foreach runtime, travlangrun travlangrund travlangruni, \
   $(eval runtime/$(runtime)$(EXE): | $(BYTE_BINDIR)/flexlink$(EXE)))
 
 tools/checkstack$(EXE): | $(BYTE_BINDIR)/flexlink$(EXE)
 else
-boot/ocamlrun$(EXE): runtime/ocamlrun$(EXE) runtime/primitives
+boot/travlangrun$(EXE): runtime/travlangrun$(EXE) runtime/primitives
 endif
 
-# $< refers to runtime/ocamlruns when bootstrapping flexlink and
-# runtime/ocamlrun otherwise (see above).
-boot/ocamlrun$(EXE):
+# $< refers to runtime/travlangruns when bootstrapping flexlink and
+# runtime/travlangrun otherwise (see above).
+boot/travlangrun$(EXE):
 	cp $< $@
 
 # Start up the system from the distribution compiler
 .PHONY: coldstart
-coldstart: boot/ocamlrun$(EXE) runtime/libcamlrun.$(A)
-	$(MAKE) -C stdlib OCAMLRUN='$$(ROOTDIR)/$<' USE_BOOT_OCAMLC=true all
+coldstart: boot/travlangrun$(EXE) runtime/libcamlrun.$(A)
+	$(MAKE) -C stdlib travlangRUN='$$(ROOTDIR)/$<' USE_BOOT_travlangC=true all
 	rm -f $(addprefix boot/, libcamlrun.$(A) $(LIBFILES))
 	cp $(addprefix stdlib/, $(LIBFILES)) boot
 	cd boot; $(LN) ../runtime/libcamlrun.$(A) .
@@ -678,8 +678,8 @@ coldstart: boot/ocamlrun$(EXE) runtime/libcamlrun.$(A)
 # Recompile the core system using the bootstrap compiler
 .PHONY: coreall
 coreall: runtime
-	$(MAKE) ocamlc
-	$(MAKE) ocamllex ocamltools library
+	$(MAKE) travlangc
+	$(MAKE) travlanglex travlangtools library
 
 # Build the core system: the minimum needed to make depend and bootstrap
 .PHONY: core
@@ -690,19 +690,19 @@ core: coldstart
 
 # We use tools/cmpbyt because it has better error reporting, but cmp could also
 # be used.
-CMPCMD ?= $(OCAMLRUN) tools/cmpbyt$(EXE)
+CMPCMD ?= $(travlangRUN) tools/cmpbyt$(EXE)
 
 .PHONY: compare
 compare:
-# The core system has to be rebuilt after bootstrap anyway, so strip ocamlc
-# and ocamllex, which means the artefacts should be identical.
-	mv ocamlc$(EXE) ocamlc.tmp
-	$(OCAMLRUN) tools/stripdebug -all ocamlc.tmp ocamlc$(EXE)
-	mv lex/ocamllex$(EXE) ocamllex.tmp
-	$(OCAMLRUN) tools/stripdebug -all ocamllex.tmp lex/ocamllex$(EXE)
-	rm -f ocamllex.tmp ocamlc.tmp
-	@if $(CMPCMD) boot/ocamlc ocamlc$(EXE) \
-         && $(CMPCMD) boot/ocamllex lex/ocamllex$(EXE); \
+# The core system has to be rebuilt after bootstrap anyway, so strip travlangc
+# and travlanglex, which means the artefacts should be identical.
+	mv travlangc$(EXE) travlangc.tmp
+	$(travlangRUN) tools/stripdebug -all travlangc.tmp travlangc$(EXE)
+	mv lex/travlanglex$(EXE) travlanglex.tmp
+	$(travlangRUN) tools/stripdebug -all travlanglex.tmp lex/travlanglex$(EXE)
+	rm -f travlanglex.tmp travlangc.tmp
+	@if $(CMPCMD) boot/travlangc travlangc$(EXE) \
+         && $(CMPCMD) boot/travlanglex lex/travlanglex$(EXE); \
 	then echo "Fixpoint reached, bootstrap succeeded."; \
 	else \
 	  echo "Fixpoint not reached, try one more bootstrapping cycle."; \
@@ -715,8 +715,8 @@ PROMOTE ?= cp
 
 .PHONY: promote-common
 promote-common:
-	$(PROMOTE) ocamlc$(EXE) boot/ocamlc
-	$(PROMOTE) lex/ocamllex$(EXE) boot/ocamllex
+	$(PROMOTE) travlangc$(EXE) boot/travlangc
+	$(PROMOTE) lex/travlanglex$(EXE) boot/travlanglex
 	cd stdlib; cp $(LIBFILES) ../boot
 
 # Promote the newly compiled system to the rank of cross compiler
@@ -727,45 +727,45 @@ promote-cross: promote-common
 # Promote the newly compiled system to the rank of bootstrap compiler
 # (Runs on the new runtime, produces code for the new runtime)
 .PHONY: promote
-promote: PROMOTE = $(OCAMLRUN) tools/stripdebug -all
+promote: PROMOTE = $(travlangRUN) tools/stripdebug -all
 promote: promote-common
-	rm -f boot/ocamlrun$(EXE)
-	cp runtime/ocamlrun$(EXE) boot/ocamlrun$(EXE)
+	rm -f boot/travlangrun$(EXE)
+	cp runtime/travlangrun$(EXE) boot/travlangrun$(EXE)
 
 # Compile the native-code compiler
 .PHONY: opt-core
 opt-core: runtimeopt
-	$(MAKE) ocamlopt
+	$(MAKE) travlangopt
 	$(MAKE) libraryopt
 
 .PHONY: opt
 opt: checknative
 	$(MAKE) runtimeopt
-	$(MAKE) ocamlopt
+	$(MAKE) travlangopt
 	$(MAKE) libraryopt
-	$(MAKE) otherlibrariesopt ocamltoolsopt
+	$(MAKE) otherlibrariesopt travlangtoolsopt
 
 # Native-code versions of the tools
 .PHONY: opt.opt
 opt.opt: checknative
 	$(MAKE) checkstack
 	$(MAKE) coreall
-	$(MAKE) ocaml
+	$(MAKE) travlang
 	$(MAKE) opt-core
 ifeq "$(BOOTSTRAPPING_FLEXDLL)" "true"
 	$(MAKE) flexlink.opt$(EXE)
 endif
-	$(MAKE) ocamlc.opt
+	$(MAKE) travlangc.opt
 # TODO: introduce OPTIONAL_LIBRARIES and OPTIONAL_TOOLS variables to be
 # computed at configure time to keep track of which tools and libraries
 # need to be built
-	$(MAKE) otherlibraries $(WITH_DEBUGGER) $(OCAMLDOC_TARGET) \
-	  $(OCAMLTEST_TARGET)
-	$(MAKE) ocamlopt.opt
+	$(MAKE) otherlibraries $(WITH_DEBUGGER) $(travlangDOC_TARGET) \
+	  $(travlangTEST_TARGET)
+	$(MAKE) travlangopt.opt
 	$(MAKE) otherlibrariesopt
-	$(MAKE) ocamllex.opt ocamltoolsopt ocamltoolsopt.opt \
-	  $(OCAMLDOC_OPT_TARGET) \
-	  $(OCAMLTEST_OPT_TARGET) othertools ocamlnat
+	$(MAKE) travlanglex.opt travlangtoolsopt travlangtoolsopt.opt \
+	  $(travlangDOC_OPT_TARGET) \
+	  $(travlangTEST_OPT_TARGET) othertools travlangnat
 ifeq "$(build_libraries_manpages)" "true"
 	$(MAKE) manpages
 endif
@@ -775,17 +775,17 @@ endif
 ifeq "$(FLAT_FLOAT_ARRAY)" "true"
 coreboot:
 # Promote the new compiler but keep the old runtime
-# This compiler runs on boot/ocamlrun and produces bytecode for
-# runtime/ocamlrun
+# This compiler runs on boot/travlangrun and produces bytecode for
+# runtime/travlangrun
 	$(MAKE) promote-cross
-# Rebuild ocamlc and ocamllex (run on runtime/ocamlrun)
+# Rebuild travlangc and travlanglex (run on runtime/travlangrun)
 # utils/config.ml will have the fixed bootstrap configuration
 	$(MAKE) partialclean
-	$(MAKE) IN_COREBOOT_CYCLE=true ocamlc ocamllex ocamltools
-# Rebuild the library (using runtime/ocamlrun ./ocamlc)
+	$(MAKE) IN_COREBOOT_CYCLE=true travlangc travlanglex travlangtools
+# Rebuild the library (using runtime/travlangrun ./travlangc)
 	$(MAKE) library-cross
 # Promote the new compiler and the new runtime
-	$(MAKE) OCAMLRUN=runtime/ocamlrun$(EXE) promote
+	$(MAKE) travlangRUN=runtime/travlangrun$(EXE) promote
 # Rebuild the core system
 # utils/config.ml must still have the fixed bootstrap configuration
 	$(MAKE) partialclean
@@ -802,22 +802,22 @@ endif
 
 .PHONY: all
 all: coreall
-	$(MAKE) ocaml
-	$(MAKE) otherlibraries $(WITH_DEBUGGER) $(OCAMLDOC_TARGET) \
-         $(OCAMLTEST_TARGET)
+	$(MAKE) travlang
+	$(MAKE) otherlibraries $(WITH_DEBUGGER) $(travlangDOC_TARGET) \
+         $(travlangTEST_TARGET)
 	$(MAKE) othertools
 ifeq "$(build_libraries_manpages)" "true"
 	$(MAKE) manpages
 endif
 
 # Bootstrap and rebuild the whole system.
-# The compilation of ocaml will fail if the runtime has changed.
+# The compilation of travlang will fail if the runtime has changed.
 # Never mind, just do make bootstrap to reach fixpoint again.
 .PHONY: bootstrap
 bootstrap: coreboot
 # utils/config.ml must be restored to config.status's configuration
-# lex/ocamllex$(EXE) was stripped in order to compare it
-	rm -f utils/config.ml lex/ocamllex$(EXE)
+# lex/travlanglex$(EXE) was stripped in order to compare it
+	rm -f utils/config.ml lex/travlanglex$(EXE)
 	$(MAKE) all
 
 # Compile everything the first time
@@ -852,17 +852,17 @@ flexlink:
 	@echo ./configure --with-flexdll
 	@false
 
-ifeq "$(wildcard ocamlopt.opt$(EXE))" ""
-  FLEXLINK_OCAMLOPT=../runtime/ocamlrun$(EXE) ../ocamlopt$(EXE)
+ifeq "$(wildcard travlangopt.opt$(EXE))" ""
+  FLEXLINK_travlangOPT=../runtime/travlangrun$(EXE) ../travlangopt$(EXE)
 else
-  FLEXLINK_OCAMLOPT=../ocamlopt.opt$(EXE)
+  FLEXLINK_travlangOPT=../travlangopt.opt$(EXE)
 endif
 
 flexlink.opt$(EXE): \
     $(FLEXDLL_SOURCES) | $(BYTE_BINDIR)/flexlink$(EXE) $(OPT_BINDIR)
 	rm -f $(FLEXDLL_SOURCE_DIR)/flexlink.exe
 	$(MAKE) -C $(FLEXDLL_SOURCE_DIR) $(FLEXLINK_BUILD_ENV) \
-	  OCAMLOPT='$(FLEXLINK_OCAMLOPT) -nostdlib -I ../stdlib' flexlink.exe
+	  travlangOPT='$(FLEXLINK_travlangOPT) -nostdlib -I ../stdlib' flexlink.exe
 	cp $(FLEXDLL_SOURCE_DIR)/flexlink.exe $@
 	rm -f $(OPT_BINDIR)/flexlink$(EXE)
 	cd $(OPT_BINDIR); $(LN) $(call ROOT_FROM, $(OPT_BINDIR))/$@ flexlink$(EXE)
@@ -878,13 +878,13 @@ flexdll flexlink flexlink.opt:
 	@echo make invocation. Simply place the sources for FlexDLL in a
 	@echo sub-directory.
 	@echo This can either be done by downloading a source tarball from
-	@echo \  https://github.com/ocaml/flexdll/releases
+	@echo \  https://github.com/travlang/flexdll/releases
 	@if [ -d .git ]; then \
 	  echo or by checking out the flexdll submodule with; \
 	  echo \  git submodule update --init; \
 	else \
 	  echo or by cloning the git repository; \
-	  echo \  git clone https://github.com/ocaml/flexdll.git; \
+	  echo \  git clone https://github.com/travlang/flexdll.git; \
 	fi
 	@echo "Then pass --with-flexdll=<dir> to configure and build as normal."
 	@false
@@ -926,32 +926,32 @@ clean::
 clean:: partialclean
 	rm -f configure~
 	rm -f $(C_PROGRAMS) $(C_PROGRAMS:=.exe)
-	rm -f $(OCAML_PROGRAMS) $(OCAML_PROGRAMS:=.exe)
-	rm -f $(OCAML_PROGRAMS:=.opt) $(OCAML_PROGRAMS:=.opt.exe)
-	rm -f $(OCAML_BYTECODE_PROGRAMS) $(OCAML_BYTECODE_PROGRAMS:=.exe)
-	rm -f $(OCAML_NATIVE_PROGRAMS) $(OCAML_NATIVE_PROGRAMS:=.exe)
+	rm -f $(travlang_PROGRAMS) $(travlang_PROGRAMS:=.exe)
+	rm -f $(travlang_PROGRAMS:=.opt) $(travlang_PROGRAMS:=.opt.exe)
+	rm -f $(travlang_BYTECODE_PROGRAMS) $(travlang_BYTECODE_PROGRAMS:=.exe)
+	rm -f $(travlang_NATIVE_PROGRAMS) $(travlang_NATIVE_PROGRAMS:=.exe)
 
 # The bytecode compiler
 
-ocamlc_LIBRARIES = $(addprefix compilerlibs/,ocamlcommon ocamlbytecomp)
+travlangc_LIBRARIES = $(addprefix compilerlibs/,travlangcommon travlangbytecomp)
 
-ocamlc_SOURCES = driver/main.mli driver/main.ml
+travlangc_SOURCES = driver/main.mli driver/main.ml
 
-ocamlc$(EXE): OC_BYTECODE_LINKFLAGS += -compat-32 -g
+travlangc$(EXE): OC_BYTECODE_LINKFLAGS += -compat-32 -g
 
 partialclean::
-	rm -f ocamlc ocamlc.exe ocamlc.opt ocamlc.opt.exe
+	rm -f travlangc travlangc.exe travlangc.opt travlangc.opt.exe
 
 # The native-code compiler
 
-ocamlopt_LIBRARIES = $(addprefix compilerlibs/,ocamlcommon ocamloptcomp)
+travlangopt_LIBRARIES = $(addprefix compilerlibs/,travlangcommon travlangoptcomp)
 
-ocamlopt_SOURCES = driver/optmain.mli driver/optmain.ml
+travlangopt_SOURCES = driver/optmain.mli driver/optmain.ml
 
-ocamlopt$(EXE): OC_BYTECODE_LINKFLAGS += -g
+travlangopt$(EXE): OC_BYTECODE_LINKFLAGS += -g
 
 partialclean::
-	rm -f ocamlopt ocamlopt.exe ocamlopt.opt ocamlopt.opt.exe
+	rm -f travlangopt travlangopt.exe travlangopt.opt travlangopt.opt.exe
 
 # The toplevel
 
@@ -959,57 +959,57 @@ partialclean::
 # because its build involves calling expunge. We thus give its build
 # rules explicitly until the day expunge can hopefully be removed.
 
-ocaml_LIBRARIES = \
-  $(addprefix compilerlibs/,ocamlcommon ocamlbytecomp ocamltoplevel)
+travlang_LIBRARIES = \
+  $(addprefix compilerlibs/,travlangcommon travlangbytecomp travlangtoplevel)
 
-ocaml_CMA_FILES = $(ocaml_LIBRARIES:=.cma)
+travlang_CMA_FILES = $(travlang_LIBRARIES:=.cma)
 
-ocaml_SOURCES = toplevel/topstart.mli toplevel/topstart.ml
+travlang_SOURCES = toplevel/topstart.mli toplevel/topstart.ml
 
-ocaml_CMO_FILES = toplevel/topstart.cmo
+travlang_CMO_FILES = toplevel/topstart.cmo
 
-.INTERMEDIATE: ocaml.tmp
-ocaml.tmp: OC_BYTECODE_LINKFLAGS += -I toplevel/byte -linkall -g
-ocaml.tmp: $(ocaml_CMA_FILES) $(ocaml_CMO_FILES)
+.INTERMEDIATE: travlang.tmp
+travlang.tmp: OC_BYTECODE_LINKFLAGS += -I toplevel/byte -linkall -g
+travlang.tmp: $(travlang_CMA_FILES) $(travlang_CMO_FILES)
 	$(V_LINKC)$(LINK_BYTECODE_PROGRAM) -o $@ $^
 
-$(eval $(call PROGRAM_SYNONYM,ocaml))
-ocaml$(EXE): $(expunge) ocaml.tmp
-	- $(V_GEN)$(OCAMLRUN) $^ $@ $(PERVASIVES)
+$(eval $(call PROGRAM_SYNONYM,travlang))
+travlang$(EXE): $(expunge) travlang.tmp
+	- $(V_GEN)$(travlangRUN) $^ $@ $(PERVASIVES)
 
 partialclean::
-	rm -f ocaml ocaml.exe
+	rm -f travlang travlang.exe
 
 # Use TOPFLAGS to pass additional flags to the bytecode or native toplevel
 # when running make runtop or make natruntop
 TOPFLAGS ?=
 OC_TOPFLAGS = $(STDLIBFLAGS) -I toplevel -noinit $(TOPINCLUDES) $(TOPFLAGS)
 
-RUN_OCAML = $(RLWRAP) $(OCAMLRUN) ./ocaml$(EXE) $(OC_TOPFLAGS)
-RUN_OCAMLNAT = $(RLWRAP) ./ocamlnat$(EXE) $(OC_TOPFLAGS)
+RUN_travlang = $(RLWRAP) $(travlangRUN) ./travlang$(EXE) $(OC_TOPFLAGS)
+RUN_travlangNAT = $(RLWRAP) ./travlangnat$(EXE) $(OC_TOPFLAGS)
 
 # Note: Beware that, since these rules begin with a coldstart, both
-# boot/ocamlrun and runtime/ocamlrun will be the same when the toplevel
+# boot/travlangrun and runtime/travlangrun will be the same when the toplevel
 # is run.
 .PHONY: runtop
 runtop: coldstart
-	$(MAKE) ocamlc
-	$(MAKE) ocaml
-	@$(RUN_OCAML)
+	$(MAKE) travlangc
+	$(MAKE) travlang
+	@$(RUN_travlang)
 
 .PHONY: runtop-with-otherlibs
 runtop-with-otherlibs: coldstart
-	$(MAKE) ocamlc
+	$(MAKE) travlangc
 	$(MAKE) otherlibraries
-	$(MAKE) ocaml
-	@$(RUN_OCAML)
+	$(MAKE) travlang
+	@$(RUN_travlang)
 
 .PHONY: natruntop
 natruntop:
 	$(MAKE) core
 	$(MAKE) opt
-	$(MAKE) ocamlnat
-	@$(RUN_OCAMLNAT)
+	$(MAKE) travlangnat
+	@$(RUN_travlangNAT)
 
 # Native dynlink
 
@@ -1067,7 +1067,7 @@ beforedepend:: tools/cvt_emit.ml
 
 asmcomp/emit.ml: asmcomp/$(ARCH)/emit.mlp $(cvt_emit)
 	$(V_GEN)echo \# 1 \"asmcomp/$(ARCH)/emit.mlp\" > $@ && \
-	$(OCAMLRUN) $(cvt_emit) < $< >> $@ \
+	$(travlangRUN) $(cvt_emit) < $< >> $@ \
 	|| { rm -f $@; exit 2; }
 
 partialclean::
@@ -1080,7 +1080,7 @@ cvt_emit_SOURCES = tools/cvt_emit.mli tools/cvt_emit.mll
 
 # The "expunge" utility
 
-expunge_LIBRARIES = $(addprefix compilerlibs/,ocamlcommon ocamlbytecomp)
+expunge_LIBRARIES = $(addprefix compilerlibs/,travlangcommon travlangbytecomp)
 
 expunge_SOURCES = toplevel/expunge.mli toplevel/expunge.ml
 
@@ -1178,7 +1178,7 @@ runtime_BUILT_HEADERS = $(addprefix runtime/, \
 
 ## Targets to build and install
 
-runtime_PROGRAMS = runtime/ocamlrun$(EXE)
+runtime_PROGRAMS = runtime/travlangrun$(EXE)
 runtime_BYTECODE_STATIC_LIBRARIES = $(addprefix runtime/, \
   ld.conf libcamlrun.$(A))
 runtime_BYTECODE_SHARED_LIBRARIES =
@@ -1187,13 +1187,13 @@ runtime_NATIVE_STATIC_LIBRARIES = \
 runtime_NATIVE_SHARED_LIBRARIES =
 
 ifeq "$(RUNTIMED)" "true"
-runtime_PROGRAMS += runtime/ocamlrund$(EXE)
+runtime_PROGRAMS += runtime/travlangrund$(EXE)
 runtime_BYTECODE_STATIC_LIBRARIES += runtime/libcamlrund.$(A)
 runtime_NATIVE_STATIC_LIBRARIES += runtime/libasmrund.$(A)
 endif
 
 ifeq "$(INSTRUMENTED_RUNTIME)" "true"
-runtime_PROGRAMS += runtime/ocamlruni$(EXE)
+runtime_PROGRAMS += runtime/travlangruni$(EXE)
 runtime_BYTECODE_STATIC_LIBRARIES += runtime/libcamlruni.$(A)
 runtime_NATIVE_STATIC_LIBRARIES += runtime/libasmruni.$(A)
 endif
@@ -1239,8 +1239,8 @@ libcomprmarsh_OBJECTS = runtime/zstd.n.$(O)
 ## General (non target-specific) assembler and compiler flags
 
 runtime_CPPFLAGS = -DCAMLDLLIMPORT= -DIN_CAML_RUNTIME
-ocamlrund_CPPFLAGS = -DDEBUG
-ocamlruni_CPPFLAGS = -DCAML_INSTR
+travlangrund_CPPFLAGS = -DDEBUG
+travlangruni_CPPFLAGS = -DCAML_INSTR
 
 ## Runtime targets
 
@@ -1302,15 +1302,15 @@ C_LITERAL = $(shell $(SAK) encode-C-literal '$(1)')
 
 runtime/build_config.h: $(ROOTDIR)/Makefile.config $(SAK)
 	$(V_GEN)echo '/* This file is generated from $(ROOTDIR)/Makefile.config */' > $@ && \
-	echo '#define OCAML_STDLIB_DIR $(call C_LITERAL,$(LIBDIR))' >> $@ && \
+	echo '#define travlang_STDLIB_DIR $(call C_LITERAL,$(LIBDIR))' >> $@ && \
 	echo '#define HOST "$(HOST)"' >> $@
 
 ## Runtime libraries and programs
 
-runtime/ocamlrun$(EXE): runtime/prims.$(O) runtime/libcamlrun.$(A)
+runtime/travlangrun$(EXE): runtime/prims.$(O) runtime/libcamlrun.$(A)
 	$(V_MKEXE)$(MKEXE) -o $@ $^ $(BYTECCLIBS)
 
-runtime/ocamlruns$(EXE): runtime/prims.$(O) runtime/libcamlrun_non_shared.$(A)
+runtime/travlangruns$(EXE): runtime/prims.$(O) runtime/libcamlrun_non_shared.$(A)
 	$(V_MKEXE)$(call MKEXE_VIA_CC,$@,$^ $(BYTECCLIBS))
 
 runtime/libcamlrun.$(A): $(libcamlrun_OBJECTS)
@@ -1319,13 +1319,13 @@ runtime/libcamlrun.$(A): $(libcamlrun_OBJECTS)
 runtime/libcamlrun_non_shared.$(A): $(libcamlrun_non_shared_OBJECTS)
 	$(V_MKLIB)$(call MKLIB,$@, $^)
 
-runtime/ocamlrund$(EXE): runtime/prims.$(O) runtime/libcamlrund.$(A)
+runtime/travlangrund$(EXE): runtime/prims.$(O) runtime/libcamlrund.$(A)
 	$(V_MKEXE)$(MKEXE) $(MKEXEDEBUGFLAG) -o $@ $^ $(BYTECCLIBS)
 
 runtime/libcamlrund.$(A): $(libcamlrund_OBJECTS)
 	$(V_MKLIB)$(call MKLIB,$@, $^)
 
-runtime/ocamlruni$(EXE): runtime/prims.$(O) runtime/libcamlruni.$(A)
+runtime/travlangruni$(EXE): runtime/prims.$(O) runtime/libcamlruni.$(A)
 	$(V_MKEXE)$(MKEXE) -o $@ $^ $(INSTRUMENTED_RUNTIME_LIBS) $(BYTECCLIBS)
 
 runtime/libcamlruni.$(A): $(libcamlruni_OBJECTS)
@@ -1360,11 +1360,11 @@ runtime/libcomprmarsh.$(A): $(libcomprmarsh_OBJECTS)
 runtime/%.$(O): OC_CPPFLAGS += $(runtime_CPPFLAGS)
 $(DEPDIR)/runtime/%.$(D): OC_CPPFLAGS += $(runtime_CPPFLAGS)
 
-runtime/%.bd.$(O): OC_CPPFLAGS += $(ocamlrund_CPPFLAGS)
-$(DEPDIR)/runtime/%.bd.$(D): OC_CPPFLAGS += $(ocamlrund_CPPFLAGS)
+runtime/%.bd.$(O): OC_CPPFLAGS += $(travlangrund_CPPFLAGS)
+$(DEPDIR)/runtime/%.bd.$(D): OC_CPPFLAGS += $(travlangrund_CPPFLAGS)
 
-runtime/%.bi.$(O): OC_CPPFLAGS += $(ocamlruni_CPPFLAGS)
-$(DEPDIR)/runtime/%.bi.$(D): OC_CPPFLAGS += $(ocamlruni_CPPFLAGS)
+runtime/%.bi.$(O): OC_CPPFLAGS += $(travlangruni_CPPFLAGS)
+$(DEPDIR)/runtime/%.bi.$(D): OC_CPPFLAGS += $(travlangruni_CPPFLAGS)
 
 runtime/%.bpic.$(O): OC_CFLAGS += $(SHAREDLIB_CFLAGS)
 
@@ -1373,14 +1373,14 @@ runtime/%.n.$(O): OC_CPPFLAGS += $(OC_NATIVE_CPPFLAGS)
 $(DEPDIR)/runtime/%.n.$(D): OC_CPPFLAGS += $(OC_NATIVE_CPPFLAGS)
 
 runtime/%.nd.$(O): OC_CFLAGS += $(OC_NATIVE_CFLAGS)
-runtime/%.nd.$(O): OC_CPPFLAGS += $(OC_NATIVE_CPPFLAGS) $(ocamlrund_CPPFLAGS)
+runtime/%.nd.$(O): OC_CPPFLAGS += $(OC_NATIVE_CPPFLAGS) $(travlangrund_CPPFLAGS)
 $(DEPDIR)/runtime/%.nd.$(D): \
-  OC_CPPFLAGS += $(OC_NATIVE_CPPFLAGS) $(ocamlrund_CPPFLAGS)
+  OC_CPPFLAGS += $(OC_NATIVE_CPPFLAGS) $(travlangrund_CPPFLAGS)
 
 runtime/%.ni.$(O): OC_CFLAGS += $(OC_NATIVE_CFLAGS)
-runtime/%.ni.$(O): OC_CPPFLAGS += $(OC_NATIVE_CPPFLAGS) $(ocamlruni_CPPFLAGS)
+runtime/%.ni.$(O): OC_CPPFLAGS += $(OC_NATIVE_CPPFLAGS) $(travlangruni_CPPFLAGS)
 $(DEPDIR)/runtime/%.ni.$(D): \
-  OC_CPPFLAGS += $(OC_NATIVE_CPPFLAGS) $(ocamlruni_CPPFLAGS)
+  OC_CPPFLAGS += $(OC_NATIVE_CPPFLAGS) $(travlangruni_CPPFLAGS)
 
 runtime/%.npic.$(O): OC_CFLAGS += $(OC_NATIVE_CFLAGS) $(SHAREDLIB_CFLAGS)
 runtime/%.npic.$(O): OC_CPPFLAGS += $(OC_NATIVE_CPPFLAGS)
@@ -1447,10 +1447,10 @@ runtime/%.o: runtime/%.S
 	$(V_ASM)$(ASPP) $(OC_ASPPFLAGS) -o $@ $< || $(ASPP_ERROR)
 
 runtime/%.d.o: runtime/%.S
-	$(V_ASM)$(ASPP) $(OC_ASPPFLAGS) $(ocamlrund_CPPFLAGS) -o $@ $< || $(ASPP_ERROR)
+	$(V_ASM)$(ASPP) $(OC_ASPPFLAGS) $(travlangrund_CPPFLAGS) -o $@ $< || $(ASPP_ERROR)
 
 runtime/%.i.o: runtime/%.S
-	$(V_ASM)$(ASPP) $(OC_ASPPFLAGS) $(ocamlruni_CPPFLAGS) -o $@ $< || $(ASPP_ERROR)
+	$(V_ASM)$(ASPP) $(OC_ASPPFLAGS) $(travlangruni_CPPFLAGS) -o $@ $< || $(ASPP_ERROR)
 
 runtime/%_libasmrunpic.o: runtime/%.S
 	$(V_ASM)$(ASPP) $(OC_ASPPFLAGS) $(SHAREDLIB_CFLAGS) -o $@ $<
@@ -1462,10 +1462,10 @@ runtime/amd64nt.obj: runtime/amd64nt.asm runtime/domain_state.inc
 	$(V_ASM)$(ASM)$@ $<
 
 runtime/amd64nt.d.obj: runtime/amd64nt.asm runtime/domain_state.inc
-	$(V_ASM)$(ASM)$@ $(ocamlrund_CPPFLAGS) $<
+	$(V_ASM)$(ASM)$@ $(travlangrund_CPPFLAGS) $<
 
 runtime/amd64nt.i.obj: runtime/amd64nt.asm runtime/domain_state.inc
-	$(V_ASM)$(ASM)$@ $(ocamlruni_CPPFLAGS) $<
+	$(V_ASM)$(ASM)$@ $(travlangruni_CPPFLAGS) $<
 
 runtime/%_libasmrunpic.obj: runtime/%.asm
 	$(V_ASM)$(ASM)$@ $<
@@ -1495,9 +1495,9 @@ stdlib/libcamlrun.$(A): runtime-all
 	cd stdlib; $(LN) ../runtime/libcamlrun.$(A) .
 clean::
 	rm -f $(addprefix runtime/, *.o *.obj *.a *.lib *.so *.dll ld.conf)
-	rm -f $(addprefix runtime/, ocamlrun ocamlrund ocamlruni ocamlruns sak)
+	rm -f $(addprefix runtime/, travlangrun travlangrund travlangruni travlangruns sak)
 	rm -f $(addprefix runtime/, \
-	  ocamlrun.exe ocamlrund.exe ocamlruni.exe ocamlruns.exe sak.exe)
+	  travlangrun.exe travlangrund.exe travlangruni.exe travlangruns.exe sak.exe)
 	rm -f runtime/primitives runtime/primitives*.new runtime/prims.c \
 	  $(runtime_BUILT_HEADERS)
 	rm -f runtime/domain_state.inc
@@ -1531,12 +1531,12 @@ alldepend: depend
 # The standard library
 
 .PHONY: library
-library: ocamlc
+library: travlangc
 	$(MAKE) -C stdlib all
 
 .PHONY: library-cross
 library-cross:
-	$(MAKE) -C stdlib OCAMLRUN=../runtime/ocamlrun$(EXE) all
+	$(MAKE) -C stdlib travlangRUN=../runtime/travlangrun$(EXE) all
 
 .PHONY: libraryopt
 libraryopt:
@@ -1547,9 +1547,9 @@ partialclean::
 
 # The lexer generator
 
-ocamllex_LIBRARIES =
+travlanglex_LIBRARIES =
 
-ocamllex_SOURCES = $(addprefix lex/,\
+travlanglex_SOURCES = $(addprefix lex/,\
   cset.mli cset.ml \
   syntax.mli syntax.ml \
   parser.mly \
@@ -1563,60 +1563,60 @@ ocamllex_SOURCES = $(addprefix lex/,\
   main.mli main.ml)
 
 .PHONY: lex-all
-lex-all: lex/ocamllex
+lex-all: lex/travlanglex
 
 .PHONY: lex-allopt
-lex-allopt: lex/ocamllex.opt
+lex-allopt: lex/travlanglex.opt
 
-.PHONY: ocamllex
-ocamllex: ocamlyacc
+.PHONY: travlanglex
+travlanglex: travlangyacc
 	$(MAKE) lex-all
 
-.PHONY: ocamllex.opt
-ocamllex.opt: ocamlopt
+.PHONY: travlanglex.opt
+travlanglex.opt: travlangopt
 	$(MAKE) lex-allopt
 
-lex/ocamllex$(EXE): OC_BYTECODE_LINKFLAGS += -compat-32
+lex/travlanglex$(EXE): OC_BYTECODE_LINKFLAGS += -compat-32
 
 partialclean::
 	rm -f lex/*.cm* lex/*.o lex/*.obj \
-        $(ocamllex_PROGRAMS) $(ocamllex_PROGRAMS:=.exe) \
+        $(travlanglex_PROGRAMS) $(travlanglex_PROGRAMS:=.exe) \
         lex/parser.ml lex/parser.mli lex/parser.output \
         lex/lexer.ml
 
 beforedepend:: lex/parser.ml lex/parser.mli lex/lexer.ml
 
-# The ocamlyacc parser generator
+# The travlangyacc parser generator
 
-ocamlyacc_OTHER_MODULES = $(addprefix yacc/,\
+travlangyacc_OTHER_MODULES = $(addprefix yacc/,\
   closure error lalr lr0 main mkpar output reader skeleton symtab \
   verbose warshall)
 
-ocamlyacc_MODULES = $(ocamlyacc_WSTR_MODULE) $(ocamlyacc_OTHER_MODULES)
+travlangyacc_MODULES = $(travlangyacc_WSTR_MODULE) $(travlangyacc_OTHER_MODULES)
 
-ocamlyacc_OBJECTS = $(ocamlyacc_MODULES:=.$(O))
+travlangyacc_OBJECTS = $(travlangyacc_MODULES:=.$(O))
 
-# Do not compile assertions in ocamlyacc
-ocamlyacc_CPPFLAGS = -DNDEBUG
+# Do not compile assertions in travlangyacc
+travlangyacc_CPPFLAGS = -DNDEBUG
 
-.PHONY: ocamlyacc
-ocamlyacc: $(ocamlyacc_PROGRAM)$(EXE)
+.PHONY: travlangyacc
+travlangyacc: $(travlangyacc_PROGRAM)$(EXE)
 
-$(ocamlyacc_PROGRAM)$(EXE): $(ocamlyacc_OBJECTS)
+$(travlangyacc_PROGRAM)$(EXE): $(travlangyacc_OBJECTS)
 	$(V_MKEXE)$(MKEXE) -o $@ $^
 
 clean::
-	rm -f $(ocamlyacc_MODULES:=.o) $(ocamlyacc_MODULES:=.obj)
+	rm -f $(travlangyacc_MODULES:=.o) $(travlangyacc_MODULES:=.obj)
 
-$(ocamlyacc_OTHER_MODULES:=.$(O)): yacc/defs.h
+$(travlangyacc_OTHER_MODULES:=.$(O)): yacc/defs.h
 
-$(ocamlyacc_OTHER_MODULES:=.$(O)): OC_CPPFLAGS += $(ocamlyacc_CPPFLAGS)
+$(travlangyacc_OTHER_MODULES:=.$(O)): OC_CPPFLAGS += $(travlangyacc_CPPFLAGS)
 
 # The Menhir-generated parser
 
 # In order to avoid a build-time dependency on Menhir,
 # we store the result of the parser generator (which
-# are OCaml source files) and Menhir's runtime libraries
+# are travlang source files) and Menhir's runtime libraries
 # (that the parser files rely on) in boot/.
 
 # The rules below do not depend on Menhir being available,
@@ -1637,19 +1637,19 @@ include Makefile.menhir
 parsing/camlinternalMenhirLib.ml: boot/menhir/menhirLib.ml
 	$(V_GEN)cp $< $@
 parsing/camlinternalMenhirLib.mli: boot/menhir/menhirLib.mli
-	$(V_GEN)echo '[@@@ocaml.warning "-67"]' > $@ && \
+	$(V_GEN)echo '[@@@travlang.warning "-67"]' > $@ && \
 	cat $< >> $@
 
 # Copy parsing/parser.ml from boot/
 
 PARSER_DEPS = boot/menhir/parser.ml parsing/parser.mly
 
-ifeq "$(OCAML_DEVELOPMENT_VERSION)" "true"
+ifeq "$(travlang_DEVELOPMENT_VERSION)" "true"
 PARSER_DEPS += tools/check-parser-uptodate-or-warn.sh
 endif
 
 parsing/parser.ml: $(PARSER_DEPS)
-ifeq "$(OCAML_DEVELOPMENT_VERSION)" "true"
+ifeq "$(travlang_DEVELOPMENT_VERSION)" "true"
 	@-tools/check-parser-uptodate-or-warn.sh
 endif
 	$(V_GEN)sed "s/MenhirLib/CamlinternalMenhirLib/g" $< > $@
@@ -1663,11 +1663,11 @@ beforedepend:: parsing/camlinternalMenhirLib.ml \
 partialclean:: partialclean-menhir
 
 
-# OCamldoc
+# travlangdoc
 
-# First define the odoc_info library used to build OCamldoc
+# First define the odoc_info library used to build travlangdoc
 
-odoc_info_SOURCES = $(addprefix ocamldoc/,\
+odoc_info_SOURCES = $(addprefix travlangdoc/,\
   odoc_config.mli odoc_config.ml \
   odoc_messages.mli odoc_messages.ml \
   odoc_global.mli odoc_global.ml \
@@ -1702,18 +1702,18 @@ odoc_info_SOURCES = $(addprefix ocamldoc/,\
   odoc_analyse.mli odoc_analyse.ml \
   odoc_info.mli odoc_info.ml)
 
-ocamldoc_LIBRARIES = \
-  compilerlibs/ocamlcommon \
+travlangdoc_LIBRARIES = \
+  compilerlibs/travlangcommon \
   $(addprefix otherlibs/,\
     unix/unix \
     str/str \
     dynlink/dynlink) \
-  ocamldoc/odoc_info
+  travlangdoc/odoc_info
 
-ocamldoc_SOURCES = $(addprefix ocamldoc/,\
+travlangdoc_SOURCES = $(addprefix travlangdoc/,\
   odoc_dag2html.mli odoc_dag2html.ml \
   odoc_to_text.mli odoc_to_text.ml \
-  odoc_ocamlhtml.mli odoc_ocamlhtml.mll \
+  odoc_travlanghtml.mli odoc_travlanghtml.mll \
   odoc_html.mli odoc_html.ml \
   odoc_man.mli odoc_man.ml \
   odoc_latex_style.mli odoc_latex_style.ml \
@@ -1724,48 +1724,48 @@ ocamldoc_SOURCES = $(addprefix ocamldoc/,\
   odoc_args.mli odoc_args.ml \
   odoc.mli odoc.ml)
 
-# OCamldoc files to install (a subset of what is built)
+# travlangdoc files to install (a subset of what is built)
 
-OCAMLDOC_LIBMLIS = $(addprefix ocamldoc/,$(addsuffix .mli,\
+travlangDOC_LIBMLIS = $(addprefix travlangdoc/,$(addsuffix .mli,\
   odoc_dep odoc_dot odoc_extension odoc_html odoc_info odoc_latex \
-  odoc_latex_style odoc_man odoc_messages odoc_ocamlhtml odoc_parameter \
+  odoc_latex_style odoc_man odoc_messages odoc_travlanghtml odoc_parameter \
   odoc_texi odoc_text_lexer odoc_to_text odoc_type odoc_value))
-OCAMLDOC_LIBCMIS=$(OCAMLDOC_LIBMLIS:.mli=.cmi)
-OCAMLDOC_LIBCMTS=$(OCAMLDOC_LIBMLIS:.mli=.cmt) $(OCAMLDOC_LIBMLIS:.mli=.cmti)
+travlangDOC_LIBCMIS=$(travlangDOC_LIBMLIS:.mli=.cmi)
+travlangDOC_LIBCMTS=$(travlangDOC_LIBMLIS:.mli=.cmt) $(travlangDOC_LIBMLIS:.mli=.cmti)
 
-ocamldoc/%: CAMLC = $(BEST_OCAMLC) $(STDLIBFLAGS)
+travlangdoc/%: CAMLC = $(BEST_travlangC) $(STDLIBFLAGS)
 
-.PHONY: ocamldoc
-ocamldoc: ocamldoc/ocamldoc$(EXE) ocamldoc/odoc_test.cmo
+.PHONY: travlangdoc
+travlangdoc: travlangdoc/travlangdoc$(EXE) travlangdoc/odoc_test.cmo
 
-ocamldoc/ocamldoc$(EXE): ocamlc ocamlyacc ocamllex
+travlangdoc/travlangdoc$(EXE): travlangc travlangyacc travlanglex
 
-.PHONY: ocamldoc.opt
-ocamldoc.opt: ocamldoc/ocamldoc.opt$(EXE)
+.PHONY: travlangdoc.opt
+travlangdoc.opt: travlangdoc/travlangdoc.opt$(EXE)
 
-ocamldoc/ocamldoc.opt$(EXE): ocamlc.opt ocamlyacc ocamllex
+travlangdoc/travlangdoc.opt$(EXE): travlangc.opt travlangyacc travlanglex
 
-# OCamltest
+# travlangtest
 
-ifeq "$(build_ocamltest)" "true"
+ifeq "$(build_travlangtest)" "true"
 
-# Libraries ocamltest depends on
+# Libraries travlangtest depends on
 
-ocamltest_LIBRARIES = \
-  $(addprefix compilerlibs/,ocamlcommon ocamlbytecomp) \
+travlangtest_LIBRARIES = \
+  $(addprefix compilerlibs/,travlangcommon travlangbytecomp) \
   $(unix_library)
 
-# List of source files from which ocamltest is compiled
+# List of source files from which travlangtest is compiled
 # (all the different sorts of files are derived from this)
 
-# ocamltest has two components: its core and the OCaml "plugin"
+# travlangtest has two components: its core and the travlang "plugin"
 # which is actually built into the tool but clearly separated from its core
 
-ocamltest_CORE = \
+travlangtest_CORE = \
   run_$(UNIX_OR_WIN32).c run_stubs.c \
-  ocamltest_config.ml.in ocamltest_config.mli \
-  ocamltest_unix.mli ocamltest_unix.ml \
-  ocamltest_stdlib.mli ocamltest_stdlib.ml \
+  travlangtest_config.ml.in travlangtest_config.mli \
+  travlangtest_unix.mli travlangtest_unix.ml \
+  travlangtest_stdlib.mli travlangtest_stdlib.ml \
   run_command.mli run_command.ml \
   filecompare.mli filecompare.ml \
   variables.mli variables.ml \
@@ -1784,46 +1784,46 @@ ocamltest_CORE = \
   builtin_actions.mli builtin_actions.ml \
   translate.mli translate.ml
 
-ocamltest_ocaml_PLUGIN = \
-  ocaml_backends.mli ocaml_backends.ml \
-  ocaml_filetypes.mli ocaml_filetypes.ml \
-  ocaml_variables.mli ocaml_variables.ml \
-  ocaml_modifiers.mli ocaml_modifiers.ml \
-  ocaml_directories.mli ocaml_directories.ml \
-  ocaml_files.mli ocaml_files.ml \
-  ocaml_flags.mli ocaml_flags.ml \
-  ocaml_commands.mli ocaml_commands.ml \
-  ocaml_tools.mli ocaml_tools.ml \
-  ocaml_compilers.mli ocaml_compilers.ml \
-  ocaml_toplevels.mli ocaml_toplevels.ml \
-  ocaml_actions.mli ocaml_actions.ml \
-  ocaml_tests.mli ocaml_tests.ml
+travlangtest_travlang_PLUGIN = \
+  travlang_backends.mli travlang_backends.ml \
+  travlang_filetypes.mli travlang_filetypes.ml \
+  travlang_variables.mli travlang_variables.ml \
+  travlang_modifiers.mli travlang_modifiers.ml \
+  travlang_directories.mli travlang_directories.ml \
+  travlang_files.mli travlang_files.ml \
+  travlang_flags.mli travlang_flags.ml \
+  travlang_commands.mli travlang_commands.ml \
+  travlang_tools.mli travlang_tools.ml \
+  travlang_compilers.mli travlang_compilers.ml \
+  travlang_toplevels.mli travlang_toplevels.ml \
+  travlang_actions.mli travlang_actions.ml \
+  travlang_tests.mli travlang_tests.ml
 
-ocamltest_SOURCES = $(addprefix ocamltest/, \
-  $(ocamltest_CORE) $(ocamltest_ocaml_PLUGIN) \
+travlangtest_SOURCES = $(addprefix travlangtest/, \
+  $(travlangtest_CORE) $(travlangtest_travlang_PLUGIN) \
   options.mli options.ml \
   main.mli main.ml)
 
-$(eval $(call COMPILE_C_FILE,ocamltest/%.b,ocamltest/%))
-$(eval $(call COMPILE_C_FILE,ocamltest/%.n,ocamltest/%))
+$(eval $(call COMPILE_C_FILE,travlangtest/%.b,travlangtest/%))
+$(eval $(call COMPILE_C_FILE,travlangtest/%.n,travlangtest/%))
 
 ifeq "$(COMPUTE_DEPS)" "true"
-include $(addprefix $(DEPDIR)/, $(ocamltest_C_FILES:.c=.$(D)))
+include $(addprefix $(DEPDIR)/, $(travlangtest_C_FILES:.c=.$(D)))
 endif
 
-ocamltest_DEP_FILES = $(addprefix $(DEPDIR)/, $(ocamltest_C_FILES:.c=.$(D)))
+travlangtest_DEP_FILES = $(addprefix $(DEPDIR)/, $(travlangtest_C_FILES:.c=.$(D)))
 
-$(ocamltest_DEP_FILES): | $(DEPDIR)/ocamltest
+$(travlangtest_DEP_FILES): | $(DEPDIR)/travlangtest
 
-$(DEPDIR)/ocamltest:
+$(DEPDIR)/travlangtest:
 	$(MKDIR) $@
 
-$(ocamltest_DEP_FILES): $(DEPDIR)/ocamltest/%.$(D): ocamltest/%.c
+$(travlangtest_DEP_FILES): $(DEPDIR)/travlangtest/%.$(D): travlangtest/%.c
 	$(V_CCDEPS)$(DEP_CC) $(OC_CPPFLAGS) $(CPPFLAGS) $< -MT '$*.$(O)' -MF $@
 
-ocamltest/%: CAMLC = $(BEST_OCAMLC) $(STDLIBFLAGS)
+travlangtest/%: CAMLC = $(BEST_travlangC) $(STDLIBFLAGS)
 
-ocamltest: ocamltest/ocamltest$(EXE) \
+travlangtest: travlangtest/travlangtest$(EXE) \
   testsuite/lib/lib.cmo testsuite/lib/testing.cma testsuite/tools/expect$(EXE)
 
 testsuite/lib/%: VPATH += testsuite/lib
@@ -1838,7 +1838,7 @@ testsuite/tools/%: VPATH += testsuite/tools
 
 expect_SOURCES = $(addprefix testsuite/tools/,expect.mli expect.ml)
 expect_LIBRARIES = $(addprefix compilerlibs/,\
-  ocamlcommon ocamlbytecomp ocamltoplevel)
+  travlangcommon travlangbytecomp travlangtoplevel)
 
 testsuite/tools/expect$(EXE): OC_BYTECODE_LINKFLAGS += -linkall
 
@@ -1847,7 +1847,7 @@ codegen_SOURCES = $(addprefix testsuite/tools/,\
   parsecmm.mly \
   lexcmm.mli lexcmm.mll \
   codegen_main.mli codegen_main.ml)
-codegen_LIBRARIES = $(addprefix compilerlibs/,ocamlcommon ocamloptcomp)
+codegen_LIBRARIES = $(addprefix compilerlibs/,travlangcommon travlangoptcomp)
 
 # The asmgen tests are not ported to MSVC64 yet, so make sure
 # to compile the arch specific module they require only if necessary
@@ -1861,49 +1861,49 @@ $(asmgen_OBJECT): $(asmgen_SOURCE)
 	$(V_ASM)$(ASPP) $(OC_ASPPFLAGS) -o $@ $< || $(ASPP_ERROR)
 endif
 
-ocamltest/ocamltest$(EXE): OC_BYTECODE_LINKFLAGS += -custom
+travlangtest/travlangtest$(EXE): OC_BYTECODE_LINKFLAGS += -custom
 
-ocamltest/ocamltest$(EXE): ocamlc ocamlyacc ocamllex
+travlangtest/travlangtest$(EXE): travlangc travlangyacc travlanglex
 
-ocamltest.opt: ocamltest/ocamltest.opt$(EXE) \
+travlangtest.opt: travlangtest/travlangtest.opt$(EXE) \
   testsuite/lib/testing.cmxa $(asmgen_OBJECT) testsuite/tools/codegen$(EXE)
 
-ocamltest/ocamltest.opt$(EXE): ocamlc.opt ocamlyacc ocamllex
+travlangtest/travlangtest.opt$(EXE): travlangc.opt travlangyacc travlanglex
 
-# ocamltest does _not_ want to have access to the Unix interface by default,
-# to ensure functions and types are only used via Ocamltest_stdlib.Unix
+# travlangtest does _not_ want to have access to the Unix interface by default,
+# to ensure functions and types are only used via travlangtest_stdlib.Unix
 # (see #9797)
-ocamltest/%: \
+travlangtest/%: \
   VPATH := $(filter-out $(unix_directory), $(VPATH))
 
-# Ocamltest_unix and the linking of the executable itself should include the
+# travlangtest_unix and the linking of the executable itself should include the
 # Unix library, if it's being built.
-ocamltest/ocamltest_unix.% \
-ocamltest/ocamltest$(EXE) ocamltest/ocamltest.opt$(EXE): \
+travlangtest/travlangtest_unix.% \
+travlangtest/travlangtest$(EXE) travlangtest/travlangtest.opt$(EXE): \
   VPATH += $(unix_directory)
 
-# For flambda mode, it is necessary for Ocamltest_unix to be compiled with
-# -opaque to prevent errors compiling the other modules of ocamltest.
-ocamltest/ocamltest_unix.%: \
+# For flambda mode, it is necessary for travlangtest_unix to be compiled with
+# -opaque to prevent errors compiling the other modules of travlangtest.
+travlangtest/travlangtest_unix.%: \
   OC_COMMON_COMPFLAGS += -opaque
-else # ifeq "$(build_ocamltest)" "true"
-ocamltest_TARGETS = ocamltest ocamltest.opt
-.PHONY: $(ocamltest_TARGETS)
-$(ocamltest_TARGETS):
-	@echo ocamltest is disabled
-	@echo To build it, run configure again with --enable-ocamltest
+else # ifeq "$(build_travlangtest)" "true"
+travlangtest_TARGETS = travlangtest travlangtest.opt
+.PHONY: $(travlangtest_TARGETS)
+$(travlangtest_TARGETS):
+	@echo travlangtest is disabled
+	@echo To build it, run configure again with --enable-travlangtest
 	@false
-endif # ifeq "$(build_ocamltest)" "true"
+endif # ifeq "$(build_travlangtest)" "true"
 
 partialclean::
-	rm -f ocamltest/ocamltest ocamltest/ocamltest.exe
-	rm -f ocamltest/ocamltest.opt ocamltest/ocamltest.opt.exe
-	rm -f $(addprefix ocamltest/,*.o *.obj *.cm*)
-	rm -f $(patsubst %.mll,%.ml, $(wildcard ocamltest/*.mll))
-	rm -f $(patsubst %.mly,%.ml, $(wildcard ocamltest/*.mly))
-	rm -f $(patsubst %.mly,%.mli, $(wildcard ocamltest/*.mly))
-	rm -f $(patsubst %.mly,%.output, $(wildcard ocamltest/*.mly))
-	rm -f ocamltest/ocamltest.html
+	rm -f travlangtest/travlangtest travlangtest/travlangtest.exe
+	rm -f travlangtest/travlangtest.opt travlangtest/travlangtest.opt.exe
+	rm -f $(addprefix travlangtest/,*.o *.obj *.cm*)
+	rm -f $(patsubst %.mll,%.ml, $(wildcard travlangtest/*.mll))
+	rm -f $(patsubst %.mly,%.ml, $(wildcard travlangtest/*.mly))
+	rm -f $(patsubst %.mly,%.mli, $(wildcard travlangtest/*.mly))
+	rm -f $(patsubst %.mly,%.output, $(wildcard travlangtest/*.mly))
+	rm -f travlangtest/travlangtest.html
 	rm -f $(addprefix testsuite/lib/*.,cm* o obj a lib)
 	rm -f $(addprefix testsuite/tools/*.,cm* o obj a lib)
 	rm -f testsuite/tools/codegen testsuite/tools/codegen.exe
@@ -1914,7 +1914,7 @@ partialclean::
 # Documentation
 
 .PHONY: html_doc
-html_doc: ocamldoc
+html_doc: travlangdoc
 	$(MAKE) -C api_docgen html
 
 .PHONY: manpages
@@ -1922,30 +1922,30 @@ manpages:
 	$(MAKE) -C api_docgen man
 
 partialclean::
-	rm -f ocamldoc/\#*\#
-	rm -f ocamldoc/*.cm[aiotx] ocamldoc/*.cmxa ocamldoc/*.cmti \
-	  ocamldoc/*.a ocamldoc/*.lib ocamldoc/*.o ocamldoc/*.obj
-	rm -f ocamldoc/odoc_parser.output ocamldoc/odoc_text_parser.output
-	rm -f ocamldoc/odoc_lexer.ml ocamldoc/odoc_text_lexer.ml \
-	  ocamldoc/odoc_see_lexer.ml ocamldoc/odoc_ocamlhtml.ml
-	rm -f ocamldoc/odoc_parser.ml ocamldoc/odoc_parser.mli \
-	  ocamldoc/odoc_text_parser.ml ocamldoc/odoc_text_parser.mli
+	rm -f travlangdoc/\#*\#
+	rm -f travlangdoc/*.cm[aiotx] travlangdoc/*.cmxa travlangdoc/*.cmti \
+	  travlangdoc/*.a travlangdoc/*.lib travlangdoc/*.o travlangdoc/*.obj
+	rm -f travlangdoc/odoc_parser.output travlangdoc/odoc_text_parser.output
+	rm -f travlangdoc/odoc_lexer.ml travlangdoc/odoc_text_lexer.ml \
+	  travlangdoc/odoc_see_lexer.ml travlangdoc/odoc_travlanghtml.ml
+	rm -f travlangdoc/odoc_parser.ml travlangdoc/odoc_parser.mli \
+	  travlangdoc/odoc_text_parser.ml travlangdoc/odoc_text_parser.mli
 
 partialclean::
 	$(MAKE) -C api_docgen clean
 
-# The OCamltest manual
+# The travlangtest manual
 
-.PHONY: ocamltest-manual
-ocamltest-manual: ocamltest/ocamltest.html
+.PHONY: travlangtest-manual
+travlangtest-manual: travlangtest/travlangtest.html
 
-ocamltest/ocamltest.html: ocamltest/ocamltest.org
+travlangtest/travlangtest.html: travlangtest/travlangtest.org
 	pandoc -s --toc -N -f org -t html -o $@ $<
 
 # The extra libraries
 
 .PHONY: otherlibraries
-otherlibraries: ocamltools
+otherlibraries: travlangtools
 	$(MAKE) -C otherlibs all
 
 .PHONY: otherlibrariesopt
@@ -1964,7 +1964,7 @@ clean::
 
 # The replay debugger
 
-ocamldebug_LIBRARIES = compilerlibs/ocamlcommon \
+travlangdebug_LIBRARIES = compilerlibs/travlangcommon \
   $(addprefix otherlibs/,unix/unix dynlink/dynlink)
 
 # The following dependencies are necessary at the moment, because the
@@ -1978,13 +1978,13 @@ otherlibs/str/str.cma: otherlibraries
 
 debugger/%: VPATH += otherlibs/unix otherlibs/dynlink
 
-ocamldebug_COMPILER_SOURCES = $(addprefix toplevel/, \
+travlangdebug_COMPILER_SOURCES = $(addprefix toplevel/, \
   genprintval.mli genprintval.ml \
   topprinters.mli topprinters.ml)
 
-# The modules listed in the following variable are packed into ocamldebug.cmo
+# The modules listed in the following variable are packed into travlangdebug.cmo
 
-ocamldebug_DEBUGGER_SOURCES = $(addprefix debugger/,\
+travlangdebug_DEBUGGER_SOURCES = $(addprefix debugger/,\
   int64ops.mli int64ops.ml \
   primitives.mli primitives.ml \
   unix_tools.mli unix_tools.ml \
@@ -2016,40 +2016,40 @@ ocamldebug_DEBUGGER_SOURCES = $(addprefix debugger/,\
   command_line.mli command_line.ml \
   main.mli main.ml)
 
-ocamldebug_DEBUGGER_OBJECTS = \
+travlangdebug_DEBUGGER_OBJECTS = \
   $(patsubst %.ml, %.cmo, \
     $(patsubst %.mll, %.cmo, \
       $(patsubst %.mly, %.cmo, \
-        $(filter-out %.mli, $(ocamldebug_DEBUGGER_SOURCES)))))
+        $(filter-out %.mli, $(travlangdebug_DEBUGGER_SOURCES)))))
 
-ocamldebug_SOURCES = \
-  $(ocamldebug_COMPILER_SOURCES) \
+travlangdebug_SOURCES = \
+  $(travlangdebug_COMPILER_SOURCES) \
   $(addprefix debugger/, \
-    ocamldebug.ml \
-    ocamldebug_entry.mli ocamldebug_entry.ml)
+    travlangdebug.ml \
+    travlangdebug_entry.mli travlangdebug_entry.ml)
 
 debugger/%: OC_BYTECODE_LINKFLAGS = -linkall
 
-debugger/%: CAMLC = $(BEST_OCAMLC) $(STDLIBFLAGS)
+debugger/%: CAMLC = $(BEST_travlangC) $(STDLIBFLAGS)
 
-.PHONY: ocamldebug ocamldebugger
-ocamldebug: debugger/ocamldebug$(EXE)
-ocamldebugger: debugger/ocamldebug$(EXE)
-# the 'ocamldebugger' target is an alias of 'ocamldebug' for
+.PHONY: travlangdebug travlangdebugger
+travlangdebug: debugger/travlangdebug$(EXE)
+travlangdebugger: debugger/travlangdebug$(EXE)
+# the 'travlangdebugger' target is an alias of 'travlangdebug' for
 # backward-compatibility with old ./configure scripts; it can be
 # removed after most contributors have re-run ./configure once, for
 # example after 5.2 is branched
 
-debugger/ocamldebug$(EXE): ocamlc ocamlyacc ocamllex
+debugger/travlangdebug$(EXE): travlangc travlangyacc travlanglex
 
-$(ocamldebug_DEBUGGER_OBJECTS): OC_COMMON_COMPFLAGS += -for-pack ocamldebug
-debugger/ocamldebug.cmo: $(ocamldebug_DEBUGGER_OBJECTS)
-	$(V_OCAMLC)$(CAMLC) $(OC_COMMON_COMPFLAGS) -pack -o $@ $^
+$(travlangdebug_DEBUGGER_OBJECTS): OC_COMMON_COMPFLAGS += -for-pack travlangdebug
+debugger/travlangdebug.cmo: $(travlangdebug_DEBUGGER_OBJECTS)
+	$(V_travlangC)$(CAMLC) $(OC_COMMON_COMPFLAGS) -pack -o $@ $^
 
-debugger/ocamldebug_entry.cmo: debugger/ocamldebug.cmo
+debugger/travlangdebug_entry.cmo: debugger/travlangdebug.cmo
 
 clean::
-	rm -f debugger/ocamldebug debugger/ocamldebug.exe
+	rm -f debugger/travlangdebug debugger/travlangdebug.exe
 	rm -f debugger/debugger_lexer.ml
 	rm -f $(addprefix debugger/debugger_parser.,ml mli output)
 
@@ -2087,7 +2087,7 @@ endif
 # Lint @since and @deprecated annotations
 
 lintapidiff_LIBRARIES = \
-  $(addprefix compilerlibs/,ocamlcommon ocamlbytecomp) \
+  $(addprefix compilerlibs/,travlangcommon travlangbytecomp) \
   otherlibs/str/str
 lintapidiff_SOURCES = tools/lintapidiff.mli tools/lintapidiff.ml
 
@@ -2109,8 +2109,8 @@ TOOLS_NATIVE_TARGETS = $(TOOLS_MODULES:=.cmx)
 
 TOOLS_OPT_TARGETS = $(TOOLS_NAT_PROGRAMS:=.opt)
 
-.PHONY: ocamltools
-ocamltools: ocamlc ocamllex
+.PHONY: travlangtools
+travlangtools: travlangc travlanglex
 	$(MAKE) tools-all
 
 .PHONY: tools-all
@@ -2122,22 +2122,22 @@ tools-allopt: $(TOOLS_NATIVE_TARGETS)
 .PHONY: tools-allopt.opt
 tools-allopt.opt: $(TOOLS_OPT_TARGETS)
 
-.PHONY: ocamltoolsopt
-ocamltoolsopt: ocamlopt
+.PHONY: travlangtoolsopt
+travlangtoolsopt: travlangopt
 	$(MAKE) tools-allopt
 
-.PHONY: ocamltoolsopt.opt
-ocamltoolsopt.opt: ocamlc.opt ocamllex.opt
+.PHONY: travlangtoolsopt.opt
+travlangtoolsopt.opt: travlangc.opt travlanglex.opt
 	$(MAKE) tools-allopt.opt
 
-# Tools that require a full ocaml distribution: otherlibs and toplevel
+# Tools that require a full travlang distribution: otherlibs and toplevel
 
 OTHER_TOOLS =
 
-ocamltex = tools/ocamltex$(EXE)
+travlangtex = tools/travlangtex$(EXE)
 
-ifeq "$(build_ocamltex)" "true"
-OTHER_TOOLS += $(ocamltex)
+ifeq "$(build_travlangtex)" "true"
+OTHER_TOOLS += $(travlangtex)
 endif
 
 .PHONY: othertools
@@ -2150,15 +2150,15 @@ partialclean::
 
 # The dependency generator
 
-ocamldep_LIBRARIES = $(addprefix compilerlibs/,ocamlcommon ocamlbytecomp)
-ocamldep_SOURCES = tools/ocamldep.mli tools/ocamldep.ml
+travlangdep_LIBRARIES = $(addprefix compilerlibs/,travlangcommon travlangbytecomp)
+travlangdep_SOURCES = tools/travlangdep.mli tools/travlangdep.ml
 
-tools/ocamldep$(EXE): OC_BYTECODE_LINKFLAGS += -compat-32
+tools/travlangdep$(EXE): OC_BYTECODE_LINKFLAGS += -compat-32
 
 # The profiler
 
-ocamlprof_LIBRARIES =
-ocamlprof_SOURCES = \
+travlangprof_LIBRARIES =
+travlangprof_SOURCES = \
   config.mli config.ml \
   build_path_prefix_map.mli build_path_prefix_map.ml \
   misc.mli misc.ml \
@@ -2182,9 +2182,9 @@ ocamlprof_SOURCES = \
   lexer.mli lexer.ml \
   pprintast.mli pprintast.ml \
   parse.mli parse.ml \
-  ocamlprof.mli ocamlprof.ml
+  travlangprof.mli travlangprof.ml
 
-ocamlcp_ocamloptp_SOURCES = \
+travlangcp_travlangoptp_SOURCES = \
   config.mli config.ml \
   build_path_prefix_map.mli build_path_prefix_map.ml \
   misc.mli misc.ml \
@@ -2201,26 +2201,26 @@ ocamlcp_ocamloptp_SOURCES = \
   ccomp.mli ccomp.ml \
   compenv.mli compenv.ml \
   main_args.mli main_args.ml \
-  ocamlcp_common.mli ocamlcp_common.ml
+  travlangcp_common.mli travlangcp_common.ml
 
-ocamlcp_LIBRARIES =
-ocamlcp_SOURCES = $(ocamlcp_ocamloptp_SOURCES) ocamlcp.mli ocamlcp.ml
+travlangcp_LIBRARIES =
+travlangcp_SOURCES = $(travlangcp_travlangoptp_SOURCES) travlangcp.mli travlangcp.ml
 
-ocamloptp_LIBRARIES =
-ocamloptp_SOURCES = $(ocamlcp_ocamloptp_SOURCES) ocamloptp.mli ocamloptp.ml
+travlangoptp_LIBRARIES =
+travlangoptp_SOURCES = $(travlangcp_travlangoptp_SOURCES) travlangoptp.mli travlangoptp.ml
 
-# To help building mixed-mode libraries (OCaml + C)
-ocamlmklib_LIBRARIES =
-ocamlmklib_SOURCES = \
+# To help building mixed-mode libraries (travlang + C)
+travlangmklib_LIBRARIES =
+travlangmklib_SOURCES = \
   config.ml \
   build_path_prefix_map.ml \
   misc.ml \
-  ocamlmklib.mli ocamlmklib.ml
+  travlangmklib.mli travlangmklib.ml
 
 # To make custom toplevels
 
-ocamlmktop_LIBRARIES =
-ocamlmktop_SOURCES = \
+travlangmktop_LIBRARIES =
+travlangmktop_SOURCES = \
   config.mli config.ml \
   build_path_prefix_map.mli build_path_prefix_map.ml \
   misc.mli misc.ml \
@@ -2232,16 +2232,16 @@ ocamlmktop_SOURCES = \
   clflags.mli clflags.ml \
   profile.mli profile.ml \
   ccomp.mli ccomp.ml \
-  ocamlmktop.mli ocamlmktop.ml
+  travlangmktop.mli travlangmktop.ml
 
 # Reading cmt files
 
-ocamlcmt_LIBRARIES = $(addprefix compilerlibs/,ocamlcommon ocamlbytecomp)
-ocamlcmt_SOURCES = tools/ocamlcmt.mli tools/ocamlcmt.ml
+travlangcmt_LIBRARIES = $(addprefix compilerlibs/,travlangcommon travlangbytecomp)
+travlangcmt_SOURCES = tools/travlangcmt.mli tools/travlangcmt.ml
 
 # The bytecode disassembler
 
-dumpobj_LIBRARIES = $(addprefix compilerlibs/,ocamlcommon ocamlbytecomp)
+dumpobj_LIBRARIES = $(addprefix compilerlibs/,travlangcommon travlangbytecomp)
 dumpobj_SOURCES = $(addprefix tools/, \
   opnames.mli opnames.ml \
   dumpobj.mli dumpobj.ml)
@@ -2252,7 +2252,7 @@ make_opcodes_LIBRARIES =
 make_opcodes_SOURCES = tools/make_opcodes.mli tools/make_opcodes.mll
 
 tools/opnames.ml: runtime/caml/instruct.h $(make_opcodes)
-	$(V_GEN)$(NEW_OCAMLRUN) $(make_opcodes) -opnames < $< > $@
+	$(V_GEN)$(NEW_travlangRUN) $(make_opcodes) -opnames < $< > $@
 
 clean::
 	rm -f $(addprefix tools/,opnames.ml make_opcodes.ml)
@@ -2261,44 +2261,44 @@ beforedepend:: $(addprefix tools/,opnames.ml make_opcodes.ml)
 
 # Display info on compiled files
 
-ocamlobjinfo_LIBRARIES = \
-  $(addprefix compilerlibs/,ocamlcommon ocamlbytecomp ocamlmiddleend)
-ocamlobjinfo_SOURCES = tools/objinfo.mli tools/objinfo.ml
+travlangobjinfo_LIBRARIES = \
+  $(addprefix compilerlibs/,travlangcommon travlangbytecomp travlangmiddleend)
+travlangobjinfo_SOURCES = tools/objinfo.mli tools/objinfo.ml
 
 # Scan object files for required primitives
 
-primreq_LIBRARIES = $(addprefix compilerlibs/,ocamlcommon ocamlbytecomp)
+primreq_LIBRARIES = $(addprefix compilerlibs/,travlangcommon travlangbytecomp)
 primreq_SOURCES = tools/primreq.mli tools/primreq.ml
 
 # Copy a bytecode executable, stripping debug info
 
 stripdebug_LIBRARIES = \
-  $(addprefix compilerlibs/,ocamlcommon ocamlbytecomp)
+  $(addprefix compilerlibs/,travlangcommon travlangbytecomp)
 stripdebug_SOURCES = tools/stripdebug.mli tools/stripdebug.ml
 
 # Compare two bytecode executables
 
-cmpbyt_LIBRARIES = $(addprefix compilerlibs/,ocamlcommon ocamlbytecomp)
+cmpbyt_LIBRARIES = $(addprefix compilerlibs/,travlangcommon travlangbytecomp)
 cmpbyt_SOURCES = tools/cmpbyt.mli tools/cmpbyt.ml
 
-# Scan latex files, and run ocaml code examples
+# Scan latex files, and run travlang code examples
 
-ocamltex_LIBRARIES = \
-  $(addprefix compilerlibs/,ocamlcommon ocamlbytecomp ocamltoplevel) \
+travlangtex_LIBRARIES = \
+  $(addprefix compilerlibs/,travlangcommon travlangbytecomp travlangtoplevel) \
   $(addprefix otherlibs/,str/str unix/unix)
-ocamltex_SOURCES = tools/ocamltex.mli tools/ocamltex.ml
+travlangtex_SOURCES = tools/travlangtex.mli tools/travlangtex.ml
 
-# ocamltex uses str.cma and unix.cma and so must be compiled with
-# $(ROOTDIR)/ocamlc rather than with $(ROOTDIR)/boot/ocamlc since the boot
+# travlangtex uses str.cma and unix.cma and so must be compiled with
+# $(ROOTDIR)/travlangc rather than with $(ROOTDIR)/boot/travlangc since the boot
 # compiler does not necessarily have the correct shared library
 # configuration.
 # Note: the following definitions apply to all the prerequisites
-# of ocamltex.
-$(ocamltex): CAMLC = $(OCAMLRUN) $(ROOTDIR)/ocamlc$(EXE) $(STDLIBFLAGS)
-$(ocamltex): OC_COMMON_LINKFLAGS += -linkall
-$(ocamltex): VPATH += $(addprefix otherlibs/,str unix)
+# of travlangtex.
+$(travlangtex): CAMLC = $(travlangRUN) $(ROOTDIR)/travlangc$(EXE) $(STDLIBFLAGS)
+$(travlangtex): OC_COMMON_LINKFLAGS += -linkall
+$(travlangtex): VPATH += $(addprefix otherlibs/,str unix)
 
-tools/ocamltex.cmo: OC_COMMON_COMPFLAGS += -no-alias-deps
+tools/travlangtex.cmo: OC_COMMON_COMPFLAGS += -no-alias-deps
 
 # we need str and unix which depend on the bytecode version of other tools
 # thus we use the othertools target
@@ -2321,7 +2321,7 @@ beforedepend:: $(ARCH_SPECIFIC)
 check_arch:
 	@echo "========= CHECKING asmcomp/$(ARCH) =============="
 	@rm -f $(ARCH_SPECIFIC) asmcomp/emit.ml asmcomp/*.cm*
-	@$(MAKE) compilerlibs/ocamloptcomp.cma \
+	@$(MAKE) compilerlibs/travlangoptcomp.cma \
 	            >/dev/null
 	@rm -f $(ARCH_SPECIFIC) asmcomp/emit.ml asmcomp/*.cm*
 
@@ -2339,36 +2339,36 @@ endif
 
 # The native toplevel
 
-ocamlnat_LIBRARIES = \
-  compilerlibs/ocamlcommon compilerlibs/ocamloptcomp \
-  compilerlibs/ocamlbytecomp otherlibs/dynlink/dynlink \
-  compilerlibs/ocamltoplevel
+travlangnat_LIBRARIES = \
+  compilerlibs/travlangcommon compilerlibs/travlangoptcomp \
+  compilerlibs/travlangbytecomp otherlibs/dynlink/dynlink \
+  compilerlibs/travlangtoplevel
 
-ocamlnat_SOURCES = $(ocaml_SOURCES)
+travlangnat_SOURCES = $(travlang_SOURCES)
 
-ocamlnat$(EXE): OC_NATIVE_LINKFLAGS += -linkall -I toplevel/native
+travlangnat$(EXE): OC_NATIVE_LINKFLAGS += -linkall -I toplevel/native
 
 COMPILE_NATIVE_MODULE = \
   $(CAMLOPT) $(OC_COMMON_COMPFLAGS) -I $(@D) $(INCLUDES) \
   $(OC_NATIVE_COMPFLAGS)
 
 
-toplevel/topdirs.cmx toplevel/toploop.cmx $(ocamlnat_CMX_FILES): \
+toplevel/topdirs.cmx toplevel/toploop.cmx $(travlangnat_CMX_FILES): \
   OC_NATIVE_COMPFLAGS += -I toplevel/native
 
 toplevel/toploop.cmx: toplevel/native/topeval.cmx
 
-$(ocamlnat_CMX_FILES): toplevel/native/topmain.cmx
+$(travlangnat_CMX_FILES): toplevel/native/topmain.cmx
 
 partialclean::
-	rm -f ocamlnat ocamlnat.exe
+	rm -f travlangnat travlangnat.exe
 
 toplevel/native/topeval.cmx: otherlibs/dynlink/dynlink.cmxa
 
 # The numeric opcodes
 
 bytecomp/opcodes.ml: runtime/caml/instruct.h $(make_opcodes)
-	$(V_GEN)$(NEW_OCAMLRUN) $(make_opcodes) -opcodes < $< > $@
+	$(V_GEN)$(NEW_travlangRUN) $(make_opcodes) -opcodes < $< > $@
 
 bytecomp/opcodes.mli: bytecomp/opcodes.ml
 	$(V_GEN)$(CAMLC) -i $< > $@
@@ -2386,13 +2386,13 @@ endif
 # Default rules
 
 %.cmo: %.ml
-	$(V_OCAMLC)$(CAMLC) $(OC_COMMON_COMPFLAGS) -I $(@D) $(INCLUDES) -c $<
+	$(V_travlangC)$(CAMLC) $(OC_COMMON_COMPFLAGS) -I $(@D) $(INCLUDES) -c $<
 
 %.cmi: %.mli
-	$(V_OCAMLC)$(CAMLC) $(OC_COMMON_COMPFLAGS) -I $(@D) $(INCLUDES) -c $<
+	$(V_travlangC)$(CAMLC) $(OC_COMMON_COMPFLAGS) -I $(@D) $(INCLUDES) -c $<
 
 %.cmx: %.ml
-	$(V_OCAMLOPT)$(COMPILE_NATIVE_MODULE) -c $<
+	$(V_travlangOPT)$(COMPILE_NATIVE_MODULE) -c $<
 
 partialclean::
 	for d in utils parsing typing bytecomp asmcomp middle_end file_formats \
@@ -2409,10 +2409,10 @@ depend: beforedepend
          lambda file_formats middle_end/closure middle_end/flambda \
          middle_end/flambda/base_types \
          driver toplevel toplevel/byte toplevel/native lex tools debugger \
-	 ocamldoc ocamltest testsuite/lib testsuite/tools; \
+	 travlangdoc travlangtest testsuite/lib testsuite/tools; \
 	 do \
-	   $(OCAMLDEP) $(OC_OCAMLDEPFLAGS) -I $$d $(INCLUDES) \
-	   $(OCAMLDEPFLAGS) $$d/*.mli $$d/*.ml \
+	   $(travlangDEP) $(OC_travlangDEPFLAGS) -I $$d $(INCLUDES) \
+	   $(travlangDEPFLAGS) $$d/*.mli $$d/*.ml \
 	   || exit; \
          done > .depend
 
@@ -2420,8 +2420,8 @@ depend: beforedepend
 distclean: clean
 	if [ -f flexdll/Makefile ]; then $(MAKE) -C flexdll distclean MSVC_DETECT=0; fi
 	$(MAKE) -C manual distclean
-	rm -f ocamldoc/META
-	rm -f $(addprefix ocamltest/,ocamltest_config.ml ocamltest_unix.ml)
+	rm -f travlangdoc/META
+	rm -f $(addprefix travlangtest/,travlangtest_config.ml travlangtest_unix.ml)
 	$(MAKE) -C otherlibs distclean
 	rm -f $(runtime_CONFIGURED_HEADERS)
 	$(MAKE) -C stdlib distclean
@@ -2429,9 +2429,9 @@ distclean: clean
 	rm -f tools/eventlog_metadata tools/*.bak
 	rm -f utils/config.common.ml utils/config.generated.ml
 	rm -f compilerlibs/META
-	rm -f boot/ocamlrun boot/ocamlrun.exe boot/$(HEADER_NAME) \
+	rm -f boot/travlangrun boot/travlangrun.exe boot/$(HEADER_NAME) \
 	      boot/flexdll_*.o boot/flexdll_*.obj \
-	      boot/*.cm* boot/libcamlrun.a boot/libcamlrun.lib boot/ocamlc.opt
+	      boot/*.cm* boot/libcamlrun.a boot/libcamlrun.lib boot/travlangc.opt
 	rm -f Makefile.config Makefile.build_config
 	rm -rf autom4te.cache flexdll-sources $(BYTE_BUILD_TREE) $(OPT_BUILD_TREE)
 	rm -f config.log config.status libtool
@@ -2455,15 +2455,15 @@ ifneq "$(runtime_BYTECODE_SHARED_LIBRARIES)" ""
 endif
 	$(INSTALL_DATA) runtime/caml/domain_state.tbl runtime/caml/*.h \
 	  "$(INSTALL_INCDIR)"
-	$(INSTALL_PROG) ocaml$(EXE) "$(INSTALL_BINDIR)"
+	$(INSTALL_PROG) travlang$(EXE) "$(INSTALL_BINDIR)"
 ifeq "$(INSTALL_BYTECODE_PROGRAMS)" "true"
 	$(call INSTALL_STRIPPED_BYTE_PROG,\
-               ocamlc$(EXE),"$(INSTALL_BINDIR)/ocamlc.byte$(EXE)")
+               travlangc$(EXE),"$(INSTALL_BINDIR)/travlangc.byte$(EXE)")
 endif
 	$(MAKE) -C stdlib install
 ifeq "$(INSTALL_BYTECODE_PROGRAMS)" "true"
-	$(INSTALL_PROG) lex/ocamllex$(EXE) \
-	  "$(INSTALL_BINDIR)/ocamllex.byte$(EXE)"
+	$(INSTALL_PROG) lex/travlanglex$(EXE) \
+	  "$(INSTALL_BINDIR)/travlanglex.byte$(EXE)"
 	for i in $(TOOLS_TO_INSTALL_NAT); \
 	do \
 	  $(INSTALL_PROG) "tools/$$i$(EXE)" "$(INSTALL_BINDIR)/$$i.byte$(EXE)";\
@@ -2487,7 +2487,7 @@ endif
 	do \
 	  $(INSTALL_PROG) "tools/$$i$(EXE)" "$(INSTALL_BINDIR)";\
 	done
-	$(INSTALL_PROG) $(ocamlyacc_PROGRAM)$(EXE) "$(INSTALL_BINDIR)"
+	$(INSTALL_PROG) $(travlangyacc_PROGRAM)$(EXE) "$(INSTALL_BINDIR)"
 	$(INSTALL_DATA) \
 	   utils/*.cmi \
 	   parsing/*.cmi \
@@ -2523,10 +2523,10 @@ endif
 	  compilerlibs/*.cma compilerlibs/META \
 	  "$(INSTALL_COMPLIBDIR)"
 	$(INSTALL_DATA) \
-	   $(ocamlc_CMO_FILES) $(ocaml_CMO_FILES) \
+	   $(travlangc_CMO_FILES) $(travlang_CMO_FILES) \
 	   "$(INSTALL_COMPLIBDIR)"
 	$(INSTALL_PROG) $(expunge) "$(INSTALL_LIBDIR)"
-# If installing over a previous OCaml version, ensure some modules are removed
+# If installing over a previous travlang version, ensure some modules are removed
 # from the previous installation.
 	rm -f "$(INSTALL_LIBDIR)"/topdirs.cm* "$(INSTALL_LIBDIR)/topdirs.mli"
 	rm -f "$(INSTALL_LIBDIR)"/profiling.cm* "$(INSTALL_LIBDIR)/profiling.$(O)"
@@ -2539,27 +2539,27 @@ endif
 	for i in $(OTHERLIBRARIES); do \
 	  $(MAKE) -C otherlibs/$$i install || exit $$?; \
 	done
-ifeq "$(build_ocamldoc)" "true"
-	$(MKDIR) "$(INSTALL_LIBDIR)/ocamldoc"
-	$(INSTALL_PROG) $(OCAMLDOC) "$(INSTALL_BINDIR)"
+ifeq "$(build_travlangdoc)" "true"
+	$(MKDIR) "$(INSTALL_LIBDIR)/travlangdoc"
+	$(INSTALL_PROG) $(travlangDOC) "$(INSTALL_BINDIR)"
 	$(INSTALL_DATA) \
-	  ocamldoc/ocamldoc.hva ocamldoc/*.cmi ocamldoc/odoc_info.cma \
-	  ocamldoc/META \
-	  "$(INSTALL_LIBDIR)/ocamldoc"
+	  travlangdoc/travlangdoc.hva travlangdoc/*.cmi travlangdoc/odoc_info.cma \
+	  travlangdoc/META \
+	  "$(INSTALL_LIBDIR)/travlangdoc"
 	$(INSTALL_DATA) \
-	  $(OCAMLDOC_LIBCMIS) \
-	  "$(INSTALL_LIBDIR)/ocamldoc"
+	  $(travlangDOC_LIBCMIS) \
+	  "$(INSTALL_LIBDIR)/travlangdoc"
 ifeq "$(INSTALL_SOURCE_ARTIFACTS)" "true"
 	$(INSTALL_DATA) \
-	  $(OCAMLDOC_LIBMLIS) $(OCAMLDOC_LIBCMTS) \
-	  "$(INSTALL_LIBDIR)/ocamldoc"
+	  $(travlangDOC_LIBMLIS) $(travlangDOC_LIBCMTS) \
+	  "$(INSTALL_LIBDIR)/travlangdoc"
 endif
 endif
 ifeq "$(build_libraries_manpages)" "true"
 	$(MAKE) -C api_docgen install
 endif
 	if test -n "$(WITH_DEBUGGER)"; then \
-	  $(INSTALL_PROG) debugger/ocamldebug$(EXE) "$(INSTALL_BINDIR)"; \
+	  $(INSTALL_PROG) debugger/travlangdebug$(EXE) "$(INSTALL_BINDIR)"; \
 	fi
 ifeq "$(BOOTSTRAPPING_FLEXDLL)" "true"
 ifeq "$(TOOLCHAIN)" "msvc"
@@ -2577,15 +2577,15 @@ endif # ifeq "$(BOOTSTRAPPING_FLEXDLL)" "true"
 	$(INSTALL_DATA) Makefile.config "$(INSTALL_LIBDIR)"
 	$(INSTALL_DATA) $(DOC_FILES) "$(INSTALL_DOCDIR)"
 ifeq "$(INSTALL_BYTECODE_PROGRAMS)" "true"
-	if test -f ocamlopt$(EXE); then $(MAKE) installopt; else \
+	if test -f travlangopt$(EXE); then $(MAKE) installopt; else \
 	   cd "$(INSTALL_BINDIR)"; \
-	   $(LN) ocamlc.byte$(EXE) ocamlc$(EXE); \
-	   $(LN) ocamllex.byte$(EXE) ocamllex$(EXE); \
+	   $(LN) travlangc.byte$(EXE) travlangc$(EXE); \
+	   $(LN) travlanglex.byte$(EXE) travlanglex$(EXE); \
 	   (test -f flexlink.byte$(EXE) && \
 	      $(LN) flexlink.byte$(EXE) flexlink$(EXE)) || true; \
 	fi
 else
-	if test -f ocamlopt$(EXE); then $(MAKE) installopt; fi
+	if test -f travlangopt$(EXE); then $(MAKE) installopt; fi
 endif
 
 # Installation of the native-code compiler
@@ -2597,7 +2597,7 @@ ifneq "$(runtime_NATIVE_SHARED_LIBRARIES)" ""
 endif
 ifeq "$(INSTALL_BYTECODE_PROGRAMS)" "true"
 	$(call INSTALL_STRIPPED_BYTE_PROG,\
-               ocamlopt$(EXE),"$(INSTALL_BINDIR)/ocamlopt.byte$(EXE)")
+               travlangopt$(EXE),"$(INSTALL_BINDIR)/travlangopt.byte$(EXE)")
 endif
 	$(MAKE) -C stdlib installopt
 	$(INSTALL_DATA) \
@@ -2639,38 +2639,38 @@ ifeq "$(INSTALL_SOURCE_ARTIFACTS)" "true"
 	    "$(INSTALL_COMPLIBDIR)"
 endif
 	$(INSTALL_DATA) \
-	    $(ocamlopt_CMO_FILES) \
+	    $(travlangopt_CMO_FILES) \
 	    "$(INSTALL_COMPLIBDIR)"
-ifeq "$(build_ocamldoc)" "true"
-	$(MKDIR) "$(INSTALL_LIBDIR)/ocamldoc"
-	$(INSTALL_PROG) $(OCAMLDOC_OPT) "$(INSTALL_BINDIR)"
+ifeq "$(build_travlangdoc)" "true"
+	$(MKDIR) "$(INSTALL_LIBDIR)/travlangdoc"
+	$(INSTALL_PROG) $(travlangDOC_OPT) "$(INSTALL_BINDIR)"
 	$(INSTALL_DATA) \
-	  $(OCAMLDOC_LIBCMIS) \
-	  "$(INSTALL_LIBDIR)/ocamldoc"
+	  $(travlangDOC_LIBCMIS) \
+	  "$(INSTALL_LIBDIR)/travlangdoc"
 ifeq "$(INSTALL_SOURCE_ARTIFACTS)" "true"
 	$(INSTALL_DATA) \
-	  $(OCAMLDOC_LIBMLIS) $(OCAMLDOC_LIBCMTS) \
-	  "$(INSTALL_LIBDIR)/ocamldoc"
+	  $(travlangDOC_LIBMLIS) $(travlangDOC_LIBCMTS) \
+	  "$(INSTALL_LIBDIR)/travlangdoc"
 endif
 	$(INSTALL_DATA) \
-	  ocamldoc/ocamldoc.hva ocamldoc/*.cmx ocamldoc/odoc_info.$(A) \
-	  ocamldoc/odoc_info.cmxa \
-	  "$(INSTALL_LIBDIR)/ocamldoc"
+	  travlangdoc/travlangdoc.hva travlangdoc/*.cmx travlangdoc/odoc_info.$(A) \
+	  travlangdoc/odoc_info.cmxa \
+	  "$(INSTALL_LIBDIR)/travlangdoc"
 endif
 	for i in $(OTHERLIBRARIES); do \
 	  $(MAKE) -C otherlibs/$$i installopt || exit $$?; \
 	done
 ifeq "$(INSTALL_BYTECODE_PROGRAMS)" "true"
-	if test -f ocamlopt.opt$(EXE); then $(MAKE) installoptopt; else \
+	if test -f travlangopt.opt$(EXE); then $(MAKE) installoptopt; else \
 	   cd "$(INSTALL_BINDIR)"; \
-	   $(LN) ocamlc.byte$(EXE) ocamlc$(EXE); \
-	   $(LN) ocamlopt.byte$(EXE) ocamlopt$(EXE); \
-	   $(LN) ocamllex.byte$(EXE) ocamllex$(EXE); \
+	   $(LN) travlangc.byte$(EXE) travlangc$(EXE); \
+	   $(LN) travlangopt.byte$(EXE) travlangopt$(EXE); \
+	   $(LN) travlanglex.byte$(EXE) travlanglex$(EXE); \
 	   (test -f flexlink.byte$(EXE) && \
 	     $(LN) flexlink.byte$(EXE) flexlink$(EXE)) || true; \
 	fi
 else
-	if test -f ocamlopt.opt$(EXE); then $(MAKE) installoptopt; fi
+	if test -f travlangopt.opt$(EXE); then $(MAKE) installoptopt; fi
 endif
 	$(INSTALL_DATA) \
           tools/profiling.cmx tools/profiling.$(O) \
@@ -2678,13 +2678,13 @@ endif
 
 .PHONY: installoptopt
 installoptopt:
-	$(INSTALL_PROG) ocamlc.opt$(EXE) "$(INSTALL_BINDIR)"
-	$(INSTALL_PROG) ocamlopt.opt$(EXE) "$(INSTALL_BINDIR)"
-	$(INSTALL_PROG) lex/ocamllex.opt$(EXE) "$(INSTALL_BINDIR)"
+	$(INSTALL_PROG) travlangc.opt$(EXE) "$(INSTALL_BINDIR)"
+	$(INSTALL_PROG) travlangopt.opt$(EXE) "$(INSTALL_BINDIR)"
+	$(INSTALL_PROG) lex/travlanglex.opt$(EXE) "$(INSTALL_BINDIR)"
 	cd "$(INSTALL_BINDIR)"; \
-	   $(LN) ocamlc.opt$(EXE) ocamlc$(EXE); \
-	   $(LN) ocamlopt.opt$(EXE) ocamlopt$(EXE); \
-	   $(LN) ocamllex.opt$(EXE) ocamllex$(EXE)
+	   $(LN) travlangc.opt$(EXE) travlangc$(EXE); \
+	   $(LN) travlangopt.opt$(EXE) travlangopt$(EXE); \
+	   $(LN) travlanglex.opt$(EXE) travlanglex$(EXE)
 ifeq "$(BOOTSTRAPPING_FLEXDLL)" "true"
 	$(INSTALL_PROG) flexlink.opt$(EXE) "$(INSTALL_BINDIR)"
 	cd "$(INSTALL_BINDIR)"; \
@@ -2705,12 +2705,12 @@ endif
 	   compilerlibs/*.cmxa compilerlibs/*.$(A) \
 	   "$(INSTALL_COMPLIBDIR)"
 	$(INSTALL_DATA) \
-	   $(ocamlc_CMX_FILES) $(ocamlc_CMX_FILES:.cmx=.$(O)) \
-	   $(ocamlopt_CMX_FILES) $(ocamlopt_CMX_FILES:.cmx=.$(O)) \
-	   $(ocamlnat_CMX_FILES:.cmx=.$(O)) \
+	   $(travlangc_CMX_FILES) $(travlangc_CMX_FILES:.cmx=.$(O)) \
+	   $(travlangopt_CMX_FILES) $(travlangopt_CMX_FILES:.cmx=.$(O)) \
+	   $(travlangnat_CMX_FILES:.cmx=.$(O)) \
 	   "$(INSTALL_COMPLIBDIR)"
-ifeq "$(INSTALL_OCAMLNAT)" "true"
-	  $(INSTALL_PROG) ocamlnat$(EXE) "$(INSTALL_BINDIR)"
+ifeq "$(INSTALL_travlangNAT)" "true"
+	  $(INSTALL_PROG) travlangnat$(EXE) "$(INSTALL_BINDIR)"
 endif
 
 # Installation of the *.ml sources of compiler-libs
@@ -2750,4 +2750,4 @@ config.status:
 # _SOURCES variable so that GNU make's secondary expansion mechanism works
 # This is why this dependency is kept at the very end of this file
 
-$(ALL_CMX_FILES): ocamlopt$(EXE)
+$(ALL_CMX_FILES): travlangopt$(EXE)

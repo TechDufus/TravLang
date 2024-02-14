@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*               Damien Doligez, projet Para, INRIA Rocquencourt          *)
 (*          Xavier Leroy, projet Cambium, College de France and Inria     *)
@@ -75,7 +75,7 @@ module State = struct
     then
       failwith
         ("Random.State.of_binary_string: expected a format \
-          compatible with OCaml " ^ Sys.ocaml_version);
+          compatible with travlang " ^ Sys.travlang_version);
     let i1 = String.get_int64_le buf (preflen + 0 * 8) in
     let i2 = String.get_int64_le buf (preflen + 1 * 8) in
     let i3 = String.get_int64_le buf (preflen + 2 * 8) in
@@ -118,7 +118,7 @@ module State = struct
       (* = -2{^30}, which is [min_int] for 31-bit integers *)
   let max_int31 = 0x3FFF_FFFF
       (* =  2{^30}-1, which is [max_int] for 31-bit integers *)
-  (* avoid integer literals for these, 32-bit OCaml would reject them: *)
+  (* avoid integer literals for these, 32-bit travlang would reject them: *)
   let min_int32 = -(1 lsl 31)
       (* = -0x8000_0000 on platforms where [Sys.int_size >= 32] *)
   let max_int32 = (1 lsl 31) - 1
@@ -132,7 +132,7 @@ module State = struct
      [bound] may be any positive [int].  [mask] must be of the form [2{^i}-1]
      and greater or equal to [n].  Larger values of [mask] make the function
      run faster (fewer samples are rejected).  Smaller values of [mask]
-     are usable on a wider range of OCaml implementations.  *)
+     are usable on a wider range of travlang implementations.  *)
   let rec int_aux s n mask =
     (* We start by drawing a non-negative integer in the [ [0, mask] ] range *)
     let r = Int64.to_int (next s) land mask in
@@ -162,10 +162,10 @@ module State = struct
       invalid_arg "Random.full_int"
     (* When the bound fits in 31-bit signed integers, we use the same mask
        as in function [int] so as to yield the same output on all platforms
-       supported by OCaml (32-bit OCaml, 64-bit OCaml, and JavaScript).
+       supported by travlang (32-bit travlang, 64-bit travlang, and JavaScript).
        When the bound fits in 32-bit signed integers, we use [max_int32]
        as the mask so as to yield the same output on all platforms where
-       [Sys.int_size >= 32] (i.e. JavaScript and 64-bit OCaml). *)
+       [Sys.int_size >= 32] (i.e. JavaScript and 64-bit travlang). *)
     else
       int_aux s bound
         (if bound <= max_int31 then max_int31
@@ -207,10 +207,10 @@ module State = struct
       invalid_arg "Random.int_in_range";
     (* When both bounds fit in 31-bit signed integers, we use parameters
        [mask] and [nbits] appropriate for 31-bit integers, so as to
-       yield the same output on all platforms supported by OCaml.
+       yield the same output on all platforms supported by travlang.
        When both bounds fit in 32-bit signed integers, we use parameters
        [mask] and [nbits] appropriate for 32-bit integers, so as to
-       yield the same output on JavaScript and on 64-bit OCaml. *)
+       yield the same output on JavaScript and on 64-bit travlang. *)
     if min >= min_int31 && max <= max_int31 then
       int_in_range_aux s ~min ~max ~mask:max_int31 ~nbits:31
     else if min >= min_int32 && max <= max_int32 then

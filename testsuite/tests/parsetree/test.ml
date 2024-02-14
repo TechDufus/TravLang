@@ -1,5 +1,5 @@
 (* TEST
- include ocamlcommon;
+ include travlangcommon;
  readonly_files = "source.ml";
 *)
 
@@ -47,7 +47,7 @@ let to_string print_fun ast =
   Format.flush_str_formatter ()
 
 let to_tmp_file print_fun ast =
-  let fn, oc = Filename.open_temp_file "ocamlparse" ".txt" in
+  let fn, oc = Filename.open_temp_file "travlangparse" ".txt" in
   output_string oc (to_string print_fun ast);
   close_out oc;
   fn

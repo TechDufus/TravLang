@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 #**************************************************************************
 #*                                                                        *
-#*                                 OCaml                                  *
+#*                                 travlang                                  *
 #*                                                                        *
-#*                 David Allsopp, OCaml Labs, Cambridge.                  *
+#*                 David Allsopp, travlang Labs, Cambridge.                  *
 #*                                                                        *
 #*   Copyright 2021 David Allsopp Ltd.                                    *
 #*                                                                        *
@@ -49,11 +49,11 @@ not_pruned () {
 CheckTypoTree () {
   COMMIT="$1"
   COMMITS_TO_SEARCH="$2"
-  export OCAML_CT_HEAD="$COMMIT"
-  export OCAML_CT_LS_FILES="git diff-tree --no-commit-id --name-only -r \
+  export travlang_CT_HEAD="$COMMIT"
+  export travlang_CT_LS_FILES="git diff-tree --no-commit-id --name-only -r \
 $COMMITS_TO_SEARCH --"
-  export OCAML_CT_CAT='git cat-file --textconv'
-  export OCAML_CT_PREFIX="$COMMIT:"
+  export travlang_CT_CAT='git cat-file --textconv'
+  export travlang_CT_PREFIX="$COMMIT:"
   GIT_INDEX_FILE=tmp-index git read-tree --reset -i "$COMMIT"
   git diff-tree --diff-filter=d --no-commit-id --name-only -r \
     "$COMMITS_TO_SEARCH" | (while IFS= read -r path
@@ -72,8 +72,8 @@ $COMMITS_TO_SEARCH --"
 
 # tmp-index is used to ensure that correct version of .gitattributes is used by
 # check-typo
-export OCAML_CT_GIT_INDEX='tmp-index'
-export OCAML_CT_CA_FLAG='--cached'
+export travlang_CT_GIT_INDEX='tmp-index'
+export travlang_CT_CA_FLAG='--cached'
 rm -f failed
 
 COMMIT_RANGE="$MERGE_BASE..$PR_HEAD"

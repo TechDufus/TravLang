@@ -1,16 +1,16 @@
 (* TEST
- include tool-ocaml-lib;
+ include tool-travlang-lib;
  flags = "-w -a";
- ocaml_script_as_argument = "true";
- setup-ocaml-build-env;
- ocaml;
+ travlang_script_as_argument = "true";
+ setup-travlang-build-env;
+ travlang;
 *)
 
 (**** file testinterp/t301-object.ml
    suggested by Jacques Garrigue to Basile Starynkevitch
 
    compilable with
-ocamlc -nostdlib -I ../../stdlib \
+travlangc -nostdlib -I ../../stdlib \
   ../../stdlib/pervasives.cmo ../../stdlib/camlinternalOO.cmo \
   t301-object.ml -o t301-object.byte
 

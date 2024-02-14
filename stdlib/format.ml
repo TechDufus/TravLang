@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Pierre Weis, projet Cristal, INRIA Rocquencourt            *)
 (*                                                                        *)

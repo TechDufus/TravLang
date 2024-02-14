@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -54,14 +54,14 @@ v}
 
     {b Unicode text.} Strings being arbitrary sequences of bytes, they
     can hold any kind of textual encoding. However the recommended
-    encoding for storing Unicode text in OCaml strings is UTF-8. This
+    encoding for storing Unicode text in travlang strings is UTF-8. This
     is the encoding used by Unicode escapes in string literals. For
     example the string ["\u{1F42B}"] is the UTF-8 encoding of the
     Unicode character U+1F42B.
 
-    {b Past mutability.} Before OCaml 4.02, strings used to be modifiable in
+    {b Past mutability.} Before travlang 4.02, strings used to be modifiable in
     place like {!Bytes.t} mutable sequences of bytes.
-    OCaml 4 had various compiler flags and configuration options to support the
+    travlang 4 had various compiler flags and configuration options to support the
     transition period from mutable to immutable strings.
     Those options are no longer available, and strings are now always
     immutable.
@@ -248,7 +248,7 @@ val trim : string -> string
 
 val escaped : string -> string
 (** [escaped s] is [s] with special characters represented by escape
-    sequences, following the lexical conventions of OCaml.
+    sequences, following the lexical conventions of travlang.
 
     All characters outside the US-ASCII printable range \[0x20;0x7E\] are
     escaped, as well as backslash (0x2F) and double-quote (0x22).

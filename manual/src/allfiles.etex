@@ -8,8 +8,8 @@
 \thispagestyle{empty}
 \begin{maintitle}
 ~\vfill
-\Huge           The OCaml system \\
-                release \ocamlversion \\[1cm]
+\Huge           The travlang system \\
+                release \travlangversion \\[1cm]
 \Large          Documentation and user's manual \\[1cm]
 \large          Xavier Leroy, \\
                 Damien Doligez, Alain Frisch, Jacques Garrigue, \\
@@ -27,12 +27,12 @@
 \begin{maintitle}
 \vspace*{2ex}
 This manual is also available in
-\ahref{https://ocaml.org/releases/\ocamlversion/ocaml-\ocamlversion-refman.pdf}{PDF},
-\ahref{https://ocaml.org/releases/\ocamlversion/ocaml-\ocamlversion-refman.txt}{plain text},
+\ahref{https://travlang.org/releases/\travlangversion/travlang-\travlangversion-refman.pdf}{PDF},
+\ahref{https://travlang.org/releases/\travlangversion/travlang-\travlangversion-refman.txt}{plain text},
 as a
-\ahref{https://ocaml.org/releases/\ocamlversion/ocaml-\ocamlversion-refman-html.tar.gz}{bundle of HTML files},
+\ahref{https://travlang.org/releases/\travlangversion/travlang-\travlangversion-refman-html.tar.gz}{bundle of HTML files},
 and as a
-\ahref{https://ocaml.org/releases/\ocamlversion/ocaml-\ocamlversion-refman.info.tar.gz}{bundle of Emacs Info files}.
+\ahref{https://travlang.org/releases/\travlangversion/travlang-\travlangversion-refman.info.tar.gz}{bundle of Emacs Info files}.
 \end{maintitle}
 \end{htmlonly}
 
@@ -40,7 +40,7 @@ and as a
 
 \input{foreword.tex}
 
-\part{An introduction to OCaml}
+\part{An introduction to travlang}
 \label{p:tutorials}
 \input{coreexamples.tex}
 \input{moduleexamples.tex}
@@ -53,12 +53,12 @@ and as a
 \input{parallelism.tex}
 \input{memorymodel.tex}
 
-\part{The OCaml language}
+\part{The travlang language}
 \label{p:refman}
 \input{refman.tex}
 \input{exten.tex}
 
-\part{The OCaml tools}
+\part{The travlang tools}
 \label{p:commands}
 
 \input{comp.tex}
@@ -66,8 +66,8 @@ and as a
 \input{runtime.tex}
 \input{native.tex}
 \input{lexyacc.tex}
-\input{ocamldep.tex}
-\input{ocamldoc.tex}
+\input{travlangdep.tex}
+\input{travlangdoc.tex}
 \input{debugger.tex}
 \input{profil.tex}
 \input{intf-c.tex}
@@ -77,7 +77,7 @@ and as a
 \input{tail-mod-cons.tex}
 \input{tsan.tex}
 
-\part{The OCaml library}
+\part{The travlang library}
 \label{p:library}
 \input{core.tex}
 \input{stdlib-blurb.tex}

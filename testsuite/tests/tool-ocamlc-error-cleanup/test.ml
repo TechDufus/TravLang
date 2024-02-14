@@ -1,10 +1,10 @@
 (* TEST
  compiler_output = "compiler-output.raw";
- setup-ocamlc.byte-build-env;
+ setup-travlangc.byte-build-env;
  all_modules = "test.ml";
  flags = "-warn-error +A";
- ocamlc_byte_exit_status = "2";
- ocamlc.byte;
+ travlangc_byte_exit_status = "2";
+ travlangc.byte;
  script = "sh ${test_source_directory}/check-error-cleanup.sh";
  script;
 *)

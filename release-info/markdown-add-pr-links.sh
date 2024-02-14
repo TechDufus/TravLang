@@ -2,7 +2,7 @@
 
 #**************************************************************************
 #*                                                                        *
-#*                                 OCaml                                  *
+#*                                 travlang                                  *
 #*                                                                        *
 #*            Gabriel Scherer, projet Parsifal, INRIA Saclay              *
 #*                                                                        *
@@ -30,7 +30,7 @@
 # then add yet more non-linkified content, and run the script again on
 # the whole file.
 
-GITHUB=https://github.com/ocaml/ocaml
+GITHUB=https://github.com/travlang/travlang
 
 # Note: "cat $1 | sed ..." could be "sed ... $1", but this form makes
 # it easier to remove or reorder some of the sed passes.

@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*                  Damien Doligez, Jane Street Group, LLC                */
 /*                                                                        */
@@ -56,7 +56,7 @@ struct caml_params {
 
 extern const struct caml_params* const caml_params;
 
-extern void caml_parse_ocamlrunparam (void);
+extern void caml_parse_travlangrunparam (void);
 
 /* Common entry point to caml_startup.
    Returns 0 if the runtime is already initialized.

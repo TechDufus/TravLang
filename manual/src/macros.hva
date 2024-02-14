@@ -10,8 +10,8 @@
 \let\@oldsubsection*=\subsection*
 \let\@oldsubsubsection*=\subsubsection*
 
-%We go back to standard macros for ocamldoc generated files
-\newcommand{\ocamldocinputstart}{%
+%We go back to standard macros for travlangdoc generated files
+\newcommand{\travlangdocinputstart}{%
 \let\section=\@oldsection
 \let\subsection=\@oldsubsection
 \let\subsubsection=\@oldsubsubsection
@@ -95,7 +95,7 @@
 }
 
 
-\newstyle{div.ocaml}{
+\newstyle{div.travlang}{
   margin:2ex 0px;
   font-size: 1rem;
   background: beige;
@@ -107,38 +107,38 @@
   flex-wrap: nowrap;
 }
 
-\newstyle{div.ocaml .pre}{
+\newstyle{div.travlang .pre}{
   white-space: pre;
   font-family: monospace;
 }
 
 
 
-\newstyle{.ocamlkeyword}{
+\newstyle{.travlangkeyword}{
   font-weight:bold;
 }
 
 
-\newstyle{.ocamlhighlight}{
+\newstyle{.travlanghighlight}{
   font-weight:bold;
   text-decoration:underline;
 }
 
-\newstyle{.ocamlerror}{
+\newstyle{.travlangerror}{
   font-weight:bold;
   color:red;
 }
 
-\newstyle{.ocamlwarning}{
+\newstyle{.travlangwarning}{
   font-weight:bold;
   color:purple;
 }
 
-\newstyle{.ocamlcomment}{
+\newstyle{.travlangcomment}{
   color:grey;
 }
 
-\newstyle{.ocamlstring}{
+\newstyle{.travlangstring}{
   opacity:0.75;
 }
 
@@ -172,16 +172,16 @@
   \@close{div}
 }
 
-\newenvironment{caml}{\@open{div}{class=ocaml}}{\@close{div}}
-\newcommand{\ocamlkeyword}{\@span{class="ocamlkeyword"}}
-\newcommand{\ocamlhighlight}{\@span{class="ocamlhighlight"}}
-\newcommand{\ocamlerror}{\@span{class="ocamlerror"}}
-\newcommand{\ocamlwarning}{\@span{class="ocamlwarning"}}
-\newcommand{\ocamlcomment}{\@span{class="ocamlcomment"}}
-\newcommand{\ocamlstring}{\@span{class="ocamlstring"}}
+\newenvironment{caml}{\@open{div}{class=travlang}}{\@close{div}}
+\newcommand{\travlangkeyword}{\@span{class="travlangkeyword"}}
+\newcommand{\travlanghighlight}{\@span{class="travlanghighlight"}}
+\newcommand{\travlangerror}{\@span{class="travlangerror"}}
+\newcommand{\travlangwarning}{\@span{class="travlangwarning"}}
+\newcommand{\travlangcomment}{\@span{class="travlangcomment"}}
+\newcommand{\travlangstring}{\@span{class="travlangstring"}}
 
-\newcommand{\?}{\@span{class=ocamlprompt}\#}
-\newstyle{.ocamlprompt}{color:black;}
+\newcommand{\?}{\@span{class=travlangprompt}\#}
+\newstyle{.travlangprompt}{color:black;}
 
 %%% End of code example
 
@@ -286,7 +286,7 @@
 
 \newenvironment{linklist}{\begin{links}}{\end{links}}
 
-\ifocamldoc
+\iftravlangdoc
 \newcommand{\moduleref}[3]{\ahref{#1/#2.html}{#3}}
 \newcommand{\stdmoduleref}[1]{\moduleref{libref}{#1}{\texttt{#1}}}
 \else
@@ -301,7 +301,7 @@
 \newcommand{\DeclareUnicodeCharacter}[2]{}
 \newcommand{\DisableLigatures}[1]{}
 
-\ifocamldoc
+\iftravlangdoc
 \newcommand{\stddocitem}[2]{\libdocitem{#1}{#2}}
 \else
 \newcommand{\stddocitem}[2]{\docitem{libref/Stdlib}{#1}{#2}}

@@ -1,7 +1,7 @@
 \chapter{The module system} \label{c:moduleexamples}
 %HEVEA\cutname{moduleexamples.html}
 
-This chapter introduces the module system of OCaml.
+This chapter introduces the module system of travlang.
 
 \section{s:module:structures}{Structures}
 
@@ -264,7 +264,7 @@ operations of "WrongStringSet" cannot be applied to strings.
 As demonstrated above, it is important that the type "element" in the
 signature "SET" be declared equal to "Elt.t"; unfortunately, this is
 impossible above since "SET" is defined in a context where "Elt" does
-not exist. To overcome this difficulty, OCaml provides a
+not exist. To overcome this difficulty, travlang provides a
 "with type" construct over signatures that allows enriching a signature
 with extra type equalities:
 \begin{caml_example}{toplevel}
@@ -315,7 +315,7 @@ necessity to split the source into several files, called compilation
 units, that can be compiled separately, thus minimizing recompilation
 after changes.
 
-In OCaml, compilation units are special cases of structures
+In travlang, compilation units are special cases of structures
 and signatures, and the relationship between the units can be
 explained easily in terms of the module system. A compilation unit \var{A}
 comprises two files:
@@ -334,19 +334,19 @@ module \var{A}: sig (* \hbox{contents of file} \var{A}.mli *) end
         = struct (* \hbox{contents of file} \var{A}.ml *) end;;
 \end{alltt}
 The files that define the compilation units can be compiled separately
-using the "ocamlc -c" command (the "-c" option means ``compile only, do
+using the "travlangc -c" command (the "-c" option means ``compile only, do
 not try to link''); this produces compiled interface files (with
 extension ".cmi") and compiled object code files (with extension
 ".cmo"). When all units have been compiled, their ".cmo" files are
-linked together using the "ocamlc" command. For instance, the following
+linked together using the "travlangc" command. For instance, the following
 commands compile and link a program composed of two compilation units
 "Aux" and "Main":
 \begin{verbatim}
-$ ocamlc -c Aux.mli                     # produces aux.cmi
-$ ocamlc -c Aux.ml                      # produces aux.cmo
-$ ocamlc -c Main.mli                    # produces main.cmi
-$ ocamlc -c Main.ml                     # produces main.cmo
-$ ocamlc -o theprogram Aux.cmo Main.cmo
+$ travlangc -c Aux.mli                     # produces aux.cmi
+$ travlangc -c Aux.ml                      # produces aux.cmo
+$ travlangc -c Main.mli                    # produces main.cmi
+$ travlangc -c Main.ml                     # produces main.cmo
+$ travlangc -o theprogram Aux.cmo Main.cmo
 \end{verbatim}
 The program behaves exactly as if the following phrases were entered
 at top-level:
@@ -361,7 +361,7 @@ declarations contained in "Main.ml" and "Main.mli" can refer to
 definition in "Aux.ml", using the "Aux."\var{ident} notation, provided
 these definitions are exported in "Aux.mli".
 
-The order in which the ".cmo" files are given to "ocamlc" during the
+The order in which the ".cmo" files are given to "travlangc" during the
 linking phase determines the order in which the module definitions
 occur. Hence, in the example above, "Aux" appears first and "Main" can
 refer to it, but "Aux" cannot refer to "Main".

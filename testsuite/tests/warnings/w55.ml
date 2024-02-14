@@ -55,19 +55,19 @@ let d' x = (c [@inlined hint]) x
  flags = "-w +A-70";
  compile_only = "true";
  {
-   setup-ocamlc.byte-build-env;
-   ocamlc.byte;
-   check-ocamlc.byte-output;
+   setup-travlangc.byte-build-env;
+   travlangc.byte;
+   check-travlangc.byte-output;
  }{
    no-flambda;
-   setup-ocamlopt.byte-build-env;
-   ocamlopt.byte;
-   check-ocamlopt.byte-output;
+   setup-travlangopt.byte-build-env;
+   travlangopt.byte;
+   check-travlangopt.byte-output;
  }{
    compiler_reference = "${test_source_directory}/w55.flambda.reference";
    flambda;
-   setup-ocamlopt.byte-build-env;
-   ocamlopt.byte;
-   check-ocamlopt.byte-output;
+   setup-travlangopt.byte-build-env;
+   travlangopt.byte;
+   check-travlangopt.byte-output;
  }
 *)

@@ -4,7 +4,7 @@
 *)
 
 (* When the -flat-float-array optimization is active (standard in
-   OCaml versions up to at least 4.07), creating an array may perform
+   travlang versions up to at least 4.07), creating an array may perform
    a dynamic check, inspecing its first element to decide whether it
    is a float or not. The check is elided when the type-checker can
    determine statically that the type of the elements is float, or

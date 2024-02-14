@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Maxence Guesdon, projet Cristal, INRIA Rocquencourt        *)
 (*                                                                        *)
@@ -15,6 +15,6 @@
 
 let custom_generators_path =
   Filename.concat Config.standard_library
-    (Filename.concat "ocamldoc" "custom")
+    (Filename.concat "travlangdoc" "custom")
 
 let print_warnings = ref true

@@ -36,7 +36,7 @@ module M :
 |}]
 
 module Global_attributes = struct
-  [@@@ocaml.alert "-deprecated"]
+  [@@@travlang.alert "-deprecated"]
 
   external a : float -> float = "a" "noalloc" "a_nat" "float"
   external b : float -> float = "b" "noalloc" "b_nat"
@@ -61,7 +61,7 @@ Error: The native code version of the primitive is mandatory
 |}]
 
 module Old_style_warning = struct
-  [@@@ocaml.warning "+3"]
+  [@@@travlang.warning "+3"]
   external a : float -> float = "a" "noalloc" "a_nat" "float"
   external b : float -> float = "b" "noalloc" "b_nat"
   external c : float -> float = "c" "c_nat" "float"

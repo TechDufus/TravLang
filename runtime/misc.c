@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*          Xavier Leroy and Damien Doligez, INRIA Rocquencourt           */
 /*                                                                        */
@@ -262,7 +262,7 @@ int caml_runtime_warnings_active(void)
 {
   if (!caml_runtime_warnings) return 0;
   if (caml_runtime_warnings_first) {
-    fprintf(stderr, "[ocaml] (use Sys.enable_runtime_warnings to control "
+    fprintf(stderr, "[travlang] (use Sys.enable_runtime_warnings to control "
                     "these warnings)\n");
     caml_runtime_warnings_first = 0;
   }

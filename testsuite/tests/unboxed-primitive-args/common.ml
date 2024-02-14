@@ -16,7 +16,7 @@ type 'a proto =
 let ( ** ) x y = Abs (x, y)
 
 (* This form is easier to process programmatically. We don't expose it as
-   ocamlopt takes a really really long time to compile a constant list
+   travlangopt takes a really really long time to compile a constant list
    of these. *)
 type simplified_test = Test : string * 'a * 'a proto -> simplified_test
 
@@ -68,7 +68,7 @@ module Buffer = struct
 
   let length : t -> int = Array1.dim
 
-  external init_c_side : ocaml_buffer:t -> c_buffer:t -> unit
+  external init_c_side : travlang_buffer:t -> c_buffer:t -> unit
     = "test_set_buffers"
 
   external get_int32 : t -> int -> int32 = "%caml_bigstring_get32"
@@ -132,13 +132,13 @@ module Buffer = struct
     loop proto 0
 end
 
-let exec proto f ~ocaml_buffer ~c_buffer =
+let exec proto f ~travlang_buffer ~c_buffer =
   let rec loop : type a. a proto -> a -> int -> unit = fun proto f arg ->
     match proto with
     | Ret typ ->
       Buffer.set typ c_buffer ~arg f
     | Abs (typ, rest) ->
-      let x = Buffer.get typ ocaml_buffer ~arg in
+      let x = Buffer.get typ travlang_buffer ~arg in
       loop rest (f x) (arg + 1)
   in
   loop proto f 0
@@ -181,10 +181,10 @@ let print_hex ~sizes ~arity buffer =
 
 let printed_mismatches = ref 0
 
-let print_mismatch name proto ~ocaml_buffer ~c_buffer =
+let print_mismatch name proto ~travlang_buffer ~c_buffer =
   let printf = Printf.printf in
   printf "Mismatch for %s\n" name;
-  let o_args, o_res = strings_of_test_instance name proto ocaml_buffer in
+  let o_args, o_res = strings_of_test_instance name proto travlang_buffer in
   let c_args, c_res = strings_of_test_instance name proto     c_buffer in
   let o_args, c_args =
     (* Align arguments *)
@@ -195,11 +195,11 @@ let print_mismatch name proto ~ocaml_buffer ~c_buffer =
        Printf.sprintf "%*s" len b))
     |> List.split
   in
-  printf "ocaml side : (%s) -> %s\n" (String.concat ~sep:", " o_args) o_res;
+  printf "travlang side : (%s) -> %s\n" (String.concat ~sep:", " o_args) o_res;
   printf "c side     : (%s) -> %s\n" (String.concat ~sep:", " c_args) c_res;
   let sizes = sizes proto |> Array.of_list in
   let arity = arity proto in
-  printf "ocaml side : "; print_hex ~sizes ~arity ocaml_buffer; printf "\n";
+  printf "travlang side : "; print_hex ~sizes ~arity travlang_buffer; printf "\n";
   printf "c side     : "; print_hex ~sizes ~arity     c_buffer; printf "\n";
   incr printed_mismatches;
   if !printed_mismatches >= 1000 then begin
@@ -248,14 +248,14 @@ let cleanup_args_and_stack () =
   in
   ()
 
-let run_test ~random_data ~ocaml_buffer ~c_buffer (Test (name, f, proto)) =
-  Buffer.clear ocaml_buffer;
+let run_test ~random_data ~travlang_buffer ~c_buffer (Test (name, f, proto)) =
+  Buffer.clear travlang_buffer;
   Buffer.clear c_buffer;
-  Buffer.copy_args ~src:random_data ~dst:ocaml_buffer proto;
+  Buffer.copy_args ~src:random_data ~dst:travlang_buffer proto;
   cleanup_args_and_stack ();
-  exec proto f ~ocaml_buffer ~c_buffer;
-  let success = ocaml_buffer = c_buffer in
-  if not success then print_mismatch name proto ~ocaml_buffer ~c_buffer;
+  exec proto f ~travlang_buffer ~c_buffer;
+  let success = travlang_buffer = c_buffer in
+  if not success then print_mismatch name proto ~travlang_buffer ~c_buffer;
   success
 
 let run_tests tests =
@@ -265,9 +265,9 @@ let run_tests tests =
       max acc (arity p))
   in
 
-  let ocaml_buffer = Buffer.create ~arity:max_args
+  let travlang_buffer = Buffer.create ~arity:max_args
   and     c_buffer = Buffer.create ~arity:max_args in
-  Buffer.init_c_side ~ocaml_buffer ~c_buffer;
+  Buffer.init_c_side ~travlang_buffer ~c_buffer;
 
   let random_data = Buffer.create ~arity:max_args in
   let new_random_data () =
@@ -280,7 +280,7 @@ let run_tests tests =
   for i = 1 to 1000 do
     new_random_data ();
     List.iter tests ~f:(fun test ->
-      if not (run_test ~random_data ~ocaml_buffer ~c_buffer test) then
+      if not (run_test ~random_data ~travlang_buffer ~c_buffer test) then
         failure := true)
   done;
   exit (if !failure then 1 else 0)

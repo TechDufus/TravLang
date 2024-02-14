@@ -4,58 +4,58 @@
  libraries = "";
  shared-libraries;
  {
-   setup-ocamlc.byte-build-env;
+   setup-travlangc.byte-build-env;
    {
      module = "test5_main.ml";
-     ocamlc.byte;
+     travlangc.byte;
    }{
      module = "test5_plugin_a.ml";
-     ocamlc.byte;
+     travlangc.byte;
    }{
      module = "test5_plugin_b.ml";
-     ocamlc.byte;
+     travlangc.byte;
    }{
      module = "test5_second_plugin.ml";
-     ocamlc.byte;
+     travlangc.byte;
    }{
      program = "test5_plugin.cma";
      flags = "-a";
      all_modules = "test5_plugin_a.cmo test5_plugin_b.cmo";
-     ocamlc.byte;
+     travlangc.byte;
    }{
      program = "${test_build_directory}/test5.byte";
      libraries = "dynlink";
      all_modules = "test5_main.cmo";
-     ocamlc.byte;
+     travlangc.byte;
      run;
    }
  }{
    native-dynlink;
-   setup-ocamlopt.byte-build-env;
+   setup-travlangopt.byte-build-env;
    {
      module = "test5_main.ml";
-     ocamlopt.byte;
+     travlangopt.byte;
    }{
      module = "test5_plugin_a.ml";
-     ocamlopt.byte;
+     travlangopt.byte;
    }{
      module = "test5_plugin_b.ml";
-     ocamlopt.byte;
+     travlangopt.byte;
    }{
      program = "test5_plugin.cmxs";
      flags = "-shared";
      all_modules = "test5_plugin_a.cmx test5_plugin_b.cmx";
-     ocamlopt.byte;
+     travlangopt.byte;
    }{
      program = "test5_second_plugin.cmxs";
      flags = "-shared";
      all_modules = "test5_second_plugin.ml";
-     ocamlopt.byte;
+     travlangopt.byte;
    }{
      program = "${test_build_directory}/test5.exe";
      libraries = "dynlink";
      all_modules = "test5_main.cmx";
-     ocamlopt.byte;
+     travlangopt.byte;
      run;
    }
  }

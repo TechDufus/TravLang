@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*      Daniel de Rauglaudre, projet Cristal, INRIA Rocquencourt          *)
 (*                                                                        *)

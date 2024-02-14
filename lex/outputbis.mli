@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Luc Maranget projet Moscova INRIA Rocquencourt             *)
 (*                                                                        *)

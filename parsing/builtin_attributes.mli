@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*                         Alain Frisch, LexiFi                           *)
 (*                                                                        *)
@@ -15,28 +15,28 @@
 
 (** Support for the builtin attributes:
 
-    - ocaml.alert
-    - ocaml.boxed
-    - ocaml.deprecated
-    - ocaml.deprecated_mutable
-    - ocaml.explicit_arity
-    - ocaml.immediate
-    - ocaml.immediate64
-    - ocaml.inline
-    - ocaml.inlined
-    - ocaml.noalloc
-    - ocaml.poll
-    - ocaml.ppwarning
-    - ocaml.specialise
-    - ocaml.specialised
-    - ocaml.tailcall
-    - ocaml.tail_mod_cons
-    - ocaml.unboxed
-    - ocaml.untagged
-    - ocaml.unrolled
-    - ocaml.warnerror
-    - ocaml.warning
-    - ocaml.warn_on_literal_pattern
+    - travlang.alert
+    - travlang.boxed
+    - travlang.deprecated
+    - travlang.deprecated_mutable
+    - travlang.explicit_arity
+    - travlang.immediate
+    - travlang.immediate64
+    - travlang.inline
+    - travlang.inlined
+    - travlang.noalloc
+    - travlang.poll
+    - travlang.ppwarning
+    - travlang.specialise
+    - travlang.specialised
+    - travlang.tailcall
+    - travlang.tail_mod_cons
+    - travlang.unboxed
+    - travlang.untagged
+    - travlang.unrolled
+    - travlang.warnerror
+    - travlang.warning
+    - travlang.warn_on_literal_pattern
 
     {b Warning:} this module is unstable and part of
   {{!Compiler_libs}compiler-libs}.
@@ -128,10 +128,10 @@ val error_of_extension: Parsetree.extension -> Location.error
 
 val warning_attribute: ?ppwarning:bool -> Parsetree.attribute -> unit
   (** Apply warning settings from the specified attribute.
-      "ocaml.warning"/"ocaml.warnerror" (and variants without the prefix) are
+      "travlang.warning"/"travlang.warnerror" (and variants without the prefix) are
       processed and marked used for warning 53.  Other attributes are ignored.
 
-      Also implement ocaml.ppwarning (unless ~ppwarning:false is
+      Also implement travlang.ppwarning (unless ~ppwarning:false is
       passed).
   *)
 
@@ -151,7 +151,7 @@ val warning_scope:
 (** {2 Helpers for searching for particular attributes} *)
 
 (** [has_attribute name attrs] is true if an attribute with name [name] or
-    ["ocaml." ^ name] is present in [attrs].  It marks that attribute used for
+    ["travlang." ^ name] is present in [attrs].  It marks that attribute used for
     the purposes of misplaced attribute warnings. *)
 val has_attribute : string -> Parsetree.attributes -> bool
 
@@ -170,7 +170,7 @@ val select_attributes :
   (string * attr_action) list -> Parsetree.attributes -> Parsetree.attributes
 
 (** [attr_equals_builtin attr s] is true if the name of the attribute is [s] or
-    ["ocaml." ^ s].  This is useful for manually inspecting attribute names, but
+    ["travlang." ^ s].  This is useful for manually inspecting attribute names, but
     note that doing so will not result in marking the attribute used for the
     purpose of warning 53, so it is usually preferable to use [has_attribute]
     or [select_attributes]. *)

@@ -1,6 +1,6 @@
 #**************************************************************************
 #*                                                                        *
-#*                                 OCaml                                  *
+#*                                 travlang                                  *
 #*                                                                        *
 #*            Xavier Leroy, projet Cristal, INRIA Rocquencourt            *
 #*                                                                        *
@@ -82,6 +82,6 @@ distclean::
 
 .PHONY: depend
 depend:
-	$(OCAMLDEP_CMD) *.mli *.ml > .depend
+	$(travlangDEP_CMD) *.mli *.ml > .depend
 
 include .depend

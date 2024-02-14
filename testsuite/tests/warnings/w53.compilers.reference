@@ -294,9 +294,9 @@ File "w53.ml", line 163, characters 16-22:
 Warning 53 [misplaced-attribute]: the "inline" attribute cannot appear in this context
 
 File "w53.ml", line 164, characters 16-28:
-164 |   let h x = x [@ocaml.inline] (* rejected *)
+164 |   let h x = x [@travlang.inline] (* rejected *)
                       ^^^^^^^^^^^^
-Warning 53 [misplaced-attribute]: the "ocaml.inline" attribute cannot appear in this context
+Warning 53 [misplaced-attribute]: the "travlang.inline" attribute cannot appear in this context
 
 File "w53.ml", line 166, characters 16-23:
 166 |   let i x = x [@inlined] (* rejected *)
@@ -304,9 +304,9 @@ File "w53.ml", line 166, characters 16-23:
 Warning 53 [misplaced-attribute]: the "inlined" attribute cannot appear in this context
 
 File "w53.ml", line 167, characters 16-29:
-167 |   let j x = x [@ocaml.inlined] (* rejected *)
+167 |   let j x = x [@travlang.inlined] (* rejected *)
                       ^^^^^^^^^^^^^
-Warning 53 [misplaced-attribute]: the "ocaml.inlined" attribute cannot appear in this context
+Warning 53 [misplaced-attribute]: the "travlang.inlined" attribute cannot appear in this context
 
 File "w53.ml", line 170, characters 18-25:
 170 |   let l x = h x [@inlined] (* rejected *)
@@ -319,9 +319,9 @@ File "w53.ml", line 178, characters 27-33:
 Warning 53 [misplaced-attribute]: the "inline" attribute cannot appear in this context
 
 File "w53.ml", line 179, characters 28-40:
-179 |   module C' = struct end [@@ocaml.inline] (* rejected *)
+179 |   module C' = struct end [@@travlang.inline] (* rejected *)
                                   ^^^^^^^^^^^^
-Warning 53 [misplaced-attribute]: the "ocaml.inline" attribute cannot appear in this context
+Warning 53 [misplaced-attribute]: the "travlang.inline" attribute cannot appear in this context
 
 File "w53.ml", line 180, characters 27-34:
 180 |   module D = struct end [@@inlined] (* rejected *)
@@ -329,9 +329,9 @@ File "w53.ml", line 180, characters 27-34:
 Warning 53 [misplaced-attribute]: the "inlined" attribute cannot appear in this context
 
 File "w53.ml", line 181, characters 28-41:
-181 |   module D' = struct end [@@ocaml.inlined] (* rejected *)
+181 |   module D' = struct end [@@travlang.inlined] (* rejected *)
                                   ^^^^^^^^^^^^^
-Warning 53 [misplaced-attribute]: the "ocaml.inlined" attribute cannot appear in this context
+Warning 53 [misplaced-attribute]: the "travlang.inlined" attribute cannot appear in this context
 
 File "w53.ml", line 185, characters 18-24:
 185 |   module G = (A [@inline])(struct end) (* rejected *)
@@ -339,9 +339,9 @@ File "w53.ml", line 185, characters 18-24:
 Warning 53 [misplaced-attribute]: the "inline" attribute cannot appear in this context
 
 File "w53.ml", line 186, characters 19-31:
-186 |   module G' = (A [@ocaml.inline])(struct end) (* rejected *)
+186 |   module G' = (A [@travlang.inline])(struct end) (* rejected *)
                          ^^^^^^^^^^^^
-Warning 53 [misplaced-attribute]: the "ocaml.inline" attribute cannot appear in this context
+Warning 53 [misplaced-attribute]: the "travlang.inline" attribute cannot appear in this context
 
 File "w53.ml", line 190, characters 24-31:
 190 |   module I = Set.Make [@inlined] (* rejected *)
@@ -349,9 +349,9 @@ File "w53.ml", line 190, characters 24-31:
 Warning 53 [misplaced-attribute]: the "inlined" attribute cannot appear in this context
 
 File "w53.ml", line 191, characters 25-38:
-191 |   module I' = Set.Make [@ocaml.inlined] (* rejected *)
+191 |   module I' = Set.Make [@travlang.inlined] (* rejected *)
                                ^^^^^^^^^^^^^
-Warning 53 [misplaced-attribute]: the "ocaml.inlined" attribute cannot appear in this context
+Warning 53 [misplaced-attribute]: the "travlang.inlined" attribute cannot appear in this context
 
 File "w53.ml", line 193, characters 25-32:
 193 |   module J = Set.Make [@@inlined] (* rejected *)
@@ -359,9 +359,9 @@ File "w53.ml", line 193, characters 25-32:
 Warning 53 [misplaced-attribute]: the "inlined" attribute cannot appear in this context
 
 File "w53.ml", line 194, characters 26-39:
-194 |   module J' = Set.Make [@@ocaml.inlined] (* rejected *)
+194 |   module J' = Set.Make [@@travlang.inlined] (* rejected *)
                                 ^^^^^^^^^^^^^
-Warning 53 [misplaced-attribute]: the "ocaml.inlined" attribute cannot appear in this context
+Warning 53 [misplaced-attribute]: the "travlang.inlined" attribute cannot appear in this context
 
 File "w53.ml", line 199, characters 21-28:
 199 |   type 'a t1 = 'a [@@noalloc] (* rejected *)
@@ -454,9 +454,9 @@ File "w53.ml", line 254, characters 16-24:
 Warning 53 [misplaced-attribute]: the "tailcall" attribute cannot appear in this context
 
 File "w53.ml", line 255, characters 16-30:
-255 |   let n x = x [@ocaml.tailcall] (* rejected *)
+255 |   let n x = x [@travlang.tailcall] (* rejected *)
                       ^^^^^^^^^^^^^^
-Warning 53 [misplaced-attribute]: the "ocaml.tailcall" attribute cannot appear in this context
+Warning 53 [misplaced-attribute]: the "travlang.tailcall" attribute cannot appear in this context
 
 File "w53.ml", line 258, characters 18-26:
 258 |   let q x = m x [@tailcall] (* rejected *)

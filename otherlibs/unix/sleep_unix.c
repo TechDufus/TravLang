@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           */
 /*                                                                        */
@@ -41,7 +41,7 @@ CAMLprim value caml_unix_sleep(value duration)
       caml_enter_blocking_section();
       ret = nanosleep(&t, &t);
       /* MPR#7903: if we were interrupted by a signal, and this signal
-         is handled in OCaml, we should run its handler now,
+         is handled in travlang, we should run its handler now,
          not at the end of the full sleep duration.  Leaving the blocking
          section and re-entering it does the job. */
       caml_leave_blocking_section();

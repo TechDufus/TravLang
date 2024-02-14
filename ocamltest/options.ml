@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Sebastien Hinderer, projet Gallium, INRIA Paris            *)
 (*                                                                        *)
@@ -13,7 +13,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* Description of ocamltest's command-line options *)
+(* Description of travlangtest's command-line options *)
 
 let show_objects title string_of_object objects =
   let print_object o = print_endline ("  " ^ (string_of_object o)) in

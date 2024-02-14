@@ -1,6 +1,6 @@
 #**************************************************************************
 #*                                                                        *
-#*                                 OCaml                                  *
+#*                                 travlang                                  *
 #*                                                                        *
 #*            Gabriel Scherer, projet Parsifal, INRIA Saclay              *
 #*                                                                        *
@@ -44,40 +44,40 @@ ifeq "$(V)" "0"
 
 V_CC         = @$(info $   CC $@)
 V_CCDEPS     = @$(info $   CCDEPS $@)
-V_OCAMLC     = @$(info $   OCAMLC $@)
-V_OCAMLOPT   = @$(info $   OCAMLOPT $@)
+V_travlangC     = @$(info $   travlangC $@)
+V_travlangOPT   = @$(info $   travlangOPT $@)
 V_GEN        = @$(info $   GEN $@)
 V_LINKC      = @$(info $   LINKC $@)
 V_LINKOPT    = @$(info $   LINKOPT $@)
 V_MKEXE      = @$(info $   MKEXE $@)
 V_MKLIB      = @$(info $   MKLIB $@)
 V_MKDLL      = @$(info $   MKDLL $@)
-V_OCAMLLEX   = @$(info $   OCAMLLEX $@)
-V_OCAMLYACC  = @$(info $   OCAMLYACC $@)
-V_OCAMLDEP   = @$(info $   OCAMLDEP $@)
+V_travlangLEX   = @$(info $   travlangLEX $@)
+V_travlangYACC  = @$(info $   travlangYACC $@)
+V_travlangDEP   = @$(info $   travlangDEP $@)
 V_ASM        = @$(info $   ASM $@)
-V_OCAMLMKLIB = @$(info $   OCAMLMKLIB $@)
-V_OCAMLDOC   = @$(info $   OCAMLDOC $@)
+V_travlangMKLIB = @$(info $   travlangMKLIB $@)
+V_travlangDOC   = @$(info $   travlangDOC $@)
 V_ODOC       = @$(info $   ODOC $@)
 
 else
 
 V_CC         =
 V_CCDEPS     =
-V_OCAMLC     =
-V_OCAMLOPT   =
+V_travlangC     =
+V_travlangOPT   =
 V_GEN        =
 V_LINKC      =
 V_LINKOPT    =
 V_MKEXE      =
 V_MKLIB      =
 V_MKDLL      =
-V_OCAMLLEX   =
-V_OCAMLYACC  =
-V_OCAMLDEP   =
+V_travlangLEX   =
+V_travlangYACC  =
+V_travlangDEP   =
 V_ASM        =
-V_OCAMLMKLIB =
-V_OCAMLDOC   =
+V_travlangMKLIB =
+V_travlangDOC   =
 V_ODOC       =
 
 endif
@@ -97,32 +97,32 @@ FLEXDLL_SUBMODULE_PRESENT := $(wildcard $(ROOTDIR)/flexdll/Makefile)
 
 IN_COREBOOT_CYCLE ?= false
 
-# Variables used to represent the OCaml runtime system
-# Most of the time, boot/ocamlrun and runtime/ocamlrun are the same.
+# Variables used to represent the travlang runtime system
+# Most of the time, boot/travlangrun and runtime/travlangrun are the same.
 # However, under some circumstances it is important to be able to
 # distinguish one from the other, hence these two variables.
-# Boot/ocamlrun is the most frequently used in the build system, so
-# we use OCAMLRUN to designate it and keep NEW_OCAMLRUN to refer
-# to runtime/ocamlrun, because it's less frequently used.
-OCAMLRUN ?= $(ROOTDIR)/boot/ocamlrun$(EXE)
-NEW_OCAMLRUN ?= $(ROOTDIR)/runtime/ocamlrun$(EXE)
+# Boot/travlangrun is the most frequently used in the build system, so
+# we use travlangRUN to designate it and keep NEW_travlangRUN to refer
+# to runtime/travlangrun, because it's less frequently used.
+travlangRUN ?= $(ROOTDIR)/boot/travlangrun$(EXE)
+NEW_travlangRUN ?= $(ROOTDIR)/runtime/travlangrun$(EXE)
 
 # Standard library flags
 STDLIBFLAGS ?= -nostdlib -I $(ROOTDIR)/stdlib
 BOOT_STDLIBFLAGS ?= -nostdlib -I $(ROOTDIR)/boot
 
-TEST_BOOT_OCAMLC_OPT = $(shell \
-  test $(ROOTDIR)/boot/ocamlc.opt -nt $(ROOTDIR)/boot/ocamlc; \
+TEST_BOOT_travlangC_OPT = $(shell \
+  test $(ROOTDIR)/boot/travlangc.opt -nt $(ROOTDIR)/boot/travlangc; \
   echo $$?)
 
-# Use boot/ocamlc.opt if available
-ifeq "$(TEST_BOOT_OCAMLC_OPT)" "0"
-  BOOT_OCAMLC = $(ROOTDIR)/boot/ocamlc.opt
+# Use boot/travlangc.opt if available
+ifeq "$(TEST_BOOT_travlangC_OPT)" "0"
+  BOOT_travlangC = $(ROOTDIR)/boot/travlangc.opt
 else
-  BOOT_OCAMLC = $(OCAMLRUN) $(ROOTDIR)/boot/ocamlc
+  BOOT_travlangC = $(travlangRUN) $(ROOTDIR)/boot/travlangc
 endif
 
-BOOT_OCAMLDEP = $(BOOT_OCAMLC) -depend
+BOOT_travlangDEP = $(BOOT_travlangC) -depend
 
 # Takes an implicit path and converts it to a path expression which returns to
 # the current directory. e.g. $(call ROOT_FROM, foo/bar/) expands to ../..
@@ -186,42 +186,42 @@ $(1): $(1)$(EXE)
 endif
 endef # PROGRAM_SYNONYM
 
-# Definitions related to ocamldep
+# Definitions related to travlangdep
 
-# Default value for OCAMLDEP
+# Default value for travlangDEP
 # In those directories where this needs to be overridden, the overriding
 # should take place *before* Makefile.common is included.
 
-OCAMLDEP ?= $(BEST_OCAMLDEP)
-OCAMLDEPFLAGS ?=
-OC_OCAMLDEPFLAGS = -slash
-OC_OCAMLDEPDIRS =
-OCAMLDEP_CMD = $(OCAMLDEP) $(OC_OCAMLDEPFLAGS) \
-  $(addprefix -I ,$(OC_OCAMLDEPDIRS)) $(OCAMLDEPFLAGS)
+travlangDEP ?= $(BEST_travlangDEP)
+travlangDEPFLAGS ?=
+OC_travlangDEPFLAGS = -slash
+OC_travlangDEPDIRS =
+travlangDEP_CMD = $(travlangDEP) $(OC_travlangDEPFLAGS) \
+  $(addprefix -I ,$(OC_travlangDEPDIRS)) $(travlangDEPFLAGS)
 
 # Lexer generation
 
-BOOT_OCAMLLEX ?= $(OCAMLRUN) $(ROOTDIR)/boot/ocamllex
+BOOT_travlangLEX ?= $(travlangRUN) $(ROOTDIR)/boot/travlanglex
 
-# Default value for OCAMLLEX
+# Default value for travlangLEX
 # In those directories where this needs to be overridden, the overriding
 # should take place *before* Makefile.common is included.
 
-OCAMLLEX ?= $(BEST_OCAMLLEX)
+travlangLEX ?= $(BEST_travlangLEX)
 
-OCAMLLEXFLAGS ?= -q
+travlangLEXFLAGS ?= -q
 
 %.ml: %.mll
-	$(V_OCAMLLEX)$(OCAMLLEX) $(OCAMLLEXFLAGS) $<
+	$(V_travlangLEX)$(travlangLEX) $(travlangLEXFLAGS) $<
 
 # Parser generation
 
-OCAMLYACC ?= $(ROOTDIR)/yacc/ocamlyacc$(EXE)
+travlangYACC ?= $(ROOTDIR)/yacc/travlangyacc$(EXE)
 
-OCAMLYACCFLAGS ?= --strict -v
+travlangYACCFLAGS ?= --strict -v
 
 %.ml %.mli: %.mly
-	$(V_OCAMLYACC)$(OCAMLYACC) $(OCAMLYACCFLAGS) $<
+	$(V_travlangYACC)$(travlangYACC) $(travlangYACCFLAGS) $<
 
 SAK = $(ROOTDIR)/runtime/sak$(EXE)
 
@@ -231,7 +231,7 @@ if_file_exists = ( test ! -f $(1) || $(2) && rm -f $(1) )
 MERGEMANIFESTEXE = $(call if_file_exists, $(1).manifest, \
   mt -nologo -outputresource:$(1) -manifest $(1).manifest)
 
-# Macros and rules to compile OCaml programs and libraries
+# Macros and rules to compile travlang programs and libraries
 
 # The following variable is used to accumulate a list of all the CMX
 # files that get built. Is is then used in the root Makefile to express
@@ -243,13 +243,13 @@ ALL_CMX_FILES =
 # We use secondary expansion here so that variables like
 # foo_LIBRARIES and foo_SOURCES can be defined after the calls
 # to the macros below. Without secondary expansion, those variables
-# would have to be defined before the calls to OCAML_BYTECODE_PROGRAM etc.
+# would have to be defined before the calls to travlang_BYTECODE_PROGRAM etc.
 
 .SECONDEXPANSION:
 
 # Definitions that are common to both programs and libraries
 
-define _OCAML_COMMON_BASE
+define _travlang_COMMON_BASE
 $(basename $(notdir $(1)))_C_FILES = \
   $$(filter %.c, $$($(basename $(notdir $(1)))_SOURCES))
 $(basename $(notdir $(1)))_MLI_FILES = \
@@ -277,9 +277,9 @@ beforedepend:: $$$$($(basename $(notdir $(1)))_SECONDARY_FILES)
 $(basename $(notdir $(1)))_GENERATED_FILES = \
   $$($(basename $(notdir $(1)))_SECONDARY_FILES) \
   $$(patsubst %.mly,%.output, $$($(basename $(notdir $(1)))_MLY_FILES))
-endef # _OCAML_COMMON_BASE
+endef # _travlang_COMMON_BASE
 
-# Macros to build OCaml programs
+# Macros to build travlang programs
 
 # Each program foo is characterised by the foo_LIBRARIES and foo_SOURCES
 # variables. The following macros provide the infrastructure to build foo
@@ -288,26 +288,26 @@ endef # _OCAML_COMMON_BASE
 # variables whose names are prefixed with foo_ to compute the
 # different lists of files used to build foo.
 
-# The first macro, _OCAML_PROGRAM_BASE, is a private macro (hence the _ at the
+# The first macro, _travlang_PROGRAM_BASE, is a private macro (hence the _ at the
 # beginning of its name) which defines foo_ variables common to both
-# bytecode and native programs. The next two macros, OCAML_BYTECODE_PROGRAM
-# and OCAML_NATIVE_PROGRAM are used to define programs that are provided
+# bytecode and native programs. The next two macros, travlang_BYTECODE_PROGRAM
+# and travlang_NATIVE_PROGRAM are used to define programs that are provided
 # only in bytecode or native form, respectively. Programs provided
-# in both forms should use OCAML_PROGRAM.
+# in both forms should use travlang_PROGRAM.
 
-define _OCAML_PROGRAM_BASE
-$(eval $(call _OCAML_COMMON_BASE,$(1)))
-endef # _OCAML_PROGRAM_BASE
+define _travlang_PROGRAM_BASE
+$(eval $(call _travlang_COMMON_BASE,$(1)))
+endef # _travlang_PROGRAM_BASE
 
 LINK_BYTECODE_PROGRAM =\
   $(CAMLC) $(OC_COMMON_LINKFLAGS) $(OC_BYTECODE_LINKFLAGS)
 
-# The _OCAML_BYTECODE_PROGRAM macro defines a bytecode program but assuming
-# that _OCAML_PROGRAM_BASE has already been called. Its public counterpart
-# does not rely on this assumption and rather does call _OCAML_PROGRAM_BASE
+# The _travlang_BYTECODE_PROGRAM macro defines a bytecode program but assuming
+# that _travlang_PROGRAM_BASE has already been called. Its public counterpart
+# does not rely on this assumption and rather does call _travlang_PROGRAM_BASE
 # itself.
 
-define _OCAML_BYTECODE_PROGRAM
+define _travlang_BYTECODE_PROGRAM
 $(eval $(call PROGRAM_SYNONYM,$(1)))
 $(basename $(notdir $(1)))_CMA_FILES = \
   $$(patsubst %,%.cma, $$($(basename $(notdir $(1)))_LIBRARIES))
@@ -322,17 +322,17 @@ $(basename $(notdir $(1)))_BCOBJS = \
 $(1)$(EXE): $$$$($(basename $(notdir $(1)))_BCOBJS)
 	$$(V_LINKC)$$(LINK_BYTECODE_PROGRAM) -o $$@ \
 	  $$($(basename $(notdir $(1)))_BCOBJS)
-endef # _OCAML_BYTECODE_PROGRAM
+endef # _travlang_BYTECODE_PROGRAM
 
-define OCAML_BYTECODE_PROGRAM
-$(eval $(call _OCAML_PROGRAM_BASE,$(1)))
-$(eval $(call _OCAML_BYTECODE_PROGRAM,$(1)))
-endef # OCAML_BYTECODE_PROGRAM
+define travlang_BYTECODE_PROGRAM
+$(eval $(call _travlang_PROGRAM_BASE,$(1)))
+$(eval $(call _travlang_BYTECODE_PROGRAM,$(1)))
+endef # travlang_BYTECODE_PROGRAM
 
 LINK_NATIVE_PROGRAM =\
   $(CAMLOPT) $(OC_COMMON_LINKFLAGS) $(OC_NATIVE_LINKFLAGS)
 
-define _OCAML_NATIVE_PROGRAM
+define _travlang_NATIVE_PROGRAM
 $(eval $(call PROGRAM_SYNONYM,$(1)))
 $(basename $(notdir $(1)))_CMXA_FILES = \
   $$(patsubst %,%.cmxa, $$($(basename $(notdir $(1)))_LIBRARIES))
@@ -348,34 +348,34 @@ $(basename $(notdir $(1)))_NCOBJS = \
 $(1)$(EXE): $$$$($(basename $(notdir $(1)))_NCOBJS)
 	$$(V_LINKOPT)$$(LINK_NATIVE_PROGRAM) -o $$@ \
 	  $$($(basename $(notdir $(1)))_NCOBJS)
-endef # _OCAML_NATIVE_PROGRAM
+endef # _travlang_NATIVE_PROGRAM
 
-define OCAML_NATIVE_PROGRAM
-$(eval $(call _OCAML_PROGRAM_BASE,$(1)))
-$(eval $(call _OCAML_NATIVE_PROGRAM,$(1)))
-endef # OCAML_NATIVE_PROGRAM
+define travlang_NATIVE_PROGRAM
+$(eval $(call _travlang_PROGRAM_BASE,$(1)))
+$(eval $(call _travlang_NATIVE_PROGRAM,$(1)))
+endef # travlang_NATIVE_PROGRAM
 
-define OCAML_PROGRAM
-$(eval $(call _OCAML_PROGRAM_BASE,$(1)))
-$(eval $(call _OCAML_BYTECODE_PROGRAM,$(1)))
-$(eval $(call _OCAML_NATIVE_PROGRAM,$(1).opt))
-endef # OCAML_PROGRAM
+define travlang_PROGRAM
+$(eval $(call _travlang_PROGRAM_BASE,$(1)))
+$(eval $(call _travlang_BYTECODE_PROGRAM,$(1)))
+$(eval $(call _travlang_NATIVE_PROGRAM,$(1).opt))
+endef # travlang_PROGRAM
 
-# Macros for OCaml libraries, similar to those for OCaml programs
+# Macros for travlang libraries, similar to those for travlang programs
 
-define _OCAML_LIBRARY_BASE
-$(eval $(call _OCAML_COMMON_BASE,$(1)))
-endef # _OCAML_LIBRARY_BASE
+define _travlang_LIBRARY_BASE
+$(eval $(call _travlang_COMMON_BASE,$(1)))
+endef # _travlang_LIBRARY_BASE
 
 LINK_BYTECODE_LIBRARY =\
   $(CAMLC) $(OC_COMMON_LINKFLAGS) $(OC_BYTECODE_LINKFLAGS)
 
-# The _OCAML_BYTECODE_LIBRARY macro defines a bytecode library but assuming
-# that _OCAML_LIBRARY_BASE has already been called. Its public counterpart
-# does not rely on this assumption and rather does call _OCAML_LIBRARY_BASE
+# The _travlang_BYTECODE_LIBRARY macro defines a bytecode library but assuming
+# that _travlang_LIBRARY_BASE has already been called. Its public counterpart
+# does not rely on this assumption and rather does call _travlang_LIBRARY_BASE
 # itself.
 
-define _OCAML_BYTECODE_LIBRARY
+define _travlang_BYTECODE_LIBRARY
 $(basename $(notdir $(1)))_BYTE_CMI_FILES = \
   $$(foreach F,$$($(basename $(notdir $(1)))_CMI_FILES),\
     $$(if $$(findstring /native/,$$(F)),,$$(F)))
@@ -393,17 +393,17 @@ $(1).cma: \
   $$$$($(basename $(notdir $(1)))_BCOBJS)
 	$$(V_LINKC)$$(LINK_BYTECODE_LIBRARY) -a -o $$@ \
 	  $$($(basename $(notdir $(1)))_BCOBJS)
-endef # _OCAML_BYTECODE_LIBRARY
+endef # _travlang_BYTECODE_LIBRARY
 
-define OCAML_BYTECODE_LIBRARY
-$(eval $(call _OCAML_LIBRARY_BASE,$(1)))
-$(eval $(call _OCAML_BYTECODE_LIBRARY,$(1)))
-endef # OCAML_BYTECODE_LIBRARY
+define travlang_BYTECODE_LIBRARY
+$(eval $(call _travlang_LIBRARY_BASE,$(1)))
+$(eval $(call _travlang_BYTECODE_LIBRARY,$(1)))
+endef # travlang_BYTECODE_LIBRARY
 
 LINK_NATIVE_LIBRARY =\
   $(CAMLOPT) $(OC_COMMON_LINKFLAGS) $(OC_NATIVE_LINKFLAGS)
 
-define _OCAML_NATIVE_LIBRARY
+define _travlang_NATIVE_LIBRARY
 $(basename $(notdir $(1)))_NATIVE_CMI_FILES = \
   $$(foreach F,$$($(basename $(notdir $(1)))_CMI_FILES),\
     $$(if $$(findstring /byte/,$$(F)),,$$(F)))
@@ -422,29 +422,29 @@ $(1).cmxa: \
   $$$$($(basename $(notdir $(1)))_NCOBJS)
 	$$(V_LINKOPT)$$(LINK_NATIVE_LIBRARY) -a -o $$@ \
 	  $$($(basename $(notdir $(1)))_NCOBJS)
-endef # _OCAML_NATIVE_LIBRARY
+endef # _travlang_NATIVE_LIBRARY
 
-define OCAML_NATIVE_LIBRARY
-$(eval $(call _OCAML_LIBRARY_BASE,$(1)))
-$(eval $(call _OCAML_NATIVE_LIBRARY,$(1)))
-endef # OCAML_NATIVE_LIBRARY
+define travlang_NATIVE_LIBRARY
+$(eval $(call _travlang_LIBRARY_BASE,$(1)))
+$(eval $(call _travlang_NATIVE_LIBRARY,$(1)))
+endef # travlang_NATIVE_LIBRARY
 
-define OCAML_LIBRARY
-$(eval $(call _OCAML_LIBRARY_BASE,$(1)))
-$(eval $(call _OCAML_BYTECODE_LIBRARY,$(1)))
-$(eval $(call _OCAML_NATIVE_LIBRARY,$(1)))
-endef # OCAML_LIBRARY
+define travlang_LIBRARY
+$(eval $(call _travlang_LIBRARY_BASE,$(1)))
+$(eval $(call _travlang_BYTECODE_LIBRARY,$(1)))
+$(eval $(call _travlang_NATIVE_LIBRARY,$(1)))
+endef # travlang_LIBRARY
 
 # Installing a bytecode executable, with debug information removed
 define INSTALL_STRIPPED_BYTE_PROG
-$(OCAMLRUN) $(ROOTDIR)/tools/stripdebug $(1) $(1).tmp \
+$(travlangRUN) $(ROOTDIR)/tools/stripdebug $(1) $(1).tmp \
 && $(INSTALL_PROG) $(1).tmp $(2) \
 && rm $(1).tmp
 endef # INSTALL_STRIPPED_BYTE_PROG
 
-# ocamlc has several mechanisms for linking a bytecode image to the runtime
+# travlangc has several mechanisms for linking a bytecode image to the runtime
 # which executes it. The exact mechanism depends on the platform and the precise
-# location of the runtime. The boot compiler (boot/ocamlc) therefore needs this
+# location of the runtime. The boot compiler (boot/travlangc) therefore needs this
 # additional information, which comes from the stdlib build and is copied into
 # boot/ as part of coldstart. See read_runtime_launch_info in
 # bytecomp/bytelink.ml for further details.

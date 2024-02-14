@@ -17,7 +17,7 @@
 \let\@oldsubsection=\subsection
 \let\@oldsubsubsection=\subsection
 
-\newcommand{\ocamldocinputstart}{
+\newcommand{\travlangdocinputstart}{
 \let\section=\@oldsection
 \let\subsection=\@oldsubsection
 \let\subsubsection=\@oldsubsubsection
@@ -220,7 +220,7 @@
   \@input{#1.ind}}
 
 %%% Linking to modules
-\ifocamldoc
+\iftravlangdoc
 \newcommand{\moduleref}[3]{\hyperref[#2]{#3}[\ref{#2}]}
 \newcommand{\stdmoduleref}[1]{\moduleref{}{#1}{\texttt{#1}}}
 \newcommand{\stdpageref}[1]{\pageref{#1}}
@@ -232,11 +232,11 @@
 \newcommand{\stdmoduleref}[1]{\moduleref{libref-module-Stdlib}{#1}{\texttt{#1}}}
 \newcommand{\stdpageref}[1]{\pageref{\moduleLabel{libref-module-Stdlib}{#1}}}
 \fi
-\newenvironment{linklist}{\begingroup\ocamldocinputstart}{\endgroup}
+\newenvironment{linklist}{\begingroup\travlangdocinputstart}{\endgroup}
 
 \newcommand{\compilerdocitem}[2]{\input{library/#1.tex}}
 \newcommand{\libdocitem}[2]{\input{library/#1.tex}}
-\ifocamldoc
+\iftravlangdoc
 \newcommand{\stddocitem}[2]{\libdocitem{#1}{#2}}
 \else
 \newcommand{\stddocitem}[2]{\libdocitem{Stdlib.#1}{#2}}
@@ -248,14 +248,14 @@
 % Caml-example related command
 \newenvironment{camlexample}[1]{}{}
 \newenvironment{caml}{}{}
-\newcommand{\ocamlkeyword}{\bfseries}
-\newcommand{\ocamlhighlight}{\bfseries\uline}
-\newcommand{\ocamlerror}{\bfseries}
-\newcommand{\ocamlwarning}{\bfseries}
+\newcommand{\travlangkeyword}{\bfseries}
+\newcommand{\travlanghighlight}{\bfseries\uline}
+\newcommand{\travlangerror}{\bfseries}
+\newcommand{\travlangwarning}{\bfseries}
 \newcommand{\?}{\color{black}\normalsize\tt\#{}}
 
 \definecolor{gray}{gray}{0.5}
-\newcommand{\ocamlcomment}{\color{gray}\normalfont\small}
-\newcommand{\ocamlstring}{\color{gray}\bfseries}
+\newcommand{\travlangcomment}{\color{gray}\normalfont\small}
+\newcommand{\travlangstring}{\color{gray}\bfseries}
 
 \makeatother

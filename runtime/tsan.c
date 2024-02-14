@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*               Fabrice Buoro and Olivier Nicole, Tarides                */
 /*                                                                        */
@@ -72,10 +72,10 @@
 
    1. Exceptions
 
-     1.1 From OCaml
+     1.1 From travlang
 
      Exception raising must be preceded by a call to `caml_tsan_exit_on_raise`
-     to issue calls to `__tsan_func_exit` for each OCaml function exited by the
+     to issue calls to `__tsan_func_exit` for each travlang function exited by the
      exception. The process should be repeated when re-raising until the
      appropriate exception handler is found.
 
@@ -86,7 +86,7 @@
      `__tsan_func_exit` for each C function left in the current stack chunk.
      A distinct function needs to be used for C because, although both
      functions work by unwinding the stack, they use different mechanisms.
-     OCaml stack chunks are traversed using the information from frame
+     travlang stack chunks are traversed using the information from frame
      descriptors, while C stack frames (for which there are no frame
      descriptors) are traversed using the libunwind library.
 
@@ -103,15 +103,15 @@
    3. Memory model considerations
 
    TSan is designed to detect data races as defined by the C11 memory model.
-   Yet we are using it to detect data races in OCaml programs, and even in a
-   mix of OCaml and C code (e.g. between the program and the runtime). To
-   accomplish this, we use a carefully chosen mapping of OCaml memory accesses
+   Yet we are using it to detect data races in travlang programs, and even in a
+   mix of travlang and C code (e.g. between the program and the runtime). To
+   accomplish this, we use a carefully chosen mapping of travlang memory accesses
    to C11 accesses.
 
-   For each type of OCaml memory access on the left, we signal to TSan the
+   For each type of travlang memory access on the left, we signal to TSan the
    operations on the right:
 
-   OCaml access      | C11 equivalent          | TSan view
+   travlang access      | C11 equivalent          | TSan view
    ------------------|-------------------------|--------------------------------
    Atomic load       | fence(acquire)          | __tsan_atomic64_load(seq_cst)
                      | atomic_load(seq_cst)    |
@@ -143,28 +143,28 @@
 
    3.1. False negatives
 
-   There should be no false negatives, i.e., all data races (in the OCaml
+   There should be no false negatives, i.e., all data races (in the travlang
    sense) on visited code paths should be detected (modulo TSan limitations
    such as the finite history of memory accesses).
 
    3.2. False positives
 
-   The mapping that we use should not incur any false positives in pure OCaml
-   code, i.e., all data races reported between two accesses from OCaml are
-   true data races (in the OCaml sense of the term).
+   The mapping that we use should not incur any false positives in pure travlang
+   code, i.e., all data races reported between two accesses from travlang are
+   true data races (in the travlang sense of the term).
 
-   In mixed C-OCaml code, rare false positives may occur in the following cases:
+   In mixed C-travlang code, rare false positives may occur in the following cases:
 
    - A value is initialized from C without using `caml_initialize` (allowed by
      the FFI rules on the condition that the GC does not run between the
      allocation and the end of initialization) and a conflicting access is made
-     from OCaml after publication to other threads. There should be no data
+     from travlang after publication to other threads. There should be no data
      race thanks to data dependency (see [MMOC] comment in memory.c), but TSan
      does not take data dependencies into account.
    - A field is accessed from C with `Field`, or more generally using a
      `volatile value *` or a relaxed atomic access, and that field is modified
-     concurrently by OCaml code. Because `caml_modify` is instrumented as a
-     plain write for proper detection of OCaml races, this case is seen as a
+     concurrently by travlang code. Because `caml_modify` is instrumented as a
+     plain write for proper detection of travlang races, this case is seen as a
      data race.
 
    3.3. volatile accesses
@@ -202,7 +202,7 @@ Caml_inline void caml_tsan_debug_log_pc(const char* msg, uintnat pc)
 }
 
 /* This function is called by `caml_raise_exn` or `caml_tsan_raise_notrace_exn`
- from an OCaml stack.
+ from an travlang stack.
  - [pc] is the program counter where `caml_raise_exn` would return, i.e. the
  next instruction after `caml_raise_exn` in the function that raised the
  exception.
@@ -408,7 +408,7 @@ DEFINE_TSAN_VOLATILE_READ_WRITE(8, 64);
 
 /* We do not treat accesses to 128-bit (a.k.a. 16-byte) values as atomic, since
    it is dubious that they can be treated as such. Still, the functions below
-   are needed because, without them, building a C library for OCaml with TSan
+   are needed because, without them, building a C library for travlang with TSan
    enabled will fail at the linking step with an unresolved symbol error if it
    contains volatile accesses to 128-bit values. It is better to have 128-bit
    volatiles behave silently like plain 128-bit values. */

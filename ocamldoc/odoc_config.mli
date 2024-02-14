@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Maxence Guesdon, projet Cristal, INRIA Rocquencourt        *)
 (*                                                                        *)
@@ -13,10 +13,10 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(** Ocamldoc configuration constants. *)
+(** travlangdoc configuration constants. *)
 
 (** Default path to search for custom generators and to install them. *)
 val custom_generators_path : string
 
-(** A flag to indicate whether to print ocamldoc warnings or not. *)
+(** A flag to indicate whether to print travlangdoc warnings or not. *)
 val print_warnings : bool ref

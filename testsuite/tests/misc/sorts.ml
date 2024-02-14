@@ -4,7 +4,7 @@
 
 
 (*
-  ocamlopt -noassert sorts.ml -cclib -lunix
+  travlangopt -noassert sorts.ml -cclib -lunix
 *)
 
 open Printf;;

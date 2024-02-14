@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -174,7 +174,7 @@ type event +=
   (* Just after the setup, when the toplevel is ready to evaluate user
      input. This happens before the toplevel has evaluated any kind of
      user input, in particular this happens before loading the
-     [.ocamlinit] file. *)
+     [.travlanginit] file. *)
 
 val add_hook : (event -> unit) -> unit
 (* Add a function that will be called at key points of the toplevel
@@ -195,7 +195,7 @@ val override_sys_argv : string array -> unit
 
    This is called by [run_script] so that [Sys.argv] represents
    "script.ml args..." instead of the full command line:
-   "ocamlrun unix.cma ... script.ml args...". *)
+   "travlangrun unix.cma ... script.ml args...". *)
 
 val split_path : string -> string list
 (** [split_path path] splits [path] according to the PATH-splitting conventions

@@ -4,7 +4,7 @@
 
 (* Tests that:
  * - the runtime events subsystem works, logging events and passing
- *   them to OCaml;
+ *   them to travlang;
  * - runtime event phases start and stop in matched pairs;
  * - major and minor collections happen at expected frequencies.
  *)
@@ -66,7 +66,7 @@ let runtime_end domain_id ts phase =
 
 (* Record when unprocessed events are lost. If you see these messages,
  * it probably means your ring buffers are too small; try changing
- * the ocamlrunparam e=N setting at the head of this file.
+ * the travlangrunparam e=N setting at the head of this file.
  * Note that we only process events at the end of each "epoch" of
  * the test. *)
 

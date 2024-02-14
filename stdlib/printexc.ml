@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -316,7 +316,7 @@ let errors = [| "";
   (* NO_FDS *)
   "(Cannot print locations:\n \
       bytecode executable program file cannot be opened;\n \
-      -- too many open files. Try running with OCAMLRUNPARAM=b=2)"
+      -- too many open files. Try running with travlangRUNPARAM=b=2)"
 |]
 
 let default_uncaught_exception_handler exn raw_backtrace =

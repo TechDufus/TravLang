@@ -129,7 +129,7 @@ let test8 () =
 
 let test9 () =
   try
-    (* test exception raised from C (caml_array_bound_error) to OCaml *)
+    (* test exception raised from C (caml_array_bound_error) to travlang *)
     ignore ([| |].(0)); print_string "Test 9: failed\n"
   with Invalid_argument _ -> ()
 

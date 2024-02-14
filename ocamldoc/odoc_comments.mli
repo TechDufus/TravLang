@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Maxence Guesdon, projet Cristal, INRIA Rocquencourt        *)
 (*                                                                        *)
@@ -59,7 +59,7 @@ module Basic_info_retriever :
   end
 
 (** [info_of_string s] parses the given string
-   like a regular ocamldoc comment and return an
+   like a regular travlangdoc comment and return an
    {!Odoc_types.info} structure.
    @return an empty structure if there was a syntax error. TODO: change this
 *)

@@ -1,7 +1,7 @@
 == Magic numbers
 
 The magic numbers in `config.common.ml.in` are included in the header of
-compiled files produced by the OCaml compiler. Different kind of files
+compiled files produced by the travlang compiler. Different kind of files
 (cmi, cmo, cmx, cma, executables, etc.) get different magic numbers,
 and we also change the magic number whenever we change the format of
 the corresponding file.
@@ -15,7 +15,7 @@ that are not at all valid compiled files, or because they come from
 a different compiler version with an incompatible file format.
 
 We say that we "bump" a magic number when we update its version part
-in build-aux/ocaml_version.m4. To bump all magic numbers is to
+in build-aux/travlang_version.m4. To bump all magic numbers is to
 increment the version of every kind of magic number.
 
 The process for bootstrapping the compiler is covered in
@@ -51,11 +51,11 @@ tested on a large scale: this is when tool authors may update their
 tools to test the new release, and if you update *after* that you risk
 breaking them again without them noticing.
 
-Since https://github.com/ocaml/ocaml/pull/12652/[PR #12652], simply run
+Since https://github.com/travlang/travlang/pull/12652/[PR #12652], simply run
 the following command to bump the magic numbers to version xyz:
 
   tools/bump-magic-numbers xyz
 
 Once the bootstrap during which the magic numbers have been bumped
 has been completed, the following files need to be committed:
-boot/{ocamlc,ocamllex}, build-aux/ocaml_version.m4 and configure.
+boot/{travlangc,travlanglex}, build-aux/travlang_version.m4 and configure.

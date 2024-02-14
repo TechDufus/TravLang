@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           */
 /*                                                                        */
@@ -24,8 +24,8 @@
 
 %{
 
-[@@@ocaml.warning "-60"] module Str = Ast_helper.Str (* For ocamldep *)
-[@@@ocaml.warning "+60"]
+[@@@travlang.warning "-60"] module Str = Ast_helper.Str (* For travlangdep *)
+[@@@travlang.warning "+60"]
 
 open Asttypes
 open Longident
@@ -1023,7 +1023,7 @@ The precedences must be listed from low to high.
 /* Generic definitions */
 
 (* [iloption(X)] recognizes either nothing or [X]. Assuming [X] produces
-   an OCaml list, it produces an OCaml list, too. *)
+   an travlang list, it produces an travlang list, too. *)
 
 %inline iloption(X):
   /* nothing */
@@ -1044,7 +1044,7 @@ reversed_llist(X):
     { xs }
 
 (* [reversed_nonempty_llist(X)] recognizes a nonempty list of [X]s, and produces
-   an OCaml list in reverse order -- that is, the last element in the input text
+   an travlang list in reverse order -- that is, the last element in the input text
    appears first in this list. Its definition is left-recursive. *)
 
 reversed_nonempty_llist(X):
@@ -1053,7 +1053,7 @@ reversed_nonempty_llist(X):
 | xs = reversed_nonempty_llist(X) x = X
     { x :: xs }
 
-(* [nonempty_llist(X)] recognizes a nonempty list of [X]s, and produces an OCaml
+(* [nonempty_llist(X)] recognizes a nonempty list of [X]s, and produces an travlang
    list in direct order -- that is, the first element in the input text appears
    first in this list. *)
 
@@ -1062,7 +1062,7 @@ reversed_nonempty_llist(X):
     { xs }
 
 (* [reversed_nonempty_concat(X)] recognizes a nonempty sequence of [X]s (each of
-   which is a list), and produces an OCaml list of their concatenation in
+   which is a list), and produces an travlang list of their concatenation in
    reverse order -- that is, the last element of the last list in the input text
    appears first in the list.
 *)
@@ -1073,7 +1073,7 @@ reversed_nonempty_concat(X):
     { List.rev_append x xs }
 
 (* [nonempty_concat(X)] recognizes a nonempty sequence of [X]s
-   (each of which is a list), and produces an OCaml list of their concatenation
+   (each of which is a list), and produces an travlang list of their concatenation
    in direct order -- that is, the first element of the first list in the input
    text appears first in the list.
 *)
@@ -1083,7 +1083,7 @@ reversed_nonempty_concat(X):
     { xs }
 
 (* [reversed_separated_nonempty_llist(separator, X)] recognizes a nonempty list
-   of [X]s, separated with [separator]s, and produces an OCaml list in reverse
+   of [X]s, separated with [separator]s, and produces an travlang list in reverse
    order -- that is, the last element in the input text appears first in this
    list. Its definition is left-recursive. *)
 
@@ -1107,7 +1107,7 @@ reversed_separated_nonempty_llist(separator, X):
     { xs }
 
 (* [separated_nonempty_llist(separator, X)] recognizes a nonempty list of [X]s,
-   separated with [separator]s, and produces an OCaml list in direct order --
+   separated with [separator]s, and produces an travlang list in direct order --
    that is, the first element in the input text appears first in this list. *)
 
 %inline separated_nonempty_llist(separator, X):
@@ -1119,7 +1119,7 @@ reversed_separated_nonempty_llist(separator, X):
     { xs }
 
 (* [reversed_separated_nontrivial_llist(separator, X)] recognizes a list of at
-   least two [X]s, separated with [separator]s, and produces an OCaml list in
+   least two [X]s, separated with [separator]s, and produces an travlang list in
    reverse order -- that is, the last element in the input text appears first
    in this list. Its definition is left-recursive. *)
 
@@ -1134,7 +1134,7 @@ reversed_separated_nontrivial_llist(separator, X):
     { [ x2; x1 ] }
 
 (* [separated_nontrivial_llist(separator, X)] recognizes a list of at least
-   two [X]s, separated with [separator]s, and produces an OCaml list in direct
+   two [X]s, separated with [separator]s, and produces an travlang list in direct
    order -- that is, the first element in the input text appears first in this
    list. *)
 
@@ -1156,7 +1156,7 @@ separated_or_terminated_nonempty_list(delimiter, X):
 
 (* [reversed_preceded_or_separated_nonempty_llist(delimiter, X)] recognizes a
    nonempty list of [X]s, separated with [delimiter]s, and optionally preceded
-   with a leading [delimiter]. It produces an OCaml list in reverse order. Its
+   with a leading [delimiter]. It produces an travlang list in reverse order. Its
    definition is left-recursive. *)
 
 reversed_preceded_or_separated_nonempty_llist(delimiter, X):
@@ -1169,7 +1169,7 @@ reversed_preceded_or_separated_nonempty_llist(delimiter, X):
 
 (* [preceded_or_separated_nonempty_llist(delimiter, X)] recognizes a nonempty
    list of [X]s, separated with [delimiter]s, and optionally preceded with a
-   leading [delimiter]. It produces an OCaml list in direct order. *)
+   leading [delimiter]. It produces an travlang list in direct order. *)
 
 %inline preceded_or_separated_nonempty_llist(delimiter, X):
   xs = rev(reversed_preceded_or_separated_nonempty_llist(delimiter, X))
@@ -2097,7 +2097,7 @@ method_:
         let poly_exp =
           let exp, poly =
             (* it seems odd to use the global ~loc here while poly_exp_loc
-               is tighter, but this is what ocamlyacc does;
+               is tighter, but this is what travlangyacc does;
                TODO improve parser.mly *)
             wrap_type_annotation ~loc:$sloc $7 $9 $11 in
           ghexp ~loc:poly_exp_loc (Pexp_poly(exp, Some poly)) in
@@ -3541,7 +3541,7 @@ tuple_type:
     - variant types
 
   Object types are not support for local opens due to a potential
-  conflict with MetaOCaml syntax:
+  conflict with Metatravlang syntax:
     M.< x: t, y: t >
   and quoted expressions:
     .< e >.

@@ -1,6 +1,6 @@
 (* TEST
- flags = "-I ${ocamlsrcdir}/parsing -I ${ocamlsrcdir}/toplevel";
- include ocamlcommon;
+ flags = "-I ${travlangsrcdir}/parsing -I ${travlangsrcdir}/toplevel";
+ include travlangcommon;
  expect;
 *)
 

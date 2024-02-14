@@ -1,6 +1,6 @@
 #**************************************************************************
 #*                                                                        *
-#*                                 OCaml                                  *
+#*                                 travlang                                  *
 #*                                                                        *
 #*                 Damien Doligez, Jane Street Group, LLC                 *
 #*                                                                        *
@@ -13,18 +13,18 @@
 #*                                                                        *
 #**************************************************************************
 
-# A set of macros for low-level debugging of OCaml programs and of the
-# OCaml runtime itself (both native and byte-code).
+# A set of macros for low-level debugging of travlang programs and of the
+# travlang runtime itself (both native and byte-code).
 
 # Advice to future developers: rewrite this in Python which will be
-# faster, more reliable, and more maintainable. See also gdb_ocamlrun.py
+# faster, more reliable, and more maintainable. See also gdb_travlangrun.py
 
 # This file should be loaded in gdb with [ source gdb-macros ].
 # It defines a few related commands:
 #
 # Usage:
 # [caml <value>]
-# If <value> is an OCaml value, this will display it in a low-level
+# If <value> is an travlang value, this will display it in a low-level
 # but legible format, including the header information.
 #
 # [caml-next]
@@ -390,7 +390,7 @@ format, including information about where on the heap it is located, and any
 header and fields it contains.
 end
 
-# displays the next OCaml value in memory
+# displays the next travlang value in memory
 define caml_next
   if $caml_next
     caml $caml_next

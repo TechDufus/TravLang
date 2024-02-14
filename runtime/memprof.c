@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*            Jacques-Henri Jourdan, projet Gallium, INRIA Paris          */
 /*                                                                        */
@@ -270,7 +270,7 @@ CAMLexport void caml_memprof_enter_thread(memprof_thread_t thread)
   update_suspended(thread->domain, thread->suspended);
 }
 
-/**** Interface to OCaml ****/
+/**** Interface to travlang ****/
 
 #include "caml/fail.h"
 
@@ -323,7 +323,7 @@ static float one_log1m_lambda;
 
 static intnat callstack_size;
 
-/* accessors for the OCaml type [Gc.Memprof.tracker],
+/* accessors for the travlang type [Gc.Memprof.tracker],
    which is the type of the [tracker] global below. */
 #define Alloc_minor(tracker) (Field(tracker, 0))
 #define Alloc_major(tracker) (Field(tracker, 1))
@@ -1064,7 +1064,7 @@ static void shift_sample(uintnat n)
 
 /* Called when exceeding the threshold for the next sample in the
    minor heap, from the C code (the handling is different when called
-   from natively compiled OCaml code). */
+   from natively compiled travlang code). */
 void caml_memprof_track_young(uintnat wosize, int from_caml,
                               int nallocs, unsigned char* encoded_alloc_lens)
 {
@@ -1251,7 +1251,7 @@ void caml_memprof_track_interned(header_t* block, header_t* blockend)
   check_action_pending();
 }
 
-/**** Interface with the OCaml code. ****/
+/**** Interface with the travlang code. ****/
 
 static void caml_memprof_init(void)
 {

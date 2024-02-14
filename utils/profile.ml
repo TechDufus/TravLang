@@ -1,8 +1,8 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
-(*                      Pierre Chambart, OCamlPro                         *)
+(*                      Pierre Chambart, travlangPro                         *)
 (*                                                                        *)
 (*   Copyright 2015 Institut National de Recherche en Informatique et     *)
 (*     en Automatique.                                                    *)
@@ -13,7 +13,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-[@@@ocaml.warning "+a-18-40-42-48"]
+[@@@travlang.warning "+a-18-40-42-48"]
 
 type file = string
 
@@ -77,7 +77,7 @@ let record_call ?(accumulate = false) name f =
   if !initial_measure = None then initial_measure := Some start_measure;
   let this_measure_diff, this_table =
     (* We allow the recording of multiple categories by the same name, for tools
-       like ocamldoc that use the compiler libs but don't care about profile
+       like travlangdoc that use the compiler libs but don't care about profile
        information, and so may record, say, "parsing" multiple times. *)
     if accumulate
     then

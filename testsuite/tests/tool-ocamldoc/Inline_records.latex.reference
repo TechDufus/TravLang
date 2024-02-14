@@ -4,7 +4,7 @@
 \usepackage{textcomp}
 \usepackage{fullpage} 
 \usepackage{url} 
-\usepackage{ocamldoc}
+\usepackage{travlangdoc}
 \begin{document}
 \tableofcontents
 \section{Module {\tt{Inline\_records}} : This test focuses on the printing of documentation for inline record
@@ -14,274 +14,274 @@
 
 
 
-\ocamldocvspace{0.5cm}
+\travlangdocvspace{0.5cm}
 
 
 
-\label{exception:Inline-underscorerecords.Simple}\begin{ocamldoccode}
+\label{exception:Inline-underscorerecords.Simple}\begin{travlangdoccode}
 exception Simple
-\end{ocamldoccode}
+\end{travlangdoccode}
 \index{Simple@\verb`Simple`}
-\begin{ocamldocdescription}
+\begin{travlangdocdescription}
 A nice exception
 
 
-\end{ocamldocdescription}
+\end{travlangdocdescription}
 
 
 
 
-\label{exception:Inline-underscorerecords.Less}\begin{ocamldoccode}
+\label{exception:Inline-underscorerecords.Less}\begin{travlangdoccode}
 exception Less of int
-\end{ocamldoccode}
+\end{travlangdoccode}
 \index{Less@\verb`Less`}
-\begin{ocamldocdescription}
+\begin{travlangdocdescription}
 A less simple exception
 
 
-\end{ocamldocdescription}
+\end{travlangdocdescription}
 
 
 
 
-\label{TYPInline-underscorerecords.ext}\begin{ocamldoccode}
+\label{TYPInline-underscorerecords.ext}\begin{travlangdoccode}
 type ext = ..
-\end{ocamldoccode}
+\end{travlangdoccode}
 \index{ext@\verb`ext`}
-\begin{ocamldocdescription}
+\begin{travlangdocdescription}
 An open sum type
 
 
-\end{ocamldocdescription}
+\end{travlangdocdescription}
 
 
 
 
-\label{TYPInline-underscorerecords.r}\begin{ocamldoccode}
+\label{TYPInline-underscorerecords.r}\begin{travlangdoccode}
 type r = 
 {\char123}  lbl : int ;
-\end{ocamldoccode}
-\begin{ocamldoccomment}
+\end{travlangdoccode}
+\begin{travlangdoccomment}
 Field documentation for non-inline, {\tt{lbl : int}}
 
 
-\end{ocamldoccomment}
-\begin{ocamldoccode}
+\end{travlangdoccomment}
+\begin{travlangdoccode}
   more : int list ;
-\end{ocamldoccode}
-\begin{ocamldoccomment}
+\end{travlangdoccode}
+\begin{travlangdoccomment}
 More documentation for r, {\tt{more : int list}}
 
 
-\end{ocamldoccomment}
-\begin{ocamldoccode}
+\end{travlangdoccomment}
+\begin{travlangdoccode}
 {\char125}
-\end{ocamldoccode}
+\end{travlangdoccode}
 \index{r@\verb`r`}
-\begin{ocamldocdescription}
+\begin{travlangdocdescription}
 A simple record type for reference
 
 
-\end{ocamldocdescription}
+\end{travlangdocdescription}
 
 
 
 
-\label{TYPInline-underscorerecords.t}\begin{ocamldoccode}
+\label{TYPInline-underscorerecords.t}\begin{travlangdoccode}
 type t =
   | A of {\char123}  lbl : int ;
-\end{ocamldoccode}
-\begin{ocamldoccomment}
+\end{travlangdoccode}
+\begin{travlangdoccomment}
 {\tt{A}} field documentation
 
 
-\end{ocamldoccomment}
-\begin{ocamldoccode}
+\end{travlangdoccomment}
+\begin{travlangdoccode}
   more : int list ;
-\end{ocamldoccode}
-\begin{ocamldoccomment}
+\end{travlangdoccode}
+\begin{travlangdoccomment}
 More {\tt{A}} field documentation
 
 
-\end{ocamldoccomment}
-\begin{ocamldoccode}
+\end{travlangdoccomment}
+\begin{travlangdoccode}
 {\char125}
-\end{ocamldoccode}
-\begin{ocamldoccomment}
+\end{travlangdoccode}
+\begin{travlangdoccomment}
 Constructor documentation
 
 
-\end{ocamldoccomment}
+\end{travlangdoccomment}
 \index{t@\verb`t`}
-\begin{ocamldocdescription}
+\begin{travlangdocdescription}
 A sum type with one inline record
 
 
-\end{ocamldocdescription}
+\end{travlangdocdescription}
 
 
 
 
-\label{TYPInline-underscorerecords.s}\begin{ocamldoccode}
+\label{TYPInline-underscorerecords.s}\begin{travlangdoccode}
 type s =
   | B of {\char123}  a_label_for_B : int ;
-\end{ocamldoccode}
-\begin{ocamldoccomment}
+\end{travlangdoccode}
+\begin{travlangdoccomment}
 {\tt{B}} field documentation
 
 
-\end{ocamldoccomment}
-\begin{ocamldoccode}
+\end{travlangdoccomment}
+\begin{travlangdoccode}
   more_label_for_B : int list ;
-\end{ocamldoccode}
-\begin{ocamldoccomment}
+\end{travlangdoccode}
+\begin{travlangdoccomment}
 More {\tt{B}} field documentation
 
 
-\end{ocamldoccomment}
-\begin{ocamldoccode}
+\end{travlangdoccomment}
+\begin{travlangdoccode}
 {\char125}
-\end{ocamldoccode}
-\begin{ocamldoccomment}
+\end{travlangdoccode}
+\begin{travlangdoccomment}
 Constructor B documentation
 
 
-\end{ocamldoccomment}
-\begin{ocamldoccode}
+\end{travlangdoccomment}
+\begin{travlangdoccode}
   | C of {\char123}  c_has_label_too : float ;
-\end{ocamldoccode}
-\begin{ocamldoccomment}
+\end{travlangdoccode}
+\begin{travlangdoccomment}
 {\tt{C}} field documentation
 
 
-\end{ocamldoccomment}
-\begin{ocamldoccode}
+\end{travlangdoccomment}
+\begin{travlangdoccode}
   more_than_one : unit ;
-\end{ocamldoccode}
-\begin{ocamldoccomment}
+\end{travlangdoccode}
+\begin{travlangdoccomment}
 $\ldots$ documentations
 
 
-\end{ocamldoccomment}
-\begin{ocamldoccode}
+\end{travlangdoccomment}
+\begin{travlangdoccode}
 {\char125}
-\end{ocamldoccode}
-\begin{ocamldoccomment}
+\end{travlangdoccode}
+\begin{travlangdoccomment}
 Constructor C documentation
 
 
-\end{ocamldoccomment}
+\end{travlangdoccomment}
 \index{s@\verb`s`}
-\begin{ocamldocdescription}
+\begin{travlangdocdescription}
 A sum type with two inline records
 
 
-\end{ocamldocdescription}
+\end{travlangdocdescription}
 
 
 
 
-\label{TYPInline-underscorerecords.any}\begin{ocamldoccode}
+\label{TYPInline-underscorerecords.any}\begin{travlangdoccode}
 type any =
   | D : {\char123}  any : {\textquotesingle}a ;
-\end{ocamldoccode}
-\begin{ocamldoccomment}
+\end{travlangdoccode}
+\begin{travlangdoccomment}
 {\tt{A}} field {\tt{any:{\textquotesingle}a}} for {\tt{D}} in {\tt{any}}.
 
 
-\end{ocamldoccomment}
-\begin{ocamldoccode}
+\end{travlangdoccomment}
+\begin{travlangdoccode}
 {\char125}
  ->
 any
-\end{ocamldoccode}
-\begin{ocamldoccomment}
+\end{travlangdoccode}
+\begin{travlangdoccomment}
 Constructor D documentation
 
 
-\end{ocamldoccomment}
+\end{travlangdoccomment}
 \index{any@\verb`any`}
-\begin{ocamldocdescription}
+\begin{travlangdocdescription}
 A gadt constructor
 
 
-\end{ocamldocdescription}
+\end{travlangdocdescription}
 
 
 
 
-\label{exception:Inline-underscorerecords.Error}\begin{ocamldoccode}
+\label{exception:Inline-underscorerecords.Error}\begin{travlangdoccode}
 exception Error of {\char123}  name : string ;
-\end{ocamldoccode}
-\begin{ocamldoccomment}
+\end{travlangdoccode}
+\begin{travlangdoccomment}
 Error field documentation {\tt{name:string}}
 
 
-\end{ocamldoccomment}
-\begin{ocamldoccode}
+\end{travlangdoccomment}
+\begin{travlangdoccode}
 {\char125}
-\end{ocamldoccode}
+\end{travlangdoccode}
 \index{Error@\verb`Error`}
 
 
 
 
-\begin{ocamldoccode}
+\begin{travlangdoccode}
 type ext +=
-\end{ocamldoccode}
-\label{extension:Inline-underscorerecords.E}\begin{ocamldoccode}
+\end{travlangdoccode}
+\label{extension:Inline-underscorerecords.E}\begin{travlangdoccode}
   | E of {\char123}  yet_another_field : unit ;
-\end{ocamldoccode}
-\begin{ocamldoccomment}
+\end{travlangdoccode}
+\begin{travlangdoccomment}
 Field documentation for {\tt{E}} in ext
 
 
-\end{ocamldoccomment}
-\begin{ocamldoccode}
+\end{travlangdoccomment}
+\begin{travlangdoccode}
 {\char125}
-\end{ocamldoccode}
-\begin{ocamldoccomment}
+\end{travlangdoccode}
+\begin{travlangdoccomment}
 Constructor E documentation
 
 
-\end{ocamldoccomment}
-\label{extension:Inline-underscorerecords.F}\begin{ocamldoccode}
+\end{travlangdoccomment}
+\label{extension:Inline-underscorerecords.F}\begin{travlangdoccode}
   | F of {\char123}  even_more : int -> int ;
-\end{ocamldoccode}
-\begin{ocamldoccomment}
+\end{travlangdoccode}
+\begin{travlangdoccomment}
 Some field documentations for {\tt{F}}
 
 
-\end{ocamldoccomment}
-\begin{ocamldoccode}
+\end{travlangdoccomment}
+\begin{travlangdoccode}
 {\char125}
-\end{ocamldoccode}
-\begin{ocamldoccomment}
+\end{travlangdoccode}
+\begin{travlangdoccomment}
 Constructor F documentation
 
 
-\end{ocamldoccomment}
-\label{extension:Inline-underscorerecords.G}\begin{ocamldoccode}
+\end{travlangdoccomment}
+\label{extension:Inline-underscorerecords.G}\begin{travlangdoccode}
   | G of {\char123}  last : int -> int ;
-\end{ocamldoccode}
-\begin{ocamldoccomment}
+\end{travlangdoccode}
+\begin{travlangdoccomment}
 The last and least field documentation
 
 
-\end{ocamldoccomment}
-\begin{ocamldoccode}
+\end{travlangdoccomment}
+\begin{travlangdoccode}
 {\char125}
-\end{ocamldoccode}
-\begin{ocamldoccomment}
+\end{travlangdoccode}
+\begin{travlangdoccomment}
 Constructor G documentation
 
 
-\end{ocamldoccomment}
-\begin{ocamldocdescription}
+\end{travlangdoccomment}
+\begin{travlangdocdescription}
 Two new constructors for ext
 
 
-\end{ocamldocdescription}
+\end{travlangdocdescription}
 
 
 \end{document}

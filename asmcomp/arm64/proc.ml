@@ -1,7 +1,7 @@
 # 2 "asmcomp/arm64/proc.ml"
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Gallium, INRIA Rocquencourt           *)
 (*                 Benedikt Meurer, University of Siegen                  *)
@@ -165,7 +165,7 @@ let outgoing ofs =
   else Domainstate (ofs + size_domainstate_args)
 let not_supported _ofs = fatal_error "Proc.loc_results: cannot call"
 
-(* OCaml calling convention:
+(* travlang calling convention:
      first integer args in r0...r15
      first float args in d0...d15
      remaining args in domain state area, then on stack.

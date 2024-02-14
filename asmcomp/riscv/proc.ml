@@ -1,7 +1,7 @@
 # 2 "asmcomp/riscv/proc.ml"
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*                Nicolas Ojeda Bar <n.oje.bar@gmail.com>                 *)
 (*                                                                        *)
@@ -163,7 +163,7 @@ let not_supported _ = fatal_error "Proc.loc_results: cannot call"
 
 let max_arguments_for_tailcalls = 16 (* in regs *) + 64 (* in domain state *)
 
-(* OCaml calling convention:
+(* travlang calling convention:
      first integer args in a0 .. a7, s2 .. s9
      first float args in fa0 .. fa7, fs2 .. fs9
      remaining args in domain state area, then on stack.
@@ -238,7 +238,7 @@ let loc_exn_bucket = phys_reg 0
 
 let destroyed_at_c_noalloc_call =
   (* s0-s11 and fs0-fs11 are callee-save, but s0 is
-     used to preserve OCaml sp. *)
+     used to preserve travlang sp. *)
   Array.of_list(List.map phys_reg
     [0; 1; 2; 3; 4; 5; 6; 7; 16; 17; 18; 19; 20; 21 (* s0 *);
      100; 101; 102; 103; 104; 105; 106; 107; 110; 111; 112; 113; 114; 115; 116;

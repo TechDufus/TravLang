@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                OCaml                                   */
+/*                                travlang                                   */
 /*                                                                        */
 /*                  Jeremie Dimino, Jane Street Europe                    */
 /*                                                                        */
@@ -16,12 +16,12 @@
 #include <caml/mlvalues.h>
 #include <caml/bigarray.h>
 
-char *ocaml_buffer;
+char *travlang_buffer;
 char *c_buffer;
 
-value test_set_buffers(value v_ocaml_buffer, value v_c_buffer)
+value test_set_buffers(value v_travlang_buffer, value v_c_buffer)
 {
-  ocaml_buffer = Caml_ba_data_val(v_ocaml_buffer);
+  travlang_buffer = Caml_ba_data_val(v_travlang_buffer);
   c_buffer = Caml_ba_data_val(v_c_buffer);
   return Val_unit;
 }

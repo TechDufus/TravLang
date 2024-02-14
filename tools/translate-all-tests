@@ -2,7 +2,7 @@
 
 #**************************************************************************
 #*                                                                        *
-#*                                 OCaml                                  *
+#*                                 travlang                                  *
 #*                                                                        *
 #*           Damien Doligez, projet Cambium, INRIA                        *
 #*                                                                        *
@@ -21,7 +21,7 @@
 # This script assumes that ../trunk contains a check-out of trunk to get
 # the old-syntax test files from.
 
-# There are 1328 test scripts detected by ocamltest
+# There are 1328 test scripts detected by travlangtest
 
 # These tests will be translated in plain mode but need manual intervention
 # to restore comments.
@@ -637,213 +637,213 @@ tool-lexyacc/chars.mll \
 tool-lexyacc/csets.mll \
 tool-lexyacc/mpr7760.mll \
 tool-lexyacc/parsecheck.mly \
-tool-ocaml-annot/failure.ml \
-tool-ocaml-annot/success.ml \
-tool-ocaml-annot/typeonly.ml \
-tool-ocaml/directive_failure.ml \
-tool-ocaml/t000.ml \
-tool-ocaml/t010-const0.ml \
-tool-ocaml/t010-const1.ml \
-tool-ocaml/t010-const2.ml \
-tool-ocaml/t010-const3.ml \
-tool-ocaml/t011-constint.ml \
-tool-ocaml/t020.ml \
-tool-ocaml/t021-pushconst1.ml \
-tool-ocaml/t021-pushconst2.ml \
-tool-ocaml/t021-pushconst3.ml \
-tool-ocaml/t022-pushconstint.ml \
-tool-ocaml/t040-makeblock1.ml \
-tool-ocaml/t040-makeblock2.ml \
-tool-ocaml/t040-makeblock3.ml \
-tool-ocaml/t041-makeblock.ml \
-tool-ocaml/t050-getglobal.ml \
-tool-ocaml/t050-pushgetglobal.ml \
-tool-ocaml/t051-getglobalfield.ml \
-tool-ocaml/t051-pushgetglobalfield.ml \
-tool-ocaml/t060-raise.ml \
-tool-ocaml/t070-branch.ml \
-tool-ocaml/t070-branchif.ml \
-tool-ocaml/t070-branchifnot.ml \
-tool-ocaml/t071-boolnot.ml \
-tool-ocaml/t080-eq.ml \
-tool-ocaml/t080-geint.ml \
-tool-ocaml/t080-gtint.ml \
-tool-ocaml/t080-leint.ml \
-tool-ocaml/t080-ltint.ml \
-tool-ocaml/t080-neq.ml \
-tool-ocaml/t090-acc0.ml \
-tool-ocaml/t090-acc1.ml \
-tool-ocaml/t090-acc2.ml \
-tool-ocaml/t090-acc3.ml \
-tool-ocaml/t090-acc4.ml \
-tool-ocaml/t090-acc5.ml \
-tool-ocaml/t090-acc6.ml \
-tool-ocaml/t090-acc7.ml \
-tool-ocaml/t091-acc.ml \
-tool-ocaml/t092-pushacc.ml \
-tool-ocaml/t092-pushacc0.ml \
-tool-ocaml/t092-pushacc1.ml \
-tool-ocaml/t092-pushacc2.ml \
-tool-ocaml/t092-pushacc3.ml \
-tool-ocaml/t092-pushacc4.ml \
-tool-ocaml/t092-pushacc5.ml \
-tool-ocaml/t092-pushacc6.ml \
-tool-ocaml/t092-pushacc7.ml \
-tool-ocaml/t093-pushacc.ml \
-tool-ocaml/t100-pushtrap.ml \
-tool-ocaml/t101-poptrap.ml \
-tool-ocaml/t110-addint.ml \
-tool-ocaml/t110-andint.ml \
-tool-ocaml/t110-asrint-1.ml \
-tool-ocaml/t110-asrint-2.ml \
-tool-ocaml/t110-divint-1.ml \
-tool-ocaml/t110-divint-2.ml \
-tool-ocaml/t110-divint-3.ml \
-tool-ocaml/t110-lslint.ml \
-tool-ocaml/t110-lsrint.ml \
-tool-ocaml/t110-modint-1.ml \
-tool-ocaml/t110-modint-2.ml \
-tool-ocaml/t110-mulint.ml \
-tool-ocaml/t110-negint.ml \
-tool-ocaml/t110-offsetint.ml \
-tool-ocaml/t110-orint.ml \
-tool-ocaml/t110-subint.ml \
-tool-ocaml/t110-xorint.ml \
-tool-ocaml/t120-getstringchar.ml \
-tool-ocaml/t121-setstringchar.ml \
-tool-ocaml/t130-getvectitem.ml \
-tool-ocaml/t130-vectlength.ml \
-tool-ocaml/t131-setvectitem.ml \
-tool-ocaml/t140-switch-1.ml \
-tool-ocaml/t140-switch-2.ml \
-tool-ocaml/t140-switch-3.ml \
-tool-ocaml/t140-switch-4.ml \
-tool-ocaml/t141-switch-5.ml \
-tool-ocaml/t141-switch-6.ml \
-tool-ocaml/t141-switch-7.ml \
-tool-ocaml/t142-switch-8.ml \
-tool-ocaml/t142-switch-9.ml \
-tool-ocaml/t142-switch-A.ml \
-tool-ocaml/t150-push-1.ml \
-tool-ocaml/t150-push-2.ml \
-tool-ocaml/t160-closure.ml \
-tool-ocaml/t161-apply1.ml \
-tool-ocaml/t162-return.ml \
-tool-ocaml/t163.ml \
-tool-ocaml/t164-apply2.ml \
-tool-ocaml/t164-apply3.ml \
-tool-ocaml/t165-apply.ml \
-tool-ocaml/t170-envacc2.ml \
-tool-ocaml/t170-envacc3.ml \
-tool-ocaml/t170-envacc4.ml \
-tool-ocaml/t171-envacc.ml \
-tool-ocaml/t172-pushenvacc1.ml \
-tool-ocaml/t172-pushenvacc2.ml \
-tool-ocaml/t172-pushenvacc3.ml \
-tool-ocaml/t172-pushenvacc4.ml \
-tool-ocaml/t173-pushenvacc.ml \
-tool-ocaml/t180-appterm1.ml \
-tool-ocaml/t180-appterm2.ml \
-tool-ocaml/t180-appterm3.ml \
-tool-ocaml/t181-appterm.ml \
-tool-ocaml/t190-makefloatblock-1.ml \
-tool-ocaml/t190-makefloatblock-2.ml \
-tool-ocaml/t190-makefloatblock-3.ml \
-tool-ocaml/t191-vectlength.ml \
-tool-ocaml/t192-getfloatfield-1.ml \
-tool-ocaml/t192-getfloatfield-2.ml \
-tool-ocaml/t193-setfloatfield-1.ml \
-tool-ocaml/t193-setfloatfield-2.ml \
-tool-ocaml/t200-getfield0.ml \
-tool-ocaml/t200-getfield1.ml \
-tool-ocaml/t200-getfield2.ml \
-tool-ocaml/t200-getfield3.ml \
-tool-ocaml/t201-getfield.ml \
-tool-ocaml/t210-setfield0.ml \
-tool-ocaml/t210-setfield1.ml \
-tool-ocaml/t210-setfield2.ml \
-tool-ocaml/t210-setfield3.ml \
-tool-ocaml/t211-setfield.ml \
-tool-ocaml/t220-assign.ml \
-tool-ocaml/t230-check_signals.ml \
-tool-ocaml/t240-c_call1.ml \
-tool-ocaml/t240-c_call2.ml \
-tool-ocaml/t240-c_call3.ml \
-tool-ocaml/t240-c_call4.ml \
-tool-ocaml/t240-c_call5.ml \
-tool-ocaml/t250-closurerec-1.ml \
-tool-ocaml/t250-closurerec-2.ml \
-tool-ocaml/t251-pushoffsetclosure0.ml \
-tool-ocaml/t251-pushoffsetclosure2.ml \
-tool-ocaml/t251-pushoffsetclosurem2.ml \
-tool-ocaml/t252-pushoffsetclosure.ml \
-tool-ocaml/t253-offsetclosure0.ml \
-tool-ocaml/t253-offsetclosure2.ml \
-tool-ocaml/t253-offsetclosurem2.ml \
-tool-ocaml/t254-offsetclosure.ml \
-tool-ocaml/t260-offsetref.ml \
-tool-ocaml/t270-push_retaddr.ml \
-tool-ocaml/t300-getmethod.ml \
-tool-ocaml/t301-object.ml \
-tool-ocaml/t310-alloc-1.ml \
-tool-ocaml/t310-alloc-2.ml \
-tool-ocaml/t320-gc-1.ml \
-tool-ocaml/t320-gc-2.ml \
-tool-ocaml/t320-gc-3.ml \
-tool-ocaml/t330-compact-1.ml \
-tool-ocaml/t330-compact-2.ml \
-tool-ocaml/t330-compact-3.ml \
-tool-ocaml/t330-compact-4.ml \
-tool-ocaml/t340-weak.ml \
-tool-ocaml/t350-heapcheck.ml \
-tool-ocaml/t360-stacks-1.ml \
-tool-ocaml/t360-stacks-2.ml \
-tool-ocamlc-compat32/compat32.ml \
-tool-ocamlc-error-cleanup/test.ml \
-tool-ocamlc-open/tool-ocamlc-open-error.ml \
-tool-ocamlc-open/tool-ocamlc-open.ml \
-tool-ocamlc-stop-after/stop_after_lambda.ml \
-tool-ocamlc-stop-after/stop_after_scheduling.ml \
-tool-ocamldep-modalias/main.ml \
-tool-ocamldep-shadowing/a.ml \
-tool-ocamldoc-open/main.ml \
-tool-ocamldoc/Alert_toplevel.mli \
-tool-ocamldoc/Alert_toplevel2.mli \
-tool-ocamldoc/Alerts.mli \
-tool-ocamldoc/Alerts_impl.ml \
-tool-ocamldoc/Documentation_tags.mli \
-tool-ocamldoc/Entities.ml \
-tool-ocamldoc/Extensible_variant.ml \
-tool-ocamldoc/Include_module_type_of.mli \
-tool-ocamldoc/Inline_records.mli \
-tool-ocamldoc/Inline_records_bis.ml \
-tool-ocamldoc/Item_ids.mli \
-tool-ocamldoc/Level_0.mli \
-tool-ocamldoc/Linebreaks.mli \
-tool-ocamldoc/Loop.ml \
-tool-ocamldoc/Module_whitespace.ml \
-tool-ocamldoc/No_preamble.mli \
-tool-ocamldoc/Paragraph.mli \
-tool-ocamldoc/Short_description.txt \
-tool-ocamldoc/Test.mli \
-tool-ocamldoc/Variants.mli \
-tool-ocamldoc/latex_ref.mli \
-tool-ocamldoc/t01.ml \
-tool-ocamldoc/t02.ml \
-tool-ocamldoc/t03.ml \
-tool-ocamldoc/t04.ml \
-tool-ocamldoc/t05.ml \
-tool-ocamlobjinfo/question.ml \
-tool-ocamlopt-save-ir/check_for_pack.ml \
-tool-ocamlopt-save-ir/save_ir_after_scheduling.ml \
-tool-ocamlopt-save-ir/save_ir_after_typing.ml \
-tool-ocamlopt-save-ir/start_from_emit.ml \
-tool-ocamlopt-stop-after/stop_after_lambda.ml \
-tool-ocamlopt-stop-after/stop_after_scheduling.ml \
-tool-ocamltest/norm1.ml \
-tool-ocamltest/norm2.ml \
-tool-ocamltest/norm3.ml \
-tool-ocamltest/norm4.ml \
+tool-travlang-annot/failure.ml \
+tool-travlang-annot/success.ml \
+tool-travlang-annot/typeonly.ml \
+tool-travlang/directive_failure.ml \
+tool-travlang/t000.ml \
+tool-travlang/t010-const0.ml \
+tool-travlang/t010-const1.ml \
+tool-travlang/t010-const2.ml \
+tool-travlang/t010-const3.ml \
+tool-travlang/t011-constint.ml \
+tool-travlang/t020.ml \
+tool-travlang/t021-pushconst1.ml \
+tool-travlang/t021-pushconst2.ml \
+tool-travlang/t021-pushconst3.ml \
+tool-travlang/t022-pushconstint.ml \
+tool-travlang/t040-makeblock1.ml \
+tool-travlang/t040-makeblock2.ml \
+tool-travlang/t040-makeblock3.ml \
+tool-travlang/t041-makeblock.ml \
+tool-travlang/t050-getglobal.ml \
+tool-travlang/t050-pushgetglobal.ml \
+tool-travlang/t051-getglobalfield.ml \
+tool-travlang/t051-pushgetglobalfield.ml \
+tool-travlang/t060-raise.ml \
+tool-travlang/t070-branch.ml \
+tool-travlang/t070-branchif.ml \
+tool-travlang/t070-branchifnot.ml \
+tool-travlang/t071-boolnot.ml \
+tool-travlang/t080-eq.ml \
+tool-travlang/t080-geint.ml \
+tool-travlang/t080-gtint.ml \
+tool-travlang/t080-leint.ml \
+tool-travlang/t080-ltint.ml \
+tool-travlang/t080-neq.ml \
+tool-travlang/t090-acc0.ml \
+tool-travlang/t090-acc1.ml \
+tool-travlang/t090-acc2.ml \
+tool-travlang/t090-acc3.ml \
+tool-travlang/t090-acc4.ml \
+tool-travlang/t090-acc5.ml \
+tool-travlang/t090-acc6.ml \
+tool-travlang/t090-acc7.ml \
+tool-travlang/t091-acc.ml \
+tool-travlang/t092-pushacc.ml \
+tool-travlang/t092-pushacc0.ml \
+tool-travlang/t092-pushacc1.ml \
+tool-travlang/t092-pushacc2.ml \
+tool-travlang/t092-pushacc3.ml \
+tool-travlang/t092-pushacc4.ml \
+tool-travlang/t092-pushacc5.ml \
+tool-travlang/t092-pushacc6.ml \
+tool-travlang/t092-pushacc7.ml \
+tool-travlang/t093-pushacc.ml \
+tool-travlang/t100-pushtrap.ml \
+tool-travlang/t101-poptrap.ml \
+tool-travlang/t110-addint.ml \
+tool-travlang/t110-andint.ml \
+tool-travlang/t110-asrint-1.ml \
+tool-travlang/t110-asrint-2.ml \
+tool-travlang/t110-divint-1.ml \
+tool-travlang/t110-divint-2.ml \
+tool-travlang/t110-divint-3.ml \
+tool-travlang/t110-lslint.ml \
+tool-travlang/t110-lsrint.ml \
+tool-travlang/t110-modint-1.ml \
+tool-travlang/t110-modint-2.ml \
+tool-travlang/t110-mulint.ml \
+tool-travlang/t110-negint.ml \
+tool-travlang/t110-offsetint.ml \
+tool-travlang/t110-orint.ml \
+tool-travlang/t110-subint.ml \
+tool-travlang/t110-xorint.ml \
+tool-travlang/t120-getstringchar.ml \
+tool-travlang/t121-setstringchar.ml \
+tool-travlang/t130-getvectitem.ml \
+tool-travlang/t130-vectlength.ml \
+tool-travlang/t131-setvectitem.ml \
+tool-travlang/t140-switch-1.ml \
+tool-travlang/t140-switch-2.ml \
+tool-travlang/t140-switch-3.ml \
+tool-travlang/t140-switch-4.ml \
+tool-travlang/t141-switch-5.ml \
+tool-travlang/t141-switch-6.ml \
+tool-travlang/t141-switch-7.ml \
+tool-travlang/t142-switch-8.ml \
+tool-travlang/t142-switch-9.ml \
+tool-travlang/t142-switch-A.ml \
+tool-travlang/t150-push-1.ml \
+tool-travlang/t150-push-2.ml \
+tool-travlang/t160-closure.ml \
+tool-travlang/t161-apply1.ml \
+tool-travlang/t162-return.ml \
+tool-travlang/t163.ml \
+tool-travlang/t164-apply2.ml \
+tool-travlang/t164-apply3.ml \
+tool-travlang/t165-apply.ml \
+tool-travlang/t170-envacc2.ml \
+tool-travlang/t170-envacc3.ml \
+tool-travlang/t170-envacc4.ml \
+tool-travlang/t171-envacc.ml \
+tool-travlang/t172-pushenvacc1.ml \
+tool-travlang/t172-pushenvacc2.ml \
+tool-travlang/t172-pushenvacc3.ml \
+tool-travlang/t172-pushenvacc4.ml \
+tool-travlang/t173-pushenvacc.ml \
+tool-travlang/t180-appterm1.ml \
+tool-travlang/t180-appterm2.ml \
+tool-travlang/t180-appterm3.ml \
+tool-travlang/t181-appterm.ml \
+tool-travlang/t190-makefloatblock-1.ml \
+tool-travlang/t190-makefloatblock-2.ml \
+tool-travlang/t190-makefloatblock-3.ml \
+tool-travlang/t191-vectlength.ml \
+tool-travlang/t192-getfloatfield-1.ml \
+tool-travlang/t192-getfloatfield-2.ml \
+tool-travlang/t193-setfloatfield-1.ml \
+tool-travlang/t193-setfloatfield-2.ml \
+tool-travlang/t200-getfield0.ml \
+tool-travlang/t200-getfield1.ml \
+tool-travlang/t200-getfield2.ml \
+tool-travlang/t200-getfield3.ml \
+tool-travlang/t201-getfield.ml \
+tool-travlang/t210-setfield0.ml \
+tool-travlang/t210-setfield1.ml \
+tool-travlang/t210-setfield2.ml \
+tool-travlang/t210-setfield3.ml \
+tool-travlang/t211-setfield.ml \
+tool-travlang/t220-assign.ml \
+tool-travlang/t230-check_signals.ml \
+tool-travlang/t240-c_call1.ml \
+tool-travlang/t240-c_call2.ml \
+tool-travlang/t240-c_call3.ml \
+tool-travlang/t240-c_call4.ml \
+tool-travlang/t240-c_call5.ml \
+tool-travlang/t250-closurerec-1.ml \
+tool-travlang/t250-closurerec-2.ml \
+tool-travlang/t251-pushoffsetclosure0.ml \
+tool-travlang/t251-pushoffsetclosure2.ml \
+tool-travlang/t251-pushoffsetclosurem2.ml \
+tool-travlang/t252-pushoffsetclosure.ml \
+tool-travlang/t253-offsetclosure0.ml \
+tool-travlang/t253-offsetclosure2.ml \
+tool-travlang/t253-offsetclosurem2.ml \
+tool-travlang/t254-offsetclosure.ml \
+tool-travlang/t260-offsetref.ml \
+tool-travlang/t270-push_retaddr.ml \
+tool-travlang/t300-getmethod.ml \
+tool-travlang/t301-object.ml \
+tool-travlang/t310-alloc-1.ml \
+tool-travlang/t310-alloc-2.ml \
+tool-travlang/t320-gc-1.ml \
+tool-travlang/t320-gc-2.ml \
+tool-travlang/t320-gc-3.ml \
+tool-travlang/t330-compact-1.ml \
+tool-travlang/t330-compact-2.ml \
+tool-travlang/t330-compact-3.ml \
+tool-travlang/t330-compact-4.ml \
+tool-travlang/t340-weak.ml \
+tool-travlang/t350-heapcheck.ml \
+tool-travlang/t360-stacks-1.ml \
+tool-travlang/t360-stacks-2.ml \
+tool-travlangc-compat32/compat32.ml \
+tool-travlangc-error-cleanup/test.ml \
+tool-travlangc-open/tool-travlangc-open-error.ml \
+tool-travlangc-open/tool-travlangc-open.ml \
+tool-travlangc-stop-after/stop_after_lambda.ml \
+tool-travlangc-stop-after/stop_after_scheduling.ml \
+tool-travlangdep-modalias/main.ml \
+tool-travlangdep-shadowing/a.ml \
+tool-travlangdoc-open/main.ml \
+tool-travlangdoc/Alert_toplevel.mli \
+tool-travlangdoc/Alert_toplevel2.mli \
+tool-travlangdoc/Alerts.mli \
+tool-travlangdoc/Alerts_impl.ml \
+tool-travlangdoc/Documentation_tags.mli \
+tool-travlangdoc/Entities.ml \
+tool-travlangdoc/Extensible_variant.ml \
+tool-travlangdoc/Include_module_type_of.mli \
+tool-travlangdoc/Inline_records.mli \
+tool-travlangdoc/Inline_records_bis.ml \
+tool-travlangdoc/Item_ids.mli \
+tool-travlangdoc/Level_0.mli \
+tool-travlangdoc/Linebreaks.mli \
+tool-travlangdoc/Loop.ml \
+tool-travlangdoc/Module_whitespace.ml \
+tool-travlangdoc/No_preamble.mli \
+tool-travlangdoc/Paragraph.mli \
+tool-travlangdoc/Short_description.txt \
+tool-travlangdoc/Test.mli \
+tool-travlangdoc/Variants.mli \
+tool-travlangdoc/latex_ref.mli \
+tool-travlangdoc/t01.ml \
+tool-travlangdoc/t02.ml \
+tool-travlangdoc/t03.ml \
+tool-travlangdoc/t04.ml \
+tool-travlangdoc/t05.ml \
+tool-travlangobjinfo/question.ml \
+tool-travlangopt-save-ir/check_for_pack.ml \
+tool-travlangopt-save-ir/save_ir_after_scheduling.ml \
+tool-travlangopt-save-ir/save_ir_after_typing.ml \
+tool-travlangopt-save-ir/start_from_emit.ml \
+tool-travlangopt-stop-after/stop_after_lambda.ml \
+tool-travlangopt-stop-after/stop_after_scheduling.ml \
+tool-travlangtest/norm1.ml \
+tool-travlangtest/norm2.ml \
+tool-travlangtest/norm3.ml \
+tool-travlangtest/norm4.ml \
 tool-toplevel-invocation/test.ml \
 tool-toplevel/exotic_lists.ml \
 tool-toplevel/install_printer.ml \
@@ -1286,11 +1286,11 @@ typing-objects-bugs/pr4018_bad.ml \
 typing-objects-bugs/pr4435_bad.ml \
 typing-objects-bugs/pr4824a_bad.ml \
 typing-objects-bugs/pr7284_bad.ml \
-typing-ocamlc-i/pervasives_leitmotiv.ml \
-typing-ocamlc-i/pr4791.ml \
-typing-ocamlc-i/pr6323.ml \
-typing-ocamlc-i/pr7402.ml \
-typing-ocamlc-i/pr7620_bad.ml \
+typing-travlangc-i/pervasives_leitmotiv.ml \
+typing-travlangc-i/pr4791.ml \
+typing-travlangc-i/pr6323.ml \
+typing-travlangc-i/pr7402.ml \
+typing-travlangc-i/pr7620_bad.ml \
 typing-polyvariants-bugs-2/pr3918c.ml \
 typing-polyvariants-bugs/pr5057a_bad.ml \
 typing-private-bugs/pr5026_bad.ml \
@@ -1369,9 +1369,9 @@ parsing/int_and_float_with_modifier.ml \
 parsing/pr6865.ml \
 parsing/quotedextensions.ml \
 parsing/shortcut_ext_attr.ml \
-tool-ocamlc-stop-after/stop_after_parsing_impl.ml \
-tool-ocamlc-stop-after/stop_after_parsing_intf.mli \
-tool-ocamlc-stop-after/stop_after_typing_impl.ml \
+tool-travlangc-stop-after/stop_after_parsing_impl.ml \
+tool-travlangc-stop-after/stop_after_parsing_intf.mli \
+tool-travlangc-stop-after/stop_after_typing_impl.ml \
 "
 
 for f in $TESTS_COMMENTS; do
@@ -1383,25 +1383,25 @@ done
 for f in $TESTS_PLAIN; do
   echo plain: $f
   ff="testsuite/tests/$f"
-  ocamltest/ocamltest -translate -compact ../trunk/$ff >$ff
+  travlangtest/travlangtest -translate -compact ../trunk/$ff >$ff
 done
 
 for f in $TESTS_LINES; do
   echo lines: $f
   ff="testsuite/tests/$f"
-  ocamltest/ocamltest -translate -compact -keep-lines ../trunk/$ff >$ff
+  travlangtest/travlangtest -translate -compact -keep-lines ../trunk/$ff >$ff
 done
 
 for f in $TESTS_COMPACT; do
   echo compact: $f
   ff="testsuite/tests/$f"
-  ocamltest/ocamltest -translate -compact ../trunk/$ff >$ff
+  travlangtest/travlangtest -translate -compact ../trunk/$ff >$ff
 done
 
 for f in $TESTS_CHARS; do
   echo chars: $f
   ff="testsuite/tests/$f"
-  ocamltest/ocamltest -translate -compact -keep-chars ../trunk/$ff >$ff
+  travlangtest/travlangtest -translate -compact -keep-chars ../trunk/$ff >$ff
 done
 
 N=$(echo $TESTS_COMMENTS $TESTS_PLAIN $TESTS_COMPACT $TESTS_LINES $TESTS_CHARS \

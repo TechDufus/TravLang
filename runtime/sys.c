@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           */
 /*                                                                        */
@@ -648,7 +648,7 @@ CAMLprim value caml_sys_random_seed (value unit)
 #else
   n = caml_unix_random_seed(data);
 #endif
-  /* Convert to an OCaml array of ints */
+  /* Convert to an travlang array of ints */
   res = caml_alloc_small(n, 0);
   for (i = 0; i < n; i++) Field(res, i) = Val_long(data[i]);
   return res;
@@ -683,17 +683,17 @@ CAMLprim value caml_sys_const_max_wosize(value unit)
 
 CAMLprim value caml_sys_const_ostype_unix(value unit)
 {
-  return Val_bool(0 == strcmp(OCAML_OS_TYPE,"Unix"));
+  return Val_bool(0 == strcmp(travlang_OS_TYPE,"Unix"));
 }
 
 CAMLprim value caml_sys_const_ostype_win32(value unit)
 {
-  return Val_bool(0 == strcmp(OCAML_OS_TYPE,"Win32"));
+  return Val_bool(0 == strcmp(travlang_OS_TYPE,"Win32"));
 }
 
 CAMLprim value caml_sys_const_ostype_cygwin(value unit)
 {
-  return Val_bool(0 == strcmp(OCAML_OS_TYPE,"Cygwin"));
+  return Val_bool(0 == strcmp(travlang_OS_TYPE,"Cygwin"));
 }
 
 CAMLprim value caml_sys_const_backend_type(value unit)
@@ -705,7 +705,7 @@ CAMLprim value caml_sys_get_config(value unit)
   CAMLparam0 ();   /* unit is unused */
   CAMLlocal2 (result, ostype);
 
-  ostype = caml_copy_string(OCAML_OS_TYPE);
+  ostype = caml_copy_string(travlang_OS_TYPE);
   result = caml_alloc_small (3, 0);
   Field(result, 0) = ostype;
   Field(result, 1) = Val_long (8 * sizeof(value));
@@ -760,7 +760,7 @@ CAMLprim value caml_sys_isatty(value chan)
 }
 
 /* On Windows, returns a string list of directories to search for configuration
-   files. On Unix, this list is more easily computed in OCaml, so the list
+   files. On Unix, this list is more easily computed in travlang, so the list
    returned by the primitive is empty. */
 CAMLprim value caml_xdg_defaults(value unit)
 {

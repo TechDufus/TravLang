@@ -61,11 +61,11 @@ $(WEBDIRMAN)/%: $(WEBDIRAPI)/% | $(WEBDIRMAN)
 
 LOGO := colour-logo.svg
 $(WEBDIRAPI)/colour-logo.svg: | $(WEBDIRAPI) $(WEBDIRMAN) $(WEBDIRCOMP)
-	$(CURL) "https://raw.githubusercontent.com/ocaml/ocaml-logo/master/Colour/SVG/colour-logo.svg" > $(WEBDIRAPI)/$(LOGO)
+	$(CURL) "https://raw.githubusercontent.com/travlang/travlang-logo/master/Colour/SVG/colour-logo.svg" > $(WEBDIRAPI)/$(LOGO)
 
 ICON := favicon.ico
 $(WEBDIRAPI)/favicon.ico: | $(WEBDIRAPI) $(WEBDIRMAN) $(WEBDIRCOMP)
-	$(CURL) "https://raw.githubusercontent.com/ocaml/ocaml-logo/master/Colour/Favicon/32x32.ico" > $(WEBDIRAPI)/$(ICON)
+	$(CURL) "https://raw.githubusercontent.com/travlang/travlang-logo/master/Colour/Favicon/32x32.ico" > $(WEBDIRAPI)/$(ICON)
 
 IMG_FILES0 := colour-logo.svg
 IMG_FILES := $(addprefix $(WEBDIRAPI)/, $(IMG_FILES0)) $(addprefix $(WEBDIRCOMP)/, $(IMG_FILES0)) $(addprefix $(WEBDIRMAN)/, $(IMG_FILES0)) 
@@ -96,24 +96,24 @@ CAMLP_STREAMS_TAG = v5.0.1
 duniverse: dune/dune.exe re markup.ml uutf lambdasoup camlp-streams
 
 dune/dune.exe: dune
-	cd dune; ocaml bootstrap.ml
+	cd dune; travlang bootstrap.ml
 
 GIT_CHECKOUT = git -c advice.detachedHead=false checkout
 
 dune:
-	git clone https://github.com/ocaml/dune.git -n -o upstream
+	git clone https://github.com/travlang/dune.git -n -o upstream
 	cd dune; $(GIT_CHECKOUT) $(DUNE_TAG)
 
 distclean::
 	rm -rf dune
 
 re:
-	git clone https://github.com/ocaml/ocaml-re.git -n -o upstream
-	cd ocaml-re; $(GIT_CHECKOUT) $(RE_TAG)
-	sed -i.bak -e '/(libraries seq)/d' ocaml-re/lib/dune
+	git clone https://github.com/travlang/travlang-re.git -n -o upstream
+	cd travlang-re; $(GIT_CHECKOUT) $(RE_TAG)
+	sed -i.bak -e '/(libraries seq)/d' travlang-re/lib/dune
 
 distclean::
-	rm -rf ocaml-re
+	rm -rf travlang-re
 
 lambdasoup:
 	git clone https://github.com/dra27/lambdasoup.git -n -o dra27
@@ -142,7 +142,7 @@ distclean::
 	rm -rf uutf
 
 camlp-streams:
-	git clone https://github.com/ocaml/camlp-streams.git -n -o upstream
+	git clone https://github.com/travlang/camlp-streams.git -n -o upstream
 	cd camlp-streams; $(GIT_CHECKOUT) $(CAMLP_STREAMS_TAG)
 
 distclean::

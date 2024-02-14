@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*            Xavier Leroy, projet Cristal, INRIA Rocquencourt            */
 /*                                                                        */
@@ -732,7 +732,7 @@ wchar_t *caml_secure_getenv (wchar_t const *var)
    copy that is cached by the C runtime system. The result of caml_win32_getenv
    is dynamically allocated and must be explicitly deallocated.
 
-   In contrast, the OCaml runtime system still calls _wgetenv from the C runtime
+   In contrast, the travlang runtime system still calls _wgetenv from the C runtime
    system, via caml_secure_getenv. The result is statically allocated and needs
    no deallocation. */
 CAMLexport wchar_t *caml_win32_getenv(wchar_t const *lpName)
@@ -871,7 +871,7 @@ int caml_win32_unlink(const wchar_t * path) {
 static uintnat windows_unicode_enabled = WINDOWS_UNICODE;
 
 /* If [windows_unicode_strict] is non-zero, then illegal UTF-8 characters (on
-   the OCaml side) or illegal UTF-16 characters (on the Windows side) cause an
+   the travlang side) or illegal UTF-16 characters (on the Windows side) cause an
    error to be signaled.  What happens then depends on the variable
    [windows_unicode_fallback].
 

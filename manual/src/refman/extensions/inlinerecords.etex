@@ -1,4 +1,4 @@
-(Introduced in OCaml 4.03)
+(Introduced in travlang 4.03)
 \begin{syntax}
   constr-args:
           ...

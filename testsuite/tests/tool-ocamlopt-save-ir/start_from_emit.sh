@@ -8,7 +8,7 @@ obj=start_from_emit.${objext}
 if [ -e "$obj" ] ; then
     test_result=${TEST_PASS}
 else
-    echo "not found $obj" > ${ocamltest_response}
+    echo "not found $obj" > ${travlangtest_response}
     test_result=${TEST_FAIL}
 fi
 exit ${test_result}

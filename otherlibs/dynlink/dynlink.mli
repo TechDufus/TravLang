@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*             Mark Shinwell and Leo White, Jane Street Europe            *)
@@ -26,7 +26,7 @@ val is_native : bool
 val loadfile : string -> unit
 (** In bytecode: load the given bytecode object file ([.cmo] file) or
     bytecode library file ([.cma] file), and link it with the running
-    program. In native code: load the given OCaml plugin file (usually
+    program. In native code: load the given travlang plugin file (usually
     [.cmxs]), and link it with the running program.
 
     All toplevel expressions in the loaded compilation units

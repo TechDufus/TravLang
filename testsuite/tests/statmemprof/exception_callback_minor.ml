@@ -1,6 +1,6 @@
 (* TEST
  exit_status = "2";
- reason = "port stat-mem-prof : https://github.com/ocaml/ocaml/pull/8634";
+ reason = "port stat-mem-prof : https://github.com/travlang/travlang/pull/8634";
  skip;
 *)
 

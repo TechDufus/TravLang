@@ -2701,7 +2701,7 @@ end;;
 (* Conor McBride, JFP 13(6) *)
 (* http://strictlypositive.org/publications.html *)
 
-(* This is a translation of the code part to ocaml *)
+(* This is a translation of the code part to travlang *)
 (* Of course, we do not prove other properties, not even termination *)
 
 (* 2.2 Inductive Families *)
@@ -3084,7 +3084,7 @@ Error: Types marked with the immediate attribute must be
    New: implicit pack is also supported, and you only need to be able
    to infer the the module type path from the context.
  *)
-(* ocaml -principal *)
+(* travlang -principal *)
 
 (* Use a module pattern *)
 let sort (type s) (module Set : Set.S with type elt = s) l =
@@ -5250,9 +5250,9 @@ end = struct
   type refer = { poly : 'a 'b 'c . (('b, 'c) #Classdef.cl2 as 'a) }
 end
 (*
-  ocamlc -c pr3918a.mli pr3918b.mli
+  travlangc -c pr3918a.mli pr3918b.mli
   rm -f pr3918a.cmi
-  ocamlc -c pr3918c.ml
+  travlangc -c pr3918c.ml
 *)
 
 open Pr3918b
@@ -6641,7 +6641,7 @@ end = struct
 end;;
 
 module Global_attributes = struct
-  [@@@ocaml.warning "-3"]
+  [@@@travlang.warning "-3"]
 
   external a : float -> float = "a" "noalloc" "a_nat" "float"
   external b : float -> float = "b" "noalloc" "b_nat"
@@ -6658,7 +6658,7 @@ module Global_attributes = struct
 end;;
 
 module Old_style_warning = struct
-  [@@@ocaml.warning "+3"]
+  [@@@travlang.warning "+3"]
   external a : float -> float = "a" "noalloc" "a_nat" "float"
   external b : float -> float = "b" "noalloc" "b_nat"
   external c : float -> float = "c" "c_nat" "float"
@@ -7381,8 +7381,8 @@ let () =
 type t = unit
 
 let rec equal : 'a. ('a -> 'a -> bool) -> 'a t -> 'a t -> bool =
- (fun poly_a (_ : unit) (_ : unit) -> true) [@ocaml.warning "-A"]
- [@@ocaml.warning "-39"]
+ (fun poly_a (_ : unit) (_ : unit) -> true) [@travlang.warning "-A"]
+ [@@travlang.warning "-39"]
 
 (* Issue #9548, PR #9591 *)
 

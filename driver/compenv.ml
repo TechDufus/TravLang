@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*       Fabrice Le Fessant, EPI Gallium, INRIA Paris-Rocquencourt        *)
 (*                                                                        *)
@@ -25,7 +25,7 @@ let output_prefix name =
   Filename.remove_extension oname
 
 let print_version_and_library compiler =
-  Printf.printf "The OCaml %s, version " compiler;
+  Printf.printf "The travlang %s, version " compiler;
   print_string Config.version; print_newline();
   print_string "Standard library directory: ";
   print_string Config.standard_library; print_newline();
@@ -68,14 +68,14 @@ type filename = string
 type readenv_position =
   Before_args | Before_compile of filename | Before_link
 
-(* Syntax of OCAMLPARAM: SEP?(name=VALUE SEP)* _ (SEP name=VALUE)*
+(* Syntax of travlangPARAM: SEP?(name=VALUE SEP)* _ (SEP name=VALUE)*
    where VALUE should not contain SEP, and SEP is ',' if unspecified,
    or ':', '|', ';', ' ' or ',' *)
 exception SyntaxError of string
 
 let print_error ppf msg =
   Location.print_warning Location.none ppf
-    (Warnings.Bad_env_variable ("OCAMLPARAM", msg))
+    (Warnings.Bad_env_variable ("travlangPARAM", msg))
 
 let parse_args s =
   let args =
@@ -144,7 +144,7 @@ let float_setter ppf name option s =
   with _ ->
     Location.print_warning Location.none ppf
       (Warnings.Bad_env_variable
-         ("OCAMLPARAM", Printf.sprintf "non-float parameter for \"%s\"" name))
+         ("travlangPARAM", Printf.sprintf "non-float parameter for \"%s\"" name))
 *)
 
 let check_bool ppf name s =
@@ -181,7 +181,7 @@ let set_compiler_pass ppf ~name v flag ~filter =
       end
 
 (* 'can-discard=' specifies which arguments can be discarded without warning
-   because they are not understood by some versions of OCaml. *)
+   because they are not understood by some versions of travlang. *)
 let can_discard = ref []
 
 let parse_warnings error v =
@@ -225,8 +225,8 @@ let read_one_param ppf position name v =
   | "unsafe" -> set "unsafe" [ unsafe ] v
   | "verbose" -> set "verbose" [ verbose ] v
   | "nopervasives" -> set "nopervasives" [ nopervasives ] v
-  | "slash" -> set "slash" [ force_slash ] v (* for ocamldep *)
-  | "no-slash" -> clear "no-slash" [ force_slash ] v (* for ocamldep *)
+  | "slash" -> set "slash" [ force_slash ] v (* for travlangdep *)
+  | "no-slash" -> clear "no-slash" [ force_slash ] v (* for travlangdep *)
   | "keep-docs" -> set "keep-docs" [ Clflags.keep_docs ] v
   | "keep-locs" -> set "keep-locs" [ Clflags.keep_locs ] v
 
@@ -275,44 +275,44 @@ let read_one_param ppf position name v =
 
   | "inline-toplevel" ->
     Int_arg_helper.parse v
-      "Bad syntax in OCAMLPARAM for 'inline-toplevel'"
+      "Bad syntax in travlangPARAM for 'inline-toplevel'"
       inline_toplevel_threshold
 
   | "rounds" -> int_option_setter ppf "rounds" simplify_rounds v
   | "inline-max-unroll" ->
-    Int_arg_helper.parse v "Bad syntax in OCAMLPARAM for 'inline-max-unroll'"
+    Int_arg_helper.parse v "Bad syntax in travlangPARAM for 'inline-max-unroll'"
       inline_max_unroll
   | "inline-call-cost" ->
     Int_arg_helper.parse v
-      "Bad syntax in OCAMLPARAM for 'inline-call-cost'"
+      "Bad syntax in travlangPARAM for 'inline-call-cost'"
       inline_call_cost
   | "inline-alloc-cost" ->
     Int_arg_helper.parse v
-      "Bad syntax in OCAMLPARAM for 'inline-alloc-cost'"
+      "Bad syntax in travlangPARAM for 'inline-alloc-cost'"
       inline_alloc_cost
   | "inline-prim-cost" ->
     Int_arg_helper.parse v
-      "Bad syntax in OCAMLPARAM for 'inline-prim-cost'"
+      "Bad syntax in travlangPARAM for 'inline-prim-cost'"
       inline_prim_cost
   | "inline-branch-cost" ->
     Int_arg_helper.parse v
-      "Bad syntax in OCAMLPARAM for 'inline-branch-cost'"
+      "Bad syntax in travlangPARAM for 'inline-branch-cost'"
       inline_branch_cost
   | "inline-indirect-cost" ->
     Int_arg_helper.parse v
-      "Bad syntax in OCAMLPARAM for 'inline-indirect-cost'"
+      "Bad syntax in travlangPARAM for 'inline-indirect-cost'"
       inline_indirect_cost
   | "inline-lifting-benefit" ->
     Int_arg_helper.parse v
-      "Bad syntax in OCAMLPARAM for 'inline-lifting-benefit'"
+      "Bad syntax in travlangPARAM for 'inline-lifting-benefit'"
       inline_lifting_benefit
   | "inline-branch-factor" ->
     Float_arg_helper.parse v
-      "Bad syntax in OCAMLPARAM for 'inline-branch-factor'"
+      "Bad syntax in travlangPARAM for 'inline-branch-factor'"
       inline_branch_factor
   | "inline-max-depth" ->
     Int_arg_helper.parse v
-      "Bad syntax in OCAMLPARAM for 'inline-max-depth'"
+      "Bad syntax in travlangPARAM for 'inline-max-depth'"
       inline_max_depth
 
   | "Oclassic" ->
@@ -456,14 +456,14 @@ let read_one_param ppf position name v =
     if not (List.mem name !can_discard) then begin
       can_discard := name :: !can_discard;
       Printf.ksprintf (print_error ppf)
-        "Warning: discarding value of variable %S in OCAMLPARAM\n%!"
+        "Warning: discarding value of variable %S in travlangPARAM\n%!"
         name
     end
 
 
-let read_OCAMLPARAM ppf position =
+let read_travlangPARAM ppf position =
   try
-    let s = Sys.getenv "OCAMLPARAM" in
+    let s = Sys.getenv "travlangPARAM" in
     if s <> "" then
       let (before, after) =
         try
@@ -478,7 +478,7 @@ let read_OCAMLPARAM ppf position =
          | Before_compile _ | Before_link -> after)
   with Not_found -> ()
 
-(* OCAMLPARAM passed as file *)
+(* travlangPARAM passed as file *)
 
 type pattern =
   | Filename of string
@@ -548,7 +548,7 @@ let matching_filename filename { pattern } =
 
 let apply_config_file ppf position =
   let config_file =
-    Filename.concat Config.standard_library "ocaml_compiler_internal_params"
+    Filename.concat Config.standard_library "travlang_compiler_internal_params"
   in
   let config =
     if Sys.file_exists config_file then
@@ -572,12 +572,12 @@ let readenv ppf position =
   last_ppx := [];
   last_objfiles := [];
   apply_config_file ppf position;
-  read_OCAMLPARAM ppf position;
+  read_travlangPARAM ppf position;
   all_ccopts := !last_ccopts @ !first_ccopts;
   all_ppx := !last_ppx @ !first_ppx
 
-let get_objfiles ~with_ocamlparam =
-  if with_ocamlparam then
+let get_objfiles ~with_travlangparam =
+  if with_travlangparam then
     List.rev (!last_objfiles @ !objfiles @ !first_objfiles)
   else
     List.rev !objfiles
@@ -600,12 +600,12 @@ let c_object_of_filename name =
   Filename.chop_suffix (Filename.basename name) ".c" ^ Config.ext_obj
 
 let process_action
-    (ppf, implementation, interface, ocaml_mod_ext, ocaml_lib_ext) action =
+    (ppf, implementation, interface, travlang_mod_ext, travlang_lib_ext) action =
   let impl ~start_from name =
     readenv ppf (Before_compile name);
     let opref = output_prefix name in
     implementation ~start_from ~source_file:name ~output_prefix:opref;
-    objfiles := (opref ^ ocaml_mod_ext) :: !objfiles
+    objfiles := (opref ^ travlang_mod_ext) :: !objfiles
   in
   match action with
   | ProcessImplementation name ->
@@ -630,8 +630,8 @@ let process_action
   | ProcessDLLs names ->
       dllibs := names @ !dllibs
   | ProcessOtherFile name ->
-      if Filename.check_suffix name ocaml_mod_ext
-      || Filename.check_suffix name ocaml_lib_ext then
+      if Filename.check_suffix name travlang_mod_ext
+      || Filename.check_suffix name travlang_lib_ext then
         objfiles := name :: !objfiles
       else if Filename.check_suffix name ".cmi" && !make_package then
         objfiles := name :: !objfiles
@@ -672,7 +672,7 @@ let intf filename = defer (ProcessInterface filename)
 let process_deferred_actions env =
   let final_output_name = !output_name in
   (* Make sure the intermediate products don't clash with the final one
-     when we're invoked like: ocamlopt -o foo bar.c baz.ml. *)
+     when we're invoked like: travlangopt -o foo bar.c baz.ml. *)
   if not !compile_only then output_name := None;
   begin
     match final_output_name with

@@ -1,7 +1,7 @@
 Entering f
 Entering g
 Calling C code
-Hello from print_and_call_ocaml_h
+Hello from print_and_call_travlang_h
 Entering h
 Entering i
 Throwing ExnB...

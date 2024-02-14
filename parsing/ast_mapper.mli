@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*                         Alain Frisch, LexiFi                           *)
 (*                                                                        *)
@@ -44,7 +44,7 @@ let () =
 
   This -ppx rewriter, which replaces [[%test]] in expressions with
   the constant [42], can be compiled using
-  [ocamlc -o ppx_test -I +compiler-libs ocamlcommon.cma ppx_test.ml].
+  [travlangc -o ppx_test -I +compiler-libs travlangcommon.cma ppx_test.ml].
 
   {b Warning:} this module is unstable and part of
   {{!Compiler_libs}compiler-libs}.
@@ -121,8 +121,8 @@ val default_mapper: mapper
 
 val tool_name: unit -> string
 (** Can be used within a ppx preprocessor to know which tool is
-    calling it ["ocamlc"], ["ocamlopt"], ["ocamldoc"], ["ocamldep"],
-    ["ocaml"], ...  Some global variables that reflect command-line
+    calling it ["travlangc"], ["travlangopt"], ["travlangdoc"], ["travlangdep"],
+    ["travlang"], ...  Some global variables that reflect command-line
     options are automatically synchronized between the calling tool
     and the ppx preprocessor: {!Clflags.include_dirs},
     {!Clflags.hidden_include_dirs}, {!Load_path}, {!Clflags.open_modules},
@@ -169,12 +169,12 @@ val register: string -> (string list -> mapper) -> unit
 val map_opt: ('a -> 'b) -> 'a option -> 'b option
 
 val extension_of_error: Location.error -> extension
-(** Encode an error into an 'ocaml.error' extension node which can be
+(** Encode an error into an 'travlang.error' extension node which can be
     inserted in a generated Parsetree.  The compiler will be
     responsible for reporting the error. *)
 
 val attribute_of_warning: Location.t -> string -> attribute
-(** Encode a warning message into an 'ocaml.ppwarning' attribute which can be
+(** Encode a warning message into an 'travlang.ppwarning' attribute which can be
     inserted in a generated Parsetree.  The compiler will be
     responsible for reporting the warning. *)
 
@@ -193,7 +193,7 @@ val add_ppx_context_sig:
 
 val drop_ppx_context_str:
     restore:bool -> Parsetree.structure -> Parsetree.structure
-(** Drop the ocaml.ppx.context attribute from a structure.  If
+(** Drop the travlang.ppx.context attribute from a structure.  If
     [restore] is true, also restore the associated data in the current
     process. *)
 
@@ -204,7 +204,7 @@ val drop_ppx_context_sig:
 (** {1 Cookies} *)
 
 (** Cookies are used to pass information from a ppx processor to
-    a further invocation of itself, when called from the OCaml
+    a further invocation of itself, when called from the travlang
     toplevel (or other tools that support cookies). *)
 
 val set_cookie: string -> Parsetree.expression -> unit

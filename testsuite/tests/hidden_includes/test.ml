@@ -21,60 +21,60 @@
 *)
 
 subdirectories = "liba liba_alt libb libc";
-setup-ocamlc.byte-build-env;
+setup-travlangc.byte-build-env;
 
 flags = "-I liba -nocwd";
 module = "liba/a.ml";
-ocamlc.byte;
+travlangc.byte;
 
 flags = "-I liba_alt -nocwd";
 module = "liba_alt/a.ml";
-ocamlc.byte;
+travlangc.byte;
 
 flags = "-I liba -I libb -nocwd";
 module = "libb/b.ml";
-ocamlc.byte;
+travlangc.byte;
 {
   (* Test hiding A completely *)
   flags = "-I libb -nocwd";
   module = "libc/c2.ml";
-  setup-ocamlc.byte-build-env;
-  ocamlc.byte;
+  setup-travlangc.byte-build-env;
+  travlangc.byte;
 }
 {
   (* Test hiding A completely, but using it *)
   flags = "-I libb -nocwd";
   module = "libc/c1.ml";
-  setup-ocamlc.byte-build-env;
-  ocamlc_byte_exit_status = "2";
-  ocamlc.byte;
-  compiler_reference = "${test_source_directory}/not_included.ocamlc.reference";
-  check-ocamlc.byte-output;
+  setup-travlangc.byte-build-env;
+  travlangc_byte_exit_status = "2";
+  travlangc.byte;
+  compiler_reference = "${test_source_directory}/not_included.travlangc.reference";
+  check-travlangc.byte-output;
 }
 {
   (* Test transitive use of A's cmi with -I. *)
   flags = "-I liba -I libb -nocwd";
   module = "libc/c1.ml";
-  setup-ocamlc.byte-build-env;
-  ocamlc.byte;
+  setup-travlangc.byte-build-env;
+  travlangc.byte;
 }
 {
   (* Test transitive use of A's cmi with -H. *)
   flags = "-H liba -I libb -nocwd";
   module = "libc/c1.ml";
-  setup-ocamlc.byte-build-env;
-  ocamlc.byte;
+  setup-travlangc.byte-build-env;
+  travlangc.byte;
 }
 {
   (* Test direct use of A cmi with -H. *)
   flags = "-H liba -I libb -nocwd";
   module = "libc/c3.ml";
-  setup-ocamlc.byte-build-env;
-  ocamlc_byte_exit_status = "2";
-  ocamlc.byte;
+  setup-travlangc.byte-build-env;
+  travlangc_byte_exit_status = "2";
+  travlangc.byte;
   compiler_reference =
-    "${test_source_directory}/cant_reference_hidden.ocamlc.reference";
-  check-ocamlc.byte-output;
+    "${test_source_directory}/cant_reference_hidden.travlangc.reference";
+  check-travlangc.byte-output;
 }
 
 (* The next four tests check that -I takes priority over -H regardless of the
@@ -83,36 +83,36 @@ ocamlc.byte;
 {
   flags = "-H liba_alt -I liba -I libb -nocwd";
   module = "libc/c1.ml";
-  setup-ocamlc.byte-build-env;
-  ocamlc.byte;
+  setup-travlangc.byte-build-env;
+  travlangc.byte;
 }
 {
   flags = "-I liba -H liba_alt -I libb -nocwd";
   module = "libc/c1.ml";
-  setup-ocamlc.byte-build-env;
-  ocamlc.byte;
+  setup-travlangc.byte-build-env;
+  travlangc.byte;
 }
 {
   not-windows;
   flags = "-H liba -I liba_alt -I libb -nocwd";
   module = "libc/c1.ml";
-  setup-ocamlc.byte-build-env;
-  ocamlc_byte_exit_status = "2";
-  ocamlc.byte;
+  setup-travlangc.byte-build-env;
+  travlangc_byte_exit_status = "2";
+  travlangc.byte;
   compiler_reference =
-    "${test_source_directory}/wrong_include_order.ocamlc.reference";
-  check-ocamlc.byte-output;
+    "${test_source_directory}/wrong_include_order.travlangc.reference";
+  check-travlangc.byte-output;
 }
 {
   not-windows;
   flags = "-I liba_alt -H liba -I libb -nocwd";
   module = "libc/c1.ml";
-  setup-ocamlc.byte-build-env;
-  ocamlc_byte_exit_status = "2";
-  ocamlc.byte;
+  setup-travlangc.byte-build-env;
+  travlangc_byte_exit_status = "2";
+  travlangc.byte;
   compiler_reference =
-    "${test_source_directory}/wrong_include_order.ocamlc.reference";
-  check-ocamlc.byte-output;
+    "${test_source_directory}/wrong_include_order.travlangc.reference";
+  check-travlangc.byte-output;
 }
 
 (* The next two tests show that earlier -Hs take priority over later -Hs *)
@@ -120,18 +120,18 @@ ocamlc.byte;
   not-windows;
   flags = "-H liba_alt -H liba -I libb -nocwd";
   module = "libc/c1.ml";
-  setup-ocamlc.byte-build-env;
-  ocamlc_byte_exit_status = "2";
-  ocamlc.byte;
+  setup-travlangc.byte-build-env;
+  travlangc_byte_exit_status = "2";
+  travlangc.byte;
   compiler_reference =
-    "${test_source_directory}/wrong_include_order.ocamlc.reference";
-  check-ocamlc.byte-output;
+    "${test_source_directory}/wrong_include_order.travlangc.reference";
+  check-travlangc.byte-output;
 }
 {
   flags = "-H liba -H liba_alt -I libb -nocwd";
   module = "libc/c1.ml";
-  setup-ocamlc.byte-build-env;
-  ocamlc.byte;
+  setup-travlangc.byte-build-env;
+  travlangc.byte;
 }
 
 (* Test that a hidden `A` doesn't become visible as a result of the typechecker
@@ -139,12 +139,12 @@ ocamlc.byte;
 {
   flags = "-H liba -I libb -nocwd";
   module = "libc/c4.ml";
-  setup-ocamlc.byte-build-env;
-  ocamlc_byte_exit_status = "2";
-  ocamlc.byte;
+  setup-travlangc.byte-build-env;
+  travlangc_byte_exit_status = "2";
+  travlangc.byte;
   compiler_reference =
-    "${test_source_directory}/hidden_stays_hidden.ocamlc.reference";
-  check-ocamlc.byte-output;
+    "${test_source_directory}/hidden_stays_hidden.travlangc.reference";
+  check-travlangc.byte-output;
 }
 
 (* Test that type-directed constructor disambiguation works through -H (at
@@ -152,8 +152,8 @@ ocamlc.byte;
 {
   flags = "-H liba -I libb -nocwd";
   module = "libc/c5.ml";
-  setup-ocamlc.byte-build-env;
-  ocamlc.byte;
+  setup-travlangc.byte-build-env;
+  travlangc.byte;
 }
 
 *)

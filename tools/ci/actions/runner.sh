@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 #**************************************************************************
 #*                                                                        *
-#*                                 OCaml                                  *
+#*                                 travlang                                  *
 #*                                                                        *
-#*              Anil Madhavapeddy, OCaml Labs                             *
+#*              Anil Madhavapeddy, travlang Labs                             *
 #*                                                                        *
 #*   Copyright 2014 Institut National de Recherche en Informatique et     *
 #*     en Automatique.                                                    *
@@ -29,7 +29,7 @@ Configure () {
   mkdir -p $PREFIX
   cat<<EOF
 ------------------------------------------------------------------------
-This test builds the OCaml compiler distribution with your pull request
+This test builds the travlang compiler distribution with your pull request
 and runs its testsuite.
 Failing to build the compiler distribution, or testsuite failures are
 critical errors that must be understood and fixed before your pull
@@ -40,7 +40,7 @@ EOF
   configure_flags="\
     --prefix=$PREFIX \
     --enable-flambda-invariants \
-    --enable-ocamltest \
+    --enable-travlangtest \
     --disable-dependency-generation \
     $CONFIG_ARG"
 
@@ -169,8 +169,8 @@ BasicCompiler () {
 
   # Need a runtime
   make -j coldstart
-  # And generated files (ocamllex compiles ocamlyacc)
-  make -j ocamllex
+  # And generated files (travlanglex compiles travlangyacc)
+  make -j travlanglex
 
   ReportBuildStatus 0
 }

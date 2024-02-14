@@ -1,7 +1,7 @@
 #!/bin/sh
 #**************************************************************************
 #*                                                                        *
-#*                                 OCaml                                  *
+#*                                 travlang                                  *
 #*                                                                        *
 #*          Damien Doligez, projet Gallium, INRIA Rocquencourt            *
 #*                                                                        *
@@ -17,14 +17,14 @@
 # This script is run on Inria's continuous-integration servers to make sure
 # it is possible to bootstrap the compiler.
 
-# To know the slave's architecture, this script looks at the OCAML_ARCH
+# To know the slave's architecture, this script looks at the travlang_ARCH
 # environment variable. For a given node NODE, this variable can be defined
 # in Jenkins at the following address:
-# https://ci.inria.fr/ocaml/computer/NODE/configure
+# https://ci.inria.fr/travlang/computer/NODE/configure
 
 # Other environments variables that are honored:
-#   OCAML_CONFIGURE_OPTIONS   additional options for configure
-#   OCAML_JOBS                number of jobs to run in parallel (make -j)
+#   travlang_CONFIGURE_OPTIONS   additional options for configure
+#   travlang_JOBS                number of jobs to run in parallel (make -j)
 
 # Command-line arguments:
 # -conf configure-option  add configure-option to configure cmd line
@@ -38,8 +38,8 @@ error () {
 }
 
 arch_error() {
-  configure_url="https://ci.inria.fr/ocaml/computer/${NODE_NAME}/configure"
-  msg="Unknown architecture. Make sure the OCAML_ARCH environment"
+  configure_url="https://ci.inria.fr/travlang/computer/${NODE_NAME}/configure"
+  msg="Unknown architecture. Make sure the travlang_ARCH environment"
   msg="$msg variable has been defined."
   msg="$msg\nSee ${configure_url}"
   error "$msg"
@@ -76,7 +76,7 @@ echo jenkinsdir=${jenkinsdir}
 # If we are called from a Windows batch script, we must set up the
 # Unix environment variables (e.g. PATH).
 
-case "${OCAML_ARCH}" in
+case "${travlang_ARCH}" in
   bsd|macos|linux|solaris) ;;
   cygwin|cygwin64|mingw|mingw64)
     . /etc/profile
@@ -98,7 +98,7 @@ esac
 #########################################################################
 
 # be considerate towards other potential users of the test machine
-case "${OCAML_ARCH}" in
+case "${travlang_ARCH}" in
   bsd|macos|linux) renice 10 $$ ;;
 esac
 
@@ -110,9 +110,9 @@ set -ex
 
 # default values
 make=make
-instdir="$HOME/ocaml-tmp-install"
-confoptions="--enable-ocamltest --enable-dependency-generation \
-${OCAML_CONFIGURE_OPTIONS}"
+instdir="$HOME/travlang-tmp-install"
+confoptions="--enable-travlangtest --enable-dependency-generation \
+${travlang_CONFIGURE_OPTIONS}"
 make_native=true
 cleanup=false
 check_make_alldepend=false
@@ -121,7 +121,7 @@ jobs=''
 build=''
 host=''
 
-case "${OCAML_ARCH}" in
+case "${travlang_ARCH}" in
   bsd|solaris) make=gmake ;;
   macos) ;;
   linux)
@@ -139,28 +139,28 @@ case "${OCAML_ARCH}" in
   mingw)
     build='--build=i686-pc-cygwin'
     host='--host=i686-w64-mingw32'
-    instdir='C:/ocamlmgw'
+    instdir='C:/travlangmgw'
     cleanup=true
     check_make_alldepend=true
   ;;
   mingw64)
     build='--build=x86_64-pc-cygwin'
     host='--host=x86_64-w64-mingw32'
-    instdir='C:/ocamlmgw64'
+    instdir='C:/travlangmgw64'
     cleanup=true
     check_make_alldepend=true
   ;;
   msvc)
     build='--build=i686-pc-cygwin'
     host='--host=i686-pc-windows'
-    instdir='C:/ocamlms'
+    instdir='C:/travlangms'
     configure=nt
     cleanup=true
   ;;
   msvc64)
     build='--build=x86_64-pc-cygwin'
     host='--host=x86_64-pc-windows'
-    instdir='C:/ocamlms64'
+    instdir='C:/travlangms64'
     configure=nt
     cleanup=true
   ;;
@@ -170,15 +170,15 @@ esac
 # Make sure two builds won't use the same install directory
 instdir="$instdir-$$"
 
-case "${OCAML_JOBS}" in
-  [1-9]|[1-9][0-9]) jobs="-j${OCAML_JOBS}" ;;
+case "${travlang_JOBS}" in
+  [1-9]|[1-9][0-9]) jobs="-j${travlang_JOBS}" ;;
 esac
 
 #########################################################################
 # On Windows, cleanup processes that may remain from previous run
 
 if $cleanup; then
-  tasks="tee ocamlrun program ocamltest ocamltest.opt"
+  tasks="tee travlangrun program travlangtest travlangtest.opt"
   for task in ${tasks}; do kill_task ${task}.exe; done
 fi
 

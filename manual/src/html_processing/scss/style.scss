@@ -3,9 +3,9 @@
 /* If the above line does not say "SOURCE FILE", then do not edit. It */
 /* means this file is generated from [sass style.scss] */
 
-/* CSS file for the Ocaml API.  San Vu Ngoc 2019 */
+/* CSS file for the travlang API.  San Vu Ngoc 2019 */
 
-// TODO: the ocamldoc output of Functors like in
+// TODO: the travlangdoc output of Functors like in
 // compilerlibref/4.08/Arg_helper.Make.html
 // is not easy to style... without breaking other tables.
    
@@ -200,8 +200,8 @@
 	/*border-bottom: 4px solid rgb(255, 215, 181);*/
 	background-color: #ffd6b5;
 	z-index: 0;
-	@if $ocamlorg {
-	    /* Because of fixed banner in the ocaml.org site, we have to offset the targets. See https://stackoverflow.com/questions/10732690/offsetting-an-html-anchor-to-adjust-for-fixed-header */
+	@if $travlangorg {
+	    /* Because of fixed banner in the travlang.org site, we have to offset the targets. See https://stackoverflow.com/questions/10732690/offsetting-an-html-anchor-to-adjust-for-fixed-header */
 	    padding-top: 85px;
 	    margin-top: -85px;
 	}
@@ -344,7 +344,7 @@
 
     /* Code blocks (e.g. Examples) */
 
-    pre code.ocaml {
+    pre code.travlang {
 	font-size: 0.893rem;
     }
 
@@ -698,7 +698,7 @@
 	}
     }
 
-    .ocaml {
+    .travlang {
 	background: linear-gradient(to left, white 0%, rgb(243, 247, 246) 100%);
     }
 
@@ -963,7 +963,7 @@
 
 
 /* When the navigation bar is collapsed */
-// this should match with ocamlorg.css
+// this should match with travlangorg.css
 @media only screen and (max-width: 979px) {
     @include mobile;
     .container, .api {
@@ -1056,7 +1056,7 @@
 
 
 /* When the navigation bar has reduced size */
-@if $ocamlorg {
+@if $travlangorg {
     @media (max-height: 600px) and (min-width: 980px) {
 	.api *:target {
 	    padding-top: 60px;

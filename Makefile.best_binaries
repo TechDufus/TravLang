@@ -1,6 +1,6 @@
 #**************************************************************************
 #*                                                                        *
-#*                                 OCaml                                  *
+#*                                 travlang                                  *
 #*                                                                        *
 #*            Gabriel Scherer, projet Parsifal, INRIA Saclay              *
 #*                                                                        *
@@ -20,10 +20,10 @@
 # - a ROOTDIR variable pointing to the repository root
 #   relative to the including Makefile
 
-# It exports definitions of BEST_OCAML{C,OPT,LEX,DEP} commands that
+# It exports definitions of BEST_travlang{C,OPT,LEX,DEP} commands that
 # run to either the bytecode binary built in the repository or the
 # native binary, if available. Note that they never use the boot/
-# versions: we assume that ocamlc, ocamlopt, etc. have been run first.
+# versions: we assume that travlangc, travlangopt, etc. have been run first.
 
 # Set this to empty to force use of the bytecode compilers at all times
 USE_BEST_BINARIES ?= true
@@ -40,45 +40,45 @@ choose_best = $(strip $(if \
    $(and $(USE_BEST_BINARIES),$(wildcard $(ROOTDIR)/$1.opt$(EXE)),$(strip \
       $(call check_not_stale,$1$(EXE),$1.opt$(EXE)))), \
     $(ROOTDIR)/$1.opt$(EXE), \
-    $(OCAMLRUN) $(ROOTDIR)/$1$(EXE)))
+    $(travlangRUN) $(ROOTDIR)/$1$(EXE)))
 
-BEST_OCAMLC := $(call choose_best,ocamlc)
-BEST_OCAMLOPT := $(call choose_best,ocamlopt)
-BEST_OCAMLLEX := $(call choose_best,lex/ocamllex)
+BEST_travlangC := $(call choose_best,travlangc)
+BEST_travlangOPT := $(call choose_best,travlangopt)
+BEST_travlangLEX := $(call choose_best,lex/travlanglex)
 
 # We want to be able to compute dependencies even if the bytecode compiler
 # is not built yet, using the bootstrap compiler.
 
 # Unlike other tools, there is no risk of mixing incompatible
-# bootstrap-compiler and host-compiler object files, as ocamldep only
+# bootstrap-compiler and host-compiler object files, as travlangdep only
 # produces text output.
-BEST_OCAMLDEP := $(strip $(if \
-   $(and $(USE_BEST_BINARIES),$(wildcard $(ROOTDIR)/ocamlc.opt$(EXE)),$(strip \
-      $(call check_not_stale,boot/ocamlc,ocamlc.opt$(EXE)))), \
-    $(ROOTDIR)/ocamlc.opt$(EXE) -depend, \
-    $(BOOT_OCAMLC) -depend))
+BEST_travlangDEP := $(strip $(if \
+   $(and $(USE_BEST_BINARIES),$(wildcard $(ROOTDIR)/travlangc.opt$(EXE)),$(strip \
+      $(call check_not_stale,boot/travlangc,travlangc.opt$(EXE)))), \
+    $(ROOTDIR)/travlangc.opt$(EXE) -depend, \
+    $(BOOT_travlangC) -depend))
 
-OCAMLDOC = $(ROOTDIR)/ocamldoc/ocamldoc$(EXE)
-OCAMLDOC_OPT = $(ROOTDIR)/ocamldoc/ocamldoc.opt$(EXE)
+travlangDOC = $(ROOTDIR)/travlangdoc/travlangdoc$(EXE)
+travlangDOC_OPT = $(ROOTDIR)/travlangdoc/travlangdoc.opt$(EXE)
 
 ifeq "$(TARGET)" "$(HOST)"
   ifeq "$(SUPPORTS_SHARED_LIBRARIES)" "true"
-    OCAMLDOC_RUN_BYTE = $(NEW_OCAMLRUN) -I $(ROOTDIR)/otherlibs/unix \
-                                    -I $(ROOTDIR)/otherlibs/str $(OCAMLDOC)
+    travlangDOC_RUN_BYTE = $(NEW_travlangRUN) -I $(ROOTDIR)/otherlibs/unix \
+                                    -I $(ROOTDIR)/otherlibs/str $(travlangDOC)
   else
     # if shared-libraries are not supported, unix.cma and str.cma
-    # are compiled with -custom, so ocamldoc also uses -custom,
-    # and (ocamlrun ocamldoc) does not work.
-    OCAMLDOC_RUN_BYTE = $(OCAMLDOC)
+    # are compiled with -custom, so travlangdoc also uses -custom,
+    # and (travlangrun travlangdoc) does not work.
+    travlangDOC_RUN_BYTE = $(travlangDOC)
   endif
 else
-  OCAMLDOC_RUN_BYTE = $(NEW_OCAMLRUN) $(OCAMLDOC)
+  travlangDOC_RUN_BYTE = $(NEW_travlangRUN) $(travlangDOC)
 endif
 
-OCAMLDOC_RUN_OPT = $(OCAMLDOC_OPT)
+travlangDOC_RUN_OPT = $(travlangDOC_OPT)
 
-ifeq "$(wildcard $(OCAMLDOC_OPT))" ""
-  OCAMLDOC_RUN = $(OCAMLDOC_RUN_BYTE)
+ifeq "$(wildcard $(travlangDOC_OPT))" ""
+  travlangDOC_RUN = $(travlangDOC_RUN_BYTE)
 else
-  OCAMLDOC_RUN = $(OCAMLDOC_RUN_OPT)
+  travlangDOC_RUN = $(travlangDOC_RUN_OPT)
 endif

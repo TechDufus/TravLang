@@ -2,15 +2,15 @@
 %HEVEA\cutname{memorymodel.html}
 \label{c:memorymodel}
 
-This chapter describes the details of OCaml relaxed memory model. The relaxed
-memory model describes what values an OCaml program is allowed to witness when
+This chapter describes the details of travlang relaxed memory model. The relaxed
+memory model describes what values an travlang program is allowed to witness when
 reading a memory location. If you are interested in high-level parallel
-programming in OCaml, please have a look at the parallel programming chapter
+programming in travlang, please have a look at the parallel programming chapter
 \ref{c:parallelism}.
 
 This chapter is aimed at experts who would like to understand the details of
-the OCaml memory model from a practitioner's perspective. For a formal
-definition of the OCaml memory model, its guarantees and the compilation to
+the travlang memory model from a practitioner's perspective. For a formal
+definition of the travlang memory model, its guarantees and the compilation to
 hardware memory models, please have a look at the PLDI 2018 paper on
 \href{https://doi.org/10.1145/3192366.3192421}{Bounding Data Races in Space and
 Time}. The memory model presented in this chapter is an extension of the one
@@ -79,8 +79,8 @@ the second read of "a" in "d1" should also return "0".
 
 \subsection{ss:mm_comp_opt}{Compiler optimisations}
 
-Surprisingly, this assertion may fail in OCaml due to compiler optimisations.
-The OCaml compiler observes the common sub-expression "!a * 2" in "d1" and
+Surprisingly, this assertion may fail in travlang due to compiler optimisations.
+The travlang compiler observes the common sub-expression "!a * 2" in "d1" and
 optimises the program to:
 
 \begin{caml_example*}{verbatim}
@@ -175,8 +175,8 @@ memory.
 
 \section{s:drf_sc}{Data race freedom implies sequential consistency}
 
-The aim of the OCaml relaxed memory model is to precisely describe which orders
-are preserved by the OCaml program. The compiler and the hardware are free to
+The aim of the travlang relaxed memory model is to precisely describe which orders
+are preserved by the travlang program. The compiler and the hardware are free to
 optimize the program as long as they respect the ordering guarantees of the
 memory model. While programming directly under the relaxed memory model is
 difficult, the memory model also describes the conditions under which a program
@@ -187,7 +187,7 @@ number of definitions.
 
 \subsection{s:atomics}{Memory locations}
 
-OCaml classifies memory locations into \emph{atomic} and \emph{non-atomic}
+travlang classifies memory locations into \emph{atomic} and \emph{non-atomic}
 locations. Reference cells, array fields and mutable record fields are
 non-atomic memory locations. Immutable objects are non-atomic locations with an
 initialising write but no further updates. Atomic memory locations are those
@@ -195,7 +195,7 @@ that are created using the \stdmoduleref{Atomic} module.
 
 \subsection{s:happens_before}{Happens-before relation}
 
-Let us imagine that the OCaml programs are executed by an abstract machine that
+Let us imagine that the travlang programs are executed by an abstract machine that
 executes one action at a time, arbitrarily picking one of the available domains
 at each step. We classify actions into two: \emph{inter-domain} and
 \emph{intra-domain}. An inter-domain action is one which can be observed and be
@@ -221,7 +221,7 @@ given program due to non-determinism.
 
 For a given execution trace, we define an irreflexive, transitive
 \emph{happens-before relation} that captures the causality between actions in
-the OCaml program. The happens-before relation is defined as the smallest
+the travlang program. The happens-before relation is defined as the smallest
 transitive relation satisfying the following properties:
 
 \begin{itemize}
@@ -394,7 +394,7 @@ happens-before relationship between them. Hence, this program has a data race.
 
 \section{s:local_drf}{Local data race freedom}
 
-The OCaml memory model offers strong guarantees even for programs with data
+The travlang memory model offers strong guarantees even for programs with data
 races. It offers what is known as \emph{local data race freedom sequential
 consistency (LDRF-SC)} guarantee. A formal definition of this property is beyond
 the scope of this manual chapter. Interested readers are encouraged to read the
@@ -447,7 +447,7 @@ memory locations. Hence, the Java memory model allows them to be reordered. As
 a result, the write in the second thread may occur before the read of "c.x",
 and hence, "c.x" returns "7".
 
-The OCaml equivalent of the Java code above is:
+The travlang equivalent of the Java code above is:
 
 \begin{caml_example*}{verbatim}
 let g = ref None
@@ -479,32 +479,32 @@ let a = !c in
 ...
 \end{verbatim}
 
-The OCaml memory model is bounded both in space and time. The only memory
+The travlang memory model is bounded both in space and time. The only memory
 location here is "c". Reasoning only about this snippet, there is neither the
 data race in space (the race on "g") nor in time (the future race on "c").
 Hence, the snippet will have sequentially consistent behaviour, and the value
 returned by "!c" will be "42".
 
-The OCaml memory model guarantees that even for programs with data races,
+The travlang memory model guarantees that even for programs with data races,
 memory safety is preserved. While programs with data races may observe
 non-sequentially consistent behaviours, they will not crash.
 
 \section{s:mm_semantics}{An operational view of the memory model}
 
-In this section, we describe the semantics of the OCaml memory model. A formal
+In this section, we describe the semantics of the travlang memory model. A formal
 definition of the operational view of the memory model is presented in section
 3 of the PLDI 2018 paper on
 \href{https://doi.org/10.1145/3192366.3192421}{Bounding Data Races in Space and
 Time}. This section presents an informal description of the memory model with
 the help of an example.
 
-Given an OCaml program, which may possibly contain data races, the operational
+Given an travlang program, which may possibly contain data races, the operational
 semantics tells you the values that may be observed by the read of a memory
 location. For simplicity, we restrict the intra-thread actions to just the
 accesses to atomic and non-atomic locations, ignoring domain spawn and join
 operations, and the operations on mutexes.
 
-We describe the semantics of the OCaml memory model in a straightforward
+We describe the semantics of the travlang memory model in a straightforward
 small-step operational manner. That is, the semantics is described by an
 abstract machine that executes one action at a time, arbitrarily picking one of
 the available domains at each step. This is similar to the abstract machine

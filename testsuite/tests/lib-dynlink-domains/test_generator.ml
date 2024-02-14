@@ -517,23 +517,23 @@ readonly_files = "@[<h>store.ml main.ml%a@]"
 
 *01 not-windows
 *02 shared-libraries
-*03 setup-ocamlc.byte-build-env
-*04 ocamlc.byte
+*03 setup-travlangc.byte-build-env
+*04 travlangc.byte
 module = "store.ml"@ @]|}
       files node;
     let bytecode_compilation i node =
       if node.path = [] then i else begin
       Format.fprintf ppf
-        {|@[<v>%a ocamlc.byte@,module = "%a.ml"@,@]|}
+        {|@[<v>%a travlangc.byte@,module = "%a.ml"@,@]|}
         task i name (rev node.path);
       i + 1
       end
     in
     let stars = fold bytecode_compilation 5 node in
     Format.fprintf ppf
-      "@[<v>%a ocamlc.byte@ \
+      "@[<v>%a travlangc.byte@ \
        module = \"main.ml\"@ \
-       %a ocamlc.byte@ \
+       %a travlangc.byte@ \
        program = \"./main.byte.exe\"@ \
        libraries= \"dynlink\"@ \
        all_modules = \"store.cmo main.cmo\"@ \
@@ -550,7 +550,7 @@ module = "store.ml"@ @]|}
     let native_compilation i node =
       if node.path = [] then i else begin
       Format.fprintf ppf
-        "@[<v>%a ocamlopt.byte@ \
+        "@[<v>%a travlangopt.byte@ \
          flags = \"-shared\"@ \
          program= \"%a.cmxs\"@ \
          module = \"\"@,\
@@ -564,18 +564,18 @@ module = "store.ml"@ @]|}
     in
     Format.fprintf ppf
       "@[<v>*02 native-dynlink@ \
-       *03 setup-ocamlopt.byte-build-env@ \
-       *04 ocamlopt.byte@ \
+       *03 setup-travlangopt.byte-build-env@ \
+       *04 travlangopt.byte@ \
        flags = \"\"@ \
        module = \"store.ml\"@ \
        @]";
     let stars = fold native_compilation 5 node in
     Format.fprintf ppf
       "@[<v>\
-       %a ocamlopt.byte@ \
+       %a travlangopt.byte@ \
        flags = \"\"@ \
        module = \"main.ml\"@ \
-       %a ocamlopt.byte@ \
+       %a travlangopt.byte@ \
        program = \"./main.exe\"@ \
        libraries=\"dynlink\"@ \
        all_modules = \"store.cmx main.cmx\"@ \

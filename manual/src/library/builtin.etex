@@ -9,130 +9,130 @@ consequence, they can only be referred by their short names.
 \subsection*{ss:builtin-types}{Built-in types}
 %\vspace{0.1cm}
 
-\begin{ocamldoccode}
+\begin{travlangdoccode}
  type int
-\end{ocamldoccode}
+\end{travlangdoccode}
 \index{int@\verb`int`}
-\begin{ocamldocdescription}
+\begin{travlangdocdescription}
     The type of integer numbers.
-\end{ocamldocdescription}
+\end{travlangdocdescription}
 
-\begin{ocamldoccode}
+\begin{travlangdoccode}
  type char
-\end{ocamldoccode}
+\end{travlangdoccode}
 \index{char@\verb`char`}
-\begin{ocamldocdescription}
+\begin{travlangdocdescription}
    The type of characters.
-\end{ocamldocdescription}
+\end{travlangdocdescription}
 
-\begin{ocamldoccode}
+\begin{travlangdoccode}
  type bytes
-\end{ocamldoccode}
+\end{travlangdoccode}
 \index{bytes@\verb`bytes`}
-\begin{ocamldocdescription}
+\begin{travlangdocdescription}
  The type of (writable) byte sequences.
-\end{ocamldocdescription}
+\end{travlangdocdescription}
 
-\begin{ocamldoccode}
+\begin{travlangdoccode}
  type string
-\end{ocamldoccode}
+\end{travlangdoccode}
 \index{string@\verb`string`}
-\begin{ocamldocdescription}
+\begin{travlangdocdescription}
  The type of (read-only) character strings.
-\end{ocamldocdescription}
+\end{travlangdocdescription}
 
-\begin{ocamldoccode}
+\begin{travlangdoccode}
  type float
-\end{ocamldoccode}
+\end{travlangdoccode}
 \index{float@\verb`float`}
-\begin{ocamldocdescription}
+\begin{travlangdocdescription}
   The type of floating-point numbers.
-\end{ocamldocdescription}
+\end{travlangdocdescription}
 
-\begin{ocamldoccode}
+\begin{travlangdoccode}
  type bool = false | true
-\end{ocamldoccode}
+\end{travlangdoccode}
 \index{bool@\verb`bool`}
-\begin{ocamldocdescription}
+\begin{travlangdocdescription}
    The type of booleans (truth values).
-\end{ocamldocdescription}
+\end{travlangdocdescription}
 
-\begin{ocamldoccode}
+\begin{travlangdoccode}
  type unit = ()
-\end{ocamldoccode}
+\end{travlangdoccode}
 \index{unit@\verb`unit`}
-\begin{ocamldocdescription}
+\begin{travlangdocdescription}
  The type of the unit value.
-\end{ocamldocdescription}
+\end{travlangdocdescription}
 
-\begin{ocamldoccode}
+\begin{travlangdoccode}
  type exn
-\end{ocamldoccode}
+\end{travlangdoccode}
 \index{exn@\verb`exn`}
-\begin{ocamldocdescription}
+\begin{travlangdocdescription}
     The type of exception values.
-\end{ocamldocdescription}
+\end{travlangdocdescription}
 
-\begin{ocamldoccode}
+\begin{travlangdoccode}
  type 'a array
-\end{ocamldoccode}
+\end{travlangdoccode}
 \index{array@\verb`array`}
-\begin{ocamldocdescription}
+\begin{travlangdocdescription}
   The type of arrays whose elements have type "'a".
-\end{ocamldocdescription}
+\end{travlangdocdescription}
 
-\begin{ocamldoccode}
+\begin{travlangdoccode}
  type 'a list = [] | :: of 'a * 'a list
-\end{ocamldoccode}
+\end{travlangdoccode}
 \index{list@\verb`list`}
-\begin{ocamldocdescription}
+\begin{travlangdocdescription}
   The type of lists whose elements have type "'a".
-\end{ocamldocdescription}
+\end{travlangdocdescription}
 
-\begin{ocamldoccode}
+\begin{travlangdoccode}
 type 'a option = None | Some of 'a
-\end{ocamldoccode}
+\end{travlangdoccode}
 \index{option@\verb`option`}
-\begin{ocamldocdescription}
+\begin{travlangdocdescription}
   The type of optional values of type "'a".
-\end{ocamldocdescription}
+\end{travlangdocdescription}
 
-\begin{ocamldoccode}
+\begin{travlangdoccode}
 type int32
-\end{ocamldoccode}
+\end{travlangdoccode}
 \index{int32@\verb`int32`}
-\begin{ocamldocdescription}
+\begin{travlangdocdescription}
  The type of signed 32-bit integers.
  Literals for 32-bit integers are suffixed by l.
  See the \stdmoduleref{Int32} module.
-\end{ocamldocdescription}
+\end{travlangdocdescription}
 
-\begin{ocamldoccode}
+\begin{travlangdoccode}
 type int64
-\end{ocamldoccode}
+\end{travlangdoccode}
 \index{int64@\verb`int64`}
-\begin{ocamldocdescription}
+\begin{travlangdocdescription}
  The type of signed 64-bit integers.
  Literals for 64-bit integers are suffixed by L.
  See the \stdmoduleref{Int64} module.
-\end{ocamldocdescription}
+\end{travlangdocdescription}
 
-\begin{ocamldoccode}
+\begin{travlangdoccode}
 type nativeint
-\end{ocamldoccode}
+\end{travlangdoccode}
 \index{nativeint@\verb`nativeint`}
-\begin{ocamldocdescription}
+\begin{travlangdocdescription}
  The type of signed, platform-native integers (32 bits on 32-bit
  processors, 64 bits on 64-bit processors).
  Literals for native integers are suffixed by n.
  See the \stdmoduleref{Nativeint} module.
-\end{ocamldocdescription}
+\end{travlangdocdescription}
 
-\begin{ocamldoccode}
+\begin{travlangdoccode}
 type ('a, 'b, 'c, 'd, 'e, 'f) format6
-\end{ocamldoccode}
+\end{travlangdoccode}
 \index{format4@\verb`format4`}
-\begin{ocamldocdescription}
+\begin{travlangdocdescription}
   The type of format strings. "'a" is the type of the parameters of
   the format, "'f" is the result type for the "printf"-style
   functions, "'b" is the type of the first argument given to "%a" and
@@ -142,142 +142,142 @@ type ('a, 'b, 'c, 'd, 'e, 'f) format6
   functions, "'d" is the result type for the "scanf"-style functions
   (see module \stdmoduleref{Scanf}), and "'e" is the type of the receiver function
   for the "scanf"-style functions.
-\end{ocamldocdescription}
+\end{travlangdocdescription}
 
-\begin{ocamldoccode}
+\begin{travlangdoccode}
 type 'a lazy_t
-\end{ocamldoccode}
+\end{travlangdoccode}
 \index{lazyt@\verb`lazy_t`}
-\begin{ocamldocdescription}
+\begin{travlangdocdescription}
  This type is used to implement the \stdmoduleref{Lazy} module.
  It should not be used directly.
-\end{ocamldocdescription}
+\end{travlangdocdescription}
 
 %\vspace{0.1cm}
 \subsection*{ss:predef-exn}{Predefined exceptions}
 %\vspace{0.1cm}
 
-\begin{ocamldoccode}
+\begin{travlangdoccode}
 exception Match_failure of (string * int * int)
-\end{ocamldoccode}
+\end{travlangdoccode}
 \index{Matchfailure@\verb`Match_failure`}
-\begin{ocamldocdescription}
+\begin{travlangdocdescription}
    Exception raised when none of the cases of a pattern-matching
    apply. The arguments are the location of the "match" keyword
    in the source code (file name, line number, column number).
-\end{ocamldocdescription}
+\end{travlangdocdescription}
 
-\begin{ocamldoccode}
+\begin{travlangdoccode}
 exception Assert_failure of (string * int * int)
-\end{ocamldoccode}
+\end{travlangdoccode}
 \index{Assertfailure@\verb`Assert_failure`}
-\begin{ocamldocdescription}
+\begin{travlangdocdescription}
    Exception raised when an assertion fails.  The arguments are
    the location of the "assert" keyword in the source code
    (file name, line number, column number).
-\end{ocamldocdescription}
+\end{travlangdocdescription}
 
-\begin{ocamldoccode}
+\begin{travlangdoccode}
 exception Invalid_argument of string
-\end{ocamldoccode}
+\end{travlangdoccode}
 \index{Invalidargument@\verb`Invalid_argument`}
-\begin{ocamldocdescription}
+\begin{travlangdocdescription}
    Exception raised by library functions to signal that the given
    arguments do not make sense.  The string gives some information
    to the programmer.  As a general rule, this exception should not
    be caught, it denotes a programming error and the code should be
    modified not to trigger it.
-\end{ocamldocdescription}
+\end{travlangdocdescription}
 
-\begin{ocamldoccode}
+\begin{travlangdoccode}
 exception Failure of string
-\end{ocamldoccode}
+\end{travlangdoccode}
 \index{Failure@\verb`Failure`}
-\begin{ocamldocdescription}
+\begin{travlangdocdescription}
   Exception raised by library functions to signal that they are
   undefined on the given arguments.  The string is meant to give some
   information to the programmer; you must \emph{not} pattern match on
   the string literal because it may change in future versions (use
   \verb`Failure _` instead).
-\end{ocamldocdescription}
+\end{travlangdocdescription}
 
-\begin{ocamldoccode}
+\begin{travlangdoccode}
 exception Not_found
-\end{ocamldoccode}
+\end{travlangdoccode}
 \index{Notfound@\verb`Not_found`}
-\begin{ocamldocdescription}
+\begin{travlangdocdescription}
    Exception raised by search functions when the desired object
    could not be found.
-\end{ocamldocdescription}
+\end{travlangdocdescription}
 
-\begin{ocamldoccode}
+\begin{travlangdoccode}
 exception Out_of_memory
-\end{ocamldoccode}
+\end{travlangdoccode}
 \index{Outofmemory@\verb`Out_of_memory`}
-\begin{ocamldocdescription}
+\begin{travlangdocdescription}
    Exception raised by the garbage collector when there is
    insufficient memory to complete the computation. (Not reliable for
    allocations on the minor heap.)
-\end{ocamldocdescription}
+\end{travlangdocdescription}
 
-\begin{ocamldoccode}
+\begin{travlangdoccode}
 exception Stack_overflow
-\end{ocamldoccode}
+\end{travlangdoccode}
 \index{Stackoverflow@\verb`Stack_overflow`}
-\begin{ocamldocdescription}
+\begin{travlangdocdescription}
    Exception raised by the bytecode interpreter when the evaluation
    stack reaches its maximal size. This often indicates infinite or
    excessively deep recursion in the user's program. Before 4.10, it
    was not fully implemented by the native-code compiler.
-\end{ocamldocdescription}
+\end{travlangdocdescription}
 
-\begin{ocamldoccode}
+\begin{travlangdoccode}
 exception Sys_error of string
-\end{ocamldoccode}
+\end{travlangdoccode}
 \index{Syserror@\verb`Sys_error`}
-\begin{ocamldocdescription}
+\begin{travlangdocdescription}
   Exception raised by the input/output functions to report an
   operating system error.  The string is meant to give some
   information to the programmer; you must \emph{not} pattern match on
   the string literal because it may change in future versions (use
   \verb`Sys_error _` instead).
-\end{ocamldocdescription}
+\end{travlangdocdescription}
 
-\begin{ocamldoccode}
+\begin{travlangdoccode}
 exception End_of_file
-\end{ocamldoccode}
+\end{travlangdoccode}
 \index{Endoffile@\verb`End_of_file`}
-\begin{ocamldocdescription}
+\begin{travlangdocdescription}
    Exception raised by input functions to signal that the
    end of file has been reached.
-\end{ocamldocdescription}
+\end{travlangdocdescription}
 
-\begin{ocamldoccode}
+\begin{travlangdoccode}
 exception Division_by_zero
-\end{ocamldoccode}
+\end{travlangdoccode}
 \index{Divisionbyzero@\verb`Division_by_zero`}
-\begin{ocamldocdescription}
+\begin{travlangdocdescription}
    Exception raised by integer division and remainder operations
    when their second argument is zero.
-\end{ocamldocdescription}
+\end{travlangdocdescription}
 
-\begin{ocamldoccode}
+\begin{travlangdoccode}
 exception Sys_blocked_io
-\end{ocamldoccode}
+\end{travlangdoccode}
 \index{Sysblockedio@\verb`Sys_blocked_io`}
-\begin{ocamldocdescription}
+\begin{travlangdocdescription}
    A special case of "Sys_error" raised when no I/O is possible
    on a non-blocking I/O channel.
-\end{ocamldocdescription}
+\end{travlangdocdescription}
 
-\begin{ocamldoccode}
+\begin{travlangdoccode}
 exception Undefined_recursive_module of (string * int * int)
-\end{ocamldoccode}
+\end{travlangdoccode}
 \index{Undefinedrecursivemodule@\verb`Undefined_recursive_module`}
-\begin{ocamldocdescription}
+\begin{travlangdocdescription}
    Exception raised when an ill-founded recursive module definition
    is evaluated.  (See section~\ref{s:recursive-modules}.)
    The arguments are the location of the definition in the source code
    (file name, line number, column number).
-\end{ocamldocdescription}
+\end{travlangdocdescription}
 

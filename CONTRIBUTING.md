@@ -3,12 +3,12 @@
 :+1::tada: First off, thank you for taking time to contribute! :tada::+1:
 
 The following is a set of guidelines for proposing changes to the
-OCaml distribution. These are just guidelines, not rules, use your
+travlang distribution. These are just guidelines, not rules, use your
 best judgment and feel free to propose changes to this document itself
 in a pull request.
 
 This document assumes that you have a patch against the sources of the
-compiler distribution, that you wish to submit to the OCaml
+compiler distribution, that you wish to submit to the travlang
 maintainers upstream. See [INSTALL.adoc](INSTALL.adoc) for details on
 how to build the compiler distribution from sources. See
 [HACKING.adoc](HACKING.adoc) for details on how to modify the sources.
@@ -16,26 +16,26 @@ how to build the compiler distribution from sources. See
 ## Contribution
 
 Modifying the sources is far from the only way to contribute to the
-OCaml distribution. Bug reports (in particular when they come with
+travlang distribution. Bug reports (in particular when they come with
 a reproducible example), simple typos or clarifications in the
 documentation also help, and help evaluating and integrating existing
 change proposals also help. Providing good answers on the discussion
 forums, or asking the good questions that highlight deficiencies in
 existing documentations, also help.
 
-There are also many valuable ways to contribute to the wider OCaml
-ecosystem that do not involve changes to the OCaml distribution.
+There are also many valuable ways to contribute to the wider travlang
+ecosystem that do not involve changes to the travlang distribution.
 
 The rest of the document is concerned with the form of change
-proposals against the OCaml distribution. (Code changes, but also
+proposals against the travlang distribution. (Code changes, but also
 improvement to documentation or implementation comments, which are
 valuable changes on their own.)
 
 ## Workflow
 
-All changes to the OCaml distribution need to be processed through the
+All changes to the travlang distribution need to be processed through the
 GitHub Pull Request (PR) system.  In order to propose a change, a
-contributor thus needs to have a GitHub account, fork the ocaml/ocaml
+contributor thus needs to have a GitHub account, fork the travlang/travlang
 repository, create a branch for the proposal on their fork and submit
 it as a Pull Request on the upstream repository.  (If you are not yet
 familiar with GitHub, don't worry, all these steps are actually quite
@@ -86,8 +86,8 @@ The current list of maintainers is as follows:
 - @yallop Jeremy Yallop
 
 <!-- Note: the list comes from [this Github
-page](https://github.com/orgs/ocaml/teams/ocaml-dev/members), plus
-Anil as co-owner of the github/ocaml/ organization. Oddly enough,
+page](https://github.com/orgs/travlang/teams/travlang-dev/members), plus
+Anil as co-owner of the github/travlang/ organization. Oddly enough,
 Github does not make the page publicly accessible. -->
 
 ### Releases
@@ -103,8 +103,8 @@ characters. These typographical rules can be checked with the script
 
 Otherwise, there are no strongly enforced guidelines specific to the
 compiler -- and, as a result, the style may differ in the different
-parts of the compiler. The general [OCaml Programming
-Guidelines](https://ocaml.org/learn/tutorials/guidelines.html) are
+parts of the compiler. The general [travlang Programming
+Guidelines](https://travlang.org/learn/tutorials/guidelines.html) are
 good to keep in mind, and otherwise we strive for good taste and local
 consistency (following the code located around your change).
 
@@ -179,14 +179,14 @@ documentation comments of the relevant `.mli` files. After running
 `make html_doc`, you can find the HTML Standard Library documentation
 at `./api_docgen/html/libref/index.html`.
 
-It is recommended to include changes to the OCaml Reference Manual
+It is recommended to include changes to the travlang Reference Manual
 (in particular for any change in the surface language), which is now
 part of the main repository (under `manual/`). To build the full manual,
 see the instructions in `manual/README.md`.
 
 Finally, changes in command-line options should be integrated in the
 manual, but also in the man pages present in the `man/` sub-directory
-of the OCaml distribution.
+of the travlang distribution.
 
 
 ### Changelog
@@ -239,7 +239,7 @@ Clean patch series are useful, both during the review process and
 for code maintenance after it has been merged. Before submitting
 your request, you should rebase your patch series:
 
-- on top of the OCaml branch in which you want to merge
+- on top of the travlang branch in which you want to merge
   (usually `trunk`), solving any conflicts.
 
 - into a few well-separated, self-contained patches (github PRs
@@ -337,7 +337,7 @@ are asked to bear this in mind when making submissions.
 
 ## Collective maintenance
 
-Proposing changes to the OCaml compiler contribution generates
+Proposing changes to the travlang compiler contribution generates
 "maintenance work" for other people. Maintenance work includes, for
 example:
 
@@ -384,7 +384,7 @@ be useful when submitting your own work.
 Note: we have been asked whether groups of contributors could balance
 maintenance work at the level of the whole group, rather than
 individual contributors -- for example a company where some frequent
-OCaml contributors would do less maintenance and others would do more
+travlang contributors would do less maintenance and others would do more
 to compensate. Yes, that sounds reasonable, but also harder to balance
 than encouraging everyone to play nice individually.
 
@@ -409,16 +409,16 @@ We distinguish two kind of contributions:
   the license of its choice. This is not a copyright *assignment*
   (as requested by the Free Software Foundation for example),
   contributors retain the copyright on their contribution, and can use
-  it as they see fit. The OCaml CLA is lightly adapted from [the
+  it as they see fit. The travlang CLA is lightly adapted from [the
   CLA](https://www.apache.org/licenses/icla.txt) of the Apache
   Foundation, and is available in two versions: [for individual
   contributors](http://caml.inria.fr/pub/docs/CLA-individual.doc) and
   [for corporations](http://caml.inria.fr/pub/docs/CLA-corporate.doc).
 
 You must understand that, by proposing a contribution for integration
-in the OCaml distribution, you accept that it be considered under one
+in the travlang distribution, you accept that it be considered under one
 of those regimes. In particular, in all cases you give INRIA the
-permission to freely re-license the OCaml distribution including the
+permission to freely re-license the travlang distribution including the
 contribution.
 
 This ability to re-license allows INRIA to provide members of the

@@ -1,8 +1,8 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
-/*                         The OCaml programmers                          */
+/*                         The travlang programmers                          */
 /*                                                                        */
 /*   Copyright 2020 Institut National de Recherche en Informatique et     */
 /*     en Automatique.                                                    */

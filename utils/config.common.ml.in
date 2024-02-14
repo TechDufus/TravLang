@@ -2,7 +2,7 @@
 #3 "utils/config.common.ml.in"
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -17,12 +17,12 @@
 
 (* Portions of the Config module common to both the boot and main compiler. *)
 
-(* The main OCaml version string has moved to ../build-aux/ocaml_version.m4 *)
-let version = Sys.ocaml_version
+(* The main travlang version string has moved to ../build-aux/travlang_version.m4 *)
+let version = Sys.travlang_version
 
 let standard_library =
   try
-    Sys.getenv "OCAMLLIB"
+    Sys.getenv "travlangLIB"
   with Not_found ->
   try
     Sys.getenv "CAMLLIB"
@@ -77,10 +77,10 @@ let configuration_variables () =
   p "standard_library" standard_library;
   p "ccomp_type" ccomp_type;
   p "c_compiler" c_compiler;
-  p "ocamlc_cflags" ocamlc_cflags;
-  p "ocamlc_cppflags" ocamlc_cppflags;
-  p "ocamlopt_cflags" ocamlopt_cflags;
-  p "ocamlopt_cppflags" ocamlopt_cppflags;
+  p "travlangc_cflags" travlangc_cflags;
+  p "travlangc_cppflags" travlangc_cppflags;
+  p "travlangopt_cflags" travlangopt_cflags;
+  p "travlangopt_cppflags" travlangopt_cppflags;
   p "bytecomp_c_compiler" bytecomp_c_compiler;
   p "native_c_compiler" native_c_compiler;
   p "bytecomp_c_libraries" bytecomp_c_libraries;

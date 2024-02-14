@@ -113,10 +113,10 @@ val y : 'a list -> unit = <fun>
 |}];;
 
 (* used to be accepted, see PR#7696 *)
-let rec x = { x with contents = 3 }  [@ocaml.warning "-23"];;
+let rec x = { x with contents = 3 }  [@travlang.warning "-23"];;
 [%%expect{|
 Line 1, characters 12-35:
-1 | let rec x = { x with contents = 3 }  [@ocaml.warning "-23"];;
+1 | let rec x = { x with contents = 3 }  [@travlang.warning "-23"];;
                 ^^^^^^^^^^^^^^^^^^^^^^^
 Error: This kind of expression is not allowed as right-hand side of "let rec"
 |}];;

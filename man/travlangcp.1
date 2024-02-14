@@ -1,0 +1,140 @@
+.\"**************************************************************************
+.\"*                                                                        *
+.\"*                                 travlang                                  *
+.\"*                                                                        *
+.\"*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *
+.\"*                                                                        *
+.\"*   Copyright 1996 Institut National de Recherche en Informatique et     *
+.\"*     en Automatique.                                                    *
+.\"*                                                                        *
+.\"*   All rights reserved.  This file is distributed under the terms of    *
+.\"*   the GNU Lesser General Public License version 2.1, with the          *
+.\"*   special exception on linking described in the file LICENSE.          *
+.\"*                                                                        *
+.\"**************************************************************************
+.\"
+.TH "travlangCP" 1
+
+.SH NAME
+travlangcp, travlangoptp \- The travlang profiling compilers
+
+.SH SYNOPSIS
+.B travlangcp
+[
+.I travlangc options
+]
+[
+.BI \-P " flags"
+]
+.I filename ...
+
+.B travlangoptp
+[
+.I travlangopt options
+]
+[
+.BI \-P " flags"
+]
+.I filename ...
+
+.SH DESCRIPTION
+The
+.B travlangcp
+and
+.B travlangoptp
+commands are front-ends to
+.BR travlangc (1)
+and
+.BR travlangopt (1)
+that instrument the source code, adding code to record how many times
+functions are called, branches of conditionals are taken, etc.
+Execution of instrumented code produces an execution profile in the
+file travlangprof.dump, which can be read using
+.BR travlangprof (1).
+
+.B travlangcp
+accepts the same arguments and options as
+.BR travlangc (1)
+and
+.B travlangoptp
+accepts the same arguments and options as
+.BR travlangopt (1).
+There is only one exception: in both cases, the
+.B \-pp
+option is not supported.  If you need to preprocess your source files,
+you will have to do it separately before calling
+.B travlangcp
+or
+.BR travlangoptp .
+
+.SH OPTIONS
+
+In addition to the
+.BR travlangc (1)
+or
+.BR travlangopt (1)
+options,
+.B travlangcp
+and
+.B travlangoptp
+accept one option to control the kind of profiling information, the
+.BI \-P " letters"
+option. The
+.I letters
+indicate which parts of the program should be profiled:
+.TP
+.B a
+all options
+.TP
+.B f
+function calls: a count point is set at the beginning of each function body
+.TP
+.B i
+.BR if " ... " then " ... " else\c
+: count points are set in both
+.BR then " and " else
+branches
+.TP
+.B l
+.BR while ", " for
+loops: a count point is set at the beginning of the loop body
+.TP
+.B m
+.B match
+branches: a count point is set at the beginning of the
+body of each branch of a pattern-matching
+.TP
+.B t
+.BR try " ... " with
+branches: a count point is set at the beginning of the body of each
+branch of an exception catcher
+
+.PP
+For instance, compiling with
+.B travlangcp \-P film
+profiles function calls,
+.BR if " ... " then " ... " else " ...,"
+loops, and pattern matching.
+
+Calling
+.BR travlangcp (1)
+or
+.BR travlangoptp (1)
+without the
+.B \-P
+option defaults to
+.BR \-P " fm" ,
+meaning that only function calls and pattern matching are profiled.
+
+Note: for compatibility with previous versions,
+.BR travlangcp (1)
+also accepts the option
+.B \-p
+with the same argument and meaning as
+.BR \-P .
+
+.SH SEE ALSO
+.BR travlangc "(1), " travlangopt "(1), " travlangprof (1).
+.br
+.IR The\ travlang\ user's\ manual ,
+chapter "Profiling".

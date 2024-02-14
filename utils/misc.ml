@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -863,9 +863,9 @@ let show_config_variable_and_exit x =
   | Some v ->
       (* we intentionally don't print a newline to avoid Windows \r
          issues: bash only strips the trailing \n when using a command
-         substitution $(ocamlc -config-var foo), so a trailing \r would
+         substitution $(travlangc -config-var foo), so a trailing \r would
          remain if printing a newline under Windows and scripts would
-         have to use $(ocamlc -config-var foo | tr -d '\r')
+         have to use $(travlangc -config-var foo | tr -d '\r')
          for portability. Ugh. *)
       print_string v;
       exit 0
@@ -1149,7 +1149,7 @@ module Magic_number = struct
           (human_name_of_kind expected) (string_of_kind expected)
           (human_name_of_kind actual) (string_of_kind actual)
     | Version (kind, { actual; expected }) ->
-        Printf.sprintf "This seems to be a %s (%s) for %s version of OCaml."
+        Printf.sprintf "This seems to be a %s (%s) for %s version of travlang."
           (human_name_of_kind kind) (string_of_kind kind)
           (if actual < expected then "an older" else "a newer")
 

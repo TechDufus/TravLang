@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*   Gabriel Scherer, projet Parsifal, INRIA Saclay                       *)
 (*   Rodolphe Lepigre, projet Deducteam, INRIA Saclay                     *)
@@ -19,7 +19,7 @@ open Types
 type type_definition = type_declaration
 (* We should use 'declaration' for interfaces, and 'definition' for
    implementations. The name type_declaration in types.ml is improper
-   for our usage -- although for OCaml types the declaration and
+   for our usage -- although for travlang types the declaration and
    definition languages are the same. *)
 
 (** assuming that a datatype has a single constructor/label with
@@ -194,7 +194,7 @@ let free_variables ty =
 
 (** Coinductive hypotheses to handle equi-recursive types
 
-    OCaml allows infinite/cyclic types, such as
+    travlang allows infinite/cyclic types, such as
       (int * 'a) as 'a
     whose infinite unfolding is (int * (int * (int * (int * ...)))).
 

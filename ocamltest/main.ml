@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Sebastien Hinderer, projet Gallium, INRIA Paris            *)
 (*                                                                        *)
@@ -13,9 +13,9 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(* Main program of the ocamltest test driver *)
+(* Main program of the travlangtest test driver *)
 
-open Ocamltest_stdlib
+open travlangtest_stdlib
 open Tsl_ast
 open Tsl_semantics
 
@@ -24,7 +24,7 @@ type behavior =
   | Run
 
 (* this primitive announce should be used for tests
-   that were aborted on system error before ocamltest
+   that were aborted on system error before travlangtest
    could parse them *)
 let announce_test_error test_filename error =
   Printf.printf " ... testing '%s' => unexpected error (%s)\n%!"
@@ -49,7 +49,7 @@ let print_exn loc e =
       sprintf "Environment modifier \"%s\" does not exist." name
     | Tsl_semantics.No_such_test_or_action name ->
       sprintf "This is not the name of a test or an action: \"%s\"." name
-    | Ocaml_actions.Cannot_compile_file_type t ->
+    | travlang_actions.Cannot_compile_file_type t ->
       sprintf "Cannot compile files of type %s." t
     | _ ->
       sprintf "Unexpected exception: %s" (Printexc.to_string e)
@@ -155,10 +155,10 @@ let get_test_source_directory test_dirname =
   else test_dirname
 
 let get_test_build_directory_prefix test_dirname =
-  let ocamltestdir_variable = "OCAMLTESTDIR" in
+  let travlangtestdir_variable = "travlangTESTDIR" in
   let root =
-    Sys.getenv_with_default_value ocamltestdir_variable
-      (Filename.concat (Sys.getcwd ()) "_ocamltest")
+    Sys.getenv_with_default_value travlangtestdir_variable
+      (Filename.concat (Sys.getcwd ()) "_travlangtest")
   in
   if test_dirname = "." then root
   else Filename.concat root test_dirname
@@ -166,7 +166,7 @@ let get_test_build_directory_prefix test_dirname =
 let tests_to_skip = ref []
 
 let init_tests_to_skip () =
-  tests_to_skip := String.words (Sys.safe_getenv "OCAMLTEST_SKIP_TESTS")
+  tests_to_skip := String.words (Sys.safe_getenv "travlangTEST_SKIP_TESTS")
 
 let extract_rootenv (Ast (stmts, subs)) =
   let (env, stmts) = split_env stmts in

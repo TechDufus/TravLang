@@ -32,7 +32,7 @@ let M.T x = M.T 3 in x = true;; (* fail *)
 let M.T x = M.T 3 in x = 3;; (* ok *)
 *)
 
-(* Another version using OCaml 2.00 objects *)
+(* Another version using travlang 2.00 objects *)
 module F(T:sig type 'a t end) = struct
   class ['a] c x =
     object constraint 'a = 'b T.t val x' : 'b = x method x = x' end

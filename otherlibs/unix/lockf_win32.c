@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*    Contributed by Tracy Camp, PolyServe Inc., <campt@polyserve.com>    */
 /*                  Further improvements by Reed Wilson                   */
@@ -102,7 +102,7 @@ CAMLprim value caml_unix_lockf(value fd, value cmd, value span)
      * lock and then releasing it. It is not clear that
      * this behavior matches anything in particular, but
      * it is not clear the nature of the lock test performed
-     * by ocaml (unix) currently. */
+     * by travlang (unix) currently. */
     if (LockFileEx(h, LOCKFILE_FAIL_IMMEDIATELY | LOCKFILE_EXCLUSIVE_LOCK, 0,
                    lock_len.LowPart, lock_len.HighPart, &overlap)) {
       UnlockFileEx(h, 0, lock_len.LowPart, lock_len.HighPart, &overlap);

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #**************************************************************************
 #*                                                                        *
-#*                                 OCaml                                  *
+#*                                 travlang                                  *
 #*                                                                        *
 #*                 Paul-Elliot Anglès d'Auriac, Tarides                   *
 #*                                                                        *

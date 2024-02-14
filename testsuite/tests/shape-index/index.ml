@@ -3,14 +3,14 @@
 flags = "-bin-annot -bin-annot-occurrences";
 compile_only = "true";
 readonly_files = "auxiliaire.ml";
-setup-ocamlc.byte-build-env;
+setup-travlangc.byte-build-env;
 all_modules = "auxiliaire.ml index.ml";
-ocamlc.byte;
-check-ocamlc.byte-output;
+travlangc.byte;
+check-travlangc.byte-output;
 
 program = "-quiet -index -decls index.cmt";
 output = "out_objinfo";
-ocamlobjinfo;
+travlangobjinfo;
 
 check-program-output;
 *)

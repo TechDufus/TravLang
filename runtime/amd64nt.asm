@@ -1,6 +1,6 @@
 ;**************************************************************************
 ;*                                                                        *
-;*                                 OCaml                                  *
+;*                                 travlang                                  *
 ;*                                                                        *
 ;*             Xavier Leroy, projet Gallium, INRIA Rocquencourt           *
 ;*                                                                        *
@@ -175,7 +175,7 @@ caml_allocN:
         jb      caml_call_gc
         ret
 
-; Call a C function from OCaml
+; Call a C function from travlang
 
         PUBLIC  caml_c_call
         ALIGN   16
@@ -199,7 +199,7 @@ caml_c_call:
         push    r12
         ret
 
-; Start the OCaml program
+; Start the travlang program
 
         PUBLIC  caml_start_program
         ALIGN   16
@@ -242,7 +242,7 @@ L106:
         push    r13
         push    Caml_state(exception_pointer)
         mov     Caml_state(exception_pointer), rsp
-    ; Call the OCaml code
+    ; Call the travlang code
         call    r12
 L107:
     ; Pop the exception handler
@@ -284,7 +284,7 @@ L108:
         or      rax, 2
         jmp     L109
 
-; Raise an exception from OCaml
+; Raise an exception from travlang
 
         PUBLIC  caml_raise_exn
         ALIGN   16
@@ -340,7 +340,7 @@ L112:
         mov     r15, Caml_state(young_ptr)           ; Reload alloc ptr
         ret
 
-; Callback from C to OCaml
+; Callback from C to travlang
 
         PUBLIC  caml_callback_asm
         ALIGN   16

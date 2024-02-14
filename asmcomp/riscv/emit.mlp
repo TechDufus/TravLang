@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*                Nicolas Ojeda Bar <n.oje.bar@gmail.com>                 *)
 (*                                                                        *)
@@ -25,7 +25,7 @@ open Emitaux
 open Emitenv
 
 (* Layout of the stack.  The C stack must be 16-aligned, but 8-alignment
-   is enough for the OCaml stack. *)
+   is enough for the travlang stack. *)
 
 let frame_size env =
   env.stack_offset +                     (* Trap frame, outgoing parameters *)
@@ -335,7 +335,7 @@ let emit_instr env i =
         `	{emit_call "caml_c_call"}\n`;
         record_frame env i.live (Dbg_other i.dbg)
       end else begin
-        (* store ocaml stack in s0, which is marked as being destroyed
+        (* store travlang stack in s0, which is marked as being destroyed
            at noalloc calls *)
         `	mv	s0, sp\n`;
         cfi_remember_state ();

@@ -1,6 +1,6 @@
 ;**************************************************************************
 ;*                                                                        *
-;*                                 OCaml                                  *
+;*                                 travlang                                  *
 ;*                                                                        *
 ;*                     Thomas Refis, Jane Street Europe                   *
 ;*                                                                        *
@@ -43,6 +43,6 @@
    (with-stdout-to %{targets}
      (bash "cat %{dep} | sed 's/MenhirLib/CamlinternalMenhirLib/g'"))))
 
-(ocamllex
+(travlanglex
  (modules lexer)
  (mode fallback))

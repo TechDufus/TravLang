@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*   Contributed by Tracy Camp, PolyServe Inc., <campt@polyserve.com>     */
 /*                                                                        */

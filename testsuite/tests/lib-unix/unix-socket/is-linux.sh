@@ -9,13 +9,13 @@ if [ "$uname" = "Linux" ]; then
 # (bytecode and native) depend on stdout redirection, but
 # running a script sets both of those to the empty string.
 # See https://caml.inria.fr/mantis/view.php?id=7910
-  cat > "$ocamltest_response" <<EOF
+  cat > "$travlangtest_response" <<EOF
 -stdout
 -stderr
 EOF
 
   exit ${TEST_PASS}
 else
-  echo "$uname" > "$ocamltest_response"
+  echo "$uname" > "$travlangtest_response"
   exit ${TEST_SKIP}
 fi

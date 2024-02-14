@@ -1,5 +1,5 @@
 (* TEST
- ocamldoc with html;
+ travlangdoc with html;
 *)
 
 (** There's a top-comment before. *)

@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Florian Angeletti, projet Cambium, Inria Paris             *)
 (*                                                                        *)
@@ -51,7 +51,7 @@ type t
     - the filename prefix (dirname + basename with all extensions stripped)
       for compilation artifacts
     - the input source file
-    For instance, when calling [ocamlopt dir/x.mli -o target/y.cmi],
+    For instance, when calling [travlangopt dir/x.mli -o target/y.cmi],
     - the input source file is [dir/x.mli]
     - the module name is [Y]
     - the prefix is [target/y]

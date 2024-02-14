@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*          Xavier Leroy and Damien Doligez, INRIA Rocquencourt           */
 /*                                                                        */
@@ -239,7 +239,7 @@ CAMLprim value caml_thread_cleanup(value unit);
 static void reset_active(void)
 {
   Active_thread = NULL;
-  /* If no other OCaml thread remains, ask the tick thread to stop
+  /* If no other travlang thread remains, ask the tick thread to stop
      so that it does not prevent the whole process from exiting (#9971) */
   caml_thread_cleanup(Val_unit);
 }
@@ -340,7 +340,7 @@ void caml_thread_free_info(caml_thread_t th)
 
   /* Remark: we could share gc_regs_buckets between threads on a same
      domain, but this might break the invariant that it is always
-     non-empty at the point where we switch from OCaml to C, so we
+     non-empty at the point where we switch from travlang to C, so we
      would need to do something more complex when activating a thread
      to restore this invariant. */
   caml_free_gc_regs_buckets(th->gc_regs_buckets);
@@ -385,7 +385,7 @@ static caml_thread_t thread_alloc_and_add(void)
 static void caml_thread_remove_and_free(caml_thread_t th)
 {
   if (th->next == th)
-    reset_active(); /* last OCaml thread exiting */
+    reset_active(); /* last travlang thread exiting */
   else if (Active_thread == th)
     restore_runtime_state(th->next); /* PR#5295 */
   th->next->prev = th->prev;
@@ -408,7 +408,7 @@ static void caml_thread_reinitialize(void)
      process may only execute async-signal-safe operations until such
      time as one of the exec functions is called." (POSIX fork())
 
-     Keeping OCaml+threads running after a fork is best-effort, and
+     Keeping travlang+threads running after a fork is best-effort, and
      relies on having a single domain whose domain lock ensures some
      consistency of state. (If there are other C threads running we
      are hopeless.)
@@ -456,7 +456,7 @@ CAMLprim value caml_thread_join(value th);
 
    When a domain shuts down, the state must be cleared to allow proper reuse of
    the domain slot the next time a domain is started on this slot. If a program
-   is single-domain, we mimic OCaml 4's behavior and do not care about ongoing
+   is single-domain, we mimic travlang 4's behavior and do not care about ongoing
    thread: the program will exit. */
 static void caml_thread_domain_stop_hook(void) {
   /* If the program runs multiple domains, we should not let systhreads to hang
@@ -564,7 +564,7 @@ CAMLprim value caml_thread_initialize(value unit)
 
 /* Cleanup the thread machinery when the runtime is shut down. Joining the tick
    thread take 25ms on average / 50ms in the worst case, so we don't do it on
-   program exit. (FIXME: not implemented in OCaml 5 yet) */
+   program exit. (FIXME: not implemented in travlang 5 yet) */
 
 CAMLprim value caml_thread_cleanup(value unit)
 {
@@ -668,7 +668,7 @@ CAMLprim value caml_thread_new(value clos)
 
 #ifndef NATIVE_CODE
   if (caml_debugger_in_use)
-    caml_fatal_error("ocamldebug does not support multithreaded programs");
+    caml_fatal_error("travlangdebug does not support multithreaded programs");
 #endif
 
   /* Create the tick thread if not already done.
@@ -745,7 +745,7 @@ CAMLexport int caml_c_thread_unregister(void)
   if (This_thread == NULL) return 0;
   /* Acquire the domain lock the regular way */
   caml_leave_blocking_section();
-  /* Detach thread from the OCaml runtime; note that this resets
+  /* Detach thread from the travlang runtime; note that this resets
      [Caml_state_opt] and [This_thread]. */
   thread_detach_from_runtime();
   return 1;

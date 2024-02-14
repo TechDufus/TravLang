@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #**************************************************************************
 #*                                                                        *
-#*                                 OCaml                                  *
+#*                                 travlang                                  *
 #*                                                                        *
 #*                         Christophe Troestler                           *
 #*                                                                        *
@@ -95,10 +95,10 @@ function set_configuration {
 
     # Remove configure cache if the script has failed
     if ! ./configure --cache-file="$CACHE_FILE" $dep $build $man $host \
-                     --prefix="$2" --enable-ocamltest ; then
+                     --prefix="$2" --enable-travlangtest ; then
         rm -f -- "$CACHE_FILE"
         ./configure --cache-file="$CACHE_FILE" $dep $build $man $host \
-                    --prefix="$2" --enable-ocamltest
+                    --prefix="$2" --enable-travlangtest
     fi
 
 #    FILE=$(pwd | cygpath -f - -m)/Makefile.config
@@ -108,7 +108,7 @@ function set_configuration {
 PARALLEL_URL='https://git.savannah.gnu.org/cgit/parallel.git/plain/src/parallel'
 APPVEYOR_BUILD_FOLDER=$(echo "$APPVEYOR_BUILD_FOLDER" | cygpath -f -)
 FLEXDLLROOT="$PROGRAMFILES/flexdll"
-OCAMLROOT=$(echo "$OCAMLROOT" | cygpath -f - -m)
+travlangROOT=$(echo "$travlangROOT" | cygpath -f - -m)
 
 if [[ $BOOTSTRAP_FLEXDLL = 'false' ]] ; then
   case "$PORT" in
@@ -151,7 +151,7 @@ case "$1" in
     ;;
   test)
     FULL_BUILD_PREFIX="$APPVEYOR_BUILD_FOLDER/../$BUILD_PREFIX"
-    run 'ocamlc.opt -version' "$FULL_BUILD_PREFIX-$PORT/ocamlc.opt" -version
+    run 'travlangc.opt -version' "$FULL_BUILD_PREFIX-$PORT/travlangc.opt" -version
     if [[ $PORT =~ mingw* ]] ; then
       run "Check runtime symbols" \
           "$FULL_BUILD_PREFIX-$PORT/tools/check-symbol-names" \
@@ -162,10 +162,10 @@ case "$1" in
     # tests now (to include natdynlink)
     run "test dynlink $PORT" \
         $MAKE -C "$FULL_BUILD_PREFIX-$PORT/testsuite" parallel-lib-dynlink
-    # Now reconfigure ocamltest to run in bytecode-only mode
+    # Now reconfigure travlangtest to run in bytecode-only mode
     sed -i '/native_/s/true/false/' \
-           "$FULL_BUILD_PREFIX-$PORT/ocamltest/ocamltest_config.ml"
-    $MAKE -C "$FULL_BUILD_PREFIX-$PORT" -j ocamltest ocamltest.opt
+           "$FULL_BUILD_PREFIX-$PORT/travlangtest/travlangtest_config.ml"
+    $MAKE -C "$FULL_BUILD_PREFIX-$PORT" -j travlangtest travlangtest.opt
     # And run the entire testsuite, skipping all the native-code tests
     run "test $PORT" \
         make -C "$FULL_BUILD_PREFIX-$PORT/testsuite" SHOW_TIMINGS=1 all
@@ -177,7 +177,7 @@ case "$1" in
       # Ensure that .gitignore is up-to-date - this will fail if any untracked
       # or altered files exist. We revert the change from the bootstrap (that
       # would have failed the build earlier if necessary)
-      git checkout -- boot/ocamlc boot/ocamllex
+      git checkout -- boot/travlangc boot/travlanglex
       # Remove the FlexDLL sources placed earlier in the process
       rm -rf "flexdll-$FLEXDLL_VERSION"
       run --show "Check tree is tracked" test -z "$(git status --porcelain)"
@@ -207,7 +207,7 @@ case "$1" in
       cd ..
     fi
 
-    set_configuration "$PORT" "$OCAMLROOT"
+    set_configuration "$PORT" "$travlangROOT"
 
     export TERM=ansi
 

@@ -2,13 +2,13 @@
  expect;
 *)
 
-[@@@ocaml.warning "+3"];;
+[@@@travlang.warning "+3"];;
 
 module X: sig
-  type t [@@ocaml.deprecated]
-  type s [@@ocaml.deprecated]
-  type u [@@ocaml.deprecated]
-  val x: t [@@ocaml.deprecated]
+  type t [@@travlang.deprecated]
+  type s [@@travlang.deprecated]
+  type u [@@travlang.deprecated]
+  val x: t [@@travlang.deprecated]
 end = struct
   type t = int
   type s
@@ -17,7 +17,7 @@ end = struct
 end;;
 [%%expect{|
 Line 7, characters 9-10:
-7 |   val x: t [@@ocaml.deprecated]
+7 |   val x: t [@@travlang.deprecated]
              ^
 Alert deprecated: t
 
@@ -114,13 +114,13 @@ Alert deprecated: X.s
 type t = X.t * X.s
 |}]
 
-type t = X.t * X.s [@@ocaml.warning "-3"]
+type t = X.t * X.s [@@travlang.warning "-3"]
 ;;
 [%%expect{|
 type t = X.t * X.s
 |}]
 
-type t1 = X.t [@@ocaml.warning "-3"]
+type t1 = X.t [@@travlang.warning "-3"]
 and t2 = X.s
 ;;
 [%%expect{|
@@ -133,11 +133,11 @@ type t1 = X.t
 and t2 = X.s
 |}]
 
-type t = A of t [@@ocaml.deprecated]
+type t = A of t [@@travlang.deprecated]
 ;;
 [%%expect{|
 Line 1, characters 14-15:
-1 | type t = A of t [@@ocaml.deprecated]
+1 | type t = A of t [@@travlang.deprecated]
                   ^
 Alert deprecated: t
 
@@ -145,8 +145,8 @@ type t = A of t
 |}]
 
 type t = A of t
-  [@@ocaml.deprecated]
-  [@@ocaml.warning "-3"]
+  [@@travlang.deprecated]
+  [@@travlang.warning "-3"]
 ;;
 [%%expect{|
 type t = A of t
@@ -154,17 +154,17 @@ type t = A of t
 
 (* Type expressions *)
 
-type t = (X.t * X.s) [@ocaml.warning "-3"]
+type t = (X.t * X.s) [@travlang.warning "-3"]
 ;;
 [%%expect{|
 type t = X.t * X.s
 |}]
 
-type t = (X.t [@ocaml.warning "-3"]) * X.s
+type t = (X.t [@travlang.warning "-3"]) * X.s
 ;;
 [%%expect{|
 Line 1, characters 39-42:
-1 | type t = (X.t [@ocaml.warning "-3"]) * X.s
+1 | type t = (X.t [@travlang.warning "-3"]) * X.s
                                            ^^^
 Alert deprecated: X.s
 
@@ -172,8 +172,8 @@ type t = X.t * X.s
 |}]
 
 
-type t = A of (t [@ocaml.warning "-3"])
-  [@@ocaml.deprecated]
+type t = A of (t [@travlang.warning "-3"])
+  [@@travlang.deprecated]
 ;;
 [%%expect{|
 type t = A of t
@@ -192,7 +192,7 @@ Alert deprecated: X.t
 - : X.t -> unit = <fun>
 |}]
 
-let _ = function (_ : X.t)[@ocaml.warning "-3"] -> ()
+let _ = function (_ : X.t)[@travlang.warning "-3"] -> ()
 ;;
 [%%expect{|
 - : X.t -> unit = <fun>
@@ -212,13 +212,13 @@ Alert deprecated: X.x
 module M : sig val x : X.t end
 |}]
 
-module M = (struct let x = X.x end)[@ocaml.warning "-3"]
+module M = (struct let x = X.x end)[@travlang.warning "-3"]
 ;;
 [%%expect{|
 module M : sig val x : X.t end
 |}]
 
-module M = struct let x = X.x end [@@ocaml.warning "-3"]
+module M = struct let x = X.x end [@@travlang.warning "-3"]
 ;;
 [%%expect{|
 module M : sig val x : X.t end
@@ -243,20 +243,20 @@ module rec M : sig val x : X.t end
 module rec M : sig val x: X.t end =
   struct
     let x = X.x
-  end [@@ocaml.warning "-3"]
+  end [@@travlang.warning "-3"]
 [%%expect{|
 module rec M : sig val x : X.t end
 |}]
 
 module rec M :
-  (sig val x: X.t end)[@ocaml.warning "-3"] =
-  (struct let x = X.x end)[@ocaml.warning "-3"]
+  (sig val x: X.t end)[@travlang.warning "-3"] =
+  (struct let x = X.x end)[@travlang.warning "-3"]
 [%%expect{|
 module rec M : sig val x : X.t end
 |}]
 
 module rec M :
-  (sig val x: X.t end)[@ocaml.warning "-3"] =
+  (sig val x: X.t end)[@travlang.warning "-3"] =
   struct let x = X.x end
 [%%expect{|
 Line 3, characters 17-20:
@@ -280,13 +280,13 @@ Alert deprecated: X.t
 module type S = sig type t = X.t end
 |}]
 
-module type S = (sig type t = X.t end)[@ocaml.warning "-3"]
+module type S = (sig type t = X.t end)[@travlang.warning "-3"]
 ;;
 [%%expect{|
 module type S = sig type t = X.t end
 |}]
 
-module type S = sig type t = X.t end[@@ocaml.warning "-3"]
+module type S = sig type t = X.t end[@@travlang.warning "-3"]
 ;;
 [%%expect{|
 module type S = sig type t = X.t end
@@ -306,19 +306,19 @@ Alert deprecated: X.x
 class c : object method x : X.t end
 |}]
 
-class c = object method x = X.x end[@@ocaml.warning "-3"]
+class c = object method x = X.x end[@@travlang.warning "-3"]
 ;;
 [%%expect{|
 class c : object method x : X.t end
 |}]
 
-class c = (object method x = X.x end)[@ocaml.warning "-3"]
+class c = (object method x = X.x end)[@travlang.warning "-3"]
 ;;
 [%%expect{|
 class c : object method x : X.t end
 |}]
 
-class c = object method x = X.x [@@ocaml.warning "-3"] end
+class c = object method x = X.x [@@travlang.warning "-3"] end
 ;;
 [%%expect{|
 class c : object method x : X.t end
@@ -338,19 +338,19 @@ Alert deprecated: X.t
 class type c = object method x : X.t end
 |}]
 
-class type c = object method x : X.t end[@@ocaml.warning "-3"]
+class type c = object method x : X.t end[@@travlang.warning "-3"]
 ;;
 [%%expect{|
 class type c = object method x : X.t end
 |}]
 
-class type c = object method x : X.t end[@ocaml.warning "-3"]
+class type c = object method x : X.t end[@travlang.warning "-3"]
 ;;
 [%%expect{|
 class type c = object method x : X.t end
 |}]
 
-class type c = object method x : X.t [@@ocaml.warning "-3"] end
+class type c = object method x : X.t [@@travlang.warning "-3"] end
 ;;
 [%%expect{|
 class type c = object method x : X.t end
@@ -371,7 +371,7 @@ Alert deprecated: X.t
 external foo : unit -> X.t = "foo"
 |}]
 
-external foo: unit -> X.t = "foo"[@@ocaml.warning "-3"]
+external foo: unit -> X.t = "foo"[@@travlang.warning "-3"]
 ;;
 [%%expect{|
 external foo : unit -> X.t = "foo"
@@ -392,7 +392,7 @@ Alert deprecated: X.x
 |}]
 
 ;;
-X.x [@@ocaml.warning "-3"]
+X.x [@@travlang.warning "-3"]
 ;;
 [%%expect{|
 - : X.t = <abstr>
@@ -400,7 +400,7 @@ X.x [@@ocaml.warning "-3"]
 
 (* Open / include *)
 
-module D = struct end[@@ocaml.deprecated]
+module D = struct end[@@travlang.deprecated]
 
 open D
 ;;
@@ -412,7 +412,7 @@ Line 3, characters 5-6:
 Alert deprecated: module D
 |}]
 
-open D [@@ocaml.warning "-3"]
+open D [@@travlang.warning "-3"]
 ;;
 [%%expect{|
 |}]
@@ -426,7 +426,7 @@ Line 1, characters 8-9:
 Alert deprecated: module D
 |}]
 
-include D [@@ocaml.warning "-3"]
+include D [@@travlang.warning "-3"]
 ;;
 [%%expect{|
 |}]
@@ -442,8 +442,8 @@ type ext = ..
 
 type ext +=
   | A of X.t
-  | B of (X.s [@ocaml.warning "-3"])
-  | C of X.u [@ocaml.warning "-3"]
+  | B of (X.s [@travlang.warning "-3"])
+  | C of X.u [@travlang.warning "-3"]
 ;;
 [%%expect{|
 Line 2, characters 9-12:
@@ -456,7 +456,7 @@ type ext += A of X.t | B of X.s | C of X.u
 
 type ext +=
   | C of X.t
-  [@@ocaml.warning "-3"]
+  [@@travlang.warning "-3"]
 ;;
 [%%expect{|
 type ext += C of X.t
@@ -474,7 +474,7 @@ Alert deprecated: X.t
 exception Foo of X.t
 |}]
 
-exception Foo of X.t [@ocaml.warning "-3"]
+exception Foo of X.t [@travlang.warning "-3"]
 ;;
 [%%expect{|
 exception Foo of X.t
@@ -485,8 +485,8 @@ exception Foo of X.t
 
 type t =
   | A of X.t
-  | B of X.s [@ocaml.warning "-3"]
-  | C of (X.u [@ocaml.warning "-3"])
+  | B of X.s [@travlang.warning "-3"]
+  | C of (X.u [@travlang.warning "-3"])
 ;;
 [%%expect{|
 Line 2, characters 9-12:
@@ -500,8 +500,8 @@ type t = A of X.t | B of X.s | C of X.u
 type t =
   {
     a: X.t;
-    b: X.s [@ocaml.warning "-3"];
-    c: (X.u [@ocaml.warning "-3"]);
+    b: X.s [@travlang.warning "-3"];
+    c: (X.u [@travlang.warning "-3"]);
   }
 ;;
 [%%expect{|
@@ -517,8 +517,8 @@ type t = { a : X.t; b : X.s; c : X.u; }
 type t =
   <
     a: X.t;
-    b: X.s [@ocaml.warning "-3"];
-    c: (X.u [@ocaml.warning "-3"]);
+    b: X.s [@travlang.warning "-3"];
+    c: (X.u [@travlang.warning "-3"]);
   >
 ;;
 [%%expect{|
@@ -534,8 +534,8 @@ type t = < a : X.t; b : X.s; c : X.u >
 type t =
   [
   | `A of X.t
-  | `B of X.s [@ocaml.warning "-3"]
-  | `C of (X.u [@ocaml.warning "-3"])
+  | `B of X.s [@travlang.warning "-3"]
+  | `C of (X.u [@travlang.warning "-3"])
   ]
 ;;
 [%%expect{|
@@ -548,30 +548,30 @@ type t = [ `A of X.t | `B of X.s | `C of X.u ]
 |}]
 
 
-(* Test for ocaml.ppwarning, and its interactions with ocaml.warning *)
+(* Test for travlang.ppwarning, and its interactions with travlang.warning *)
 
 
-[@@@ocaml.ppwarning "Pp warning!"]
+[@@@travlang.ppwarning "Pp warning!"]
 ;;
 [%%expect{|
 Line 1, characters 20-33:
-1 | [@@@ocaml.ppwarning "Pp warning!"]
+1 | [@@@travlang.ppwarning "Pp warning!"]
                         ^^^^^^^^^^^^^
 Warning 22 [preprocessor]: Pp warning!
 |}]
 
 
-let x = () [@ocaml.ppwarning "Pp warning 1!"]
-    [@@ocaml.ppwarning  "Pp warning 2!"]
+let x = () [@travlang.ppwarning "Pp warning 1!"]
+    [@@travlang.ppwarning  "Pp warning 2!"]
 ;;
 [%%expect{|
 Line 2, characters 24-39:
-2 |     [@@ocaml.ppwarning  "Pp warning 2!"]
+2 |     [@@travlang.ppwarning  "Pp warning 2!"]
                             ^^^^^^^^^^^^^^^
 Warning 22 [preprocessor]: Pp warning 2!
 
 Line 1, characters 29-44:
-1 | let x = () [@ocaml.ppwarning "Pp warning 1!"]
+1 | let x = () [@travlang.ppwarning "Pp warning 1!"]
                                  ^^^^^^^^^^^^^^^
 Warning 22 [preprocessor]: Pp warning 1!
 
@@ -579,11 +579,11 @@ val x : unit = ()
 |}]
 
 type t = unit
-    [@ocaml.ppwarning "Pp warning!"]
+    [@travlang.ppwarning "Pp warning!"]
 ;;
 [%%expect{|
 Line 2, characters 22-35:
-2 |     [@ocaml.ppwarning "Pp warning!"]
+2 |     [@travlang.ppwarning "Pp warning!"]
                           ^^^^^^^^^^^^^
 Warning 22 [preprocessor]: Pp warning!
 
@@ -591,18 +591,18 @@ type t = unit
 |}]
 
 module X = struct
-  [@@@ocaml.warning "-22"]
+  [@@@travlang.warning "-22"]
 
-  [@@@ocaml.ppwarning "Pp warning1!"]
+  [@@@travlang.ppwarning "Pp warning1!"]
 
-  [@@@ocaml.warning "+22"]
+  [@@@travlang.warning "+22"]
 
-  [@@@ocaml.ppwarning "Pp warning2!"]
+  [@@@travlang.ppwarning "Pp warning2!"]
 end
 ;;
 [%%expect{|
 Line 8, characters 22-36:
-8 |   [@@@ocaml.ppwarning "Pp warning2!"]
+8 |   [@@@travlang.ppwarning "Pp warning2!"]
                           ^^^^^^^^^^^^^^
 Warning 22 [preprocessor]: Pp warning2!
 
@@ -610,12 +610,12 @@ module X : sig end
 |}]
 
 let x =
-  ((() [@ocaml.ppwarning "Pp warning 1!"]) [@ocaml.warning "-22"])
-    [@ocaml.ppwarning  "Pp warning 2!"]
+  ((() [@travlang.ppwarning "Pp warning 1!"]) [@travlang.warning "-22"])
+    [@travlang.ppwarning  "Pp warning 2!"]
 ;;
 [%%expect{|
 Line 3, characters 23-38:
-3 |     [@ocaml.ppwarning  "Pp warning 2!"]
+3 |     [@travlang.ppwarning  "Pp warning 2!"]
                            ^^^^^^^^^^^^^^^
 Warning 22 [preprocessor]: Pp warning 2!
 
@@ -623,40 +623,40 @@ val x : unit = ()
 |}]
 
 type t =
-  ((unit [@ocaml.ppwarning "Pp warning 1!"]) [@ocaml.warning "-22"])
-  [@ocaml.ppwarning  "Pp warning 2!"]
-  [@@ocaml.ppwarning "Pp warning 3!"]
+  ((unit [@travlang.ppwarning "Pp warning 1!"]) [@travlang.warning "-22"])
+  [@travlang.ppwarning  "Pp warning 2!"]
+  [@@travlang.ppwarning "Pp warning 3!"]
 ;;
 [%%expect{|
 Line 4, characters 21-36:
-4 |   [@@ocaml.ppwarning "Pp warning 3!"]
+4 |   [@@travlang.ppwarning "Pp warning 3!"]
                          ^^^^^^^^^^^^^^^
 Warning 22 [preprocessor]: Pp warning 3!
 
 Line 3, characters 21-36:
-3 |   [@ocaml.ppwarning  "Pp warning 2!"]
+3 |   [@travlang.ppwarning  "Pp warning 2!"]
                          ^^^^^^^^^^^^^^^
 Warning 22 [preprocessor]: Pp warning 2!
 
 type t = unit
 |}]
 
-let ([][@ocaml.ppwarning "XX"]) = []
+let ([][@travlang.ppwarning "XX"]) = []
 ;;
 [%%expect{|
 Line 1, characters 25-29:
-1 | let ([][@ocaml.ppwarning "XX"]) = []
+1 | let ([][@travlang.ppwarning "XX"]) = []
                              ^^^^
 Warning 22 [preprocessor]: XX
 
 Line 1, characters 4-31:
-1 | let ([][@ocaml.ppwarning "XX"]) = []
+1 | let ([][@travlang.ppwarning "XX"]) = []
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Warning 8 [partial-match]: this pattern-matching is not exhaustive.
 Here is an example of a case that is not matched:
 _::_
 |}]
-let[@ocaml.warning "-8-22"] ([][@ocaml.ppwarning "XX"]) = []
+let[@travlang.warning "-8-22"] ([][@travlang.ppwarning "XX"]) = []
 ;;
 [%%expect{|
 |}]

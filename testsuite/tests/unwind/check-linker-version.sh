@@ -1,5 +1,5 @@
 #!/bin/sh
-exec > ${ocamltest_response} 2>&1
+exec > ${travlangtest_response} 2>&1
 LDFULL="`ld -v 2>&1`"
 LD="`echo $LDFULL | grep -o \"ld64-[0-9]*\"`"
 LDVER="`echo $LD | sed \"s/ld64-//\"`"

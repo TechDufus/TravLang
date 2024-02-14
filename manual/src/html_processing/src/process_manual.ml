@@ -1,10 +1,10 @@
-(* ------------ Ocaml Web-manual -------------- *)
+(* ------------ travlang Web-manual -------------- *)
 
 (* Copyright San Vu Ngoc, 2020
 
    file: process_api.ml
 
-   Post-processing the HTML of the OCaml Manual.
+   Post-processing the HTML of the travlang Manual.
 
    (The "API" side is treated by process_api.ml) *)
 
@@ -273,7 +273,7 @@ let convert_index version soup =
   let title_selector = if float_of_string version < 4.07
     then "div.center" else "div.maintitle" in
   let maintitle = soup $ title_selector in
-  sprintf "<div class=\"maintitle\"><h1><span>The OCaml system</span>  release %s </h1><h3>%s</h3></div>"
+  sprintf "<div class=\"maintitle\"><h1><span>The travlang system</span>  release %s </h1><h3>%s</h3></div>"
     version (extract_date maintitle |> string_of_opt)
   |> parse
   |> insert_after maintitle ;
@@ -285,7 +285,7 @@ let convert_index version soup =
 
 let change_title title soup =
   let title_tag = soup $ "title" in
-  let new_title = create_element "title" ~inner_text:("OCaml - " ^ title) in
+  let new_title = create_element "title" ~inner_text:("travlang - " ^ title) in
   replace title_tag new_title
 
 (* Create left sidebar for TOC.  *)
@@ -350,12 +350,12 @@ let make_toc_sidebar ~version ~title file body =
              append_child toc li)
         end;
         (* Link to APIs *)
-        let a = create_element "a" ~inner_text:"OCaml API"
+        let a = create_element "a" ~inner_text:"travlang API"
             ~attributes:["href", api_page_url ^ "/index.html"] in
         let li = create_element "li" in
         (append_child li a;
          append_child toc li);
-        let a = create_element "a" ~inner_text:"OCaml Compiler API"
+        let a = create_element "a" ~inner_text:"travlang Compiler API"
             ~attributes:["href", api_page_url ^ "/compilerlibref/index.html"] in
         let li = create_element "li" in
         (append_child li a;
@@ -364,10 +364,10 @@ let make_toc_sidebar ~version ~title file body =
     end
   end;
 
-  (* Add back link to "OCaml Manual" *)
+  (* Add back link to "travlang Manual" *)
   if file <> "index.html" then begin
     let toc_title = create_element "div" ~class_:"toc_title" in
-    let a = create_element "a" ~inner_text:"< The OCaml Manual"
+    let a = create_element "a" ~inner_text:"< The travlang Manual"
         ~attributes:["href", "index.html"] in
     append_child toc_title a;
     prepend_child nav toc_title
@@ -403,7 +403,7 @@ let make_part_menu ~part_title chapters file body =
 let add_logo file soup =
   match soup $? "header" with
   | None -> dbg "Warning: no <header> for %s" file
-  | Some header -> prepend_child header (logo_html "https://ocaml.org/")
+  | Some header -> prepend_child header (logo_html "https://travlang.org/")
 
 (* Move authors to the end *)
 let move_authors body =
@@ -498,7 +498,7 @@ let process version =
   let toc_table, all_chapters = parse_toc () in
 
   (* special case of the "index.html" file: *)
-  convert version ("", []) toc_table ("index.html", "The OCaml Manual");
+  convert version ("", []) toc_table ("index.html", "The travlang Manual");
 
   let main_files = List.fold_left (fun list (part_title, chapters) ->
       dbg "* Processing chapters for %s" part_title;

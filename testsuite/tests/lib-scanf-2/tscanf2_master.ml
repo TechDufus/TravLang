@@ -7,12 +7,12 @@
  {
    (* The bytecode test *)
    program = "${test_build_directory}/master.byte";
-   setup-ocamlc.byte-build-env;
-   ocamlc.byte; (* Compiles the master *)
+   setup-travlangc.byte-build-env;
+   travlangc.byte; (* Compiles the master *)
    all_modules = "tscanf2_io.cmo tscanf2_worker.ml";
    program = "${test_build_directory}/worker.byte";
-   ocamlc.byte; (* Compiles the worker *)
-   check-ocamlc.byte-output;
+   travlangc.byte; (* Compiles the worker *)
+   check-travlangc.byte-output;
    program = "${test_build_directory}/master.byte";
    arguments = "${test_build_directory}/worker.byte";
    run;
@@ -20,12 +20,12 @@
  }{
    (* The native test *)
    program = "${test_build_directory}/master.opt";
-   setup-ocamlopt.byte-build-env;
-   ocamlopt.byte; (* Compiles the master *)
+   setup-travlangopt.byte-build-env;
+   travlangopt.byte; (* Compiles the master *)
    all_modules = "tscanf2_io.cmx tscanf2_worker.ml";
    program = "${test_build_directory}/worker.opt";
-   ocamlopt.byte; (* Compiles the worker *)
-   check-ocamlopt.byte-output;
+   travlangopt.byte; (* Compiles the worker *)
+   check-travlangopt.byte-output;
    program = "${test_build_directory}/master.opt";
    arguments = "${test_build_directory}/worker.opt";
    run;

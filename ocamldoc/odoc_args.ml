@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Maxence Guesdon, projet Cristal, INRIA Rocquencourt        *)
 (*                                                                        *)
@@ -184,7 +184,7 @@ let anonymous f =
   in
   Odoc_global.files := !Odoc_global.files @ [sf]
 
-module Options = Main_args.Make_ocamldoc_options(struct
+module Options = Main_args.Make_travlangdoc_options(struct
     include Main_args.Default.Odoc_args
     let _I s = Odoc_global.include_dirs := s :: !Odoc_global.include_dirs
     let _H s = Odoc_global.hidden_include_dirs := s :: !Odoc_global.hidden_include_dirs

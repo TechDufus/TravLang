@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*                          Sadiq Jaffer, Opsian                          */
 /*                                                                        */
@@ -28,7 +28,7 @@
    different sets of events). To create one for the current process, pass
    [runtime_events_path] as NULL and a [pid] < 0. Otherwise
    [runtime_events_path] is a path to a directory containing the .events
-   files. [pid] is the process id (or equivalent) of the startup OCaml process.
+   files. [pid] is the process id (or equivalent) of the startup travlang process.
    The resulting cursor can be used with `caml_runtime_events_read_poll` to read
    events from the runtime_events ring-buffers. */
 CAMLextern runtime_events_error

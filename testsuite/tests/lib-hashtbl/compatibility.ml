@@ -24,14 +24,14 @@ let check_table supported h expected =
   else check_failure h;
   check_contents (Hashtbl.rebuild h) expected
 
-(* Hash table version 1, produced with OCaml 3.12.1 *)
+(* Hash table version 1, produced with travlang 3.12.1 *)
 let h1 : (string, int) Hashtbl.t =
   Marshal.from_string
     "\132\149\166\190\000\000\000/\000\000\000\n\000\000\000+\000\000\000)\
      \160D\b\000\0004\000@@@@@\176%threeC@@@@\176#twoB@@@\176$fourD\176#oneA@"
   0
 
-(* Hash table version 2, produced with OCaml 4.09.0 *)
+(* Hash table version 2, produced with travlang 4.09.0 *)
 let h2 : (string, int) Hashtbl.t =
   Marshal.from_string
     "\132\149\166\190\000\000\000;\000\000\000\012\000\000\0008\000\000\0004\

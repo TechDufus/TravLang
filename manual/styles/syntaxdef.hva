@@ -1,5 +1,5 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Hevea code for syntax definitions of the ocaml manual %
+% Hevea code for syntax definitions of the travlang manual %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Important commands
 % \token, for typesetting grammar terminals
@@ -76,7 +76,7 @@
 \stx@silent{symbol}%
 %%Not defined in debugger.etex
 \stx@silent{integer}
-%%Not defined in ocamldoc.etex
+%%Not defined in travlangdoc.etex
 \stx@silent{string}
 \stx@silent{id}
 \stx@silent{Exc}

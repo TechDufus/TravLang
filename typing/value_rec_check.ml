@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*               Jeremy Yallop, University of Cambridge                   *)
 (*               Gabriel Scherer, Project Parsifal, INRIA Saclay          *)

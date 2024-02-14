@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*          Xavier Leroy and Damien Doligez, INRIA Rocquencourt           */
 /*                                                                        */
@@ -138,7 +138,7 @@ CAMLdeprecated_typedef(addr, char *);
 #endif
 
 /* Alignment is necessary for domain_state.h, since the code generated */
-/* by ocamlopt makes direct references into the domain state structure,*/
+/* by travlangopt makes direct references into the domain state structure,*/
 /* which is stored in a register on many platforms. For this to work, */
 /* we need to be able to compute the exact offset of each member. */
 #if defined(__STDC_VERSION__) && __STDC_VERSION__ >= 201112L
@@ -195,7 +195,7 @@ CAMLdeprecated_typedef(addr, char *);
 #endif
 
 /* GC timing hooks. These can be assigned by the user. These hooks
-   must not allocate, change any heap value, nor call OCaml code. They
+   must not allocate, change any heap value, nor call travlang code. They
    can obtain the domain id with Caml_state->id. These functions must
    be reentrant. */
 #ifndef __cplusplus
@@ -287,7 +287,7 @@ void caml_alloc_point_here(void);
 
 #endif
 
-/* This hook is called when a fatal error occurs in the OCaml
+/* This hook is called when a fatal error occurs in the travlang
    runtime. It is given arguments to be passed to the [vprintf]-like
    functions in order to synthesize the error message.
    If it returns, the runtime calls [abort()].

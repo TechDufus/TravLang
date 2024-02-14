@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*              Damien Doligez, projet Para, INRIA Rocquencourt           */
 /*                                                                        */
@@ -86,7 +86,7 @@ CAMLextern void caml_stat_destroy_pool(void);
 #endif /* CAML_INTERNALS */
 
 /* [caml_stat_alloc(size)] allocates a memory block of the requested [size]
-   (in bytes) and returns a pointer to it. It throws an OCaml exception in case
+   (in bytes) and returns a pointer to it. It throws an travlang exception in case
    the request fails, and so requires the runtime lock to be held.
 */
 CAMLextern caml_stat_block caml_stat_alloc(asize_t);
@@ -100,7 +100,7 @@ CAMLextern caml_stat_block caml_stat_alloc_noexc(asize_t);
 /* [caml_stat_alloc_aligned(size, modulo, block*)] allocates a memory block of
    the requested [size] (in bytes), the starting address of which is aligned to
    the provided [modulo] value. The function returns the aligned address, as
-   well as the unaligned [block] (as an output parameter). It throws an OCaml
+   well as the unaligned [block] (as an output parameter). It throws an travlang
    exception in case the request fails, and so requires the runtime lock.
 */
 CAMLextern void* caml_stat_alloc_aligned(asize_t, int modulo, caml_stat_block*);
@@ -127,7 +127,7 @@ CAMLextern void caml_stat_free(caml_stat_block);
    address is returned by the function). The content of the [block] is preserved
    up to the smaller of the new and old sizes, even if the block is moved to a
    new location. If the new size is larger, the value of the newly allocated
-   portion is indeterminate. The function throws an OCaml exception in case the
+   portion is indeterminate. The function throws an travlang exception in case the
    request fails, and so requires the runtime lock to be held.
 */
 CAMLextern caml_stat_block caml_stat_resize(caml_stat_block, asize_t);
@@ -142,7 +142,7 @@ CAMLextern caml_stat_block caml_stat_resize_noexc(caml_stat_block, asize_t);
 typedef char* caml_stat_string;
 
 /* [caml_stat_strdup(s)] returns a pointer to a heap-allocated string which is a
-   copy of the NULL-terminated string [s]. It throws an OCaml exception in case
+   copy of the NULL-terminated string [s]. It throws an travlang exception in case
    the request fails, and so requires the runtime lock to be held.
 */
 CAMLextern caml_stat_string caml_stat_strdup(const char *s);
@@ -157,7 +157,7 @@ CAMLextern caml_stat_string caml_stat_strdup_noexc(const char *s);
 
 /* [caml_stat_strconcat(nargs, strings)] concatenates NULL-terminated [strings]
    (an array of [char*] of size [nargs]) into a new string, dropping all NULLs,
-   except for the very last one. It throws an OCaml exception in case the
+   except for the very last one. It throws an travlang exception in case the
    request fails, and so requires the runtime lock to be held.
 */
 CAMLextern caml_stat_string caml_stat_strconcat(int n, ...);
@@ -263,7 +263,7 @@ struct caml__roots_block {
    un-register the local roots (i.e. undo the effects of the [CAMLparam*]
    and [CAMLlocal] macros) without returning immediately, use [CAMLdrop].
 
-   All the identifiers beginning with "caml__" are reserved by OCaml.
+   All the identifiers beginning with "caml__" are reserved by travlang.
    Do not use them for anything (local or global variables, struct or
    union tags, macros, etc.)
 */
@@ -437,7 +437,7 @@ struct caml__roots_block {
    It must contain all values in C local variables and function parameters
    at the time the minor GC is called.
    Usage:
-   After initialising your local variables to legal OCaml values, but before
+   After initialising your local variables to legal travlang values, but before
    calling allocation functions, insert [Begin_roots_n(v1, ... vn)], where
    v1 ... vn are your variables of type [value] that you want to be updated
    across allocations.
@@ -537,7 +537,7 @@ CAMLextern void caml_remove_global_root (value *);
    the value of this variable, it must do so by calling
    [caml_modify_generational_global_root].  The [value *] pointer
    passed to [caml_register_generational_global_root] must contain
-   a valid OCaml value before the call.
+   a valid travlang value before the call.
    In return for these constraints, scanning of memory roots during
    minor collection is made more efficient. */
 

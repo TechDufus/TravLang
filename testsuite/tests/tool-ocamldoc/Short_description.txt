@@ -1,5 +1,5 @@
 (* TEST
- ocamldoc with latex;
+ travlangdoc with latex;
 *)
 
 Short global description in text mode

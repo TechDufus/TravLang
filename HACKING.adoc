@@ -21,7 +21,7 @@ example, to make a fix for 4.11.1, base your branch on *4.11* (not on *4.11.1*).
 The `configure` step for the compiler recognises a development build from the
 `+dev` in the version number (see file `VERSION`), and release tarballs and the tagged Git commits do
 not have this which causes some important development things to be disabled
-(ocamltest and converting C compiler warnings to errors).
+(travlangtest and converting C compiler warnings to errors).
 
 2. Consult link:INSTALL.adoc[] for build instructions. Here is the gist of it:
 +
@@ -30,10 +30,10 @@ not have this which causes some important development things to be disabled
 make -j 4
 ----
 If you are on a release build and need development options, you can add
-`--enable-ocamltest` (to allow running the testsuite) and `--enable-warn-error`
+`--enable-travlangtest` (to allow running the testsuite) and `--enable-warn-error`
 (so you don't get caught by CI later!).
 
-3. Try the newly built compiler binaries `ocamlc`, `ocamlopt` or their
+3. Try the newly built compiler binaries `travlangc`, `travlangopt` or their
 `.opt` version. To try the toplevel, use:
 +
 ----
@@ -58,14 +58,14 @@ See also our <<tips,development tips and tricks>>, for example on how to
 There is always a lot of potential tasks, both for old and
 newcomers. Here are various potential projects:
 
-* https://github.com/ocaml/ocaml/issues[The OCaml
+* https://github.com/travlang/travlang/issues[The travlang
   bugtracker] contains reported bugs and feature requests. Some
   changes that should be accessible to newcomers are marked with the
-  tag link:++https://github.com/ocaml/ocaml/issues?q=is%3Aopen+is%3Aissue+label%3Anewcomer-job++[
+  tag link:++https://github.com/travlang/travlang/issues?q=is%3Aopen+is%3Aissue+label%3Anewcomer-job++[
   newcomer-job].
 
 * The
-  https://github.com/ocamllabs/compiler-hacking/wiki/Things-to-work-on[OCaml
+  https://github.com/travlanglabs/compiler-hacking/wiki/Things-to-work-on[travlang
   Labs compiler-hacking wiki] contains various ideas of changes to
   propose, some easy, some requiring a fair amount of work.
 
@@ -76,7 +76,7 @@ newcomers. Here are various potential projects:
   clarifying comments can be an excellent contribution to help you,
   next time, and other code readers.
 
-* The https://github.com/ocaml/ocaml[github project] contains a lot of
+* The https://github.com/travlang/travlang[github project] contains a lot of
   pull requests, many of them being in dire need of a review -- we
   have more people willing to contribute changes than to review
   someone else's change. Picking one of them, trying to understand the
@@ -87,7 +87,7 @@ newcomers. Here are various potential projects:
   feature.
 +
 Again, reviewing small or medium-sized pull requests is accessible to
-anyone with OCaml programming experience, and helps maintainers and
+anyone with travlang programming experience, and helps maintainers and
 other contributors. If you also submit pull requests yourself, a good
 discipline is to review at least as many pull requests as you submit.
 
@@ -127,9 +127,9 @@ link:typing/HACKING.adoc[].
 
 === Runtime system
 
-The low-level routines that OCaml programs use during their execution:
+The low-level routines that travlang programs use during their execution:
 garbage collection, interaction with the operating system
-(IO in particular), low-level primitives to manipulate some OCaml data
+(IO in particular), low-level primitives to manipulate some travlang data
 structures, etc. Mostly implemented in C, with some rare bits of
 assembly code in architecture-specific files. The "includes"
 corresponding to the `.c` files are in the link:runtime/caml[]
@@ -159,16 +159,16 @@ result by running
 make html_doc
 ----
 
-and then opening link:./api_docgen/ocamldoc/build/html/libref/index.html[] in a web browser.
+and then opening link:./api_docgen/travlangdoc/build/html/libref/index.html[] in a web browser.
 The documentation is located in
 link:./api_docgen/odoc/build/html/libref/index.html[] when `--with-odoc` is
 passed to the configure script.
 
 === Tools
 
-link:lex/[]:: The `ocamllex` lexer generator.
+link:lex/[]:: The `travlanglex` lexer generator.
 
-link:yacc/[]:: The `ocamlyacc` parser generator. We do not recommend
+link:yacc/[]:: The `travlangyacc` parser generator. We do not recommend
 using it for user projects in need of a parser generator. Please
 consider using and contributing to
 link:http://gallium.inria.fr/~fpottier/menhir/[menhir] instead, which
@@ -179,20 +179,20 @@ has excellent documentation.
 
   BOOTSTRAP.adoc::        instructions for bootstrapping
   Changes::               what's new with each release
-  CONTRIBUTING.md::       how to contribute to OCaml
+  CONTRIBUTING.md::       how to contribute to travlang
   HACKING.adoc::          this file
   INSTALL.adoc::          instructions for installation
   LICENSE::               license and copyright notice
   Makefile::              main Makefile
   Makefile.common::       common Makefile definitions
   README.adoc::           general information on the compiler distribution
-  README.win32.adoc::     general information on the Windows ports of OCaml
+  README.win32.adoc::     general information on the Windows ports of travlang
   VERSION::               version string. Run `make configure` after changing.
   asmcomp/::              native-code compiler and linker
   boot/::                 bootstrap compiler
   build-aux/:             autotools support scripts
   bytecomp/::             bytecode compiler and linker
-  compilerlibs/::         the OCaml compiler as a library
+  compilerlibs/::         the travlang compiler as a library
   configure::             configure script
   configure.ac:           autoconf input file
   debugger/::             source-level replay debugger
@@ -202,8 +202,8 @@ has excellent documentation.
   man/::                  man pages
   manual/::               system to generate the manual
   middle_end/::           the flambda optimisation phase
-  ocamldoc/::             documentation generator
-  ocamltest/::            test driver
+  travlangdoc/::             documentation generator
+  travlangtest/::            test driver
   otherlibs/::            several additional libraries
   parsing/::              syntax analysis -- see link:parsing/HACKING.adoc[]
   release-info/::         documentation and tools to prepare releases
@@ -252,7 +252,7 @@ work locally) by pinning:
 
 ----
 opam switch create my-switch-name --empty
-opam pin add ocaml-variants git+https://$REPO#branch
+opam pin add travlang-variants git+https://$REPO#branch
 ----
 
 ==== Incremental builds with `opam`
@@ -313,16 +313,16 @@ and also trigger a recompilation of all the packages in the switch.
 
 The `opam-custom-install` plugin allows you to install a package using a custom
 command instead of the package-supplied one. It can be installed following
-instructions https://gitlab.ocamlpro.com/louis/opam-custom-install[here].
+instructions https://gitlab.travlangpro.com/louis/opam-custom-install[here].
 
 In our case, we need to build the compiler, and when we've built everything
-that we need then we run `opam custom-install ocaml-variants -- make install`.
+that we need then we run `opam custom-install travlang-variants -- make install`.
 This will make `opam` remove the previously installed version of the compiler
 (if any), then install the new one in its stead.
 
 -----
 # reinstall the compiler, and rebuild all opam packages
-opam custom-install ocaml-variants -- make install
+opam custom-install travlang-variants -- make install
 -----
 
 Since most `opam` packages depend on the compiler, this will trigger a
@@ -336,30 +336,30 @@ get inconsistent assumptions errors later.
 
 -----
 # reinstall the compiler, leaving the opam packages untouched -- unsafe!
-opam custom-install --no-recompilations ocaml-variants -- make install
+opam custom-install --no-recompilations travlang-variants -- make install
 -----
 
 Note about the first installation:
 When you start from an empty switch, and install a compiler (in our case,
-the `ocaml-variants` package provided by the compiler's `opam` file), then
+the `travlang-variants` package provided by the compiler's `opam` file), then
 a number of additional packages are installed to ensure that the switch
-will work correctly. Mainly, the `ocaml` package needs to be installed,
+will work correctly. Mainly, the `travlang` package needs to be installed,
 and while it's done automatically when using regular `opam` commands, the
 `custom-install` plugin will not force installation of dependencies.
-Moreover, if you try to fix the problem by manually installing the `ocaml`
-package, `opam` will try to recompile `ocaml-variants`, using the default
+Moreover, if you try to fix the problem by manually installing the `travlang`
+package, `opam` will try to recompile `travlang-variants`, using the default
 instructions. You can get around this by running
 `opam reinstall --forget-pending` just after the `opam custom-install` command
-and just before the `opam install ocaml command`.
+and just before the `opam install travlang command`.
 Full example:
 
 -----
 opam switch create . --empty
-./configure --prefix=$(opam var prefix) --disable-ocamldoc --disable-ocamltest
+./configure --prefix=$(opam var prefix) --disable-travlangdoc --disable-travlangtest
 make world && make opt
-opam custom-install ocaml-variants -- make install
+opam custom-install travlang-variants -- make install
 opam reinstall --forget-pending --yes
-opam install ocaml
+opam install travlang
 # You now have a working switch, in which you can start installing packages
 -----
 
@@ -396,20 +396,20 @@ mess with `opam`'s tracking of installed files.
 Besides the targets listed in link:INSTALL.adoc[] for build and
 installation, the following targets may be of use:
 
-`make runtop` :: builds and runs the ocaml toplevel of the distribution
+`make runtop` :: builds and runs the travlang toplevel of the distribution
                           (optionally uses `rlwrap` for readline+history support)
                           (use `make runtop-with-otherlibs` if you need `Unix` or other
                            `otherlibs/` libraries)
-`make natruntop`:: builds and runs the native ocaml toplevel (experimental)
+`make natruntop`:: builds and runs the native travlang toplevel (experimental)
 
-`make partialclean`:: Clean the OCaml files but keep the compiled C files.
+`make partialclean`:: Clean the travlang files but keep the compiled C files.
 
 `make depend`:: Regenerate the `.depend` file. Should be used each time new dependencies are added between files.
 
 `make -C testsuite parallel`:: see link:testsuite/HACKING.adoc[]
 
 You can use `make foo V=1` to build the target foo and show full
-commands instead of abbreviated names like OCAMLC, etc. This can be
+commands instead of abbreviated names like travlangC, etc. This can be
 useful to know the flags to use to manually rebuild a file.
 
 Additionally, there are some developer specific targets in link:Makefile.dev[].
@@ -422,7 +422,7 @@ If you have options to `configure` which you always (or at least frequently)
 use, it's possible to store them in Git, and `configure` will automatically add
 them. For example, you may wish to avoid building the debug runtime by default
 while developing, in which case you can issue
-`git config --global ocaml.configure '--disable-debug-runtime'`. The `configure`
+`git config --global travlang.configure '--disable-debug-runtime'`. The `configure`
 script will alert you that it has picked up this option and added it _before_
 any options you specified for `configure`.
 
@@ -443,15 +443,15 @@ a new `--host` value (this is quite common on Windows, where `configure` is
 also quite slow to run).
 
 You can elect to have host-specific cache files by issuing
-`git config --global ocaml.configure-cache .`. The `configure` script will now
-automatically create `ocaml-host.cache` (e.g. `ocaml-x86_64-pc-windows.cache`,
-or `ocaml-default.cache`). If you work with multiple worktrees, you can share
-these cache files by issuing `git config --global ocaml.configure-cache ..`. The
+`git config --global travlang.configure-cache .`. The `configure` script will now
+automatically create `travlang-host.cache` (e.g. `travlang-x86_64-pc-windows.cache`,
+or `travlang-default.cache`). If you work with multiple worktrees, you can share
+these cache files by issuing `git config --global travlang.configure-cache ..`. The
 directory is interpreted _relative_ to the `configure` script.
 
 === Bootstrapping
 
-The OCaml compiler is bootstrapped. This means that
+The travlang compiler is bootstrapped. This means that
 previously-compiled bytecode versions of the compiler and lexer are
 included in the repository under the
 link:boot/[] directory. These bytecode images are used once the
@@ -461,29 +461,29 @@ found in link:BOOTSTRAP.adoc[].
 
 === Speeding up builds
 
-Once you've built a natively-compiled `ocamlc.opt`, you can use it to
+Once you've built a natively-compiled `travlangc.opt`, you can use it to
 speed up future builds by copying it to `boot`:
 
 ----
-cp ocamlc.opt boot/
+cp travlangc.opt boot/
 ----
 
-If `boot/ocamlc` changes (e.g. because you ran `make bootstrap`), then
-the build will revert to the slower bytecode-compiled `ocamlc` until
+If `boot/travlangc` changes (e.g. because you ran `make bootstrap`), then
+the build will revert to the slower bytecode-compiled `travlangc` until
 you do the above step again.
 
 === Using merlin
 
 During the development of the compiler, the internal format of compiled object
 files evolves, and quickly becomes incompatible with the format of the last
-OCaml release. In particular, even an up-to-date merlin will be unable to use
+travlang release. In particular, even an up-to-date merlin will be unable to use
 them during most of the development cycle: opening a compiler source file with
 merlin gives a frustrating error message.
 
 To use merlin on the compiler, you want to build the compiler with an older
 version of itself. One easy way to do this is to use the experimental build
 rules for Dune, which are distributed with the compiler (with no guarantees that
-the build will work all the time). Assuming you already have a recent OCaml
+the build will work all the time). Assuming you already have a recent travlang
 version installed with merlin and dune, you can just run the following from the
 compiler sources:
 
@@ -493,7 +493,7 @@ make clean && dune build @libs
 ----
 
 which will do a bytecode build of all the distribution (without linking
-the executables), using your OCaml compiler.
+the executables), using your travlang compiler.
 
 Merlin will be looking at the artefacts generated by dune (in `_build`), rather
 than trying to open the incompatible artefacts produced by a Makefile build. In
@@ -523,7 +523,7 @@ most packages are incompatible with the in-progress development version.
 ==== check-typo
 
 The `tools/check-typo` script enforces various typographical rules in the
-OCaml compiler codebase.
+travlang compiler codebase.
 
 Running `./tools/check-typo` from the repository root will check all
 source files. This can be fairly slow (2 minutes for example). Use
@@ -593,8 +593,8 @@ the following environment variables, which should be set in link:appveyor.yml[]:
 
 ==== INRIA's Continuous Integration (CI)
 
-INRIA provides a Jenkins continuous integration service that OCaml
-uses, see link:https://ci.inria.fr/ocaml/[]. It provides a wider
+INRIA provides a Jenkins continuous integration service that travlang
+uses, see link:https://ci.inria.fr/travlang/[]. It provides a wider
 architecture support (MSVC and MinGW, a zsystems s390x machine, and
 various MacOS versions) than the Travis/AppVeyor testing on github,
 but only runs on commits to the trunk or release branches, not on every
@@ -604,11 +604,11 @@ You do not need to be an INRIA employee to open an account on this
 jenkins service; anyone can create an account there to access build
 logs and manually restart builds. If you
 would like to do this but have trouble doing it, please email
-ocaml-ci-admin@inria.fr.
+travlang-ci-admin@inria.fr.
 
 To be notified by email of build failures, you can subscribe to the
-ocaml-ci-notifications@inria.fr mailing list by visiting
-https://sympa.inria.fr/sympa/info/ocaml-ci-notifications[its web page.]
+travlang-ci-notifications@inria.fr mailing list by visiting
+https://sympa.inria.fr/sympa/info/travlang-ci-notifications[its web page.]
 
 ==== Running INRIA's CI on a publicly available git branch
 
@@ -620,16 +620,16 @@ branches even before opening a pull request as follows:
 
 1. Make sure you have an account on Inria's CI as described before.
 
-2. Make sure you have been added to the ocaml project.
+2. Make sure you have been added to the travlang project.
 
 3. Prepare a branch with the code you'd like to test, say "mybranch". It
 is probably a good idea to make sure your branch is based on the latest
 trunk.
 
 4. Make your branch publicly available. For instance, you can fork
-OCaml's GitHub repository and then push "mybranch" to your fork.
+travlang's GitHub repository and then push "mybranch" to your fork.
 
-5. Visit https://ci.inria.fr/ocaml/job/precheck and log in. Click on
+5. Visit https://ci.inria.fr/travlang/job/precheck and log in. Click on
 "Build with parameters".
 
 6. Fill in the REPO_URL and BRANCH fields as appropriate and run the build.
@@ -649,7 +649,7 @@ branch. In order to use "precheck" to test parallel build on a custom
 branch, add this at the beginning of tools/ci-build:
 
 ----
-OCAML_JOBS=10
+travlang_JOBS=10
 ----
 
 === The `caml-commits` mailing list

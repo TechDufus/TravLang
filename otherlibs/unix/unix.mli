@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -245,7 +245,7 @@ val execvpe : string -> string array -> string array -> 'a
 val fork : unit -> int
 (** Fork a new process. The returned integer is 0 for the child
    process, the pid of the child process for the parent process. It
-   fails if the OCaml process is multi-core (any domain has been
+   fails if the travlang process is multi-core (any domain has been
    spawned). In addition, if any thread from the Thread module has
    been spawned, then the child process might be in a corrupted state.
 
@@ -796,7 +796,7 @@ val set_close_on_exec : file_descr -> unit
    create file descriptors.
 
    The [cloexec] optional arguments and the [O_KEEPEXEC] flag were introduced
-   in OCaml 4.05.  Earlier, the common practice was to create file descriptors
+   in travlang 4.05.  Earlier, the common practice was to create file descriptors
    in the default, ``keep-on-exec'' mode, then call [set_close_on_exec]
    on those freshly-created file descriptors.  This is not as safe as
    creating the file descriptor in ``close-on-exec'' mode because, in
@@ -1596,7 +1596,7 @@ type socket_int_option =
     SO_SNDBUF    (** Size of send buffer *)
   | SO_RCVBUF    (** Size of received buffer *)
   | SO_ERROR
-    [@ocaml.deprecated "Use Unix.getsockopt_error instead."]
+    [@travlang.deprecated "Use Unix.getsockopt_error instead."]
     (** Deprecated.  Use {!getsockopt_error} instead. *)
   | SO_TYPE      (** Report the socket type *)
   | SO_RCVLOWAT  (** Minimum number of bytes to process for input operations *)

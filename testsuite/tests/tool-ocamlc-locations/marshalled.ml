@@ -1,19 +1,19 @@
 (* TEST
    readonly_files="foo.ml";
-   setup-ocamlc.byte-build-env;
+   setup-travlangc.byte-build-env;
    {
-   include ocamlcommon;
+   include travlangcommon;
    program = "marshalled.byte";
    all_modules = "marshalled.ml";
-   ocamlc.byte;
+   travlangc.byte;
    script = "./marshalled.byte";
    script;
    }
    {
    all_modules = "foo.marshalled.ml";
-   ocamlc_byte_exit_status = "2";
-   ocamlc.byte;
-   check-ocamlc.byte-output;
+   travlangc_byte_exit_status = "2";
+   travlangc.byte;
+   check-travlangc.byte-output;
    }
 *)
 

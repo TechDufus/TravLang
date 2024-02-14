@@ -1,12 +1,12 @@
-\chapter{The toplevel system or REPL (ocaml)} \label{c:camllight}
+\chapter{The toplevel system or REPL (travlang)} \label{c:camllight}
 %HEVEA\cutname{toplevel.html}
 
-This chapter describes "ocaml", the toplevel system for OCaml, that permits
-interactive use of the OCaml system
+This chapter describes "travlang", the toplevel system for travlang, that permits
+interactive use of the travlang system
 through a read-eval-print loop (REPL). In this mode, the system repeatedly
-reads OCaml phrases from the input, then typechecks, compile and
+reads travlang phrases from the input, then typechecks, compile and
 evaluate them, then prints the inferred type and result value, if
-any. End-of-file on standard input terminates "ocaml".
+any. End-of-file on standard input terminates "travlang".
 
 Input to the toplevel can span several lines. It begins after the "#"
 (sharp) prompt printed by the system and is terminated by @";;"@ (a
@@ -45,10 +45,10 @@ behavior of the toplevel; they are listed below in
 section~\ref{s:toplevel-directives}.
 
 \begin{unix}
-The toplevel system is started by the command "ocaml", as follows:
+The toplevel system is started by the command "travlang", as follows:
 \begin{alltt}
-        ocaml \var{options} \var{objects}                # interactive mode
-        ocaml \var{options} \var{objects} \var{scriptfile}        # script mode
+        travlang \var{options} \var{objects}                # interactive mode
+        travlang \var{options} \var{objects} \var{scriptfile}        # script mode
 \end{alltt}
 \var{options} are described below.
 \var{objects} are filenames ending in ".cmo" or ".cma"; they are
@@ -58,70 +58,70 @@ loaded into the interpreter immediately after \var{options} are set.
 If no \var{scriptfile} is given on the command line, the toplevel system
 enters interactive mode: phrases are read on standard input, results
 are printed on standard output, errors on standard error. End-of-file
-on standard input terminates "ocaml" (see also the "#quit" directive
+on standard input terminates "travlang" (see also the "#quit" directive
 in section~\ref{s:toplevel-directives}).
 
 On start-up (before the first phrase is read), the contents of initialization
-file are read as a sequence of OCaml phrases and executed as per the "#use"
+file are read as a sequence of travlang phrases and executed as per the "#use"
 directive described in section~\ref{s:toplevel-directives}.
 The evaluation outcode for each phrase are not displayed.
 
 The initialization file is the first found of:
 \begin{enumerate}
-  \item ".ocamlinit" in the current directory;
-  \item "XDG_CONFIG_HOME/ocaml/init.ml", if "XDG_CONFIG_HOME" is an absolute
+  \item ".travlanginit" in the current directory;
+  \item "XDG_CONFIG_HOME/travlang/init.ml", if "XDG_CONFIG_HOME" is an absolute
     path;
-  \item otherwise, on Unix, "HOME/ocaml/init.ml" or, on Windows,
-    "ocaml\\init.ml" under "LocalAppData"
-    (e.g. "C:\\Users\\Bactrian\\AppData\\Local\\ocaml\\init.ml");
-  \item "ocaml/init.ml" under any of the absolute paths in "XDG_CONFIG_DIRS".
+  \item otherwise, on Unix, "HOME/travlang/init.ml" or, on Windows,
+    "travlang\\init.ml" under "LocalAppData"
+    (e.g. "C:\\Users\\Bactrian\\AppData\\Local\\travlang\\init.ml");
+  \item "travlang/init.ml" under any of the absolute paths in "XDG_CONFIG_DIRS".
     Paths in "XDG_CONFIG_DIRS" are colon-delimited on Unix, and
     semicolon-delimited on Windows;
   \item if "XDG_CONFIG_DIRS" contained no absolute paths,
-    "/usr/xdg/ocaml/init.ml" on Unix or, "ocaml\\init.ml" under any of
+    "/usr/xdg/travlang/init.ml" on Unix or, "travlang\\init.ml" under any of
     "LocalAppData" (e.g. "C:\\Users\\Bactrian\\AppData\\Local"),
     "RoamingAppData" (e.g. "C:\\Users\\Bactrian\\AppData\\Roaming"), or
     "ProgramData" (e.g. "C:\\ProgramData") on Windows;
-  \item "HOME/.ocamlinit", if "HOME" is non-empty;
+  \item "HOME/.travlanginit", if "HOME" is non-empty;
 \end{enumerate}
 
 The toplevel system does not perform line editing, but it can
 easily be used in conjunction with an external line editor such as
 "ledit", or "rlwrap". An improved toplevel, "utop", is also available.
-Another option is to use "ocaml" under Gnu Emacs, which gives the
+Another option is to use "travlang" under Gnu Emacs, which gives the
 full editing power of Emacs (command "run-caml" from library "inf-caml").
 
 At any point, the parsing, compilation or evaluation of the current
 phrase can be interrupted by pressing "ctrl-C" (or, more precisely,
-by sending the "INTR" signal to the "ocaml" process). The toplevel
+by sending the "INTR" signal to the "travlang" process). The toplevel
 then immediately returns to the "#" prompt.
 
-If \var{scriptfile} is given on the command-line to "ocaml", the toplevel
+If \var{scriptfile} is given on the command-line to "travlang", the toplevel
 system enters script mode: the contents of the file are read as a
-sequence of OCaml phrases and executed, as per the "#use"
+sequence of travlang phrases and executed, as per the "#use"
 directive (section~\ref{s:toplevel-directives}). The outcome of the
-evaluation is not printed.  On reaching the end of file, the "ocaml"
+evaluation is not printed.  On reaching the end of file, the "travlang"
 command exits immediately.  No commands are read from standard input.
-"Sys.argv" is transformed, ignoring all OCaml parameters, and
+"Sys.argv" is transformed, ignoring all travlang parameters, and
 starting with the script file name in "Sys.argv.(0)".
 
 In script mode, the first line of the script is ignored if it starts
 with "#!".  Thus, it should be possible to make the script
-itself executable and put as first line "#!/usr/local/bin/ocaml",
+itself executable and put as first line "#!/usr/local/bin/travlang",
 thus calling the toplevel system automatically when the script is
-run.  However, "ocaml" itself is a "#!" script on most installations
-of OCaml, and Unix kernels usually do not handle nested "#!"
+run.  However, "travlang" itself is a "#!" script on most installations
+of travlang, and Unix kernels usually do not handle nested "#!"
 scripts.  A better solution is to put the following as the first line
 of the script:
 \begin{verbatim}
-        #!/usr/local/bin/ocamlrun /usr/local/bin/ocaml
+        #!/usr/local/bin/travlangrun /usr/local/bin/travlang
 \end{verbatim}
 
 \end{unix}
 
 \section{s:toplevel-options}{Options}
 
-The following command-line options are recognized by the "ocaml" command.
+The following command-line options are recognized by the "travlang" command.
 % Configure boolean variables used by the macros in unified-options.etex
 \compfalse
 \natfalse
@@ -133,13 +133,13 @@ The following command-line options are recognized by the "ocaml" command.
 \begin{unix}
 The following environment variables are also consulted:
 \begin{options}
-\item["OCAMLTOP_INCLUDE_PATH"] Additional directories to search for compiled
+\item["travlangTOP_INCLUDE_PATH"] Additional directories to search for compiled
   object code files (".cmi", ".cmo" and ".cma"). The specified directories are
   considered from left to right, after the include directories specified on the
-  command line via "-I" have been searched. Available since OCaml 4.08.
+  command line via "-I" have been searched. Available since travlang 4.08.
 
-\item["OCAMLTOP_UTF_8"] When printing string values, non-ascii bytes
-($ {} > "\0x7E" $) are printed as decimal escape sequence if "OCAMLTOP_UTF_8" is
+\item["travlangTOP_UTF_8"] When printing string values, non-ascii bytes
+($ {} > "\0x7E" $) are printed as decimal escape sequence if "travlangTOP_UTF_8" is
 set to false. Otherwise, they are printed unescaped.
 
 \item["TERM"] When printing error messages, the toplevel system
@@ -174,7 +174,7 @@ will result in an ``unbound value "quit"'' error.
     Prints a list of all available directives, with corresponding argument type
     if appropriate.
   \item["#quit;;"]
-    Exit the toplevel loop and terminate the "ocaml" command.
+    Exit the toplevel loop and terminate the "travlang" command.
   \end{options}
 
 \item[Loading codes]
@@ -194,11 +194,11 @@ will result in an ``unbound value "quit"'' error.
 
   \item["#load \""\var{file-name}"\";;"]
     Load in memory a bytecode object file (".cmo" file) or library file
-    (".cma" file) produced by the batch compiler "ocamlc".
+    (".cma" file) produced by the batch compiler "travlangc".
 
   \item["#load_rec \""\var{file-name}"\";;"]
     Load in memory a bytecode object file (".cmo" file) or library file
-    (".cma" file) produced by the batch compiler "ocamlc".
+    (".cma" file) produced by the batch compiler "travlangc".
     When loading an object file that depends on other modules
     which have not been loaded yet, the .cmo files for these modules
     are searched and loaded as well, recursively. The loading order
@@ -385,18 +385,18 @@ with "#load". See section~\ref{s:toplevel-modules} above.
 
 \end{options}
 
-\section{s:custom-toplevel}{Building custom toplevel systems: \texttt{ocamlmktop}}
+\section{s:custom-toplevel}{Building custom toplevel systems: \texttt{travlangmktop}}
 
-The "ocamlmktop" command builds OCaml toplevels that
+The "travlangmktop" command builds travlang toplevels that
 contain user code preloaded at start-up.
 
-The "ocamlmktop" command takes as argument a set of ".cmo" and ".cma"
-files, and links them with the object files that implement the OCaml toplevel.
+The "travlangmktop" command takes as argument a set of ".cmo" and ".cma"
+files, and links them with the object files that implement the travlang toplevel.
 The typical use is:
 \begin{verbatim}
-        ocamlmktop -o mytoplevel foo.cmo bar.cmo gee.cmo
+        travlangmktop -o mytoplevel foo.cmo bar.cmo gee.cmo
 \end{verbatim}
-This creates the bytecode file "mytoplevel", containing the OCaml toplevel
+This creates the bytecode file "mytoplevel", containing the travlang toplevel
 system, plus the code from the three ".cmo"
 files. This toplevel is directly executable and is started by:
 \begin{verbatim}
@@ -417,25 +417,25 @@ not opened, though; you still have to do
 \end{verbatim}
 yourself, if this is what you wish.
 
-\subsection{ss:ocamlmktop-options}{Options}
+\subsection{ss:travlangmktop-options}{Options}
 
-The following command-line options are recognized by "ocamlmktop".
+The following command-line options are recognized by "travlangmktop".
 
 \begin{options}
 
 \item["-cclib" \var{libname}]
 Pass the "-l"\var{libname} option to the C linker when linking in
 ``custom runtime'' mode. See the corresponding option for
-"ocamlc", in chapter~\ref{c:camlc}.
+"travlangc", in chapter~\ref{c:camlc}.
 
 \item["-ccopt" \var{option}]
 Pass the given option to the C compiler and linker, when linking in
 ``custom runtime'' mode. See the corresponding option for
-"ocamlc", in chapter~\ref{c:camlc}.
+"travlangc", in chapter~\ref{c:camlc}.
 
 \item["-custom"]
 Link in ``custom runtime'' mode. See the corresponding option for
-"ocamlc", in chapter~\ref{c:camlc}.
+"travlangc", in chapter~\ref{c:camlc}.
 
 \item["-I" \var{directory}]
 Add the given directory to the list of directories searched for
@@ -447,24 +447,24 @@ The default is "a.out".
 
 \end{options}
 
-\section{s:ocamlnat}{The native toplevel: \texttt{ocamlnat}\ (experimental)}
+\section{s:travlangnat}{The native toplevel: \texttt{travlangnat}\ (experimental)}
 
 {\bf This section describes a tool that is not yet officially supported %
 but may be found useful.}
 
-OCaml code executing in the traditional toplevel system uses the bytecode
+travlang code executing in the traditional toplevel system uses the bytecode
 interpreter.  When increased performance is required, or for testing
 programs that will only execute correctly when compiled to native code,
 the {\em native toplevel} may be used instead.
 
 For the majority of installations the native toplevel will not have been
-installed along with the rest of the OCaml toolchain.  In such circumstances
-it will be necessary to build the OCaml distribution from source.
+installed along with the rest of the travlang toolchain.  In such circumstances
+it will be necessary to build the travlang distribution from source.
 From the built source tree of the distribution you may use
 {\tt make natruntop} to build and execute a native toplevel.  (Alternatively
-{\tt make ocamlnat} can be used, which just performs the build step.)
+{\tt make travlangnat} can be used, which just performs the build step.)
 
 If the {\tt make install} command is run after having built the native
-toplevel then the {\tt ocamlnat} program (either from the source or the
+toplevel then the {\tt travlangnat} program (either from the source or the
 installation directory) may be invoked directly rather than using
 {\tt make natruntop}.

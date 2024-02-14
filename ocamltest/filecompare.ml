@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Sebastien Hinderer, projet Gallium, INRIA Paris            *)
 (*                                                                        *)
@@ -15,7 +15,7 @@
 
 (* File comparison tools *)
 
-open Ocamltest_stdlib
+open travlangtest_stdlib
 
 type result =
   | Same
@@ -228,9 +228,9 @@ let check_file ?(tool = default_comparison_tool) files =
   end
 
 let diff files =
-  let temporary_file = Filename.temp_file "ocamltest" "diff" in
-  let diff = Ocamltest_config.diff in
-  let diff_flags = String.words Ocamltest_config.diff_flags in
+  let temporary_file = Filename.temp_file "travlangtest" "diff" in
+  let diff = travlangtest_config.diff in
+  let diff_flags = String.words travlangtest_config.diff_flags in
   let diff_files = [files.reference_filename; files.output_filename] in
   let diff_commandline =
     Filename.quote_command diff ~stdout:temporary_file

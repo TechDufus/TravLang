@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*                  Jeremie Dimino, Jane Street Europe                    *)
 (*                                                                        *)
@@ -29,7 +29,7 @@ type error =
 
 (** The [string] argument of the following functions is the name of the
     attribute we are looking for.  If the argument is ["foo"], these functions
-    will find attributes with the name ["foo"] or ["ocaml.foo"] *)
+    will find attributes with the name ["foo"] or ["travlang.foo"] *)
 val get_no_payload_attribute : string -> attributes -> string loc option
 val has_no_payload_attribute : string -> attributes -> bool
 

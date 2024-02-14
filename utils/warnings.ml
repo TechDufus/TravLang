@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Pierre Weis && Damien Doligez, INRIA Rocquencourt          *)
 (*                                                                        *)
@@ -15,7 +15,7 @@
 
 (* When you change this, you need to update:
    - the list 'description' at the bottom of this file
-   - man/ocamlc.m
+   - man/travlangc.m
 *)
 
 type loc = {
@@ -204,7 +204,7 @@ type description =
        deprecated. The current name should always be derived mechanically from
        the constructor name. *)
     description : string;
-    since : Sys.ocaml_release_info option;
+    since : Sys.travlang_release_info option;
     (* The compiler version introducing this warning; only tagged for warnings
        created after 3.12, which introduced the numbered syntax. *)
   }
@@ -315,7 +315,7 @@ let descriptions = [
   { number = 24;
     names = ["bad-module-name"];
     description =
-    "Bad module name: the source file name is not a valid OCaml module name.";
+    "Bad module name: the source file name is not a valid travlang module name.";
     since = None };
   { number = 25;
     names = [];
@@ -763,7 +763,7 @@ let letter_alert tokens =
           spelling_hint
       in
       Some {
-        kind="ocaml_deprecated_cli";
+        kind="travlang_deprecated_cli";
         use=nowhere; def=nowhere;
         message
       }
@@ -862,7 +862,7 @@ let parse_options errflag s =
   current := {(!current) with error; active};
   alerts
 
-(* If you change these, don't forget to change them in man/ocamlc.m *)
+(* If you change these, don't forget to change them in man/travlangc.m *)
 let defaults_w = "+a-4-7-9-27-29-30-32..42-44-45-48-50-60-66..70"
 let defaults_warn_error = "-a"
 let default_disabled_alerts = [ "unstable"; "unsynchronized_access" ]
@@ -919,7 +919,7 @@ let message = function
   | Illegal_backslash ->
     "illegal backslash escape in string.\n\
     Hint: Single backslashes \\ are reserved for escape sequences\n\
-    (\\n, \\r, ...). Did you check the list of OCaml escape sequences?\n\
+    (\\n, \\r, ...). Did you check the list of travlang escape sequences?\n\
     To get a backslash character, escape it with a second backslash: \\\\."
   | Implicit_public_methods l ->
       "the following private methods were made public implicitly:\n "
@@ -945,7 +945,7 @@ let message = function
      "wildcard pattern given as argument to a constant constructor"
   | Eol_in_string ->
      "unescaped end-of-line in a string constant\n\
-      (non-portable behavior before OCaml 5.2)"
+      (non-portable behavior before travlang 5.2)"
   | Duplicate_definitions (kind, cname, tc1, tc2) ->
       Printf.sprintf "the %s %s is defined in both types %s and %s."
         kind cname tc1 tc2
@@ -1003,7 +1003,7 @@ let message = function
       ^ expansion
   | Disambiguated_name s ->
       "this use of " ^ s ^ " relies on type-directed disambiguation,\n\
-       it will not compile with OCaml 4.00 or earlier."
+       it will not compile with travlang 4.00 or earlier."
   | Nonoptional_label s ->
       "the label " ^ s ^ " is not optional."
   | Open_shadow_identifier (kind, s) ->

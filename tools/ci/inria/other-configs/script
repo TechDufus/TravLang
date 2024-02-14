@@ -1,7 +1,7 @@
 #!/bin/sh
 #**************************************************************************
 #*                                                                        *
-#*                                 OCaml                                  *
+#*                                 travlang                                  *
 #*                                                                        *
 #*            Sebastien Hinderer, projet Gallium, INRIA Paris             *
 #*                                                                        *
@@ -24,9 +24,9 @@ main="${mainjob} -j8"
 
 echo "============== minimal build ================="
 # The "MIN_BUILD" (formerly on Travis) builds with everything disabled (apart
-# from ocamltest). Its goals:
+# from travlangtest). Its goals:
 #  - Ensure that the system builds correctly without native compilation
-#  - Ensure ocamltest builds correctly with Unix
+#  - Ensure travlangtest builds correctly with Unix
 #  - Ensure the testsuite runs correctly with everything switched off
 ${main} -conf --disable-native-compiler \
         -conf --disable-shared \
@@ -35,7 +35,7 @@ ${main} -conf --disable-native-compiler \
         -conf --disable-systhreads \
         -conf --disable-str-lib \
         -conf --disable-unix-lib \
-        -conf --disable-ocamldoc \
+        -conf --disable-travlangdoc \
         -conf --disable-dependency-generation \
         -no-native
 
@@ -54,4 +54,4 @@ echo "============== bootstrap, pic ================="
 ${main} -with-bootstrap -conf --with-pic
 
 echo "============== cleanup at exit, clang ================="
-OCAMLRUNPARAM="c=1" ${main} -conf CC=clang-18
+travlangRUNPARAM="c=1" ${main} -conf CC=clang-18

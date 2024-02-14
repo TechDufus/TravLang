@@ -1,7 +1,7 @@
 # 2 "asmcomp/arm64/arch.ml"
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Gallium, INRIA Rocquencourt           *)
 (*                 Benedikt Meurer, University of Siegen                  *)

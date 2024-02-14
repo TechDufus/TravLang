@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Pierre Weis, projet Cristal, INRIA Rocquencourt            *)
 (*                                                                        *)
@@ -68,16 +68,16 @@
 
 (** {2 Formatted input as a functional feature} *)
 
-(** The OCaml scanning facility is reminiscent of the corresponding C feature.
+(** The travlang scanning facility is reminiscent of the corresponding C feature.
     However, it is also largely different, simpler, and yet more powerful:
     the formatted input functions are higher-order functionals and the
     parameter passing mechanism is just the regular function application not
     the variable assignment based mechanism which is typical for formatted
-    input in imperative languages; the OCaml format strings also feature
+    input in imperative languages; the travlang format strings also feature
     useful additions to easily define complex tokens; as expected within a
     functional programming language, the formatted input functions also
     support polymorphism, in particular arbitrary interaction with
-    polymorphic user-defined scanners. Furthermore, the OCaml formatted input
+    polymorphic user-defined scanners. Furthermore, the travlang formatted input
     facility is fully type-checked at compile time.
 *)
 
@@ -328,20 +328,20 @@ val bscanf_opt : Scanning.in_channel -> ('a, 'b, 'c, 'd) scanner_opt
       Hence, this conversion always succeeds: it returns an empty
       string if the bounding condition holds when the scan begins.
     - [S]: reads a delimited string argument (delimiters and special
-      escaped characters follow the lexical conventions of OCaml).
+      escaped characters follow the lexical conventions of travlang).
     - [c]: reads a single character. To test the current input character
       without reading it, specify a null field width, i.e. use
       specification [%0c]. Raise [Invalid_argument], if the field width
       specification is greater than 1.
     - [C]: reads a single delimited character (delimiters and special
-      escaped characters follow the lexical conventions of OCaml).
+      escaped characters follow the lexical conventions of travlang).
     - [f], [e], [E], [g], [G]: reads an optionally signed
       floating-point number in decimal notation, in the style [dddd.ddd
       e/E+-dd].
     - [h], [H]: reads an optionally signed floating-point number
       in hexadecimal notation.
     - [F]: reads a floating point number according to the lexical
-      conventions of OCaml (hence the decimal point is mandatory if the
+      conventions of travlang (hence the decimal point is mandatory if the
       exponent part is not mentioned).
     - [B]: reads a boolean argument ([true] or [false]).
     - [b]: reads a boolean argument (for backward compatibility; do not use
@@ -421,15 +421,15 @@ val bscanf_opt : Scanning.in_channel -> ('a, 'b, 'c, 'd) scanner_opt
       nothing to read in the input: in this case, it simply returns [""].
 
     - in addition to the relevant digits, ['_'] characters may appear
-    inside numbers (this is reminiscent to the usual OCaml lexical
+    inside numbers (this is reminiscent to the usual travlang lexical
     conventions). If stricter scanning is desired, use the range
     conversion facility instead of the number conversions.
 
     - the [scanf] facility is not intended for heavy duty lexical
     analysis and parsing. If it appears not expressive enough for your
     needs, several alternative exists: regular expressions (module
-    {!Str}), stream parsers, [ocamllex]-generated lexers,
-    [ocamlyacc]-generated parsers.
+    {!Str}), stream parsers, [travlanglex]-generated lexers,
+    [travlangyacc]-generated parsers.
 *)
 
 (** {2:indication Scanning indications in format strings} *)
@@ -550,7 +550,7 @@ val format_from_string :
 
 val unescaped : string -> string
 (** [unescaped s] return a copy of [s] with escape sequences (according to
-    the lexical conventions of OCaml) replaced by their corresponding special
+    the lexical conventions of travlang) replaced by their corresponding special
     characters.
     More precisely, [Scanf.unescaped] has the following property:
     for all string [s], [Scanf.unescaped (String.escaped s) = s].

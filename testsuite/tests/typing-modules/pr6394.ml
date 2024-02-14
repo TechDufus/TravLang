@@ -2,7 +2,7 @@
  expect;
 *)
 
-[@@@ ocaml.warning "+4"]
+[@@@ travlang.warning "+4"]
 module rec X : sig
   type t = int * bool
 end = struct

@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -35,17 +35,17 @@ val module_expr : Lexing.lexbuf -> Parsetree.module_expr
 val longident: Lexing.lexbuf -> Longident.t
 (**
    The function [longident] is guaranteed to parse all subclasses
-   of {!Longident.t} used in OCaml: values, constructors, simple or extended
+   of {!Longident.t} used in travlang: values, constructors, simple or extended
    module paths, and types or module types.
 
    However, this function accepts inputs which are not accepted by the
    compiler, because they combine functor applications and infix operators.
-   In valid OCaml syntax, only value-level identifiers may end with infix
+   In valid travlang syntax, only value-level identifiers may end with infix
    operators [Foo.( + )].
    Moreover, in value-level identifiers the module path [Foo] must be simple
    ([M.N] rather than [F(X)]): functor applications may only appear in
    type-level identifiers.
-   As a consequence, a path such as [F(X).( + )] is not a valid OCaml
+   As a consequence, a path such as [F(X).( + )] is not a valid travlang
    identifier; but it is accepted by this function.
 *)
 
@@ -57,7 +57,7 @@ val val_ident: Lexing.lexbuf -> Longident.t
    [x], [M.x], and [(+.)] are valid. Contrarily, [M.A], [F(X).x], and [true]
    are rejected.
 
-   Longident for OCaml's value cannot contain functor application.
+   Longident for travlang's value cannot contain functor application.
    The last component of the {!Longident.t} is not capitalized,
    but can be an operator [A.Path.To.(.%.%.(;..)<-)]
 *)
@@ -68,7 +68,7 @@ val constr_ident: Lexing.lexbuf -> Longident.t
    For instance, [A], [M.A] and [M.(::)] are valid, but both [M.a]
    and [F(X).A] are rejected.
 
-   Longident for OCaml's variant constructors cannot contain functor
+   Longident for travlang's variant constructors cannot contain functor
    application.
    The last component of the {!Longident.t} is capitalized,
    or it may be one the special constructors: [true],[false],[()],[[]],[(::)].
@@ -83,7 +83,7 @@ val simple_module_path: Lexing.lexbuf -> Longident.t
    For instance, [A], and [M.A] are valid, but both [M.a]
    and [F(X).A] are rejected.
 
-   Longident for OCaml's module cannot contain functor application.
+   Longident for travlang's module cannot contain functor application.
    The last component of the {!Longident.t} is capitalized.
 *)
 

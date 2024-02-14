@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*                    Sebastien Hinderer, INRIA Paris                     */
 /*                                                                        */
@@ -21,7 +21,7 @@ pipeline {
     timeout(time: 3, unit: 'HOURS')
   }
   stages {
-    stage('Verifying that OCaml commpiles on a Risc-V virtual machine') {
+    stage('Verifying that travlang commpiles on a Risc-V virtual machine') {
       steps {
         sh 'ssh -p 10000 riscv@localhost GIT_COMMIT=${GIT_COMMIT} ' +
           'flambda=false /home/riscv/run-ci'
@@ -31,7 +31,7 @@ pipeline {
   post {
     regression {
       emailext (
-        to: 'ocaml-ci-notifications@inria.fr',
+        to: 'travlang-ci-notifications@inria.fr',
         subject: 'Job $JOB_NAME $BUILD_STATUS (build #$BUILD_NUMBER)',
         body: 'Changes since the last successful build:\n\n' +
           '${CHANGES, format="%r %a %m"}\n\n' +

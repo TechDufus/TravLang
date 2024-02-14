@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*      KC Sivaramakrishnan, Indian Institute of Technology, Madras       */
 /*                   Stephen Dolan, University of Cambridge               */
@@ -73,8 +73,8 @@ CAMLextern void caml_reset_domain_lock(void);
 CAMLextern int caml_bt_is_in_blocking_section(void);
 CAMLextern int caml_bt_is_self(void);
 CAMLextern intnat caml_domain_is_multicore (void);
-CAMLextern void caml_bt_enter_ocaml(void);
-CAMLextern void caml_bt_exit_ocaml(void);
+CAMLextern void caml_bt_enter_travlang(void);
+CAMLextern void caml_bt_exit_travlang(void);
 CAMLextern void caml_acquire_domain_lock(void);
 CAMLextern void caml_release_domain_lock(void);
 

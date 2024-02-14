@@ -26,11 +26,11 @@ let () =
      (* check that we have not allocated anything between x1 and x2 *)
 
 
-(* Check that 'ocaml.inline always' is not broken due to the split
+(* Check that 'travlang.inline always' is not broken due to the split
    into a worker+wrapper. *)
 
 
-let[@ocaml.inline always] f ?(x = 1.) a b = a +. b *. x
+let[@travlang.inline always] f ?(x = 1.) a b = a +. b *. x
 let () =
   let r = ref 0. in
   let x0 = Gc.allocated_bytes () in

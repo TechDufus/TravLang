@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*   Contributed by Sylvain Le Gall for Lexifi                            */
 /*                                                                        */
@@ -23,7 +23,7 @@ int caml_win32_debug_test (void)
 #ifdef DEBUG
   if (!debug_init)
   {
-    debug = (getenv("OCAMLDEBUG") != NULL);
+    debug = (getenv("travlangDEBUG") != NULL);
     debug_init = 1;
   };
 #endif

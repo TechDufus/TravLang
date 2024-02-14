@@ -2,7 +2,7 @@
  expect;
 *)
 
-[@@@ocaml.warning "+39"]
+[@@@travlang.warning "+39"]
 
 let rec f () = 3;;
 [%%expect{|
@@ -29,7 +29,7 @@ Warning 39 [unused-rec-flag]: unused rec flag.
 val h : unit -> int = <fun>
 |}];;
 
-[@@@ocaml.warning "-39"]
+[@@@travlang.warning "-39"]
 
 let rec f () = 3;;
 [%%expect{|

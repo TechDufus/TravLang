@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*             Alain Frisch, projet Gallium, INRIA Rocquencourt           */
 /*                                                                        */
@@ -98,7 +98,7 @@ CAMLprim value caml_natdynlink_open(value filename, value global)
 
   sym = caml_dlsym(dlhandle, "caml_plugin_header");
   if (NULL == sym)
-    caml_failwith("not an OCaml plugin");
+    caml_failwith("not an travlang plugin");
 
   handle = Val_handle(dlhandle);
   header = caml_input_value_from_block(sym, INT_MAX);

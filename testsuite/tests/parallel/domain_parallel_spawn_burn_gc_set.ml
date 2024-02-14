@@ -15,7 +15,7 @@ let rec set_gc l =
       set_gc (l + 1)
 
 let test_size =
-  try int_of_string (Sys.getenv "OCAML_TEST_SIZE")
+  try int_of_string (Sys.getenv "travlang_TEST_SIZE")
   with Not_found | Failure _ -> 0
 
 let (list_size, num_domains, niters) =

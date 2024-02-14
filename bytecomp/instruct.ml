@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -124,5 +124,5 @@ let immed_min = -0x40000000
 and immed_max = 0x3FFFFFFF
 
 (* Actually the abstract machine accommodates -0x80000000 to 0x7FFFFFFF,
-   but these numbers overflow the OCaml type int if the compiler runs on
+   but these numbers overflow the travlang type int if the compiler runs on
    a 32-bit processor. *)

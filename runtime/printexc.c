@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           */
 /*                                                                        */
@@ -109,7 +109,7 @@ CAMLexport char * caml_format_exception(value exn)
 #  define DEBUGGER_IN_USE caml_debugger_in_use
 #endif
 
-/* Default C implementation in case the OCaml one is not registered. */
+/* Default C implementation in case the travlang one is not registered. */
 static void default_fatal_uncaught_exception(value exn)
 {
   char * msg;

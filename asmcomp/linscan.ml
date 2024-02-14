@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*                    Marcell Fischbach, University of Siegen             *)
 (*                     Benedikt Meurer, University of Siegen              *)

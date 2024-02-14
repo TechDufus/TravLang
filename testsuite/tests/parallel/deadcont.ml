@@ -3,7 +3,7 @@
 (*
   Test handling of continuations created by a domain that has since terminated.
   Bug report and testcase by Ziga Luksic, see:
-    https://github.com/ocamllabs/ocaml-multicore/issues/175
+    https://github.com/travlanglabs/travlang-multicore/issues/175
  *)
 
 open Effect

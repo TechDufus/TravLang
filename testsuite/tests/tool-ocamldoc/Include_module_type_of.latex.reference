@@ -4,7 +4,7 @@
 \usepackage{textcomp}
 \usepackage{fullpage} 
 \usepackage{url} 
-\usepackage{ocamldoc}
+\usepackage{travlangdoc}
 \begin{document}
 \tableofcontents
 \section{Module {\tt{Include\_module\_type\_of}} : Test {\tt{include module type of...}} variants}
@@ -13,78 +13,78 @@
 
 
 
-\ocamldocvspace{0.5cm}
+\travlangdocvspace{0.5cm}
 
 
 
-\begin{ocamldoccode}
-{\tt{module }}{\tt{A}}{\tt{ : }}\end{ocamldoccode}
+\begin{travlangdoccode}
+{\tt{module }}{\tt{A}}{\tt{ : }}\end{travlangdoccode}
 \label{Include-underscoremodule-underscoretype-underscoreof.A}\index{A@\verb`A`}
 
-\begin{ocamldocsigend}
+\begin{travlangdocsigend}
 
 
-\label{TYPInclude-underscoremodule-underscoretype-underscoreof.A.t}\begin{ocamldoccode}
+\label{TYPInclude-underscoremodule-underscoretype-underscoreof.A.t}\begin{travlangdoccode}
 type t 
-\end{ocamldoccode}
+\end{travlangdoccode}
 \index{t@\verb`t`}
-\end{ocamldocsigend}
+\end{travlangdocsigend}
 
 
 
 
 
 
-\begin{ocamldoccode}
-{\tt{module }}{\tt{M}}{\tt{ : }}\end{ocamldoccode}
+\begin{travlangdoccode}
+{\tt{module }}{\tt{M}}{\tt{ : }}\end{travlangdoccode}
 \label{Include-underscoremodule-underscoretype-underscoreof.M}\index{M@\verb`M`}
 
-\begin{ocamldocsigend}
+\begin{travlangdocsigend}
 
 
 A module M
 
-\begin{ocamldoccode}
-{\tt{module }}{\tt{Inner}}{\tt{ : }}\end{ocamldoccode}
+\begin{travlangdoccode}
+{\tt{module }}{\tt{Inner}}{\tt{ : }}\end{travlangdoccode}
 \label{Include-underscoremodule-underscoretype-underscoreof.M.Inner}\index{Inner@\verb`Inner`}
-\begin{ocamldocsigend}
+\begin{travlangdocsigend}
 
 
-\label{TYPInclude-underscoremodule-underscoretype-underscoreof.M.Inner.t}\begin{ocamldoccode}
+\label{TYPInclude-underscoremodule-underscoretype-underscoreof.M.Inner.t}\begin{travlangdoccode}
 type t 
-\end{ocamldoccode}
+\end{travlangdoccode}
 \index{t@\verb`t`}
-\end{ocamldocsigend}
+\end{travlangdocsigend}
 
 
 
 
-\begin{ocamldoccode}
-{\tt{module }}{\tt{Alias}}{\tt{ : }}\end{ocamldoccode}
+\begin{travlangdoccode}
+{\tt{module }}{\tt{Alias}}{\tt{ : }}\end{travlangdoccode}
 \label{Include-underscoremodule-underscoretype-underscoreof.M.Alias}\index{Alias@\verb`Alias`}
 {\tt{Include\_module\_type\_of.A}}
 
 
 
-\label{TYPInclude-underscoremodule-underscoretype-underscoreof.M.t}\begin{ocamldoccode}
+\label{TYPInclude-underscoremodule-underscoretype-underscoreof.M.t}\begin{travlangdoccode}
 type t 
-\end{ocamldoccode}
+\end{travlangdoccode}
 \index{t@\verb`t`}
-\end{ocamldocsigend}
+\end{travlangdocsigend}
 
 
 
 
 
 
-\begin{ocamldoccode}
-{\tt{module }}{\tt{B}}{\tt{ : }}\end{ocamldoccode}
+\begin{travlangdoccode}
+{\tt{module }}{\tt{B}}{\tt{ : }}\end{travlangdoccode}
 \label{Include-underscoremodule-underscoretype-underscoreof.B}\index{B@\verb`B`}
 
-\begin{ocamldocsigend}
+\begin{travlangdocsigend}
 
 
-{\tt{include }}{\tt{Include\_module\_type\_of.M}}\end{ocamldocsigend}
+{\tt{include }}{\tt{Include\_module\_type\_of.M}}\end{travlangdocsigend}
 
 
 

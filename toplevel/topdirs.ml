@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -137,7 +137,7 @@ let dir_load ppf name =
 let _ = add_directive "load" (Directive_string (with_error_fmt dir_load))
     {
       section = section_run;
-      doc = "Load in memory a bytecode object, produced by ocamlc.";
+      doc = "Load in memory a bytecode object, produced by travlangc.";
     }
 
 let dir_load_rec ppf name =

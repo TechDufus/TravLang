@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           */
 /*                                                                        */
@@ -104,7 +104,7 @@ CAMLexport void caml_Store_double_val(value val, double dbl)
 #endif
 
 /*
- OCaml runtime itself doesn't call setlocale, i.e. it is using
+ travlang runtime itself doesn't call setlocale, i.e. it is using
  standard "C" locale by default, but it is possible that
  third-party code loaded into process does.
 */

@@ -1,11 +1,11 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
-/*               Sadiq Jaffer, OCaml Labs Consultancy Ltd                 */
+/*               Sadiq Jaffer, travlang Labs Consultancy Ltd                 */
 /*               Xavier Leroy, projet Cambium, INRIA Paris                */
 /*                                                                        */
-/*   Copyright 2021 OCaml Labs Consultancy Ltd                            */
+/*   Copyright 2021 travlang Labs Consultancy Ltd                            */
 /*   Copyright 2020 Institut National de Recherche en Informatique et     */
 /*     en Automatique.                                                    */
 /*                                                                        */

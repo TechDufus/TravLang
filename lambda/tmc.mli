@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Frédéric Bour                                              *)
 (*             Gabriel Scherer, projet Partout, INRIA Saclay              *)

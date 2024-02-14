@@ -2,34 +2,34 @@
  readonly_files = "test_functor.ml test_loc_modtype_type_eq.ml \
    test_loc_modtype_type_subst.ml test_loc_type_eq.ml test_loc_type_subst.ml \
    mpr7852.mli";
- setup-ocamlc.byte-build-env;
+ setup-travlangc.byte-build-env;
  {
    module = "test_functor.ml";
-   ocamlc.byte;
+   travlangc.byte;
  }{
    module = "test_loc_type_eq.ml";
-   ocamlc_byte_exit_status = "2";
-   ocamlc.byte;
+   travlangc_byte_exit_status = "2";
+   travlangc.byte;
  }{
    module = "test_loc_modtype_type_eq.ml";
-   ocamlc_byte_exit_status = "2";
-   ocamlc.byte;
+   travlangc_byte_exit_status = "2";
+   travlangc.byte;
  }{
    module = "test_loc_type_subst.ml";
-   ocamlc_byte_exit_status = "2";
-   ocamlc.byte;
+   travlangc_byte_exit_status = "2";
+   travlangc.byte;
  }{
    module = "test_loc_modtype_type_subst.ml";
-   ocamlc_byte_exit_status = "2";
-   ocamlc.byte;
+   travlangc_byte_exit_status = "2";
+   travlangc.byte;
  }{
-   check-ocamlc.byte-output;
+   check-travlangc.byte-output;
  }{
    flags = "-w +32";
    module = "mpr7852.mli";
-   ocamlc_byte_exit_status = "0";
-   ocamlc.byte;
+   travlangc_byte_exit_status = "0";
+   travlangc.byte;
  }{
-   check-ocamlc.byte-output;
+   check-travlangc.byte-output;
  }
 *)

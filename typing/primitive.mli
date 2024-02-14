@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -20,7 +20,7 @@ type boxed_integer = Pnativeint | Pint32 | Pint64
 (* Representation of arguments/result for the native code version
    of a primitive *)
 type native_repr =
-  | Same_as_ocaml_repr
+  | Same_as_travlang_repr
   | Unboxed_float
   | Unboxed_integer of boxed_integer
   | Untagged_immediate

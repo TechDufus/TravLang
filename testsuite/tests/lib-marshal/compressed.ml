@@ -1,5 +1,5 @@
 (* TEST
-   include ocamlcommon;
+   include travlangcommon;
 *)
 
 (* Test for compressed marshaling / unmarshaling *)

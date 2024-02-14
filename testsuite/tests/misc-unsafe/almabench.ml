@@ -4,7 +4,7 @@
 
 (*
  * ALMABENCH 1.0.1
- *      OCaml     version
+ *      travlang     version
  *
  *     A number-crunching benchmark designed for cross-language and vendor
  *     comparisons.

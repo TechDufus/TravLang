@@ -12,7 +12,7 @@
 (* Test for output_value / input_value *)
 
 let test_size =
-  try int_of_string (Sys.getenv "OCAML_TEST_SIZE")
+  try int_of_string (Sys.getenv "travlang_TEST_SIZE")
   with Not_found | Failure _ -> 1
 
 let num_domains = 1 lsl test_size

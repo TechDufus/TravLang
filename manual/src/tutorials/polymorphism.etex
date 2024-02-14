@@ -7,7 +7,7 @@
 
 \noindent This chapter covers more advanced questions related to the
 limitations of polymorphic functions and types. There are some situations
-in OCaml where the type inferred by the type checker may be less generic
+in travlang where the type inferred by the type checker may be less generic
 than expected. Such non-genericity can stem either from interactions
 between side-effects and typing or the difficulties of implicit polymorphic
 recursion and higher-rank polymorphism.
@@ -41,7 +41,7 @@ another_store ;;
 After storing an "int" inside "another_store", the type of "another_store" has
 been updated from "'_weak2 option ref" to "int option ref".
 This distinction between weakly and generic polymorphic type variable protects
-OCaml programs from unsoundness and runtime errors. To understand from where
+travlang programs from unsoundness and runtime errors. To understand from where
 unsoundness might come, consider this simple function which swaps a value "x"
 with the value stored inside a "store" reference, if there is such value:
 \begin{caml_example}{toplevel}
@@ -272,7 +272,7 @@ We then recover polymorphism:
 
 The second major class of non-genericity is directly related to the problem
 of type inference for polymorphic functions. In some circumstances, the type
-inferred by OCaml might be not general enough to allow the definition of
+inferred by travlang might be not general enough to allow the definition of
 some recursive functions, in particular for recursive functions acting on
 non-regular algebraic data types.
 
@@ -444,17 +444,17 @@ that f is polymorphic in its first argument. In some sense, we would want
 \begin{verbatim}
 val average: ('a. 'a nested -> int) -> 'a nested -> 'b nested -> int
 \end{verbatim}
-Note that this syntax is not valid within OCaml: "average" has an universally
+Note that this syntax is not valid within travlang: "average" has an universally
 quantified type "'a" inside the type of one of its argument whereas for
 polymorphic recursion the universally quantified type was introduced before
 the rest of the type. This position of the universally quantified type means
 that "average" is a second-rank polymorphic function. This kind of higher-rank
-functions is not directly supported by OCaml: type inference for second-rank
+functions is not directly supported by travlang: type inference for second-rank
 polymorphic function and beyond is undecidable; therefore using this kind of
 higher-rank functions requires to handle manually these universally quantified
 types.
 
-In OCaml, there are two ways to introduce this kind of explicit universally
+In travlang, there are two ways to introduce this kind of explicit universally
 quantified types: universally quantified record fields,
 \begin{caml_example}{toplevel}
   type 'a nested_reduction = { f:'elt. 'elt nested -> 'a };;

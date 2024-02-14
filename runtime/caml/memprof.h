@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*            Jacques-Henri Jourdan, projet Gallium, INRIA Paris          */
 /*                                                                        */

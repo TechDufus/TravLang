@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Maxence Guesdon, projet Cristal, INRIA Rocquencourt        *)
 (*                                                                        *)
@@ -139,13 +139,13 @@ let alert_of_attribute attr =
     | _ -> None
   in
   match attr.attr_name.txt with
-  | "deprecated" | "ocaml.deprecated" ->
+  | "deprecated" | "travlang.deprecated" ->
       Some
         {
           alert_name = "deprecated";
           alert_payload = deprecated_payload attr.attr_payload;
         }
-  | "alert" | "ocaml.alert" -> (
+  | "alert" | "travlang.alert" -> (
       match alert_payload attr.attr_payload with
       | Some (alert_name, alert_payload) -> Some { alert_name; alert_payload }
       | None -> None)

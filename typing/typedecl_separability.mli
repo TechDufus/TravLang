@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*   Gabriel Scherer, projet Parsifal, INRIA Saclay                       *)
 (*   Rodolphe Lepigre, projet Deducteam, INRIA Saclay                     *)
@@ -14,7 +14,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-(** The OCaml runtime assumes for type-directed optimizations that all types
+(** The travlang runtime assumes for type-directed optimizations that all types
     are "separable". A type is "separable" if either all its inhabitants
     (the values of this type) are floating-point numbers, or none of them are.
 

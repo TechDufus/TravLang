@@ -1,8 +1,8 @@
 (* TEST
  {
-   ocamldoc with html;
+   travlangdoc with html;
  }{
-   ocamldoc with latex;
+   travlangdoc with latex;
  }
 *)
 

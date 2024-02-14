@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Maxence Guesdon, projet Cristal, INRIA Rocquencourt        *)
 (*                                                                        *)
@@ -15,7 +15,7 @@
 
 (** Global variables. *)
 
-(* Tell ocaml compiler not to generate files. *)
+(* Tell travlang compiler not to generate files. *)
 let _ = Clflags.dont_write_files := true
 
 type source_file =

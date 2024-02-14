@@ -4,7 +4,7 @@
 *)
 
 (* This is currently just a regression test for the bug
-   reported here: https://github.com/ocaml/ocaml/issues/9828 *)
+   reported here: https://github.com/travlang/travlang/issues/9828 *)
 
 #show list;;
 [%%expect {|

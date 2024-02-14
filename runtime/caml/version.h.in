@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*             Sebastien Hinderer, projet Cambium, INRIA Paris            */
 /*                                                                        */
@@ -13,12 +13,12 @@
 /*                                                                        */
 /**************************************************************************/
 
-/* Macros defining the current version of OCaml */
+/* Macros defining the current version of travlang */
 
-#undef OCAML_VERSION_MAJOR
-#undef OCAML_VERSION_MINOR
-#undef OCAML_VERSION_PATCHLEVEL
-#undef OCAML_VERSION_ADDITIONAL
-#undef OCAML_VERSION_EXTRA
-#undef OCAML_VERSION
-#undef OCAML_VERSION_STRING
+#undef travlang_VERSION_MAJOR
+#undef travlang_VERSION_MINOR
+#undef travlang_VERSION_PATCHLEVEL
+#undef travlang_VERSION_ADDITIONAL
+#undef travlang_VERSION_EXTRA
+#undef travlang_VERSION
+#undef travlang_VERSION_STRING

@@ -4,42 +4,42 @@
  libraries = "";
  shared-libraries;
  {
-   setup-ocamlc.byte-build-env;
+   setup-travlangc.byte-build-env;
    {
      module = "test7_interface_only.mli";
-     ocamlc.byte;
+     travlangc.byte;
    }{
      module = "test7_main.ml";
-     ocamlc.byte;
+     travlangc.byte;
    }{
      module = "test7_plugin.ml";
-     ocamlc.byte;
+     travlangc.byte;
    }{
      program = "${test_build_directory}/test7.byte";
      libraries = "dynlink";
      all_modules = "test7_main.cmo";
-     ocamlc.byte;
+     travlangc.byte;
      run;
    }
  }{
    native-dynlink;
-   setup-ocamlopt.byte-build-env;
+   setup-travlangopt.byte-build-env;
    {
      module = "test7_interface_only.mli";
-     ocamlopt.byte;
+     travlangopt.byte;
    }{
      module = "test7_main.ml";
-     ocamlopt.byte;
+     travlangopt.byte;
    }{
      program = "test7_plugin.cmxs";
      flags = "-shared";
      all_modules = "test7_plugin.ml";
-     ocamlopt.byte;
+     travlangopt.byte;
    }{
      program = "${test_build_directory}/test7.exe";
      libraries = "dynlink";
      all_modules = "test7_main.cmx";
-     ocamlopt.byte;
+     travlangopt.byte;
      run;
    }
  }

@@ -2,7 +2,7 @@
  expect;
 *)
 
-(* Ignore OCAMLRUNPARAM=b to be reproducible *)
+(* Ignore travlangRUNPARAM=b to be reproducible *)
 Printexc.record_backtrace false;;
 [%%expect {|
 - : unit = ()

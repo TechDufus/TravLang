@@ -1,7 +1,7 @@
 # 2 "asmcomp/power/proc.ml"
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -240,7 +240,7 @@ let stack_ptr_dwarf_register_number = 1
 (* Registers destroyed by operations *)
 
 (* For direct C calls, all caller-save registers are destroyed,
-   plus GPR28 because it is used to save the OCaml stack pointer. *)
+   plus GPR28 because it is used to save the travlang stack pointer. *)
 let destroyed_at_c_call =
   Array.of_list(List.map phys_reg
     [0; 1; 2; 3; 4; 5; 6; 7; 22;

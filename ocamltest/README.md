@@ -1,15 +1,15 @@
 # Introduction
 
-This documents how to run the OCaml compiler test suite. To learn how to
-write tests using ocamltest, read [OCAMLTEST.org](./OCAMLTEST.org).
+This documents how to run the travlang compiler test suite. To learn how to
+write tests using travlangtest, read [travlangTEST.org](./travlangTEST.org).
 
 ## Context
 
-The testsuite of the OCaml compiler consists of a series of programs
+The testsuite of the travlang compiler consists of a series of programs
 that are compiled and executed. The output of their compilation and
 execution is compared to expected outputs.
 
-Before the introduction of ocamltest, the tests were driven by a set of
+Before the introduction of travlangtest, the tests were driven by a set of
 makefiles which were responsible for compiling and running the test
 programs, and verifying that the compilation and execution outputs were
 matching the expected ones.
@@ -22,12 +22,12 @@ determine exactly how this test was supposed to be compiled and run.
 
 ## Purpose
 
-The ocamltest tool has been introduced to replace most of the makefiles
+The travlangtest tool has been introduced to replace most of the makefiles
 logic. It takes a test program as its input and derives from annotations
 stored as a special comment at the beginning of the program the exact
 way to compile and run it. Thus the test-specific metadata are stored in
 the test file itself and clearly separated from the machinery required
-to perform the actual tasks, which is centralized in the ocamltest tool.
+to perform the actual tasks, which is centralized in the travlangtest tool.
 
 ## Constraints
 
@@ -36,27 +36,27 @@ compiler in its target language. There are, however, parts of the
 compiler and the standard library that are already tested in a way,
 namely those used to compile the compiler itself. Therefore, these
 components can be considered more trustworthy than those that have not
-yet been used and that's why ocamltest relies only on the part of the
+yet been used and that's why travlangtest relies only on the part of the
 standard library that has been used to develop the compiler itself.
 
 This excludes for instance the use of the Unix and Str libraries.
 
 # Initial set-up
 
-ocamltest needs to know two things:
+travlangtest needs to know two things:
 
-1. Where the sources of the OCaml compiler to test are located. This is
-determined while OCaml is built. The default location can be overridden
-by defining the `OCAMLSRCDIR` environment variable.
+1. Where the sources of the travlang compiler to test are located. This is
+determined while travlang is built. The default location can be overridden
+by defining the `travlangSRCDIR` environment variable.
 
 2. Which directory to use to build tests. The default value for this is
-`"ocamltest"` under `Filename.get_temp_dir_name()`. This value can be
-overridden by defining the `OCAMLTESTDIR` environment variable.
+`"travlangtest"` under `Filename.get_temp_dir_name()`. This value can be
+overridden by defining the `travlangTESTDIR` environment variable.
 
 # Running tests
 
 (all the commands below are assumed to be run from
-`OCAMLSRCDIR/testsuite`)
+`travlangSRCDIR/testsuite`)
 
 From here, one can:
 
@@ -64,7 +64,7 @@ From here, one can:
 
 This runs the complete testsuite. This includes the "legacy" tests that
 still use the makefile-based infrastructure and the "new" tests that
-have been migrated to use ocamltest.
+have been migrated to use travlangtest.
 
 ## Run legacy tests: `make legacy`
 
@@ -72,29 +72,29 @@ have been migrated to use ocamltest.
 
 ## Run tests manually
 
-It is convenient to have the following ocamltest script in a directory
+It is convenient to have the following travlangtest script in a directory
 appearing in `PATH`, like `~/bin`:
 
 ```sh
 #!/bin/sh
-TERM=dumb OCAMLRUNPARAM= /path/to/ocaml/sources/ocamltest/ocamltest $*
+TERM=dumb travlangRUNPARAM= /path/to/travlang/sources/travlangtest/travlangtest $*
 ```
 
 Once this file has been made executable, one can for instance run:
 
 ```sh
-ocamltest tests/basic-io/wc.ml
+travlangtest tests/basic-io/wc.ml
 ```
 
-As can be seen, ocamltest's output looks similar to the legacy format.
+As can be seen, travlangtest's output looks similar to the legacy format.
 
 This is to make the transition between the makefile-based infrastructure
-and ocamltest as smooth as possible. Once all the tests will have been
-migrated to ocamltest, it will become possible to change this output
+and travlangtest as smooth as possible. Once all the tests will have been
+migrated to travlangtest, it will become possible to change this output
 format.
 
 The details of what exactly has been tested can be found in
-`${OCAMLTESTDIR}/tests/basic-io/wc/wc.log`
+`${travlangTESTDIR}/tests/basic-io/wc/wc.log`
 
 One can then examine `tests/basic-io/wc.ml` to see how the file had to
 be annotated to produce such a result.
@@ -103,13 +103,13 @@ Many other tests have already been migrated and it may be useful to see
 how the test files have been annotated. the command
 
 ```sh
-find tests -name '*ocamltests*' | xargs cat
+find tests -name '*travlangtests*' | xargs cat
 ```
 
 gives a list of tests that have been modified and can therefore be used
-as starting points to understand what ocamltest can do.
+as starting points to understand what travlangtest can do.
 
-# Migrating tests from makefiles to ocamltest
+# Migrating tests from makefiles to travlangtest
 
 It may be a good idea to run `make new` from the `testsuite` directory
 before starting to migrate tests. This will show how many "new" tests
@@ -118,7 +118,7 @@ there already are.
 Then, when running `make new` after migrating _n_ tests, the number of
 new tests reported by `make new` should have increased by _n_.
 
-OCaml's testsuite is divided into directories, each of them containing
+travlang's testsuite is divided into directories, each of them containing
 one or several tests, which can each consist of one or several files.
 
 Thus, the directory is the smallest unit that can be migrated.
@@ -153,7 +153,7 @@ make --trace DIR=tests/foo
 For each test, annotate its main file with a test block, i.e. a comment
 that looks like this:
 
-```ocaml
+```travlang
 (* TEST
   Optional variable assignments and tests
 *)
@@ -162,7 +162,7 @@ that looks like this:
 In particular, if the test's main file is foo.ml and the test uses
 modules `m1.ml` and `m2.ml`, the test block will look like this:
 
-```ocaml
+```travlang
 (* TEST
   modules = "m1.ml m2.ml";
 *)
@@ -171,7 +171,7 @@ modules `m1.ml` and `m2.ml`, the test block will look like this:
 And if the test consists of a single file `foo.ml` that needs to be run
 under the top-level, then its test block will look like this:
 
-```ocaml
+```travlang
 (* TEST
   toplevel;
 *)
@@ -182,7 +182,7 @@ of them contains "principal", then it means the file should be tested
 with the top-level, without and with the `-principal` option. This is
 expressed as follows:
 
-```ocaml
+```travlang
 (* TEST
   toplevel;
   include principal;
@@ -195,7 +195,7 @@ specified, then the tests that are enabled by default are used, namely
 to compile and run the test program in both bytecode and native code
 (roughly speaking).
 
-Once your test has been annotated, run `ocamltest` on it and see whether
+Once your test has been annotated, run `travlangtest` on it and see whether
 it passes or fails. If it fails, see the log file to understand why and
 make the necessary adjustments until all the tests pass.
 
@@ -206,14 +206,14 @@ Note that there are different types of reference files, those for
 compiler output and those for program output.
 
 To make sure the migration has been done correctly, you can compare the
-commands used to compile the programs in ocamltest's log file to those
+commands used to compile the programs in travlangtest's log file to those
 obtained with `make --trace`. Beware that the commands used to compare
-an obtained result to an expected one will not show up in ocamltest's
+an obtained result to an expected one will not show up in travlangtest's
 log file.
 
-Once this has been done for all tests, create a file called `ocamltests`
+Once this has been done for all tests, create a file called `travlangtests`
 (mark the final _s_!) with the names of all the files that have been
-annotated for ocamltest, one per line.
+annotated for travlangtest, one per line.
 
 Finally, `git rm` the Makefile and run `make new` from the testsuite
 directory to make sure the number of new tests has increased as

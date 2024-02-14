@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Frédéric Bour                                              *)
 (*             Gabriel Scherer, projet Partout, INRIA Saclay              *)
@@ -46,7 +46,7 @@ type 'offset destination = {
   loc : Debuginfo.Scoped_location.t;
 }
 and offset = Offset of lambda
-(** In the OCaml value model, interior pointers are not allowed.  To
+(** In the travlang value model, interior pointers are not allowed.  To
     represent the "placeholder to mutate" in DPS code, we thus use a pair
     of the block containing the placeholder, and the offset of the
     placeholder within the block.

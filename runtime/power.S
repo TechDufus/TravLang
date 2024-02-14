@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           */
 /*                                                                        */
@@ -108,9 +108,9 @@
 
 #define Far_tailcall(fn) Addrglobal(12, fn); mtctr 12; bctr
 
-/* Switch from OCaml stack to C stack */
+/* Switch from travlang stack to C stack */
 
-.macro SWITCH_OCAML_TO_C
+.macro SWITCH_travlang_TO_C
    /* Fill in Caml_state->current_stack->sp */
        ld      TMP, Caml_state(current_stack)
        std     SP, Stack_sp(TMP)
@@ -122,9 +122,9 @@
        mr      SP, TMP2
 .endm
 
-/* Switch from C stack to OCaml stack */
+/* Switch from C stack to travlang stack */
 
-.macro SWITCH_C_TO_OCAML
+.macro SWITCH_C_TO_travlang
        ld      SP, Cstack_sp(SP)
 .endm
 
@@ -257,12 +257,12 @@
 .endm
 
 .macro TSAN_ENTER_FUNCTION
-        SWITCH_OCAML_TO_C
+        SWITCH_travlang_TO_C
         TSAN_SETUP_C_CALL 0
         mr      3, 0            /* arg1: return address in caller */
         Far_call(__tsan_func_entry)
         TSAN_CLEANUP_AFTER_C_CALL 0
-        SWITCH_C_TO_OCAML
+        SWITCH_C_TO_travlang
 .endm
 
 /* This is similar to SAVE_ALL_REGS, but only saving the caller-saved
@@ -369,9 +369,9 @@ FUNCTION caml_call_realloc_stack
    /* Recover desired size, to be passed in r3 */
         mr      3, TMP2
    /* Switch stacks and call caml_try_realloc_stack */
-        SWITCH_OCAML_TO_C
+        SWITCH_travlang_TO_C
         Far_call(caml_try_realloc_stack)
-        SWITCH_C_TO_OCAML
+        SWITCH_C_TO_travlang
         cmpdi   3, 0
    /* Restore all registers, and also return address */
         RESTORE_ALL_REGS
@@ -395,9 +395,9 @@ FUNCTION caml_call_gc
    /* Save all registers, as well as ALLOC_PTR and TRAP_PTR */
         SAVE_ALL_REGS
    /* Switch stacks and call caml_garbage_collection */
-        SWITCH_OCAML_TO_C
+        SWITCH_travlang_TO_C
         Far_call(caml_garbage_collection)
-        SWITCH_C_TO_OCAML
+        SWITCH_C_TO_travlang
    /* Restore registers and return to caller */
         RESTORE_ALL_REGS
         ld      0, LR_SAVE(SP)
@@ -406,7 +406,7 @@ FUNCTION caml_call_gc
         blr
 ENDFUNCTION caml_call_gc
 
-/* Call a C function from OCaml.  Function to call is in C_CALL_FUN */
+/* Call a C function from travlang.  Function to call is in C_CALL_FUN */
 
 .macro RET_FROM_C_CALL
         ld      TMP, Caml_state(action_pending)
@@ -425,8 +425,8 @@ FUNCTION caml_c_call
    /* Save return address in caller's frame AND in a callee-save register */
         mflr    C_CALL_RET_ADDR
         std     C_CALL_RET_ADDR, LR_SAVE(SP)
-   /* Switch from OCaml to C */
-        SWITCH_OCAML_TO_C
+   /* Switch from travlang to C */
+        SWITCH_travlang_TO_C
    /* Make the exception handler and alloc ptr available to the C code */
         std     ALLOC_PTR, Caml_state(young_ptr)
         std     TRAP_PTR, Caml_state(exn_handler)
@@ -452,8 +452,8 @@ FUNCTION caml_c_call
         ld      3,  (RESERVED_STACK + 0)(SP)
         TSAN_CLEANUP_AFTER_C_CALL 16
 #endif
-    /* Switch from C to OCaml */
-        SWITCH_C_TO_OCAML
+    /* Switch from C to travlang */
+        SWITCH_C_TO_travlang
     /* Return to caller */
         RET_FROM_C_CALL
 ENDFUNCTION caml_c_call
@@ -465,14 +465,14 @@ FUNCTION caml_c_call_stack_args
    /* Save return address in caller's frame AND in a callee-save register */
         mflr    C_CALL_RET_ADDR
         std     C_CALL_RET_ADDR, LR_SAVE(SP)
-   /* Switch from OCaml to C */
-        SWITCH_OCAML_TO_C
+   /* Switch from travlang to C */
+        SWITCH_travlang_TO_C
    /* Make the exception handler and alloc ptr available to the C code */
         std     ALLOC_PTR, Caml_state(young_ptr)
         std     TRAP_PTR, Caml_state(exn_handler)
    /* Reserve STACK_ARG_BYTES bytes on the C stack */
         subfc   SP, STACK_ARG_BYTES, SP
-   /* Copy from OCaml SP + [32...32+STACK_ARG_BYTES)
+   /* Copy from travlang SP + [32...32+STACK_ARG_BYTES)
            to C SP + [32...32+STACK_ARG_BYTES) */
         addi    TMP, STACK_ARG_BYTES, 32 - 8
 1:      ldx     0, C_CALL_TMP, TMP
@@ -492,13 +492,13 @@ FUNCTION caml_c_call_stack_args
         mtlr    C_CALL_RET_ADDR
     /* Reload allocation pointer*/
         ld      ALLOC_PTR, Caml_state(young_ptr)
-    /* Switch from C to OCaml */
-        SWITCH_C_TO_OCAML
+    /* Switch from C to travlang */
+        SWITCH_C_TO_travlang
     /* Return to caller */
         RET_FROM_C_CALL
 ENDFUNCTION caml_c_call_stack_args
 
-/* Raise an exception from OCaml */
+/* Raise an exception from travlang */
 
 FUNCTION caml_raise_exn
 .Lcaml_raise_exn:
@@ -546,7 +546,7 @@ ENDFUNCTION caml_reraise_exn
 
 #if defined(WITH_THREAD_SANITIZER)
 /* When TSan support is enabled, this routine should be called just before
-   raising an exception. It calls __tsan_func_exit for every OCaml frame about
+   raising an exception. It calls __tsan_func_exit for every travlang frame about
    to be exited due to the exception.
    Takes no arguments, clobbers r3, r4, r5 and potentially all
    caller-saved registers of the C calling convention. */
@@ -554,11 +554,11 @@ FUNCTION caml_tsan_exit_on_raise_asm
         mflr    3               /* arg1: PC of raise */
         mr      4, SP           /* arg2: SP of raise */
         mr      5, TRAP_PTR     /* arg3: SP of handler */
-        SWITCH_OCAML_TO_C
+        SWITCH_travlang_TO_C
         TSAN_SETUP_C_CALL 0
         Far_call(caml_tsan_exit_on_raise)
         TSAN_CLEANUP_AFTER_C_CALL 0
-        SWITCH_C_TO_OCAML
+        SWITCH_C_TO_travlang
         blr
 ENDFUNCTION caml_tsan_exit_on_raise_asm
 #endif
@@ -573,17 +573,17 @@ FUNCTION caml_raise_exception
     /* Reload allocation pointer and exception pointer */
         ld      ALLOC_PTR, Caml_state(young_ptr)
         ld      TRAP_PTR, Caml_state(exn_handler)
-    /* Discard the C stack pointer and switch to OCaml stack */
+    /* Discard the C stack pointer and switch to travlang stack */
         ld      TMP, Caml_state(current_stack)
         ld      SP, Stack_sp(TMP)
     /* Reload return address from caller's frame (for the backtrace) */
         ld      0, LR_SAVE(SP)
         mtlr    0
 #if defined(WITH_THREAD_SANITIZER)
-    /* Call __tsan_func_exit for every OCaml stack frame exited due to the
+    /* Call __tsan_func_exit for every travlang stack frame exited due to the
        exception */
         mr      4, SP           /* arg2: SP of raise */
-        SWITCH_OCAML_TO_C
+        SWITCH_travlang_TO_C
         TSAN_SETUP_C_CALL 16
         std     3, (RESERVED_STACK + 0)(SP) /* preserve exception bucket */
         mr      3, 0            /* arg1: PC of raise */
@@ -591,18 +591,18 @@ FUNCTION caml_raise_exception
         Far_call(caml_tsan_exit_on_raise)
         ld      3,  (RESERVED_STACK + 0)(SP)
         TSAN_CLEANUP_AFTER_C_CALL 16
-        SWITCH_C_TO_OCAML
+        SWITCH_C_TO_travlang
 #endif
     /* Raise the exception */
         b       .Lcaml_raise_exn
 ENDFUNCTION caml_raise_exception
 
-/* Start the OCaml program */
+/* Start the travlang program */
 
 FUNCTION caml_start_program
 #if defined(WITH_THREAD_SANITIZER)
   /* We can't use the TSAN_ENTER_FUNCTION macro, as it assumes to run on an
-     OCaml stack, and we are still on a C stack at this point. Moreover, we
+     travlang stack, and we are still on a C stack at this point. Moreover, we
      need to save r3 on the stack. */
         TSAN_SETUP_C_CALL 16
         std     3, (RESERVED_STACK + 0)(SP)
@@ -678,7 +678,7 @@ FUNCTION caml_start_program
         ld      0, Caml_state(c_stack)
         std     0, Cstack_prev(SP)
         std     SP, Caml_state(c_stack)
-    /* Load the OCaml stack */
+    /* Load the travlang stack */
         ld      TMP, Caml_state(current_stack)
         ld      TMP, Stack_sp(TMP)
     /* Store the gc_regs for callbacks during a GC */
@@ -686,16 +686,16 @@ FUNCTION caml_start_program
         stdu    0, -8(TMP)
     /* Store the stack pointer to allow DWARF unwind (one day) */
         stdu    SP, -8(TMP)
-    /* Setup a trap frame to catch exceptions escaping the OCaml code */
+    /* Setup a trap frame to catch exceptions escaping the travlang code */
         addi    TMP, TMP, -TRAP_SIZE
         ld      0, Caml_state(exn_handler)
         std     0, TRAP_PREVIOUS_OFFSET(TMP)
         Addrlabel(0,trap_handler)
         std     0, TRAP_HANDLER_OFFSET(TMP)
         mr      TRAP_PTR, TMP
-    /* Switch stacks, reserving 32 bytes at the bottom of the OCaml stack */
+    /* Switch stacks, reserving 32 bytes at the bottom of the travlang stack */
         addi    SP, TMP, -RESERVED_STACK
-    /* Call the OCaml code (address in START_PRG_ARG) */
+    /* Call the travlang code (address in START_PRG_ARG) */
         mtctr   START_PRG_ARG
 .Lcaml_retaddr:
         bctrl
@@ -785,7 +785,7 @@ FUNCTION caml_start_program
 #undef STACKSIZE
 ENDFUNCTION caml_start_program
 
-/* Callback from C to OCaml */
+/* Callback from C to travlang */
 
 FUNCTION caml_callback_asm
 #if defined(WITH_THREAD_SANITIZER)
@@ -862,13 +862,13 @@ ENDFUNCTION caml_callback3_asm
 
 /* Fibers */
 
-/* Switch between OCaml stacks. Clobbers register 0 and switches TRAP_PTR.
+/* Switch between travlang stacks. Clobbers register 0 and switches TRAP_PTR.
    Preserves old_stack and new_stack registers */
-.macro SWITCH_OCAML_STACKS old_stack, new_stack
+.macro SWITCH_travlang_STACKS old_stack, new_stack
     /* Save return address for old_stack */
         mflr    0
         std     0, LR_SAVE(SP)
-    /* Save OCaml SP and exn_handler in the stack info */
+    /* Save travlang SP and exn_handler in the stack info */
         std     SP, Stack_sp(\old_stack)
         std     TRAP_PTR, Stack_exception(\old_stack)
     /* switch stacks */
@@ -904,11 +904,11 @@ FUNCTION caml_perform
         TSAN_SAVE_CALLER_REGS
         mflr    3        /* arg1: PC of perform */
         mr      4, SP    /* arg2: SP of perform */
-        SWITCH_OCAML_TO_C
+        SWITCH_travlang_TO_C
         TSAN_SETUP_C_CALL 0
         Far_call(caml_tsan_exit_on_perform)
         TSAN_CLEANUP_AFTER_C_CALL 0
-        SWITCH_C_TO_OCAML
+        SWITCH_C_TO_travlang
         TSAN_RESTORE_CALLER_REGS
 #endif
         ld      7, Stack_handler(5)  /* r7 := old stack -> handler */
@@ -916,7 +916,7 @@ FUNCTION caml_perform
         cmpdi   8, 0
         beq     1f
 #if defined(WITH_THREAD_SANITIZER)
-        SWITCH_OCAML_TO_C
+        SWITCH_travlang_TO_C
         TSAN_SETUP_C_CALL 48
     /* Save non-callee-saved registers r3 to r8 */
         std     3, (RESERVED_STACK + 0)(SP)
@@ -935,9 +935,9 @@ FUNCTION caml_perform
         ld      4, (RESERVED_STACK + 8)(SP)
         ld      3, (RESERVED_STACK + 0)(SP)
         TSAN_CLEANUP_AFTER_C_CALL 48
-        SWITCH_C_TO_OCAML
+        SWITCH_C_TO_travlang
 #endif
-        SWITCH_OCAML_STACKS 5, 8
+        SWITCH_travlang_STACKS 5, 8
   /* We have to null the Handler_parent after the switch because
      the Handler_parent is needed to unwind the stack for backtraces */
         li      0, 0
@@ -954,7 +954,7 @@ FUNCTION caml_perform
         ld      10, 0(4) /* r10 := performer stack (loaded from continuation) */
         addi    10, 10, -1 /* r10 := Ptr_val(r10) */
         ld      9, Caml_state(current_stack)
-        SWITCH_OCAML_STACKS 9, 10
+        SWITCH_travlang_STACKS 9, 10
   /* No parent stack. Raise Effect.Unhandled. */
 #if defined(WITH_THREAD_SANITIZER)
         /* We must let the TSan runtime know that we switched back to the
@@ -967,14 +967,14 @@ FUNCTION caml_perform
         mflr    3       /* arg1: PC of perform */
         mr      4, SP   /* arg2: SP of perform */
         mr      5, 10   /* arg3: performer stack */
-        SWITCH_OCAML_TO_C
+        SWITCH_travlang_TO_C
         TSAN_SETUP_C_CALL 0
         Far_call(caml_tsan_entry_on_resume)
         /* invoke __tsan_func_entry without shuffling stacks */
         ld      3, LR_SAVE(SP)
         Far_call(__tsan_func_entry)
         TSAN_CLEANUP_AFTER_C_CALL 0
-        SWITCH_C_TO_OCAML
+        SWITCH_C_TO_travlang
         TSAN_RESTORE_CALLER_REGS
 #endif
         Addrglobal(C_CALL_FUN, caml_raise_unhandled_effect)
@@ -1006,7 +1006,7 @@ FUNCTION caml_resume
         beq     1f
 #if defined(WITH_THREAD_SANITIZER)
         TSAN_SAVE_CALLER_REGS
-        SWITCH_OCAML_TO_C
+        SWITCH_travlang_TO_C
         TSAN_SETUP_C_CALL 16
         std     3, (RESERVED_STACK + 0)(SP)
     /* Necessary to include the caller of caml_resume in the TSan backtrace */
@@ -1019,7 +1019,7 @@ FUNCTION caml_resume
         ld      3, LR_SAVE(4)   /* arg1: PC of perform */
         Far_call(caml_tsan_entry_on_resume)
         TSAN_CLEANUP_AFTER_C_CALL 16
-        SWITCH_C_TO_OCAML
+        SWITCH_C_TO_travlang
         TSAN_RESTORE_CALLER_REGS
     /* Restore r12 and ctr */
         ld      12, 0(4) /* r12 = code pointer */
@@ -1031,7 +1031,7 @@ FUNCTION caml_resume
         ld      8, Caml_state(current_stack)
         std     8, Handler_parent(7)
     /* Switch stacks and run code */
-        SWITCH_OCAML_STACKS 8, 3
+        SWITCH_travlang_STACKS 8, 3
         mr      3, 5
         bctr
 1:      TSAN_ENTER_FUNCTION /* needed since we skip caml_c_call entry */
@@ -1043,7 +1043,7 @@ ENDFUNCTION caml_resume
    return the value or invoke exception handler */
 FUNCTION caml_runstack
 #if defined(WITH_THREAD_SANITIZER)
-        SWITCH_OCAML_TO_C
+        SWITCH_travlang_TO_C
         TSAN_SETUP_C_CALL 32
     /* Save non-callee-saved registers r3, r4 and r5 */
         std     3, (RESERVED_STACK + 0)(SP)
@@ -1056,7 +1056,7 @@ FUNCTION caml_runstack
         ld      4, (RESERVED_STACK + 8)(SP)
         ld      3, (RESERVED_STACK + 0)(SP)
         TSAN_CLEANUP_AFTER_C_CALL 32
-        SWITCH_C_TO_OCAML
+        SWITCH_C_TO_travlang
 #endif
   /* r3: fiber
      r4: fun
@@ -1114,15 +1114,15 @@ FUNCTION caml_runstack
         ld      SP, Caml_state(c_stack)
         Far_call(caml_free_stack)
     /* switch directly to parent stack */
-        mr      SP, 27 /* OCaml stack */
+        mr      SP, 27 /* travlang stack */
 #if defined(WITH_THREAD_SANITIZER)
     /* Signal to TSan that we exit caml_runstack (no registers to save here) */
         li      3, 0
-        SWITCH_OCAML_TO_C
+        SWITCH_travlang_TO_C
         TSAN_SETUP_C_CALL 0
         Far_call(__tsan_func_exit)
         TSAN_CLEANUP_AFTER_C_CALL 0
-        SWITCH_C_TO_OCAML
+        SWITCH_C_TO_travlang
 #endif
     /* pick correct return */
         mr      3, 26  /* return value */

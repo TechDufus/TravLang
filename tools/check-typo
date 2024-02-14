@@ -2,7 +2,7 @@
 
 #**************************************************************************
 #*                                                                        *
-#*                                 OCaml                                  *
+#*                                 travlang                                  *
 #*                                                                        *
 #*           Damien Doligez, projet Gallium, INRIA Rocquencourt           *
 #*                                                                        *
@@ -15,7 +15,7 @@
 #*                                                                        *
 #**************************************************************************
 
-# check-typo - Check typographic conventions on OCaml sources.
+# check-typo - Check typographic conventions on travlang sources.
 
 # This program will check files for the following rules:
 
@@ -71,14 +71,14 @@
 # First prevent i18n from messing up everything.
 export LC_ALL=C
 
-OCAML_CT_CAT=${OCAML_CT_CAT:-cat}
-OCAML_CT_LS_FILES=${OCAML_CT_LS_FILES:-git ls-files}
-OCAML_CT_HEAD=${OCAML_CT_HEAD:-HEAD}
-OCAML_CT_AWK=${OCAML_CT_AWK:-awk}
-if [ -z "${OCAML_CT_GIT_INDEX+x}" ] ; then
-  OCAML_CT_GIT_INDEX=
+travlang_CT_CAT=${travlang_CT_CAT:-cat}
+travlang_CT_LS_FILES=${travlang_CT_LS_FILES:-git ls-files}
+travlang_CT_HEAD=${travlang_CT_HEAD:-HEAD}
+travlang_CT_AWK=${travlang_CT_AWK:-awk}
+if [ -z "${travlang_CT_GIT_INDEX+x}" ] ; then
+  travlang_CT_GIT_INDEX=
 else
-  OCAML_CT_GIT_INDEX="GIT_INDEX_FILE=$OCAML_CT_GIT_INDEX"
+  travlang_CT_GIT_INDEX="GIT_INDEX_FILE=$travlang_CT_GIT_INDEX"
 fi
 
 # The output of processing the attributes should be whitespace-separated with
@@ -93,7 +93,7 @@ fi
 #   typo.very-long-line: false
 # should result in "long-line missing-header?"
 get_attrs() {
-  env $OCAML_CT_GIT_INDEX git check-attr --all $OCAML_CT_CA_FLAG "$1" \
+  env $travlang_CT_GIT_INDEX git check-attr --all $travlang_CT_CA_FLAG "$1" \
   | grep -o " typo\\..*$" | sed "s/ typo\\.//g" \
   | grep -v ": unset" | grep -v ": false" \
   | sed "s/: set//g" | sed "s/: true//g" | sed "s/: may/?/g"
@@ -101,7 +101,7 @@ get_attrs() {
 
 # empty if the path is *not* pruned
 check_prune() {
-  env $OCAML_CT_GIT_INDEX git check-attr typo.prune $OCAML_CT_CA_FLAG "$1" \
+  env $travlang_CT_GIT_INDEX git check-attr typo.prune $travlang_CT_CA_FLAG "$1" \
   | grep -v ': unspecified$' | grep -v ': false$'
 }
 
@@ -135,13 +135,13 @@ usage () {
 }
 
 check_script () {
-  if [ "$($OCAML_CT_CAT "$OCAML_CT_PREFIX$1" \
+  if [ "$($travlang_CT_CAT "$travlang_CT_PREFIX$1" \
             | sed -ne '1s/^#!.*/#!/p')" != '#!' ] ; then
     # These files are listed manually, rather than via gitattributes,
     # because the list should never expand, and it should not be trivial to
     # expand (the unix-execvpe test is an ultra-special-case!)
     f=${1#./}
-    if [ "$f" != "boot/ocamlc" ] && [ "$f" != "boot/ocamllex" ] && \
+    if [ "$f" != "boot/travlangc" ] && [ "$f" != "boot/travlanglex" ] && \
        [ "$f" != "testsuite/tests/lib-unix/unix-execvpe/subdir/script2" ] ; then
       echo "$1 shouldn't be executable; either:"
       echo " - Add a #! line"
@@ -175,9 +175,9 @@ IGNORE_DIRS="
 # out in the middle) than to first check then run.
 
 TEST_AWK='BEGIN {if ("a{1}" ~ /a{1}$/) exit 1}'
-if ! $OCAML_CT_AWK "$TEST_AWK" ; then
-  if $OCAML_CT_AWK --re-interval "$TEST_AWK" 2>/dev/null ; then
-    OCAML_CT_AWK="$OCAML_CT_AWK --re-interval"
+if ! $travlang_CT_AWK "$TEST_AWK" ; then
+  if $travlang_CT_AWK --re-interval "$TEST_AWK" 2>/dev/null ; then
+    travlang_CT_AWK="$travlang_CT_AWK --re-interval"
   else
     echo "This script requires interval support in regexes ({m} notation)">&2
     echo "Please install a version of awk (e.g. gawk) which supports this">&2
@@ -194,7 +194,7 @@ EXIT_CODE=0
   while read f; do
     if test -n "$(check_prune "$f")"; then continue; fi
     if $(git check-ignore -q "$f"); then continue; fi
-    case `$OCAML_CT_LS_FILES "$f" 2>&1` in
+    case `$travlang_CT_LS_FILES "$f" 2>&1` in
       "") path_in_index=false;;
       *) path_in_index=true;;
     esac
@@ -203,7 +203,7 @@ EXIT_CODE=0
       *) is_cmd_line=false;;
     esac
     if $path_in_index || $is_cmd_line; then :; else continue; fi
-    if [ -z "$OCAML_CT_PREFIX" ] ; then
+    if [ -z "$travlang_CT_PREFIX" ] ; then
       if [ -x "$f" ] ; then
         check_script "$f"
       fi
@@ -226,7 +226,7 @@ EXIT_CODE=0
       #    the documentation for the --numstat option. Commands designated as
       #    "plumbing" commands in git have stable output intended for parsing)
       EMPTY=`git hash-object -t tree /dev/null`
-      git diff-tree --numstat $EMPTY $OCAML_CT_HEAD -- "$f" \
+      git diff-tree --numstat $EMPTY $travlang_CT_HEAD -- "$f" \
         | grep -q "^-[[:blank:]]-" && continue
       attr_rules=$(get_attrs "$f")
     fi
@@ -242,15 +242,15 @@ EXIT_CODE=0
         # requires the entire line to match. This specifically detects the
         # presence of lines containing malformed UTF-8. It may be tested using
         # https://www.cl.cam.ac.uk/~mgk25/ucs/examples/UTF-8-test.txt
-        if $OCAML_CT_CAT "$OCAML_CT_PREFIX$f" \
+        if $travlang_CT_CAT "$travlang_CT_PREFIX$f" \
              | LC_ALL=en_US.UTF8 grep -qaxv '.*' ; then
           echo "File \"$f\" is not correctly encoded in UTF-8"
           exit 2
         fi
     fi
     if ! \
-    ($OCAML_CT_CAT "$OCAML_CT_PREFIX$f" | tr -d '\r'; echo) \
-    | $OCAML_CT_AWK -v rules="$rules" -v attr_rules="$attr_rules" -v file="$f" \
+    ($travlang_CT_CAT "$travlang_CT_PREFIX$f" | tr -d '\r'; echo) \
+    | $travlang_CT_AWK -v rules="$rules" -v attr_rules="$attr_rules" -v file="$f" \
       '
         function is_err(name) {
           return ((rules attr_rules) !~ (" " name "[\\? ]"));
@@ -458,7 +458,7 @@ EXIT_CODE=0
                       { state = "(authors)"; }
         state == "blank2" && $0 ~ /\* {72}\*/ { state = "authors"; }
         state == "blank2" { state = "(blank line 2)"; }
-        state == "title" && $0 ~ /\* {33}OCaml {34}\*/ { state = "blank2"; }
+        state == "title" && $0 ~ /\* {33}travlang {34}\*/ { state = "blank2"; }
         state == "title" { state = "(title line)"; }
         state == "blank1" && $0 ~ /\* {72}\*/ { state = "title"; }
         state == "blank1" { state = "(blank line 1)"; }

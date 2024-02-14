@@ -4,27 +4,27 @@
  subdirectories = "host plugin1 plugin2 plugin3 plugin4";
  shared-libraries;
  {
-   setup-ocamlc.byte-build-env;
+   setup-travlangc.byte-build-env;
    {
      cwd = "plugin1";
      cd;
    }{
      module = "api.mli";
-     ocamlc.byte;
+     travlangc.byte;
    }{
      flags = "-for-pack Packed";
      module = "api.ml";
-     ocamlc.byte;
+     travlangc.byte;
    }{
      program = "packed.cmo";
      flags = "-pack";
      all_modules = "api.cmo";
-     ocamlc.byte;
+     travlangc.byte;
    }{
      program = "plugin.cma";
      flags = "-a";
      all_modules = "plugin.ml";
-     ocamlc.byte;
+     travlangc.byte;
    }{
      cwd = "..";
      cd;
@@ -33,21 +33,21 @@
      cd;
    }{
      module = "api.mli";
-     ocamlc.byte;
+     travlangc.byte;
    }{
      flags = "-for-pack Packed";
      module = "api.ml";
-     ocamlc.byte;
+     travlangc.byte;
    }{
      program = "packed.cmo";
      flags = "-pack";
      all_modules = "api.cmo";
-     ocamlc.byte;
+     travlangc.byte;
    }{
      program = "plugin.cma";
      flags = "-a";
      all_modules = "plugin.ml";
-     ocamlc.byte;
+     travlangc.byte;
    }{
      cwd = "..";
      cd;
@@ -56,21 +56,21 @@
      cd;
    }{
      module = "api.mli";
-     ocamlc.byte;
+     travlangc.byte;
    }{
      flags = "-for-pack Packed";
      module = "api.ml";
-     ocamlc.byte;
+     travlangc.byte;
    }{
      program = "packed.cmo";
      flags = "-pack";
      all_modules = "api.cmo";
-     ocamlc.byte;
+     travlangc.byte;
    }{
      program = "plugin.cma";
      flags = "-a";
      all_modules = "packed.cmo plugin.ml";
-     ocamlc.byte;
+     travlangc.byte;
    }{
      cwd = "..";
      cd;
@@ -79,21 +79,21 @@
      cd;
    }{
      module = "api.mli";
-     ocamlc.byte;
+     travlangc.byte;
    }{
      flags = "-for-pack Packed";
      module = "api.ml";
-     ocamlc.byte;
+     travlangc.byte;
    }{
      program = "packed.cmo";
      flags = "-pack";
      all_modules = "api.cmo";
-     ocamlc.byte;
+     travlangc.byte;
    }{
      program = "plugin.cma";
      flags = "-a";
      all_modules = "packed.cmo plugin.ml";
-     ocamlc.byte;
+     travlangc.byte;
    }{
      cwd = "..";
      cd;
@@ -102,21 +102,21 @@
      cd;
    }{
      module = "api.mli";
-     ocamlc.byte;
+     travlangc.byte;
    }{
      flags = "-for-pack Packed";
      module = "api.ml";
-     ocamlc.byte;
+     travlangc.byte;
    }{
      program = "packed.cmo";
      flags = "-pack";
      all_modules = "api.cmo";
-     ocamlc.byte;
+     travlangc.byte;
    }{
      program = "./host.byt";
      libraries = "dynlink";
      all_modules = "packed.cmo host.ml";
-     ocamlc.byte;
+     travlangc.byte;
      {
        arguments = "../plugin1/plugin.cma";
        output = "byte.plugin1.result";
@@ -149,27 +149,27 @@
  }{
    native-dynlink;
    {
-     setup-ocamlopt.byte-build-env;
+     setup-travlangopt.byte-build-env;
      {
        cwd = "plugin1";
        cd;
      }{
        module = "api.mli";
-       ocamlopt.byte;
+       travlangopt.byte;
      }{
        flags = "-for-pack Packed";
        module = "api.ml";
-       ocamlopt.byte;
+       travlangopt.byte;
      }{
        program = "packed.cmx";
        flags = "-pack";
        all_modules = "api.cmx";
-       ocamlopt.byte;
+       travlangopt.byte;
      }{
        program = "plugin.cmxs";
        flags = "-shared";
        all_modules = "plugin.ml";
-       ocamlopt.byte;
+       travlangopt.byte;
      }{
        cwd = "..";
        cd;
@@ -178,21 +178,21 @@
        cd;
      }{
        module = "api.mli";
-       ocamlopt.byte;
+       travlangopt.byte;
      }{
        flags = "-for-pack Packed";
        module = "api.ml";
-       ocamlopt.byte;
+       travlangopt.byte;
      }{
        program = "packed.cmx";
        flags = "-pack";
        all_modules = "api.cmx";
-       ocamlopt.byte;
+       travlangopt.byte;
      }{
        program = "plugin.cmxs";
        flags = "-shared";
        all_modules = "plugin.ml";
-       ocamlopt.byte;
+       travlangopt.byte;
      }
    }{
      cwd = "..";
@@ -202,21 +202,21 @@
        cd;
      }{
        module = "api.mli";
-       ocamlopt.byte;
+       travlangopt.byte;
      }{
        flags = "-for-pack Packed";
        module = "api.ml";
-       ocamlopt.byte;
+       travlangopt.byte;
      }{
        program = "packed.cmx";
        flags = "-pack";
        all_modules = "api.cmx";
-       ocamlopt.byte;
+       travlangopt.byte;
      }{
        program = "plugin.cmxs";
        flags = "-shared";
        all_modules = "packed.cmx plugin.ml";
-       ocamlopt.byte;
+       travlangopt.byte;
      }{
        cwd = "..";
        cd;
@@ -225,21 +225,21 @@
        cd;
      }{
        module = "api.mli";
-       ocamlopt.byte;
+       travlangopt.byte;
      }{
        flags = "-for-pack Packed";
        module = "api.ml";
-       ocamlopt.byte;
+       travlangopt.byte;
      }{
        program = "packed.cmx";
        flags = "-pack";
        all_modules = "api.cmx";
-       ocamlopt.byte;
+       travlangopt.byte;
      }{
        program = "plugin.cmxs";
        flags = "-shared";
        all_modules = "packed.cmx plugin.ml";
-       ocamlopt.byte;
+       travlangopt.byte;
      }{
        cwd = "..";
        cd;
@@ -248,21 +248,21 @@
        cd;
      }{
        module = "api.mli";
-       ocamlopt.byte;
+       travlangopt.byte;
      }{
        flags = "-for-pack Packed";
        module = "api.ml";
-       ocamlopt.byte;
+       travlangopt.byte;
      }{
        program = "packed.cmx";
        flags = "-pack";
        all_modules = "api.cmx";
-       ocamlopt.byte;
+       travlangopt.byte;
      }{
        program = "./host.exe";
        libraries = "dynlink";
        all_modules = "packed.cmx host.ml";
-       ocamlopt.byte;
+       travlangopt.byte;
        {
          arguments = "../plugin1/plugin.cmxs";
          output = "native.plugin1.result";

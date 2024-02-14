@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*         Mehdi Dogguy, PPS laboratory, University Paris Diderot         *)
@@ -314,7 +314,7 @@ let exit_magic_msg msg =
       this tool only supports object files produced by compiler version\n\
       \t%s\n\
       %s"
-    Sys.ocaml_version msg
+    Sys.travlang_version msg
 
 let exit_magic_error ~expected_kind err =
   exit_magic_msg Magic_number.(match err with

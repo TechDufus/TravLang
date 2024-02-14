@@ -1,11 +1,11 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
-(*                       Pierre Chambart, OCamlPro                        *)
+(*                       Pierre Chambart, travlangPro                        *)
 (*           Mark Shinwell and Leo White, Jane Street Europe              *)
 (*                                                                        *)
-(*   Copyright 2013--2016 OCamlPro SAS                                    *)
+(*   Copyright 2013--2016 travlangPro SAS                                    *)
 (*   Copyright 2014--2016 Jane Street Group LLC                           *)
 (*                                                                        *)
 (*   All rights reserved.  This file is distributed under the terms of    *)
@@ -14,7 +14,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-[@@@ocaml.warning "+a-4-9-30-40-41-42"]
+[@@@travlang.warning "+a-4-9-30-40-41-42"]
 
 (** Intermediate language used for tree-based analysis and optimization. *)
 
@@ -189,7 +189,7 @@ and let_mutable = {
     (see above).  Given a closure, not only can it be applied, but information
     about its defining environment can be retrieved (using [Project_var],
     see above).
-    At runtime, a [set_of_closures] corresponds to an OCaml value with tag
+    At runtime, a [set_of_closures] corresponds to an travlang value with tag
     [Closure_tag] (possibly with inline [Infix_tag](s)).  As an optimization,
     an operation ([Move_within_set_of_closures]) is provided (see above)
     which enables one closure within a set to be located given another

@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -62,7 +62,7 @@ let use_file ppf ~wrap_in_module ~modpath ~filepath ~filename =
   use_lexbuf ppf ~wrap_in_module lexbuf ~modpath ~filename
 
 let use_output ppf command =
-  let fn = Filename.temp_file "ocaml" "_toploop.ml" in
+  let fn = Filename.temp_file "travlang" "_toploop.ml" in
   Misc.try_finally ~always:(fun () ->
       try Sys.remove fn with Sys_error _ -> ())
     (fun () ->
@@ -131,12 +131,12 @@ let run_script ppf name args =
   use_silently ppf explicit_name
 
 (* Toplevel initialization. Performed here instead of at the
-   beginning of loop() so that user code linked in with ocamlmktop
+   beginning of loop() so that user code linked in with travlangmktop
    can call directives from Topdirs. *)
 let _ =
   if !Sys.interactive then (* PR#6108 *)
-    invalid_arg "The ocamltoplevel.cma library from compiler-libs \
-                 cannot be loaded inside the OCaml toplevel";
+    invalid_arg "The travlangtoplevel.cma library from compiler-libs \
+                 cannot be loaded inside the travlang toplevel";
   Sys.interactive := true;
   Topeval.init ()
 
@@ -191,11 +191,11 @@ let split_path =
 
 external windows_xdg_defaults : unit -> string list = "caml_xdg_defaults"
 
-let find_ocamlinit () =
-  let ocamlinit = ".ocamlinit" in
-  (* 1. .ocamlinit in the current directory *)
-  if Sys.file_exists ocamlinit then Some ocamlinit else
-  let init_ml = Filename.concat "ocaml" "init.ml" in
+let find_travlanginit () =
+  let travlanginit = ".travlanginit" in
+  (* 1. .travlanginit in the current directory *)
+  if Sys.file_exists travlanginit then Some travlanginit else
+  let init_ml = Filename.concat "travlang" "init.ml" in
   let getenv var = match Sys.getenv_opt var with Some "" -> None | v -> v in
   let is_absolute = Fun.negate Filename.is_relative in
   let exists_in_dir ~file dir =
@@ -204,7 +204,7 @@ let find_ocamlinit () =
   in
   let home_dir () = getenv "HOME" in
   let windows_xdg_defaults = Lazy.from_fun windows_xdg_defaults in
-  (* 2. ocaml/init.ml under $XDG_CONFIG_HOME (or $HOME/.config on Unix, if
+  (* 2. travlang/init.ml under $XDG_CONFIG_HOME (or $HOME/.config on Unix, if
         $XDG_CONFIG_HOME is unset, empty or not an absolute path) *)
   let check_xdg_config_home () =
     match getenv "XDG_CONFIG_HOME" with
@@ -223,7 +223,7 @@ let find_ocamlinit () =
         in
         Option.bind default (exists_in_dir ~file:init_ml)
   in
-  (* 3. ocaml/init.ml under any of $XDG_CONFIG_DIRS (or /etc/xdg on Unix, or
+  (* 3. travlang/init.ml under any of $XDG_CONFIG_DIRS (or /etc/xdg on Unix, or
         %LOCALAPPDATA%, %APPDATA%, %PROGRAMDATA% on Windows) *)
   let check_xdg_config_dirs () =
     let dirs_from_env =
@@ -236,7 +236,7 @@ let find_ocamlinit () =
         if Sys.win32 then
           (* There's a non-zero chance that a user of Cygwin, etc. sets
              XDG_CONFIG_HOME for their Cygwin installation and then starts
-             native Windows `ocaml.exe` from within that installation. In this
+             native Windows `travlang.exe` from within that installation. In this
              scenario, XDG_CONFIG_HOME is very unlikely to be a valid path (as
              Cygwin won't have translated it from Unix notation). To mitigate
              this, the default value we take for XDG_CONFIG_DIRS on Windows
@@ -251,23 +251,23 @@ let find_ocamlinit () =
     in
     List.find_map (exists_in_dir ~file:init_ml) search
   in
-  (* 4. .ocamlinit in $HOME *)
+  (* 4. .travlanginit in $HOME *)
   let check_home () =
-    Option.bind (home_dir ()) (exists_in_dir ~file:ocamlinit)
+    Option.bind (home_dir ()) (exists_in_dir ~file:travlanginit)
   in
   List.find_map (fun f -> f ())
                 [check_xdg_config_home;
                  check_xdg_config_dirs;
                  check_home]
 
-let load_ocamlinit ppf =
+let load_travlanginit ppf =
   if !Clflags.noinit then ()
   else match !Clflags.init_file with
   | Some f ->
     if Sys.file_exists f then ignore (use_silently ppf (File f) )
     else fprintf ppf "Init file not found: \"%s\".@." f
   | None ->
-      match find_ocamlinit () with
+      match find_travlanginit () with
       | None -> ()
       | Some file -> ignore (use_silently ppf (File file))
 
@@ -384,7 +384,7 @@ let loop ppf =
   Clflags.debug := true;
   Location.formatter_for_warnings := ppf;
   if not !Clflags.noversion then
-    fprintf ppf "OCaml version %s%s%s@.Enter %a for help.@.@."
+    fprintf ppf "travlang version %s%s%s@.Enter %a for help.@.@."
       Config.version
       (if Topeval.implementation_label = "" then "" else " - ")
       Topeval.implementation_label
@@ -396,7 +396,7 @@ let loop ppf =
   Location.input_phrase_buffer := Some phrase_buffer;
   Sys.catch_break true;
   run_hooks After_setup;
-  load_ocamlinit ppf;
+  load_travlanginit ppf;
   while true do
     let snap = ref (Btype.snapshot ()) in
     try

@@ -1,4 +1,4 @@
-The patch below removes the 'sinh' primitive from the OCaml runtime
+The patch below removes the 'sinh' primitive from the travlang runtime
 and standard library.
 
 It is used on Inria's CI to make sure the bootstrap procedure works.

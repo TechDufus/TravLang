@@ -3,28 +3,28 @@
  hasunix;
  {
    program = "${test_build_directory}/test_unix_cmdline.byte";
-   setup-ocamlc.byte-build-env;
+   setup-travlangc.byte-build-env;
    program = "${test_build_directory}/cmdline_prog.exe";
    all_modules = "cmdline_prog.ml";
-   ocamlc.byte;
+   travlangc.byte;
    include unix;
    program = "${test_build_directory}/test_unix_cmdline.byte";
    all_modules = "test_unix_cmdline.ml";
-   ocamlc.byte;
-   check-ocamlc.byte-output;
+   travlangc.byte;
+   check-travlangc.byte-output;
    run;
    check-program-output;
  }{
    program = "${test_build_directory}/test_unix_cmdline.opt";
-   setup-ocamlopt.byte-build-env;
+   setup-travlangopt.byte-build-env;
    program = "${test_build_directory}/cmdline_prog.exe";
    all_modules = "cmdline_prog.ml";
-   ocamlc.byte;
+   travlangc.byte;
    include unix;
    program = "${test_build_directory}/test_unix_cmdline.opt";
    all_modules = "test_unix_cmdline.ml";
-   ocamlopt.byte;
-   check-ocamlopt.byte-output;
+   travlangopt.byte;
+   check-travlangopt.byte-output;
    run;
    check-program-output;
  }

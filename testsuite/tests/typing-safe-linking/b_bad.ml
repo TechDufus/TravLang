@@ -19,12 +19,12 @@ let () = f A.y
 
 (* TEST
  readonly_files = "a.ml";
- setup-ocamlc.byte-build-env;
+ setup-travlangc.byte-build-env;
  module = "a.ml";
- ocamlc.byte;
+ travlangc.byte;
  module = "b_bad.ml";
  flags = "-warn-error +8";
- ocamlc_byte_exit_status = "2";
- ocamlc.byte;
- check-ocamlc.byte-output;
+ travlangc_byte_exit_status = "2";
+ travlangc.byte;
+ check-travlangc.byte-output;
 *)

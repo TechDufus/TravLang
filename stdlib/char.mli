@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -26,7 +26,7 @@ val chr : int -> char
 val escaped : char -> string
 (** Return a string representing the given character,
     with special characters escaped following the lexical conventions
-    of OCaml.
+    of travlang.
     All characters outside the ASCII printable range (32..126) are
     escaped, as well as backslash, double-quote, and single-quote. *)
 

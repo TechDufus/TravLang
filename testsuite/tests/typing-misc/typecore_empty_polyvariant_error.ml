@@ -1,11 +1,11 @@
 (* TEST
  readonly_files = "empty_ppx.ml";
- setup-ocamlc.byte-build-env;
+ setup-travlangc.byte-build-env;
  all_modules = "empty_ppx.ml";
  program = "ppx.exe";
- ocamlc.byte with ocamlcommon;
+ travlangc.byte with travlangcommon;
  all_modules = "${test_file}";
- flags = "-ppx '${ocamlrun} ${test_build_directory_prefix}/ocamlc.byte/ppx.exe'";
+ flags = "-ppx '${travlangrun} ${test_build_directory_prefix}/travlangc.byte/ppx.exe'";
  toplevel;
 *)
 

@@ -1,15 +1,15 @@
 (* TEST
- setup-ocamlc.byte-build-env;
+ setup-travlangc.byte-build-env;
  flags = "-dlambda -dno-unique-ids";
- ocamlc.byte;
+ travlangc.byte;
  {
    flat-float-array;
    compiler_reference = "${test_source_directory}/module_coercion.compilers.flat.reference";
-   check-ocamlc.byte-output;
+   check-travlangc.byte-output;
  }{
    no-flat-float-array;
    compiler_reference = "${test_source_directory}/module_coercion.compilers.no-flat.reference";
-   check-ocamlc.byte-output;
+   check-travlangc.byte-output;
  }
 *)
 

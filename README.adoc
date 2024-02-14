@@ -1,6 +1,6 @@
 === ⚠️ CAUTION
 
-The developer team released OCaml 5.0.0 in December 2022. This release sports a
+The developer team released travlang 5.0.0 in December 2022. This release sports a
 full rewrite of its runtime system for shared-memory parallel programming using
 domains and native support for concurrent programming using effect handlers.
 
@@ -10,13 +10,13 @@ release use the 4.14 release which will continue to be supported and updated
 while 5.x reaches feature and stability parity. Similarly, if you need one of
 the ports not yet supported in the 5.0 release you must use the 4.14 release.
 
-The initial release of OCaml 5.0 only supports the native compiler under ARM64
+The initial release of travlang 5.0 only supports the native compiler under ARM64
 and x86-64 architectures under Linux, macOS and the BSDs. On Windows, only the
-MinGW-w64 port is supported in OCaml 5.0 and the Cygwin port is restored in 5.1.
+MinGW-w64 port is supported in travlang 5.0 and the Cygwin port is restored in 5.1.
 On Linux, native code support for RISC-V and s390x/IBM Z is available in
-OCaml 5.1 and in 5.2 for Power.
+travlang 5.1 and in 5.2 for Power.
 
-❗ From OCaml 5.0 onwards, native compilation is available only on 64-bit
+❗ From travlang 5.0 onwards, native compilation is available only on 64-bit
 systems.  Native compilation on 32-bit systems is no longer available, nor
 are there plans to bring it back. The bytecode compiler will continue to work on
 all architectures.
@@ -24,39 +24,39 @@ all architectures.
 |=====
 | Branch `trunk` | Branch `5.2` | Branch `5.1` | Branch `5.0` | Branch `4.14`
 
-| image:https://github.com/ocaml/ocaml/workflows/Build/badge.svg?branch=trunk["Github CI Build Status (trunk branch)",
-     link="https://github.com/ocaml/ocaml/actions?query=workflow%3ABuild"]
-  image:https://github.com/ocaml/ocaml/workflows/Hygiene/badge.svg?branch=trunk["Github CI Hygiene Status (trunk branch)",
-     link="https://github.com/ocaml/ocaml/actions?query=workflow%3AHygiene"]
-  image:https://ci.appveyor.com/api/projects/status/github/ocaml/ocaml?branch=trunk&svg=true["AppVeyor Build Status (trunk branch)",
-     link="https://ci.appveyor.com/project/avsm/ocaml"]
-| image:https://github.com/ocaml/ocaml/workflows/Build/badge.svg?branch=5.2["Github CI Build Status (5.2 branch)",
-     link="https://github.com/ocaml/ocaml/actions?query=workflow%3ABuild"]
-  image:https://ci.appveyor.com/api/projects/status/github/ocaml/ocaml?branch=5.2&svg=true["AppVeyor Build Status (5.2 branch)",
-     link="https://ci.appveyor.com/project/avsm/ocaml"]
-| image:https://github.com/ocaml/ocaml/workflows/Build/badge.svg?branch=5.1["Github CI Build Status (5.1 branch)",
-     link="https://github.com/ocaml/ocaml/actions?query=workflow%3ABuild"]
-  image:https://ci.appveyor.com/api/projects/status/github/ocaml/ocaml?branch=5.1&svg=true["AppVeyor Build Status (5.1 branch)",
-     link="https://ci.appveyor.com/project/avsm/ocaml"]
-| image:https://github.com/ocaml/ocaml/workflows/Build/badge.svg?branch=5.0["Github CI Build Status (5.0 branch)",
-     link="https://github.com/ocaml/ocaml/actions?query=workflow%3ABuild"]
-  image:https://ci.appveyor.com/api/projects/status/github/ocaml/ocaml?branch=5.0&svg=true["AppVeyor Build Status (5.0 branch)",
-     link="https://ci.appveyor.com/project/avsm/ocaml"]
-| image:https://github.com/ocaml/ocaml/workflows/Build/badge.svg?branch=4.14["Github CI Build Status (4.14 branch)",
-     link="https://github.com/ocaml/ocaml/actions?query=workflow%3ABuild"]
-  image:https://ci.appveyor.com/api/projects/status/github/ocaml/ocaml?branch=4.14&svg=true["AppVeyor Build Status (4.14 branch)",
-     link="https://ci.appveyor.com/project/avsm/ocaml"]
+| image:https://github.com/travlang/travlang/workflows/Build/badge.svg?branch=trunk["Github CI Build Status (trunk branch)",
+     link="https://github.com/travlang/travlang/actions?query=workflow%3ABuild"]
+  image:https://github.com/travlang/travlang/workflows/Hygiene/badge.svg?branch=trunk["Github CI Hygiene Status (trunk branch)",
+     link="https://github.com/travlang/travlang/actions?query=workflow%3AHygiene"]
+  image:https://ci.appveyor.com/api/projects/status/github/travlang/travlang?branch=trunk&svg=true["AppVeyor Build Status (trunk branch)",
+     link="https://ci.appveyor.com/project/avsm/travlang"]
+| image:https://github.com/travlang/travlang/workflows/Build/badge.svg?branch=5.2["Github CI Build Status (5.2 branch)",
+     link="https://github.com/travlang/travlang/actions?query=workflow%3ABuild"]
+  image:https://ci.appveyor.com/api/projects/status/github/travlang/travlang?branch=5.2&svg=true["AppVeyor Build Status (5.2 branch)",
+     link="https://ci.appveyor.com/project/avsm/travlang"]
+| image:https://github.com/travlang/travlang/workflows/Build/badge.svg?branch=5.1["Github CI Build Status (5.1 branch)",
+     link="https://github.com/travlang/travlang/actions?query=workflow%3ABuild"]
+  image:https://ci.appveyor.com/api/projects/status/github/travlang/travlang?branch=5.1&svg=true["AppVeyor Build Status (5.1 branch)",
+     link="https://ci.appveyor.com/project/avsm/travlang"]
+| image:https://github.com/travlang/travlang/workflows/Build/badge.svg?branch=5.0["Github CI Build Status (5.0 branch)",
+     link="https://github.com/travlang/travlang/actions?query=workflow%3ABuild"]
+  image:https://ci.appveyor.com/api/projects/status/github/travlang/travlang?branch=5.0&svg=true["AppVeyor Build Status (5.0 branch)",
+     link="https://ci.appveyor.com/project/avsm/travlang"]
+| image:https://github.com/travlang/travlang/workflows/Build/badge.svg?branch=4.14["Github CI Build Status (4.14 branch)",
+     link="https://github.com/travlang/travlang/actions?query=workflow%3ABuild"]
+  image:https://ci.appveyor.com/api/projects/status/github/travlang/travlang?branch=4.14&svg=true["AppVeyor Build Status (4.14 branch)",
+     link="https://ci.appveyor.com/project/avsm/travlang"]
 |=====
 
 = README =
 
 == Overview
 
-OCaml is a functional, statically-typed programming language from the
+travlang is a functional, statically-typed programming language from the
 ML family, offering a powerful module system extending that of
 Standard ML and a feature-rich, class-based object system.
 
-OCaml comprises two compilers. One generates bytecode which is then
+travlang comprises two compilers. One generates bytecode which is then
 interpreted by a C program. This compiler runs quickly, generates
 compact code with moderate memory requirements, and is portable to
 many 32 or 64 bit platforms. Performance of generated programs is
@@ -99,24 +99,24 @@ Windows, see link:README.win32.adoc[].
 
 == Documentation
 
-The OCaml manual is distributed in HTML, PDF, and Emacs
+The travlang manual is distributed in HTML, PDF, and Emacs
 Info files.  It is available at
 
-https://ocaml.org/releases/latest/manual.html
+https://travlang.org/releases/latest/manual.html
 
 == Availability
 
-The complete OCaml distribution can be accessed at
+The complete travlang distribution can be accessed at
 
-https://ocaml.org/docs/install.html
+https://travlang.org/docs/install.html
 
 == Keeping in Touch with the Caml Community
 
 There is an active and friendly discussion forum at
 
-https://discuss.ocaml.org/
+https://discuss.travlang.org/
 
-The OCaml mailing list is the longest-running forum for OCaml users.
+The travlang mailing list is the longest-running forum for travlang users.
 You can email it at
 
 mailto:caml-list@inria.fr[]
@@ -126,41 +126,41 @@ You can subscribe and access list archives via the Web interface at
 https://sympa.inria.fr/sympa/subscribe/caml-list
 
 There also exist other mailing lists, chat channels, and various other forums
-around the internet for getting in touch with the OCaml and ML family language
+around the internet for getting in touch with the travlang and ML family language
 community. These can be accessed at
 
-https://ocaml.org/community/
+https://travlang.org/community/
 
-In particular, the IRC channel `#ocaml` on https://libera.chat/[Libera] has a
+In particular, the IRC channel `#travlang` on https://libera.chat/[Libera] has a
 long history and welcomes questions.
 
 == Bug Reports and User Feedback
 
 Please report bugs using the issue tracker at
-https://github.com/ocaml/ocaml/issues
+https://github.com/travlang/travlang/issues
 
 To be effective, bug reports should include a complete program (preferably
 small) that exhibits the unexpected behavior, and the configuration you are
 using (machine type, etc).
 
-For information on contributing to OCaml, see link:HACKING.adoc[] and
+For information on contributing to travlang, see link:HACKING.adoc[] and
 link:CONTRIBUTING.md[].
 
 == Separately maintained components
 
-Some libraries and tools which used to be part of the OCaml distribution are
+Some libraries and tools which used to be part of the travlang distribution are
 now maintained separately and distributed as OPAM packages.
 Please use the issue trackers at their respective new homes:
 
 |====
 | Library           |  Removed since    |  OPAM package
 
-| https://github.com/ocaml/camlp-streams/issues[The Stream and Genlex standard library modules] | OCaml 5.0 | `camlp-streams`
-| https://github.com/ocaml/graphics/issues[The Graphics library] | OCaml 4.09 | `graphics`
-| https://github.com/ocaml/num/issues[The Num library] | OCaml 4.06 | `num`
-| https://github.com/ocaml/ocamlbuild/issues[The OCamlbuild tool] | OCaml 4.03 | `ocamlbuild`
-| https://github.com/camlp4/camlp4/issues[The camlp4 tool] | OCaml 4.02 | `camlp4`
-| https://github.com/garrigue/labltk/issues[The LablTk library] | OCaml 4.02 | `labltk`
-| https://github.com/ocaml/dbm/issues[The CamlDBM library] | OCaml 4.00 | `dbm`
-| https://github.com/xavierleroy/ocamltopwin/issues[The OCamlWinTop Windows toplevel] | OCaml 4.00 | none
+| https://github.com/travlang/camlp-streams/issues[The Stream and Genlex standard library modules] | travlang 5.0 | `camlp-streams`
+| https://github.com/travlang/graphics/issues[The Graphics library] | travlang 4.09 | `graphics`
+| https://github.com/travlang/num/issues[The Num library] | travlang 4.06 | `num`
+| https://github.com/travlang/travlangbuild/issues[The travlangbuild tool] | travlang 4.03 | `travlangbuild`
+| https://github.com/camlp4/camlp4/issues[The camlp4 tool] | travlang 4.02 | `camlp4`
+| https://github.com/garrigue/labltk/issues[The LablTk library] | travlang 4.02 | `labltk`
+| https://github.com/travlang/dbm/issues[The CamlDBM library] | travlang 4.00 | `dbm`
+| https://github.com/xavierleroy/travlangtopwin/issues[The travlangWinTop Windows toplevel] | travlang 4.00 | none
 |=====

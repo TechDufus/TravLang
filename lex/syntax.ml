@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*                                                                        *)
@@ -14,7 +14,7 @@
 (**************************************************************************)
 
 (* This apparently useless implementation file is in fact required
-   by the pa_ocamllex syntax extension *)
+   by the pa_travlanglex syntax extension *)
 
 (* The shallow abstract syntax *)
 

@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
 (*              Mark Shinwell and Leo White, Jane Street Europe           *)
@@ -59,7 +59,7 @@ module Bytecode = struct
   let init () =
     if !Sys.interactive then begin (* PR#6802 *)
       invalid_arg "The dynlink.cma library cannot be used \
-        inside the OCaml toplevel"
+        inside the travlang toplevel"
     end;
     default_crcs := Symtable.init_toplevel ();
     default_global_map := Symtable.current_state ()

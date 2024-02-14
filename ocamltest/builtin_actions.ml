@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*             Sebastien Hinderer, projet Gallium, INRIA Paris            *)
 (*                                                                        *)
@@ -15,7 +15,7 @@
 
 (* Definition of a few built-in actions *)
 
-open Ocamltest_stdlib
+open travlangtest_stdlib
 open Actions
 
 let reason_with_fallback env fallback =
@@ -70,35 +70,35 @@ let dumpenv = make
 let hasunix = make
   ~name:"hasunix"
   ~description:"Pass if the unix library is available"
-  (Actions_helpers.pass_or_skip (Ocamltest_config.libunix <> None)
+  (Actions_helpers.pass_or_skip (travlangtest_config.libunix <> None)
     "unix library available"
     "unix library not available")
 
 let libunix = make
   ~name:"libunix"
   ~description:"Pass if libunix is available"
-  (Actions_helpers.pass_or_skip (Ocamltest_config.libunix = Some true)
+  (Actions_helpers.pass_or_skip (travlangtest_config.libunix = Some true)
     "libunix available"
     "libunix not available")
 
 let libwin32unix = make
   ~name:"libwin32unix"
   ~description:"Pass if the win32 variant of the unix library is available"
-  (Actions_helpers.pass_or_skip (Ocamltest_config.libunix = Some false)
+  (Actions_helpers.pass_or_skip (travlangtest_config.libunix = Some false)
     "win32 variant of the unix library available"
     "win32 variant of the unix library not available")
 
 let hassysthreads = make
   ~name:"hassysthreads"
   ~description:"Pass if the systhreads library is available"
-  (Actions_helpers.pass_or_skip Ocamltest_config.systhreads
+  (Actions_helpers.pass_or_skip travlangtest_config.systhreads
     "systhreads library available"
     "systhreads library not available")
 
 let hasstr = make
   ~name:"hasstr"
   ~description:"Pass if the str library is available"
-  (Actions_helpers.pass_or_skip Ocamltest_config.str
+  (Actions_helpers.pass_or_skip travlangtest_config.str
     "str library available"
     "str library not available")
 
@@ -128,14 +128,14 @@ let is_bsd_system s =
 let bsd = make
   ~name:"bsd"
   ~description:"Pass if running on a BSD system"
-  (Actions_helpers.pass_or_skip (is_bsd_system Ocamltest_config.system)
+  (Actions_helpers.pass_or_skip (is_bsd_system travlangtest_config.system)
     "on a BSD system"
     "not on a BSD system")
 
 let not_bsd = make
   ~name:"not-bsd"
   ~description:"Pass if not running on a BSD system"
-  (Actions_helpers.pass_or_skip (not (is_bsd_system Ocamltest_config.system))
+  (Actions_helpers.pass_or_skip (not (is_bsd_system travlangtest_config.system))
     "not on a BSD system"
     "on a BSD system")
 
@@ -144,7 +144,7 @@ let macos_system = "macosx"
 let macos = make
   ~name:"macos"
   ~description:"Pass if running on a MacOS system"
-  (Actions_helpers.pass_or_skip (Ocamltest_config.system = macos_system)
+  (Actions_helpers.pass_or_skip (travlangtest_config.system = macos_system)
     "on a MacOS system"
     "not on a MacOS system")
 
@@ -165,63 +165,63 @@ let arch64 = make
 let arch_arm = make
   ~name:"arch_arm"
   ~description:"Pass if target is an ARM architecture"
-  (Actions_helpers.pass_or_skip (String.equal Ocamltest_config.arch "arm")
+  (Actions_helpers.pass_or_skip (String.equal travlangtest_config.arch "arm")
      "Target is ARM architecture"
      "Target is not ARM architecture")
 
 let arch_arm64 = make
   ~name:"arch_arm64"
   ~description:"Pass if target is an ARM64 architecture"
-  (Actions_helpers.pass_or_skip (String.equal Ocamltest_config.arch "arm64")
+  (Actions_helpers.pass_or_skip (String.equal travlangtest_config.arch "arm64")
      "Target is ARM64 architecture"
      "Target is not ARM64 architecture")
 
  let arch_amd64 = make
   ~name:"arch_amd64"
   ~description:"Pass if target is an AMD64 architecture"
-  (Actions_helpers.pass_or_skip (String.equal Ocamltest_config.arch "amd64")
+  (Actions_helpers.pass_or_skip (String.equal travlangtest_config.arch "amd64")
      "Target is AMD64 architecture"
      "Target is not AMD64 architecture")
 
  let arch_i386 = make
   ~name:"arch_i386"
   ~description:"Pass if target is an i386 architecture"
-  (Actions_helpers.pass_or_skip (String.equal Ocamltest_config.arch "i386")
+  (Actions_helpers.pass_or_skip (String.equal travlangtest_config.arch "i386")
      "Target is i386 architecture"
      "Target is not i386 architecture")
 
 let arch_power = make
   ~name:"arch_power"
   ~description:"Pass if target is a POWER architecture"
-  (Actions_helpers.pass_or_skip (String.equal Ocamltest_config.arch "power")
+  (Actions_helpers.pass_or_skip (String.equal travlangtest_config.arch "power")
     "Target is POWER architecture"
     "Target is not POWER architecture")
 
 let function_sections = make
   ~name:"function_sections"
   ~description:"Pass if target supports function sections"
-  (Actions_helpers.pass_or_skip (Ocamltest_config.function_sections)
+  (Actions_helpers.pass_or_skip (travlangtest_config.function_sections)
      "Target supports function sections"
      "Target does not support function sections")
 
 let frame_pointers = make
   ~name:"frame_pointers"
   ~description:"Pass if frame pointers are available"
-  (Actions_helpers.pass_or_skip (Ocamltest_config.frame_pointers)
+  (Actions_helpers.pass_or_skip (travlangtest_config.frame_pointers)
      "frame-pointers available"
      "frame-pointers not available")
 
 let tsan = make
   ~name:"tsan"
   ~description:"Pass if thread sanitizer is supported"
-  (Actions_helpers.pass_or_skip (Ocamltest_config.tsan)
+  (Actions_helpers.pass_or_skip (travlangtest_config.tsan)
      "tsan available"
      "tsan not available")
 
 let no_tsan = make
   ~name:"no-tsan"
   ~description:"Pass if thread sanitizer is not supported"
-  (Actions_helpers.pass_or_skip (not Ocamltest_config.tsan)
+  (Actions_helpers.pass_or_skip (not travlangtest_config.tsan)
      "tsan not available"
      "tsan available")
 

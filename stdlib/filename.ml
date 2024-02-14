@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*           Xavier Leroy and Damien Doligez, INRIA Rocquencourt          *)
 (*                                                                        *)
@@ -28,7 +28,7 @@ let generic_quote quotequote s =
 (* This function implements the Open Group specification found here:
   [[1]] http://pubs.opengroup.org/onlinepubs/9699919799/utilities/basename.html
   In step 1 of [[1]], we choose to return "." for empty input.
-    (for compatibility with previous versions of OCaml)
+    (for compatibility with previous versions of travlang)
   In step 2, we choose to process "//" normally.
   Step 6 is not implemented: we consider that the [suffix] operand is
     always absent.  Suffixes are handled by [chop_suffix] and [chop_extension].

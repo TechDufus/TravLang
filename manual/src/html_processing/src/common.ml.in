@@ -1,6 +1,6 @@
 (* @configure_input@ *)
 #2 "manual/src/html_processing/src/common.ml.in"
-(* ------------ OCaml Web-manual -------------- *)
+(* ------------ travlang Web-manual -------------- *)
 
 (* Copyright San Vu Ngoc, 2020
 
@@ -49,7 +49,7 @@ let html_maindir = "../htmlman"
 (* Where to get the original html files *)
 let html_file = ( // ) html_maindir
 
-let releases_url = "https://ocaml.org/releases/"
+let releases_url = "https://travlang.org/releases/"
 
 let favicon = "favicon.ico"
 
@@ -78,7 +78,7 @@ let rec next node =
 
 let logo_html url =
   "<nav class=\"toc brand\"><a class=\"brand\" href=\"" ^ url ^
-  "\" ><img src=\"colour-logo.svg\" class=\"svg\" alt=\"OCaml\" /></a></nav>"
+  "\" ><img src=\"colour-logo.svg\" class=\"svg\" alt=\"travlang\" /></a></nav>"
   |> parse
 
 let wrap_body ~classes soup =
@@ -121,7 +121,7 @@ let add_sidebar_button body =
   |> prepend_child btn;
   prepend_child body btn
 
-let find_version () = "@OCAML_VERSION_SHORT@"
+let find_version () = "@travlang_VERSION_SHORT@"
 
 (*
    Local Variables:

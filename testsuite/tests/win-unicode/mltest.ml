@@ -47,7 +47,7 @@ let foreign_names2 =
 
 (* let env0 =
      List.sort compare
-     (List.mapi (fun i v -> Printf.sprintf "OCAML_UTF8_VAR%d=%s" i v)
+     (List.mapi (fun i v -> Printf.sprintf "travlang_UTF8_VAR%d=%s" i v)
                 foreign_names2) *)
 
 (* let read_all ic = *)

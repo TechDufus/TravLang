@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           */
 /*                                                                        */
@@ -201,7 +201,7 @@ CAMLprim value caml_invoke_traced_function(value codeptr, value env, value arg)
 
 #else
 
-/* Dummy definitions to support compilation of ocamlc.opt */
+/* Dummy definitions to support compilation of travlangc.opt */
 
 value caml_get_global_data(value unit)
 {

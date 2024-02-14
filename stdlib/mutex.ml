@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*           Xavier Leroy and Pascal Cuoq, INRIA Rocquencourt             *)
 (*                                                                        *)

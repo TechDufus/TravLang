@@ -1,6 +1,6 @@
 /**************************************************************************/
 /*                                                                        */
-/*                                 OCaml                                  */
+/*                                 travlang                                  */
 /*                                                                        */
 /*                          Sadiq Jaffer, Opsian                          */
 /*                                                                        */
@@ -577,7 +577,7 @@ caml_runtime_events_read_poll(struct caml_runtime_events_cursor *cursor,
   return E_SUCCESS;
 }
 
-/* OCaml for reading from an runtime_events */
+/* travlang for reading from an runtime_events */
 
 #define Cursor_val(v) \
   (*((struct caml_runtime_events_cursor **)Data_custom_val(v)))
@@ -1045,7 +1045,7 @@ static int ml_user_custom(int domain_id, void *callback_data, int64_t timestamp,
 
     const char* data_str = (const char*) event_data;
     uintnat string_len = event_data_len * sizeof(uint64_t) - 1;
-    // because the ring buffer is 64-bits aligned, the whole ocaml value is
+    // because the ring buffer is 64-bits aligned, the whole travlang value is
     // transferred, including the padding bytes and the last byte containing
     // the number of padding bytes. This information is crucial to determine
     // the true size of the string.

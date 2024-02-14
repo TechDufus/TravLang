@@ -14,9 +14,9 @@
 *)
 
 (*
-  ocamlc -c pr3918a.mli pr3918b.mli
+  travlangc -c pr3918a.mli pr3918b.mli
   rm -f pr3918a.cmi
-  ocamlc -c pr3918c.ml
+  travlangc -c pr3918c.ml
 *)
 
 open Pr3918b
@@ -26,18 +26,18 @@ let f (x : 'a vlist) = (x : 'b vlist)
 
 (* TEST
  readonly_files = "pr3918a.mli pr3918b.mli";
- setup-ocamlc.byte-build-env;
+ setup-travlangc.byte-build-env;
  module = "pr3918a.mli";
- ocamlc.byte;
+ travlangc.byte;
  module = "pr3918b.mli";
- ocamlc.byte;
+ travlangc.byte;
  script = "rm -f pr3918a.cmi";
  script;
  {
    module = "pr3918c.ml";
-   ocamlc_byte_exit_status = "2";
-   ocamlc.byte;
+   travlangc_byte_exit_status = "2";
+   travlangc.byte;
  }{
-   check-ocamlc.byte-output;
+   check-travlangc.byte-output;
  }
 *)

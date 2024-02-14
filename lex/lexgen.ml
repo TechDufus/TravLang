@@ -1,6 +1,6 @@
 (**************************************************************************)
 (*                                                                        *)
-(*                                 OCaml                                  *)
+(*                                 travlang                                  *)
 (*                                                                        *)
 (*           Xavier Leroy, projet Cristal, INRIA Rocquencourt             *)
 (*           Luc Maranget, projet Moscova, INRIA Rocquencourt             *)
